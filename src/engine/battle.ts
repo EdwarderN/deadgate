@@ -284,8 +284,8 @@ export function startAfterBattle(rules: Rules, crew: Crew): Crew {
   const fit = rules.crew.campaign.statuses.value[0];
   const fighters = rules.crew.afterBattle.resetStatusesAtBreak.value ? crew.fighters.map((f) => ({ ...f, status: fit, nextBattle: [] })) : crew.fighters;
   const after: AfterBattle = {
-    step: 0, battle: { ...crew.battle, phase: 'ended' }, xpApplied: false, wordsApplied: {}, extraXp: {}, injuries: {},
-    story: { row: '', roll: null, notes: '' }, tasks: {}, taxPaid: false, history: {}, seasonLogged: false,
+    step: 'battle', battle: { ...crew.battle, phase: 'ended' }, extraXp: {}, injuries: {}, done: {},
+    story: { row: '', roll: null, notes: '' }, tasks: {}, history: {},
   };
   // A new break: sellers must be found again (11.3).
   return { ...crew, fighters, battle: null, after, sellers: {}, breakNo: (crew.breakNo ?? 0) + 1 };

@@ -99,22 +99,32 @@ export interface Battle {
 }
 
 export interface AfterBattle {
-  step: number;
+  /** the id of the step on screen */
+  step: number | string;
   battle: Battle;
-  xpApplied: boolean;
-  wordsApplied: Record<string, boolean>;
   extraXp: Record<string, number>;
-  injuries: Record<string, { rolls: number[]; done: boolean; notes: string }>;
-  story: { row: string; roll: number | null; notes: string };
-  tasks: Record<string, { task: string; success: boolean | null; testTotal: number | null; tableRoll: number | null; paid: boolean }>;
-  taxPaid: boolean;
+  /** steps confirmed, and what each one recorded */
+  done?: Record<string, string[]>;
+  sillyRolls?: Record<string, number | null>;
+  spinOff?: Record<string, string>;
+  tookCaptive?: boolean;
+  injuries: Record<string, { rolls: number[]; chosen?: number | null; listRolls?: number[]; picks?: Record<string, boolean>; done?: boolean; notes?: string }>;
+  ransom?: Record<string, { pay: number | null; refuse: boolean }>;
+  captive?: { income: number | null; roll: number | null; xpWho: string | null; picks?: Record<string, boolean> };
+  taxUnpaid?: string[];
+  story: { row: string; roll: number | null; notes: string; choice?: string; twistWho?: string | null; twistOk?: boolean | null; picks?: Record<string, boolean>; who?: Record<string, string> };
+  tasks: Record<string, { task: string; success: boolean | null; testTotal: number | null; tableRoll: number | null; paid?: boolean; picks?: Record<string, boolean>; rating?: string }>;
   history: Record<string, string>;
-  seasonLogged: boolean;
-  faction?: { asks: Record<string, boolean | number>; stars: Record<string, number>; researchDone: boolean; researchWho: string | null; applied: boolean };
+  faction?: { asks: Record<string, boolean | number>; stars: Record<string, number>; researchDone: boolean; researchWho: string | null; applied?: boolean };
   /** a type's put-down XP given to another fighter (Stunt double to an Action star) */
   redirects?: Record<string, string>;
-  captiveXpDone?: boolean;
   cancelled?: boolean;
+  // fields from earlier versions, kept so an unfinished break still opens
+  xpApplied?: boolean;
+  wordsApplied?: Record<string, boolean>;
+  taxPaid?: boolean;
+  seasonLogged?: boolean;
+  captiveXpDone?: boolean;
 }
 
 export interface LedgerEntry { id: string; at: string; amount: number; note: string }

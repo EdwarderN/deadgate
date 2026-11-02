@@ -1171,6 +1171,18 @@
       "value": true,
       "source": "13.2",
       "note": "Sore and Laid up last one break; the app clears them when the next after-battle begins"
+    },
+    "storyRowHints": {
+      "value": {
+        "1": "heldField",
+        "2": "notHeldField",
+        "3": "ran",
+        "4": "lostSomeone",
+        "5": "captive",
+        "6": "legend"
+      },
+      "source": "14.5",
+      "note": "which story rows fit the battle, for the app's suggestion; the player still chooses"
     }
   },
   "factionPayCap": {

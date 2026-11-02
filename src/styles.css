@@ -314,3 +314,28 @@ button.seg-btn.on { color: #fff; }
 .seller-result.bad { background: var(--err-bg); color: var(--err); }
 .confirm-msg { font-size: 1.05rem; margin: 0; }
 .copy-text { width: 100%; }
+
+/* ---------- after the battle (v2) ---------- */
+.step.done .step-n { background: var(--ok); color: #fff; }
+.summary { position: sticky; bottom: 0.5rem; z-index: 8; border: 2px solid var(--ink); box-shadow: 0 -4px 16px #0002; display: grid; gap: 0.4rem; }
+.summary h3 { margin: 0; font-size: 0.95rem; }
+.summary ul { max-height: 9.5rem; overflow: auto; border-left: 3px solid var(--tape); padding-left: 0.6rem; }
+.summary.recorded { position: static; border-color: var(--ok); box-shadow: none; }
+.summary.recorded ul { border-left-color: var(--ok); max-height: none; }
+.outcomes { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.outcome { display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem; border: 1.5px dashed var(--line); border-radius: 999px; padding: 0 0.6rem; background: #fff; }
+.outcome.on { border-style: solid; border-color: var(--ok); background: var(--ok-bg); }
+.outcome .check { min-height: 34px; }
+.outcome select { min-height: 32px; font-size: 0.85rem; padding: 0.1rem 0.3rem; }
+.xp-list { display: grid; gap: 0.5rem; }
+.xp-row { border-bottom: 1px solid #eeebe2; padding-bottom: 0.4rem; }
+.xp-total { font-weight: 800; font-size: 1.05rem; }
+.inline-field { display: inline-flex; align-items: center; gap: 0.4rem; }
+.num.tiny { width: 4rem; min-height: 34px; }
+.option.tight { padding: 0.35rem 0.6rem; }
+.choices { display: grid; gap: 0.35rem; }
+.word-row, .task-row { border-bottom: 1px solid #eeebe2; padding-bottom: 0.6rem; }
+.word-row:last-child, .task-row:last-child { border-bottom: 0; }
+.step-back { margin-top: 1rem; }
+fieldset:disabled { opacity: 0.75; }
+@media (max-width: 640px) { .summary ul { max-height: 4.6rem; } }

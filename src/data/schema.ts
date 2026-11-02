@@ -299,6 +299,7 @@ export const crewRulesSchema = z.object({
     taskBlockedStatuses: sourced(z.array(str)),
     taskTableDie: sourced(str).extend({ ownTask: str }),
     resetStatusesAtBreak: sourced(z.boolean()),
+    storyRowHints: sourced(z.record(z.enum(['heldField', 'notHeldField', 'ran', 'lostSomeone', 'captive', 'legend']))),
   }),
   factions: z.record(factionRulesSchema),
 }).passthrough();
