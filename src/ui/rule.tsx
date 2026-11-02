@@ -1,7 +1,7 @@
 // Tap any trait or item to read its rule text and section, as the book prints it.
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
 import { plain, type ItemDef, type RuleRef, type Rules } from '../data/rules';
-import { Md } from './md';
+import { MdBlock } from './md';
 
 const Ctx = createContext<(r: RuleRef) => void>(() => {});
 export const useRule = () => useContext(Ctx);
@@ -29,7 +29,7 @@ export function RuleProvider({ children }: { children: ReactNode }) {
               {rule.lines.map(([k, v], i) => (
                 <div key={i} className="rule-line">
                   {k && <dt>{k}</dt>}
-                  <dd><Md text={v} /></dd>
+                  <dd><MdBlock text={v} /></dd>
                 </div>
               ))}
             </dl>

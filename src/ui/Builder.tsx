@@ -287,17 +287,20 @@ function ShopStep({ crew, update }: { crew: Crew; update: Update }) {
           <ul className="plain-list stack-s">
             {bought.map((o) => {
               const d = rules.item(o.itemId)!;
+              const cost = spend.find((l) => l.uid === o.uid)?.amount ?? 0;
               return (
-                <li key={o.uid} className="row gap-s wrap between">
+                <li key={o.uid} className="bought-row">
                   <RuleLink rule={itemRule(rules, d)}>{d.name}</RuleLink>
                   <span className="muted small">{d.source}</span>
-                  <SellerControl crew={crew} item={o} update={update} />
+                  <span className="price" aria-label={`${cost} parts`}>{cost} parts</span>
+                  <span><SellerControl crew={crew} item={o} update={update} /></span>
                   <button className="btn small" onClick={() => update((c) => ({ ...c, items: c.items.filter((x) => x.uid !== o.uid) }))}>Return</button>
                 </li>
               );
             })}
           </ul>
         )}
+        {bought.length > 0 && <p className="small strong">Gear total: {spend.filter((l) => l.uid).reduce((a, l) => a + l.amount, 0)} parts</p>}
         <details>
           <summary>Where the parts went ({spend.reduce((a, l) => a + l.amount, 0)})</summary>
           <ul className="plain-list small">{spend.map((l, i) => <li key={i}>{l.label}: {l.amount}</li>)}</ul>

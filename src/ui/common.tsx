@@ -191,7 +191,7 @@ export function Shop({ crew, update }: { crew: Crew; update: Update }) {
         </label>
       </div>
       {lead && campaign && <p className="note small">A relic lead this break: one relic at half price{lead.noRoll ? ', with no seller roll' : ''} (14.7).</p>}
-      <p className="muted small">Copies are always for sale. Old stock needs a seller first: one d6 per item per break, {target.value}+{target.why ? ` (${target.why})` : ''} (11.3). Roll in the app, type your own roll, or tick "found". Tap a name to read its rules.</p>
+      <p className="muted small">Copies are always for sale. Old stock needs a seller first: one d6 per item per break, {target.value}+{target.why ? ` (${target.why})` : ''} (11.3). Roll in the app ("Seller"), type your own d6 roll and press Enter, or tick "Found" for a lead or no roll needed. Tap a name to read its rules.</p>
       {last && (
         <p className={`seller-result ${last.found ? 'ok' : 'bad'}`} role="status">
           {last.roll === null ? `${last.name}: marked as found.` : last.found
@@ -214,16 +214,16 @@ export function Shop({ crew, update }: { crew: Crew; update: Update }) {
               <RuleLink rule={itemRule(rules, it)} className="shop-name">{it.name}</RuleLink>
               <span className={`badge src-${it.source.replace(' ', '-')}`}>{it.source}{it.source === 'old stock' && !needs ? ', no roll' : ''}{needs && found ? `, seller found${crew.sellers?.[it.id]?.roll ? ` (${crew.sellers[it.id].roll})` : ''}` : ''}</span>
               <span className="price">{price !== it.price && <s className="muted">{it.price}</s>} {price}</span>
-              {found
-                ? <button className="btn small" onClick={() => buy(it)} disabled={!ok} aria-label={`Buy ${it.name} (${it.source}) for ${price} parts`}>Buy</button>
-                : withLead ? <span /> : <span />}
-              {withLead && <button className="btn small primary lead-btn" onClick={() => buyWithLead(it)} disabled={!canSpend(rules, crew, Math.floor(price / 2))}>Relic lead: {Math.floor(price / 2)}</button>}
-              {!found && !withLead && (
-                <div className="seller-find">
-                  <RollOrEnter die="d6" label={`Find a seller (${target.value}+)`} onResult={(n) => setSeller(it, n)} />
-                  <label className="check small"><input type="checkbox" onChange={() => setSeller(it, null)} /> Found (a lead, or no roll needed)</label>
-                </div>
-              )}
+              <div className="shop-act">
+                {found && <button className="btn small" onClick={() => buy(it)} disabled={!ok} aria-label={`Buy ${it.name} (${it.source}) for ${price} parts`}>Buy</button>}
+                {withLead && <button className="btn small primary lead-btn" onClick={() => buyWithLead(it)} disabled={!canSpend(rules, crew, Math.floor(price / 2))}>Relic lead: {Math.floor(price / 2)}</button>}
+                {!found && !withLead && (
+                  <>
+                    <RollOrEnter compact die="d6" label={`Seller ${target.value}+`} onResult={(n) => setSeller(it, n)} />
+                    <label className="check small" title="A lead, or no roll needed"><input type="checkbox" onChange={() => setSeller(it, null)} aria-label={`${it.name}: seller found without a roll`} /> Found</label>
+                  </>
+                )}
+              </div>
             </li>
           );
         })}

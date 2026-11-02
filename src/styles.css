@@ -163,8 +163,14 @@ input.num { width: 6rem; }
 .kit-line { display: grid; gap: 0.4rem; }
 
 .shop-filters { align-items: flex-end; }
-.shop-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr)); gap: 0.35rem 1rem; }
-.shop-row { display: grid; grid-template-columns: 1fr auto 2.8rem auto; gap: 0.5rem; align-items: center; padding: 0.3rem 0; border-bottom: 1px solid #eeebe2; }
+.shop-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr; max-width: 60rem; }
+.shop-row { display: grid; grid-template-columns: minmax(7rem, 1fr) 12rem 4rem 19rem; gap: 0.5rem; align-items: center; padding: 0.35rem 0.25rem; border-bottom: 1px solid #eeebe2; min-height: 3rem; }
+.shop-row .badge { justify-self: start; }
+.shop-row .price { text-align: right; font-weight: 700; }
+.shop-act { display: flex; flex-wrap: nowrap; gap: 0.35rem; align-items: center; justify-content: flex-end; }
+.shop-act .roll-or-enter { flex-wrap: nowrap; gap: 0.3rem; }
+.roll-or-enter.compact .die-input { width: 3.2rem; }
+.shop-act .check { white-space: nowrap; gap: 0.25rem; }
 .shop-name { font-weight: 600; }
 .price { text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; }
 
@@ -189,7 +195,11 @@ input.num { width: 6rem; }
 .tbl td.neg { color: var(--err); }
 .table-scroll { overflow-x: auto; }
 .season input { min-width: 6rem; }
-details summary { cursor: pointer; font-weight: 600; min-height: 36px; display: flex; align-items: center; }
+details summary { cursor: pointer; font-weight: 600; min-height: 36px; display: flex; align-items: center; list-style: none; }
+details summary::-webkit-details-marker { display: none; }
+details > summary::before { content: '▸'; display: inline-block; width: 1.1em; flex: none; color: var(--muted); transition: transform 0.15s; }
+details[open] > summary::before { transform: rotate(90deg); }
+.next-battle { display: grid; gap: 0.35rem; }
 
 /* ---------- campaign ---------- */
 .actions { margin-bottom: 0.8rem; }
@@ -252,6 +262,9 @@ details summary { cursor: pointer; font-weight: 600; min-height: 36px; display: 
   .fc-body { grid-template-columns: 1fr; }
   .shop-row { grid-template-columns: 1fr auto auto; }
   .shop-row .badge { grid-column: 1; justify-self: start; margin-left: 0; }
+  .shop-row .shop-name { grid-column: 1 / 3; }
+  .shop-row .shop-act { grid-column: 1 / -1; justify-content: flex-start; flex-wrap: wrap; }
+  .shop-row:not(.needs-seller) .shop-act { grid-column: 3; grid-row: 1 / 3; }
   .ro-grid { grid-template-columns: 1fr; }
   .build-head { flex-wrap: wrap; }
 }
@@ -277,8 +290,7 @@ details summary { cursor: pointer; font-weight: 600; min-height: 36px; display: 
 .strong { font-weight: 700; }
 
 /* ---------- shop sellers ---------- */
-.shop-row.needs-seller { grid-template-columns: 1fr auto 2.8rem auto; }
-.seller-find { grid-column: 1 / -1; display: grid; gap: 0.3rem; padding: 0.3rem 0 0.2rem; }
+
 
 /* ---------- battle ---------- */
 .round-bar { position: sticky; top: 3.2rem; z-index: 9; display: grid; gap: 0.5rem; border: 2px solid var(--ink); }
@@ -349,3 +361,14 @@ fieldset:disabled { opacity: 0.75; }
 .lead-btn { grid-column: 1 / -1; justify-self: start; }
 .epip.static { width: 1.1rem; height: 1.1rem; cursor: default; display: inline-block; }
 .epip.add { background: repeating-linear-gradient(45deg, var(--tape), var(--tape) 3px, #fff 3px, #fff 6px); }
+
+/* ---------- book tables in text ---------- */
+.table-wrap { overflow-x: auto; margin: 0.3rem 0; }
+.md-table { border-collapse: collapse; width: 100%; font-size: 0.88rem; }
+.md-table th, .md-table td { border-bottom: 1px solid var(--line); padding: 0.3rem 0.45rem; text-align: left; vertical-align: top; }
+.md-table th { font-weight: 700; background: #f1eee4; }
+.md-table td:first-child, .md-table th:first-child { white-space: nowrap; font-weight: 700; width: 1%; }
+.shop-row:hover { background: #f7f4ea; }
+.bought-row { display: grid; grid-template-columns: minmax(7rem, 1fr) auto 4.5rem auto auto; gap: 0.5rem; align-items: center; padding: 0.3rem 0; border-bottom: 1px solid #eeebe2; }
+.bought-row .price { text-align: right; font-weight: 700; }
+@media (max-width: 640px) { .bought-row { grid-template-columns: 1fr auto auto; } }

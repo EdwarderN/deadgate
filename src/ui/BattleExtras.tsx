@@ -8,6 +8,7 @@ import { cellCovers, lookup } from '../engine/dice';
 import { equipped } from '../engine/crew';
 import type { Battle, BattleFighter, Crew, Fighter } from '../engine/model';
 import { Md, fighterLabel, type Update } from './common';
+import { MdBlock } from './md';
 import { PoolRoller, RollOrEnter } from './Dice';
 
 type SetB = (fn: (b: Battle) => Battle) => void;
@@ -79,7 +80,7 @@ function ScenarioPage({ b }: { b: Battle }) {
       <summary><strong>{sc.title}</strong></summary>
       {sc.lore && <p className="small muted"><em>{sc.lore}</em></p>}
       <dl className="stack-s small">{sc.sections.map((x, i) => (
-        <div key={i}><dt className="strong">{x.label}</dt><dd className="scen-text">{x.text.split('\n').map((l, k) => <div key={k}><Md text={l.replace(/^- /, '• ')} /></div>)}</dd></div>
+        <div key={i}><dt className="strong">{x.label}</dt><dd className="scen-text"><MdBlock text={x.text} /></dd></div>
       ))}</dl>
     </details>
   );

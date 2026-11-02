@@ -819,12 +819,13 @@ function DoneStep({ crew, a, setA, update }: SP) {
         <div key={f.id} className="card stack-s">
           <div className="row between gap-s wrap"><strong>{fighterLabel(f)}</strong><span className="small muted">{f.status} · {f.xp} XP{f.nextBattle?.length ? ` · starts next battle ${f.nextBattle.join(', ')}` : ''}</span></div>
           <input aria-label={`History for ${fighterLabel(f)}`} placeholder="One line of History" value={a.history[f.id] ?? ''} onChange={(e) => setA((x) => ({ ...x, history: { ...x.history, [f.id]: e.target.value } }))} />
-          <details><summary className="small">Starts the next battle with…</summary>
+          <div className="next-battle">
+            <span className="small strong">Starts the next battle with <span className="muted">(tap to add or remove)</span>:</span>
             <div className="seg wrap">{states.map((s) => {
               const on = (f.nextBattle ?? []).includes(s);
               return <button key={s} className={`seg-btn tight ${on ? 'on' : ''}`} aria-pressed={on} onClick={() => update((c) => ({ ...c, fighters: c.fighters.map((x) => (x.id === f.id ? { ...x, nextBattle: on ? (x.nextBattle ?? []).filter((y) => y !== s) : [...(x.nextBattle ?? []), s] } : x)) }))}>{s}</button>;
             })}</div>
-          </details>
+          </div>
         </div>
       ))}
       <RumourPicks crew={crew} a={a} update={update} />

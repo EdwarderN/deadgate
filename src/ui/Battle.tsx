@@ -112,7 +112,7 @@ function Setup({ crew, b, setB, setF, update }: { crew: Crew; b: Battle; setB: S
                     ? <span className="small muted">{stakes.noTakerTag}: nobody takes the bet, so it is a vow (14.10).</span>
                     : <label className="check small"><input type="checkbox" checked={bf.word.taker !== false} onChange={(e) => setF(f.id, (x) => ({ ...x, word: { ...x.word!, taker: e.target.checked } }))} /> Someone took the bet (stake {stakes.value[deedTier(rules, bf.word.deed)?.tier ?? ''] ?? 0} parts)</label>)}
                   {bf.word && sillyTierUp(f) && <span className="small muted">{f.sillyTrait}: this Word must be a tier above the one they failed (13.7).</span>}
-                  {bf.word && <DeedText id={bf.word.deed} />}
+                  {bf.word && <DeedText id={bf.word.deed} audience={bf.word.audience} />}
                 </div>
               )}
               {bf.states.length > 0 && <p className="small muted">Starts with: {bf.states.join(', ')}</p>}
@@ -126,15 +126,18 @@ function Setup({ crew, b, setB, setF, update }: { crew: Crew; b: Battle; setB: S
   );
 }
 
-function DeedText({ id }: { id: string }) {
+function DeedText({ id, audience }: { id: string; audience?: string }) {
   const rules = getRules();
+  // the rule for the kind of Word sworn (vow, boast, wager: 13.5), as the book's table gives it
+  const aud = rules.data.word_audiences.find((a) => plain(a.Audience) === audience);
+  const audLines: [string, string][] = aud ? [[`As a ${plain(aud.Audience).toLowerCase()}`, aud['What it is']], ['If fulfilled', aud.Fulfilled], ['If failed', aud.Failed]] : [];
   if (id.startsWith(RUMOUR)) {
     const r = rules.data.rumours.find((x) => plain(x.Rumour).startsWith(id.slice(RUMOUR.length)));
-    return r ? <RuleLink rule={{ title: plain(r.Rumour).split('.')[0], section: rules.section('rumour'), lines: [['Deed', r.Deed], ['Legend', r.Legend]] }}>read</RuleLink> : null;
+    return r ? <RuleLink rule={{ title: plain(r.Rumour).split('.')[0], section: rules.section('rumour'), lines: [['Deed', r.Deed], ['Legend', r.Legend], ...audLines] }}>read</RuleLink> : null;
   }
   const d = rules.deeds.find((x) => x.id === id);
   if (!d) return null;
-  return <RuleLink rule={{ title: `${d.id} ${d.name}`, section: rules.section('deed'), lines: [[d.tier, d.text], ...(d.legend ? [['Legend', d.legend] as [string, string]] : [])] }}>read</RuleLink>;
+  return <RuleLink rule={{ title: `${d.id} ${d.name}`, section: rules.section('deed'), lines: [[d.tier, d.text], ...(d.legend ? [['Legend', d.legend] as [string, string]] : []), ...audLines] }}>read</RuleLink>;
 }
 
 // ---------- playing ----------
@@ -309,7 +312,7 @@ function BattleCard({ crew, f, bf, set, update }: { crew: Crew; f: Fighter; bf: 
       )}
       {bf.word && (
         <div className="word small">
-          <strong>Word:</strong> {wordName(rules, bf.word.deed)} ({bf.word.audience}) <DeedText id={bf.word.deed} />
+          <strong>Word:</strong> {wordName(rules, bf.word.deed)} ({bf.word.audience}) <DeedText id={bf.word.deed} audience={bf.word.audience} />
           <label className="check small"><input type="checkbox" checked={bf.word.result === 'fulfilled'} onChange={(e) => set((x) => ({ ...x, word: { ...x.word!, result: e.target.checked ? 'fulfilled' : undefined } }))} /> It is done</label>
         </div>
       )}

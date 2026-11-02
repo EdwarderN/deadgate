@@ -9,7 +9,7 @@ const valid = (die: Die, n: number) => (die === 'd66' ? isD66(n) : n >= RANGE[di
 export const rollDie = (die: Die) => (die === 'd6' ? d6() : die === '2d6' ? twoD6() : d66());
 
 /** A Roll button plus a box to type a real roll. Calls onResult with the number. */
-export function RollOrEnter({ die, label, onResult, disabled, value }: { die: Die; label?: string; onResult: (n: number, rolled: boolean) => void; disabled?: boolean; value?: number | null }) {
+export function RollOrEnter({ die, label, onResult, disabled, value, compact }: { die: Die; label?: string; onResult: (n: number, rolled: boolean) => void; disabled?: boolean; value?: number | null; compact?: boolean }) {
   const [typed, setTyped] = useState('');
   const [err, setErr] = useState('');
   const submit = () => {
@@ -18,9 +18,9 @@ export function RollOrEnter({ die, label, onResult, disabled, value }: { die: Di
     setErr(''); setTyped(''); onResult(n, false);
   };
   return (
-    <div className="roll-or-enter">
+    <div className={`roll-or-enter${compact ? ' compact' : ''}`}>
       <button type="button" className="btn small primary" disabled={disabled} onClick={() => onResult(rollDie(die), true)}>🎲 {label ?? `Roll ${die}`}</button>
-      <span className="muted small">or real dice:</span>
+      {!compact && <span className="muted small">or real dice:</span>}
       <input className="num die-input" inputMode="numeric" aria-label={`Enter your ${die} roll`} placeholder={die} value={typed} disabled={disabled}
         onChange={(e) => setTyped(e.target.value.replace(/\D/g, ''))} onKeyDown={(e) => { if (e.key === 'Enter') submit(); }} />
       <button type="button" className="btn small" disabled={disabled || !typed} onClick={submit}>Enter</button>
