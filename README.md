@@ -13,3 +13,17 @@ Hand this whole folder to Claude Code and say, for example:
 - `reference/design-philosophy.md`: the game's tone and aims.
 
 When the rules change, copy the new rulebook files into `rulebook/` and ask Claude Code to "update the rules data".
+
+## The app
+
+A static web app (TypeScript, React, Vite). It reads only `data/`, works offline once loaded, and keeps crews in the browser, with JSON export/import and share links.
+
+```
+npm install
+npm run dev       # try it locally
+npm test          # every validator and price rule, against the real data
+npm run build     # static site in dist/, for any static host
+npm run rules     # re-read the rulebook into data/generated/
+```
+
+See `MAINTAINING.md` for updating the rules.

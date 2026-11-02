@@ -213,7 +213,7 @@ describe('shop rules', () => {
 });
 
 describe('slots (7.1, 7.4, 7.5)', () => {
-  const bare = () => ({ ...crewOf(plainFaction), items: [] });
+  const bare = (): Crew => ({ ...crewOf(plainFaction), items: [] });
   const twoHanded = rules.shopItems.find((i) => i.kind === 'weapon' && i.hands === 2 && i.source === 'copy')!;
   const oneHanded = rules.shopItems.find((i) => i.kind === 'weapon' && i.hands === 1 && i.source === 'copy')!;
   it('a Hands set holds up to 2 Hands', () => {

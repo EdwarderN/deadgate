@@ -1,0 +1,9 @@
+{
+  "name": "The Dead Gate crew builder",
+  "short_name": "Dead Gate",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#fbfaf6",
+  "theme_color": "#f3c623",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

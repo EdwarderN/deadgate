@@ -14,13 +14,22 @@ The game is in playtest, and its rules change often. **No rule text, price, numb
 ## When the rules change
 
 1. Replace `rulebook/` with the new rulebook markdown.
-2. Run `python3 tools/extract_rules.py`. It stops with a clear error if a table it needs was renamed; fix the header prefix in the script.
+2. Run `npm run rules` (= `python3 tools/extract_rules.py`). It stops with a clear error if a table it needs was renamed; fix the header prefix in the script.
 3. Read `data/generated/_meta.json`: `unlinkedShopItems` lists shop entries the script could not join to a rules row. It should be empty.
 4. Update `data/manual/crew-rules.json` for any changed limit or faction rule.
-5. Run the tests. Add a test for any new rule.
-6. Bump the displayed rules version (it comes from `_meta.json`).
+5. Run `npm test`. Add a test for any new rule (`tests/rules.test.ts`; data shape checks are in `tests/data.test.ts`).
+6. Bump the displayed rules version: it is the "Version" line of `rulebook/00-front.md`, carried through `_meta.json`.
+7. `npm run build` and publish `dist/`.
 
 Keep this list accurate if you change the workflow, and add a short `MAINTAINING.md` for the human owner (not a programmer) that walks through the same steps in plain words.
+
+## Code map
+
+- `src/data/schema.ts`: Zod schemas for every file in `data/`. `src/data/rules.ts` loads, validates and derives lookups (items with slots, recruit prices, bot chassis, rites, advance lists, legends, the XP ladder).
+- `src/engine/crew.ts`: prices, price rules (`priceRules[].kind`: `copyDiscount`, `recruitPrice`, `chassisDiscount`, `noSellerRoll`), starting kit, slots, stats, campaign actions.
+- `src/engine/validate.ts`: every validator, each returning messages with a section number.
+- `src/ui/`: builder steps, campaign screen, printable cards (`Print.tsx`). `public/sw.js`: offline cache.
+- Structured additions to `crew-rules.json` (all with sources): `gear.kindSlots` (where each item kind goes), frame and armour keys, `moveModifiers`, `saveDice`, `prosthetics`, `injuryEffects`, `restrictedItems`, faction `startingKit[].assign`/`pick`, `typeSpecies`, `typeGrants`, `campaign` (air tax, selling, statuses), `sections` (where each kind of rule lives, for the in-app rule text).
 
 ## Data notes
 

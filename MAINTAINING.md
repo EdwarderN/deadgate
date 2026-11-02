@@ -1,0 +1,55 @@
+# Keeping the crew builder up to date
+
+This is for the game's owner. You don't need to be a programmer. When the rules change, you change data files, never the app's code.
+
+## What you need once
+
+- **Python 3** (to read the rulebook into data).
+- **Node.js** (version 20 or later) to test and build the app. In this folder, run `npm install` once.
+
+## When the rulebook changes
+
+1. **Copy the new rulebook in.** Replace the files in `rulebook/` with the new markdown chapters. Keep the same file names.
+2. **Read the rules into data.** In this folder, run:
+
+   ```
+   npm run rules
+   ```
+
+   (This is the same as `python3 tools/extract_rules.py`.) It rewrites the files in `data/generated/`. Never edit those by hand.
+
+   If it stops with an error like *"table '| Weapon | Copy | Old stock' not found"*, a table's header in the book was renamed. Either put the old header back in the book, or ask Claude Code to "fix the table header in the extractor".
+3. **Check nothing got lost.** Open `data/generated/_meta.json`. The line `"unlinkedShopItems": []` must be an empty list. If an item name appears there, the shop sells something the gear tables don't describe (often a spelling difference between chapter 7 and section 11.3). Make the two names match in the book and run step 2 again.
+4. **Update the hand-kept rules.** Open `data/manual/crew-rules.json`. It holds the limits and faction rules the builder enforces that are not tables in the book: starting parts, the nine-fighter limit, slot sizes, starting kits, faction price rules and so on. Every value says which section it comes from (`"source"`). If the new rulebook changes one of these, change the number or name here.
+
+   Examples:
+   - Starting parts go from 60 to 70: change `creation.startingParts.value` to `70`.
+   - The Bodgers' discount becomes 2 parts: change `amount` in the Bodgers' `priceRules` to `2`.
+   - A faction's starting kit changes: edit its `startingKit` list (item name, `copy` or `old stock`, and how many).
+5. **Run the tests.**
+
+   ```
+   npm test
+   ```
+
+   Every rule the app enforces has a test that uses the real data, and every data file is checked against its expected shape. If something fails, the message says which file or rule. Ask Claude Code to look if you're unsure.
+6. **The version.** The rules version shown in the app comes from the rulebook's front page ("Version 0.3, ..." in `rulebook/00-front.md`), through `_meta.json`. Change it in the book and step 2 picks it up.
+7. **Build and publish.**
+
+   ```
+   npm run build
+   ```
+
+   Copy the `dist/` folder to any static web host. Players get the new rules the next time they open the app online.
+
+## Trying it on your computer
+
+`npm run dev` and open the address it prints. `npm run preview` shows the built version (the one that works offline).
+
+## Questions the book doesn't answer
+
+When the app meets a rule the book doesn't settle, it's listed in `OPEN-QUESTIONS.md`, with what the app does for now. Answer them there (or in the book), and the builder can be changed to match.
+
+## Saved crews
+
+Players' crews live in their own browser, and in the files they export. A crew saved under an old rules version opens with the new rules and is checked against them: anything no longer legal shows up as a red message to fix.

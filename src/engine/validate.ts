@@ -16,7 +16,8 @@ export interface Message { level: Level; text: string; section: string; step: St
 type Ctx = { rules: Rules; crew: Crew };
 type Validator = (c: Ctx) => Message[];
 
-const who = (f: Fighter) => f.name || 'An unnamed fighter';
+/** A fighter's name, or their place on the roster when unnamed. */
+const named = (crew: Crew, f: Fighter) => f.name || `Fighter ${crew.fighters.findIndex((x) => x.id === f.id) + 1} (unnamed)`;
 const an = (w: string) => (/^[AEIOU]/i.test(w) ? `An ${w}` : `A ${w}`);
 
 const msg = (rule: string, level: Level, step: Step, section: string, text: string, fighterId?: string): Message => ({ rule, level, step, section, text, fighterId });
@@ -42,7 +43,7 @@ export const validators: Record<string, Validator> = {
   },
 
   names({ crew }) {
-    return crew.fighters.filter((f) => !f.name.trim()).map((f) => msg('names', 'warning', 'rookies', '4.1', 'A fighter has no name yet.', f.id));
+    return crew.fighters.flatMap((f, i) => (f.name.trim() ? [] : [msg('names', 'warning', 'rookies', '4.1', `Fighter ${i + 1} has no name yet.`, f.id)]));
   },
 
   ratings({ rules, crew }) {
@@ -51,9 +52,9 @@ export const validators: Record<string, Validator> = {
     for (const f of crew.fighters) {
       const vals = Object.values(f.baseRatings);
       const ones = vals.filter((v) => v === 1).length;
-      if (ones !== 1 || vals.some((v) => v !== 0 && v !== 1)) out.push(msg('ratings', 'error', 'rookies', '4.2', `${who(f)} needs exactly one rating at 1 (a rookie's start), the rest at 0.`, f.id));
+      if (ones !== 1 || vals.some((v) => v !== 0 && v !== 1)) out.push(msg('ratings', 'error', 'rookies', '4.2', `${named(crew, f)} needs exactly one rating at 1 (a rookie's start), the rest at 0.`, f.id));
       const cur = currentRatings(rules, f);
-      for (const [k, v] of Object.entries(cur)) if (v < lo || v > hi) out.push(msg('ratings', 'error', 'campaign', '4.2', `${who(f)}'s ${k} is ${v}; ratings run from ${lo} to ${hi}.`, f.id));
+      for (const [k, v] of Object.entries(cur)) if (v < lo || v > hi) out.push(msg('ratings', 'error', 'campaign', '4.2', `${named(crew, f)}'s ${k} is ${v}; ratings run from ${lo} to ${hi}.`, f.id));
     }
     return out;
   },
@@ -61,7 +62,7 @@ export const validators: Record<string, Validator> = {
   botRating({ rules, crew }) {
     const r = rules.crew.limits.botForbiddenRating;
     return crew.fighters.filter((f) => isBot(rules, f) && currentRatings(rules, f)[r.value] > 0)
-      .map((f) => msg('botRating', 'error', 'rookies', r.source, `${who(f)} is a bot: a bot never has ${r.value}.`, f.id));
+      .map((f) => msg('botRating', 'error', 'rookies', r.source, `${named(crew, f)} is a bot: a bot never has ${r.value}.`, f.id));
   },
 
   species({ rules, crew }) {
@@ -70,8 +71,8 @@ export const validators: Record<string, Validator> = {
     const playable = rules.crew.limits.playableSpecies.value;
     for (const f of crew.fighters) {
       if (isBot(rules, f)) {
-        if (!fr?.specials.bots) out.push(msg('species', 'error', 'rookies', rules.crew.limits.botsOnlyFor.source, `${who(f)} is a bot. Only ${rules.crew.limits.botsOnlyFor.value} fields bots.`, f.id));
-      } else if (!playable.includes(f.species)) out.push(msg('species', 'error', 'rookies', '4.3', `${who(f)} has an unknown species, ${f.species}.`, f.id));
+        if (!fr?.specials.bots) out.push(msg('species', 'error', 'rookies', rules.crew.limits.botsOnlyFor.source, `${named(crew, f)} is a bot. Only ${rules.crew.limits.botsOnlyFor.value} fields bots.`, f.id));
+      } else if (!playable.includes(f.species)) out.push(msg('species', 'error', 'rookies', '4.3', `${named(crew, f)} has an unknown species, ${f.species}.`, f.id));
     }
     return out;
   },
@@ -83,12 +84,12 @@ export const validators: Record<string, Validator> = {
     if (!fr || !fac) return out;
     const names = fac.types.map((t) => t.name);
     for (const f of crew.fighters) {
-      if (fr.types && !f.type) out.push(msg('types', 'error', 'rookies', '4.4, 12.1', `${who(f)} needs a type: every fighter of ${fac.name} takes one.`, f.id));
+      if (fr.types && !f.type) out.push(msg('types', 'error', 'rookies', '4.4, 12.1', `${named(crew, f)} needs a type: every fighter of ${fac.name} takes one.`, f.id));
       else if (fr.types && f.type && !names.includes(f.type)) out.push(msg('types', 'error', 'rookies', fac.section, `${f.type} is not a type of ${fac.name}.`, f.id));
       else if (!fr.types && f.type) out.push(msg('types', 'error', 'rookies', '4.4', `${fac.name} have no fighter types.`, f.id));
       const need = f.type ? fr.typeSpecies?.[f.type] : undefined;
       if (need && f.species !== need) out.push(msg('types', 'error', 'rookies', fac.section, `${an(f.type!)} is ${need === rules.crew.limits.botSpecies.value ? 'a bot chassis' : `a ${need}`}, not ${f.species}.`, f.id));
-      if (!need && fr.typeSpecies && isBot(rules, f)) out.push(msg('types', 'error', 'rookies', fac.section, `${who(f)} is a bot, so their type must be a bot chassis.`, f.id));
+      if (!need && fr.typeSpecies && isBot(rules, f)) out.push(msg('types', 'error', 'rookies', fac.section, `${named(crew, f)} is a bot, so their type must be a bot chassis.`, f.id));
       const only = f.type ? fr.typeGrants?.[f.type]?.speciesOnly : undefined;
       if (only && !only.includes(f.species)) out.push(msg('types', 'error', 'rookies', fac.section, `${an(f.type!)} must be ${only.join(' or ')}, not ${f.species}.`, f.id));
     }
@@ -108,11 +109,11 @@ export const validators: Record<string, Validator> = {
     if (fr?.captainType && cap.type !== fr.captainType && crew.phase === 'creation') out.push(msg('captain', 'error', 'captain', rules.faction(crew.faction!)!.section, `The captain of ${crew.faction} is the ${fr.captainType}.`));
     const n = rules.crew.creation.captainTraitsAtStart;
     const has = cap.captainTraits.filter((t) => !t.retired).length;
-    if (has < n.value) out.push(msg('captain', 'error', 'captain', n.source, `${who(cap)} is captain and takes ${n.value} captain trait.`, cap.id));
+    if (has < n.value) out.push(msg('captain', 'error', 'captain', n.source, `${named(crew, cap)} is captain and takes ${n.value} captain trait.`, cap.id));
     if (crew.phase === 'creation' && has > n.value) out.push(msg('captain', 'error', 'captain', n.source, `A new captain takes only ${n.value} captain trait.`, cap.id));
     for (const f of crew.fighters) {
       if (f.id !== cap.id && (f.captainTraits.some((t) => !t.retired) || f.advances.some((a) => a.kind === 'captain' && !a.retired)))
-        out.push(msg('captain', 'error', 'captain', '11.2', `${who(f)} is not the captain, so cannot have captain traits.`, f.id));
+        out.push(msg('captain', 'error', 'captain', '11.2', `${named(crew, f)} is not the captain, so cannot have captain traits.`, f.id));
     }
     return out;
   },
@@ -172,7 +173,7 @@ export const validators: Record<string, Validator> = {
     const g = rules.crew.gear;
     for (const f of crew.fighters) {
       const items = equipped(crew, f, rules);
-      const w = who(f);
+      const w = named(crew, f);
       for (const s of ['set1', 'set2'] as const) {
         const load = slotLoad(rules, crew, f, s);
         if (load > g.handsPerSet.value) out.push(msg('slots', 'error', 'equip', g.handsPerSet.source, `${w}'s ${s === 'set1' ? 'first' : 'second'} Hands set holds ${load} Hands of items; a set holds up to ${g.handsPerSet.value}.`, f.id));
@@ -216,7 +217,7 @@ export const validators: Record<string, Validator> = {
     const gifted = crew.fighters.filter((f) => hasGift(rules, crew, f));
     for (const f of gifted) {
       if (!gs.value.includes(f.species)) out.push(msg('gift', 'error', 'specials', gs.source, `${an(f.species)} can't have the gift. Only ${gs.value.join(' and ')}s can (${gs.source.split(',')[0]}).`, f.id));
-      if (f.gift && giftPrice(rules, crew, f) === null) out.push(msg('gift', 'error', 'specials', '11.4', `${crew.faction} may not have psions (${who(f)} has the gift).`, f.id));
+      if (f.gift && giftPrice(rules, crew, f) === null) out.push(msg('gift', 'error', 'specials', '11.4', `${crew.faction} may not have psions (${named(crew, f)} has the gift).`, f.id));
     }
     if (gifted.length > max.value) out.push(msg('gift', 'error', 'specials', max.source, `A crew never has more than ${max.value} gifted fighters; this one has ${gifted.length}.`));
     return out;
@@ -225,19 +226,19 @@ export const validators: Record<string, Validator> = {
   rites({ rules, crew }) {
     const out: Message[] = [];
     for (const f of crew.fighters) {
-      if (f.rites && ritesPrice(rules, crew, f) === null) out.push(msg('rites', 'error', 'specials', '11.4', `${crew.faction} cannot buy Rites (${who(f)}).`, f.id));
+      if (f.rites && ritesPrice(rules, crew, f) === null) out.push(msg('rites', 'error', 'specials', '11.4', `${crew.faction} cannot buy Rites (${named(crew, f)}).`, f.id));
       const allowed = ritesAllowed(rules, crew, f);
       const chosen = f.ritesKnown.length;
-      if (!hasRites(rules, crew, f) && chosen) out.push(msg('rites', 'error', 'specials', '8.3', `${who(f)} knows rites but has no Rites.`, f.id));
-      else if (chosen > allowed) out.push(msg('rites', 'error', 'specials', '8.3', `${who(f)} may know ${allowed} rite${allowed === 1 ? '' : 's'} from Rites, not ${chosen}.`, f.id));
-      else if (hasRites(rules, crew, f) && chosen < allowed) out.push(msg('rites', 'warning', 'specials', '8.3', `${who(f)} has Rites: choose ${allowed - chosen} more rite${allowed - chosen === 1 ? '' : 's'} they know.`, f.id));
+      if (!hasRites(rules, crew, f) && chosen) out.push(msg('rites', 'error', 'specials', '8.3', `${named(crew, f)} knows rites but has no Rites.`, f.id));
+      else if (chosen > allowed) out.push(msg('rites', 'error', 'specials', '8.3', `${named(crew, f)} may know ${allowed} rite${allowed === 1 ? '' : 's'} from Rites, not ${chosen}.`, f.id));
+      else if (hasRites(rules, crew, f) && chosen < allowed) out.push(msg('rites', 'warning', 'specials', '8.3', `${named(crew, f)} has Rites: choose ${allowed - chosen} more rite${allowed - chosen === 1 ? '' : 's'} they know.`, f.id));
       for (const r of f.ritesKnown) if (!rules.rites.includes(r)) out.push(msg('rites', 'error', 'specials', '8.3', `${r} is not a rite.`, f.id));
       const known = ritesKnown(rules, f);
       const carrier = !!rules.factionRules(crew.faction ?? '')?.typeGrants?.[f.type ?? '']?.carriesRelics;
       for (const o of equipped(crew, f, rules)) {
         if (o.def?.kind !== 'relic') continue;
-        if (!hasRites(rules, crew, f)) { if (!carrier) out.push(msg('rites', 'warning', 'specials', '8.3', `${who(f)} carries the ${o.def.name} but has no Rites: only a priest can use relics.`, f.id)); }
-        else if (o.def.rite && !known.includes(o.def.rite)) out.push(msg('rites', 'warning', 'specials', '8.3', `${who(f)} carries the ${o.def.name} (${o.def.rite}) but does not know that rite, so cannot use it.`, f.id));
+        if (!hasRites(rules, crew, f)) { if (!carrier) out.push(msg('rites', 'warning', 'specials', '8.3', `${named(crew, f)} carries the ${o.def.name} but has no Rites: only a priest can use relics.`, f.id)); }
+        else if (o.def.rite && !known.includes(o.def.rite)) out.push(msg('rites', 'warning', 'specials', '8.3', `${named(crew, f)} carries the ${o.def.name} (${o.def.rite}) but does not know that rite, so cannot use it.`, f.id));
       }
     }
     return out;
@@ -246,7 +247,7 @@ export const validators: Record<string, Validator> = {
   traitBudget({ rules, crew }) {
     const b = rules.crew.limits.traitBudget;
     return crew.fighters.filter((f) => traitBudgetUsed(f) > b.value)
-      .map((f) => msg('traitBudget', 'error', 'campaign', b.source, `${who(f)} has ${traitBudgetUsed(f)} trait lines from advances, Legends and captain traits; the card holds ${b.value}. Retire one.`, f.id));
+      .map((f) => msg('traitBudget', 'error', 'campaign', b.source, `${named(crew, f)} has ${traitBudgetUsed(f)} trait lines from advances, Legends and captain traits; the card holds ${b.value}. Retire one.`, f.id));
   },
 
   advances({ rules, crew }) {
@@ -254,7 +255,7 @@ export const validators: Record<string, Validator> = {
     const e = rules.crew.experience;
     const forbid = rules.crew.limits.botForbiddenRating.value;
     for (const f of crew.fighters) {
-      const w = who(f);
+      const w = named(crew, f);
       const earned = advancesEarned(rules, f.xp);
       if (f.advances.length > earned) out.push(msg('advances', 'error', 'campaign', e.ladder.source, `${w} has ${f.advances.length} advances but ${f.xp} XP earns ${earned}.`, f.id));
       const ratings: Record<string, number> = { ...f.baseRatings };
@@ -306,10 +307,10 @@ export const validators: Record<string, Validator> = {
     const injuryNames = rules.injuries.map((i) => i.name);
     const glitchNames = rules.glitches.map((i) => i.name);
     for (const f of crew.fighters) {
-      if (f.injuries.length > max.value) out.push(msg('injuries', 'error', 'campaign', max.source, `${who(f)} has ${f.injuries.length} lasting injuries; a card holds ${max.value}.`, f.id));
+      if (f.injuries.length > max.value) out.push(msg('injuries', 'error', 'campaign', max.source, `${named(crew, f)} has ${f.injuries.length} lasting injuries; a card holds ${max.value}.`, f.id));
       for (const i of f.injuries) {
-        if (isBot(rules, f) && injuryNames.includes(i) && !glitchNames.includes(i)) out.push(msg('injuries', 'error', 'campaign', '13.3', `${who(f)} is a bot: bots take glitches, not injuries (${i}).`, f.id));
-        if (!isBot(rules, f) && glitchNames.includes(i) && !injuryNames.includes(i)) out.push(msg('injuries', 'error', 'campaign', '13.3', `${who(f)} is not a bot, so cannot have the glitch ${i}.`, f.id));
+        if (isBot(rules, f) && injuryNames.includes(i) && !glitchNames.includes(i)) out.push(msg('injuries', 'error', 'campaign', '13.3', `${named(crew, f)} is a bot: bots take glitches, not injuries (${i}).`, f.id));
+        if (!isBot(rules, f) && glitchNames.includes(i) && !injuryNames.includes(i)) out.push(msg('injuries', 'error', 'campaign', '13.3', `${named(crew, f)} is not a bot, so cannot have the glitch ${i}.`, f.id));
       }
     }
     return out;
