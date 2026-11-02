@@ -288,7 +288,7 @@ export function startAfterBattle(rules: Rules, crew: Crew): Crew {
     story: { row: '', roll: null, notes: '' }, tasks: {}, history: {},
   };
   // A new break: sellers must be found again (11.3).
-  return { ...crew, fighters, battle: null, after, sellers: {}, breakNo: (crew.breakNo ?? 0) + 1 };
+  return { ...crew, fighters, battle: null, after, sellers: {}, hireOffers: [], relicLead: null, breakNo: (crew.breakNo ?? 0) + 1 };
 }
 
 export function finishAfterBattle(crew: Crew): Crew {

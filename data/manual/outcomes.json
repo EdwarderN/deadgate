@@ -1,0 +1,2282 @@
+{
+ "_about": "What each table row does, for the app to apply. The text shown is always the book's (data/generated). Keys are the book's own row labels, so a renamed row fails the tests. Effects: parts, xp, status, next (starts the next battle), tag, contact, rival, rumour, silly, item (gain: key or kinds/source/maxPrice, fit), loseItem, sellItem, buyItem, hire (an offer: discount or free), relicLead, sellerFound, noTasks, noTask, gift, healInjury, prosthetic, allLaidUpToSore, injury, injuryRoll (Light/Heavy list, or glitches for bots), reroll, dead, leave, title, finds, drop, d6, test, choice, taskPay (0, 0.5, 2 or 'failure'), noFinds, retest, swapAdvance, note. who: self, choose, all, patient, teacher, captain, lowestXp, evacuated, legend, bot, type:<Type>.",
+ "source": "13.2, 14.5, 14.6, 14.7, 9.7, chapter 12",
+ "storyEvents": {
+  "Row 1: Held the field": {
+   "1": {
+    "accept": [],
+    "pay": [
+     {
+      "parts": -5
+     },
+     {
+      "tag": "Reliable"
+     }
+    ],
+    "twist": {
+     "rating": "Nerve",
+     "success": [
+      {
+       "tag": "Reliable"
+      }
+     ],
+     "failure": [
+      {
+       "tag": "Showboats"
+      }
+     ]
+    }
+   },
+   "2": {
+    "accept": [],
+    "twist": {
+     "rating": "Nerve",
+     "success": [
+      {
+       "parts": 6
+      }
+     ],
+     "failure": [
+      {
+       "tag": "Butchers"
+      }
+     ]
+    }
+   },
+   "3": {
+    "accept": [
+     {
+      "parts": 4
+     }
+    ],
+    "twist": {
+     "rating": "Nerve",
+     "success": [
+      {
+       "parts": 8
+      }
+     ],
+     "failure": [
+      {
+       "tag": "Oathbreakers"
+      }
+     ]
+    }
+   },
+   "4": {
+    "accept": [
+     {
+      "choice": [
+       {
+        "label": "Pay 4 parts",
+        "effects": [
+         {
+          "parts": -4
+         }
+        ]
+       },
+       {
+        "label": "Lose one copy item",
+        "effects": [
+         {
+          "loseItem": {
+           "source": "copy"
+          }
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "twist": {
+     "rating": "Tech",
+     "success": [],
+     "failure": [
+      {
+       "parts": -8
+      }
+     ]
+    }
+   },
+   "5": {
+    "accept": [
+     {
+      "hire": {
+       "discount": 5
+      }
+     }
+    ],
+    "twist": {
+     "rating": "Nerve",
+     "success": [
+      {
+       "hire": {
+        "free": true
+       }
+      }
+     ],
+     "failure": [
+      {
+       "hire": {
+        "free": true
+       }
+      },
+      {
+       "rival": true
+      }
+     ]
+    }
+   },
+   "6": {
+    "accept": [],
+    "pay": [
+     {
+      "parts": -5
+     },
+     {
+      "next": "Hyped",
+      "who": "all"
+     }
+    ]
+   }
+  },
+  "Row 2: Did not hold the field": {
+   "1": {
+    "accept": [
+     {
+      "parts": -4
+     }
+    ],
+    "twist": {
+     "rating": "Fight",
+     "success": [],
+     "failure": [
+      {
+       "parts": -8
+      }
+     ]
+    }
+   },
+   "2": {
+    "accept": [
+     {
+      "parts": 3
+     }
+    ],
+    "twist": {
+     "rating": "Nerve",
+     "success": [
+      {
+       "tag": "Reliable"
+      }
+     ],
+     "failure": [
+      {
+       "parts": 3
+      },
+      {
+       "tag": "Ran"
+      }
+     ]
+    }
+   },
+   "3": {
+    "accept": [],
+    "pay": [
+     {
+      "parts": -5
+     },
+     {
+      "item": {
+       "any": true,
+       "label": "the item lost this battle"
+      }
+     }
+    ],
+    "twist": {
+     "rating": "Grit",
+     "success": [
+      {
+       "item": {
+        "any": true,
+        "label": "the item lost this battle"
+       }
+      }
+     ],
+     "failure": [
+      {
+       "status": "Sore",
+       "who": "choose"
+      }
+     ]
+    }
+   },
+   "4": {
+    "accept": [
+     {
+      "silly": "Jittery",
+      "who": "lowestXp"
+     }
+    ],
+    "pay": [
+     {
+      "parts": -3
+     }
+    ],
+    "twist": {
+     "rating": "Nerve",
+     "success": [],
+     "failure": [
+      {
+       "leave": "lowestXp"
+      }
+     ]
+    }
+   },
+   "5": {
+    "accept": [],
+    "twist": {
+     "rating": "Tech",
+     "success": [
+      {
+       "xp": 1,
+       "who": "choose"
+      }
+     ],
+     "failure": [
+      {
+       "next": "Shook",
+       "who": "choose"
+      }
+     ]
+    }
+   },
+   "6": {
+    "accept": [],
+    "pay": [
+     {
+      "parts": -3
+     },
+     {
+      "tag": "Showboats"
+     }
+    ],
+    "twist": {
+     "rating": "Nerve",
+     "success": [
+      {
+       "xp": 1,
+       "who": "captain"
+      }
+     ],
+     "failure": [
+      {
+       "silly": "Big talk",
+       "who": "captain"
+      }
+     ]
+    }
+   }
+  },
+  "Row 3: Ran": {
+   "1": {
+    "accept": [
+     {
+      "tag": "Ran"
+     }
+    ],
+    "pay": [
+     {
+      "parts": -6
+     }
+    ],
+    "twist": {
+     "rating": "Nerve",
+     "success": [],
+     "failure": [
+      {
+       "tag": "Ran"
+      },
+      {
+       "tag": "Oathbreakers"
+      }
+     ]
+    }
+   },
+   "2": {
+    "accept": [
+     {
+      "parts": -3
+     }
+    ],
+    "twist": {
+     "rating": "Fight",
+     "success": [
+      {
+       "parts": 5
+      }
+     ],
+     "failure": [
+      {
+       "tag": "Ran"
+      }
+     ]
+    }
+   },
+   "3": {
+    "accept": [
+     {
+      "silly": "Spent your luck",
+      "who": "evacuated"
+     }
+    ],
+    "twist": {
+     "rating": "Nerve",
+     "success": [],
+     "failure": [
+      {
+       "silly": "Spent your luck",
+       "who": "evacuated"
+      },
+      {
+       "tag": "Ran"
+      }
+     ]
+    }
+   },
+   "4": {
+    "accept": [],
+    "twist": {
+     "rating": "Tech",
+     "success": [
+      {
+       "tag": "Reliable"
+      }
+     ],
+     "failure": [
+      {
+       "tag": "Ran"
+      }
+     ]
+    }
+   },
+   "5": {
+    "accept": [
+     {
+      "parts": -3
+     }
+    ],
+    "twist": {
+     "rating": "Tech",
+     "success": [],
+     "failure": [
+      {
+       "parts": -6
+      }
+     ]
+    }
+   },
+   "6": {
+    "accept": [
+     {
+      "hire": {
+       "free": true,
+       "past": "Unwritten"
+      }
+     }
+    ],
+    "twist": {
+     "rating": "Nerve",
+     "success": [
+      {
+       "hire": {
+        "free": true,
+        "past": "Unwritten"
+       }
+      },
+      {
+       "note": "Pick their rumour now (13.9)."
+      }
+     ],
+     "failure": []
+    }
+   }
+  },
+  "Row 4: Lost someone": {
+   "1": {
+    "accept": [
+     {
+      "noTasks": true
+     }
+    ],
+    "pay": [
+     {
+      "parts": -5
+     }
+    ]
+   },
+   "2": {
+    "accept": [
+     {
+      "note": "One fighter writes a Big Word on their card now, a vow for the next battle (13.5)."
+     }
+    ],
+    "twist": {
+     "rating": "Nerve",
+     "success": [
+      {
+       "next": "Hyped",
+       "who": "all"
+      }
+     ],
+     "failure": [
+      {
+       "note": "The crew swears no Words next battle."
+      }
+     ]
+    }
+   },
+   "3": {
+    "accept": [
+     {
+      "parts": -3
+     }
+    ],
+    "twist": {
+     "rating": "Nerve",
+     "success": [
+      {
+       "xp": 1,
+       "who": "choose"
+      }
+     ],
+     "failure": [
+      {
+       "status": "Sore",
+       "who": "choose"
+      }
+     ]
+    }
+   },
+   "4": {
+    "accept": [
+     {
+      "loseItem": {
+       "label": "an item the lost fighter carried"
+      }
+     }
+    ],
+    "pay": [
+     {
+      "parts": -5
+     }
+    ],
+    "twist": {
+     "rating": "Fight",
+     "success": [],
+     "failure": [
+      {
+       "loseItem": {
+        "count": 2,
+        "label": "items the lost fighter carried"
+       }
+      }
+     ]
+    }
+   },
+   "5": {
+    "accept": [
+     {
+      "hire": {
+       "discount": 5,
+       "note": "same species as the lost fighter"
+      }
+     }
+    ],
+    "twist": {
+     "rating": "Nerve",
+     "success": [
+      {
+       "hire": {
+        "discount": 5,
+        "note": "same species; they take the lost fighter's title with a prefix, and start the next battle Hyped"
+       }
+      }
+     ],
+     "failure": [
+      {
+       "hire": {
+        "discount": 5,
+        "note": "same species as the lost fighter"
+       }
+      },
+      {
+       "loseItem": {
+        "label": "an item of the lost fighter's, given to them"
+       }
+      }
+     ]
+    }
+   },
+   "6": {
+    "accept": [
+     {
+      "rival": true
+     }
+    ],
+    "twist": {
+     "rating": "Nerve",
+     "success": [
+      {
+       "rival": true
+      },
+      {
+       "next": "Hyped",
+       "who": "choose"
+      }
+     ],
+     "failure": [
+      {
+       "rival": true
+      },
+      {
+       "next": "Announced",
+       "who": "choose"
+      }
+     ]
+    }
+   }
+  },
+  "Row 5: Took a captive or paid a ransom": {
+   "1": {
+    "accept": [
+     {
+      "parts": 4
+     }
+    ],
+    "twist": {
+     "rating": "Nerve",
+     "success": [
+      {
+       "parts": 8
+      }
+     ],
+     "failure": []
+    }
+   },
+   "2": {
+    "accept": [],
+    "twist": {
+     "rating": "Nerve",
+     "success": [
+      {
+       "tag": "Showboats"
+      }
+     ],
+     "failure": [
+      {
+       "tag": "Butchers"
+      }
+     ]
+    }
+   },
+   "3": {
+    "accept": [
+     {
+      "parts": -3
+     }
+    ],
+    "twist": {
+     "rating": "Tech",
+     "success": [],
+     "failure": [
+      {
+       "parts": -6
+      }
+     ]
+    }
+   },
+   "4": {
+    "accept": [
+     {
+      "next": "Hyped",
+      "who": "choose"
+     }
+    ],
+    "twist": {
+     "rating": "Nerve",
+     "success": [
+      {
+       "next": "Hyped",
+       "who": "choose"
+      },
+      {
+       "next": "Under warranty",
+       "who": "choose"
+      }
+     ],
+     "failure": [
+      {
+       "next": "Flustered",
+       "who": "choose"
+      }
+     ]
+    }
+   },
+   "5": {
+    "accept": [
+     {
+      "tag": "Reliable"
+     }
+    ],
+    "twist": {
+     "rating": "Tech",
+     "success": [
+      {
+       "tag": "Reliable"
+      },
+      {
+       "parts": 3
+      }
+     ],
+     "failure": [
+      {
+       "tag": "Butchers"
+      }
+     ]
+    }
+   },
+   "6": {
+    "accept": [
+     {
+      "parts": -2
+     }
+    ],
+    "twist": {
+     "rating": "Tech",
+     "success": [],
+     "failure": [
+      {
+       "parts": -5
+      },
+      {
+       "tag": "Butchers"
+      }
+     ]
+    }
+   }
+  },
+  "Row 6: Made a legend": {
+   "1": {
+    "accept": [],
+    "twist": {
+     "rating": "Nerve",
+     "success": [
+      {
+       "xp": 1,
+       "who": "legend"
+      }
+     ],
+     "failure": []
+    }
+   },
+   "2": {
+    "accept": [
+     {
+      "tag": "Showboats"
+     }
+    ],
+    "twist": {
+     "rating": "Nerve",
+     "success": [
+      {
+       "parts": 2
+      }
+     ],
+     "failure": [
+      {
+       "next": "Announced",
+       "who": "legend"
+      }
+     ]
+    }
+   },
+   "3": {
+    "accept": [
+     {
+      "parts": 5
+     },
+     {
+      "noTask": "legend"
+     }
+    ],
+    "twist": {
+     "rating": "Fight",
+     "success": [
+      {
+       "parts": 10
+      },
+      {
+       "noTask": "legend"
+      }
+     ],
+     "failure": [
+      {
+       "status": "Sore",
+       "who": "legend"
+      }
+     ]
+    }
+   },
+   "4": {
+    "accept": [],
+    "pay": [
+     {
+      "parts": -5
+     }
+    ],
+    "twist": {
+     "rating": "Nerve",
+     "success": [
+      {
+       "xp": 2,
+       "who": "legend"
+      }
+     ],
+     "failure": [
+      {
+       "silly": "Big talk",
+       "who": "legend"
+      }
+     ]
+    }
+   },
+   "5": {
+    "accept": [
+     {
+      "hire": {
+       "discount": 5,
+       "note": "they insist on the legend's title with a prefix"
+      }
+     }
+    ],
+    "twist": {
+     "rating": "Nerve",
+     "success": [
+      {
+       "hire": {
+        "free": true,
+        "note": "the legend trains them"
+       }
+      }
+     ],
+     "failure": [
+      {
+       "silly": "Big talk",
+       "who": "legend"
+      }
+     ]
+    }
+   },
+   "6": {
+    "accept": [
+     {
+      "next": "Hyped",
+      "who": "legend"
+     }
+    ],
+    "twist": {
+     "rating": "Nerve",
+     "success": [
+      {
+       "xp": 1,
+       "who": "legend"
+      }
+     ],
+     "failure": [
+      {
+       "note": "They write a Big Word on their card now for the next battle."
+      }
+     ]
+    }
+   }
+  }
+ },
+ "injuryTables": {
+  "The gentle table": {
+   "11-16": [],
+   "21": [
+    {
+     "xp": 1,
+     "who": "self"
+    }
+   ],
+   "22": [
+    {
+     "next": "Hyped",
+     "who": "self"
+    }
+   ],
+   "23": [
+    {
+     "note": "At the next battle they may swear one more Word, a vow, on top of the crew's Words."
+    }
+   ],
+   "24-26, 31-32": [
+    {
+     "status": "Sore",
+     "who": "self"
+    }
+   ],
+   "33": [
+    {
+     "reroll": 2
+    }
+   ],
+   "34": [
+    {
+     "choice": [
+      {
+       "label": "Pay 5 parts: they walk it off",
+       "effects": [
+        {
+         "parts": -5
+        }
+       ]
+      },
+      {
+       "label": "Refuse: Laid up",
+       "effects": [
+        {
+         "status": "Laid up",
+         "who": "self"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "35": [
+    {
+     "status": "Sore",
+     "who": "self"
+    },
+    {
+     "status": "Sore",
+     "who": "choose"
+    }
+   ],
+   "36, 41-43": [
+    {
+     "status": "Laid up",
+     "who": "self"
+    }
+   ],
+   "44": [
+    {
+     "status": "Laid up",
+     "who": "self"
+    },
+    {
+     "parts": 5
+    }
+   ],
+   "45-46, 51": [
+    {
+     "status": "Sore",
+     "who": "self"
+    },
+    {
+     "note": "Bad stitches: they begin the next battle with one lasting condition of the player's choice."
+    }
+   ],
+   "52": [
+    {
+     "choice": [
+      {
+       "label": "Let it: Lost leg, with a free peg-leg fitted",
+       "effects": [
+        {
+         "injury": "Lost leg",
+         "who": "self"
+        },
+        {
+         "item": {
+          "key": "peg-leg",
+          "source": "copy",
+          "fit": true
+         }
+        }
+       ]
+      },
+      {
+       "label": "Refuse: Laid up",
+       "effects": [
+        {
+         "status": "Laid up",
+         "who": "self"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "53-56, 61-64": [
+    {
+     "injuryRoll": "Light"
+    }
+   ],
+   "65": [
+    {
+     "item": {
+      "key": "robo-arm",
+      "source": "copy",
+      "fit": true
+     }
+    }
+   ],
+   "66": [
+    {
+     "dead": true
+    }
+   ]
+  },
+  "The harsh table": {
+   "11-13": [],
+   "14": [
+    {
+     "next": "Prone",
+     "who": "self"
+    }
+   ],
+   "15-16, 21-22": [
+    {
+     "status": "Sore",
+     "who": "self"
+    }
+   ],
+   "23": [
+    {
+     "choice": [
+      {
+       "label": "Pay 3 parts",
+       "effects": [
+        {
+         "parts": -3
+        }
+       ]
+      },
+      {
+       "label": "Held: Laid up",
+       "effects": [
+        {
+         "status": "Laid up",
+         "who": "self"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "24": [
+    {
+     "status": "Sore",
+     "who": "self"
+    },
+    {
+     "contact": "The Waiting"
+    }
+   ],
+   "25": [
+    {
+     "status": "Sore",
+     "who": "self"
+    },
+    {
+     "parts": 3
+    }
+   ],
+   "26, 31-33": [
+    {
+     "status": "Laid up",
+     "who": "self"
+    }
+   ],
+   "34": [
+    {
+     "status": "Laid up",
+     "who": "self"
+    },
+    {
+     "xp": 1,
+     "who": "self"
+    }
+   ],
+   "35": [
+    {
+     "status": "Laid up",
+     "who": "self"
+    },
+    {
+     "finds": 1
+    }
+   ],
+   "36, 41": [
+    {
+     "status": "Sore",
+     "who": "self"
+    },
+    {
+     "note": "Bad stitches: they begin the next battle with one lasting condition of the player's choice."
+    }
+   ],
+   "42-43": [
+    {
+     "loseItem": {
+      "who": "self",
+      "kinds": [
+       "weapon",
+       "armour",
+       "frame"
+      ]
+     }
+    },
+    {
+     "status": "Sore",
+     "who": "self"
+    }
+   ],
+   "44": [
+    {
+     "status": "Sore",
+     "who": "self"
+    },
+    {
+     "note": "A stranger wants something: the crew's next story event is about them."
+    }
+   ],
+   "45": [
+    {
+     "injuryRoll": "Heavy",
+     "times": 2
+    }
+   ],
+   "46, 51-56, 61-63": [
+    {
+     "injuryRoll": "Heavy"
+    }
+   ],
+   "64-66": [
+    {
+     "dead": true
+    }
+   ]
+  }
+ },
+ "taskBase": {
+  "Recover": {
+   "success": [
+    {
+     "status": "Sore",
+     "who": "patient"
+    }
+   ],
+   "failure": [],
+   "needs": "patient"
+  },
+  "Scavenge": {
+   "success": [
+    {
+     "parts": 6
+    }
+   ],
+   "failure": [
+    {
+     "parts": 2
+    }
+   ]
+  },
+  "Work a job": {
+   "success": [
+    {
+     "parts": 10
+    }
+   ],
+   "failure": []
+  },
+  "Hunt rumours": {
+   "success": [
+    {
+     "finds": 1
+    }
+   ],
+   "failure": []
+  },
+  "Train": {
+   "success": [
+    {
+     "xp": 1,
+     "who": "self"
+    }
+   ],
+   "failure": [],
+   "needs": "teacher"
+  }
+ },
+ "taskTables": {
+  "Recover": {
+   "2": [
+    {
+     "status": "Laid up",
+     "who": "patient"
+    },
+    {
+     "note": "Even if the test succeeded."
+    }
+   ],
+   "3": [
+    {
+     "status": "Sore",
+     "who": "self"
+    }
+   ],
+   "4": [
+    {
+     "parts": -3
+    }
+   ],
+   "5": [
+    {
+     "next": "Shook",
+     "who": "patient"
+    }
+   ],
+   "6": [
+    {
+     "choice": [
+      {
+       "label": "They play the next battle with Bad stitches",
+       "effects": [
+        {
+         "status": "Sore",
+         "who": "patient"
+        }
+       ]
+      },
+      {
+       "label": "They rest",
+       "effects": []
+      }
+     ]
+    }
+   ],
+   "7": [
+    {
+     "contact": "Informer"
+    }
+   ],
+   "8": [
+    {
+     "next": "Under warranty",
+     "who": "patient"
+    }
+   ],
+   "9": [
+    {
+     "parts": 3
+    }
+   ],
+   "10": [
+    {
+     "prosthetic": "patient"
+    }
+   ],
+   "11": [
+    {
+     "allLaidUpToSore": true
+    }
+   ],
+   "12": [
+    {
+     "healInjury": "patient"
+    }
+   ]
+  },
+  "Scavenge": {
+   "2": [
+    {
+     "status": "Laid up",
+     "who": "self"
+    },
+    {
+     "taskPay": 0
+    }
+   ],
+   "3": [
+    {
+     "choice": [
+      {
+       "label": "Hand over 3 parts",
+       "effects": [
+        {
+         "parts": -3
+        }
+       ]
+      },
+      {
+       "label": "Keep everything; the gang is a rival",
+       "effects": [
+        {
+         "rival": true
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "4": [
+    {
+     "choice": [
+      {
+       "label": "Agree: lose 2 parts in fees",
+       "effects": [
+        {
+         "parts": -2
+        }
+       ]
+      },
+      {
+       "label": "Refuse: only the failure pay",
+       "effects": [
+        {
+         "taskPay": "failure"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "5": [
+    {
+     "choice": [
+      {
+       "label": "Pay 3 parts",
+       "effects": [
+        {
+         "parts": -3
+        }
+       ]
+      },
+      {
+       "label": "Forge one",
+       "effects": [
+        {
+         "test": {
+          "rating": "Tech",
+          "target": 8
+         },
+         "success": [],
+         "failure": [
+          {
+           "parts": -6
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "6": [
+    {
+     "parts": 2
+    }
+   ],
+   "7": [
+    {
+     "note": "Recharge one fighter's battery by 2, free, this break."
+    }
+   ],
+   "8": [
+    {
+     "item": {
+      "source": "copy",
+      "maxPrice": 5
+     }
+    }
+   ],
+   "9": [
+    {
+     "parts": 4
+    }
+   ],
+   "10": [
+    {
+     "item": {
+      "source": "copy",
+      "maxPrice": 8
+     }
+    },
+    {
+     "rumour": true
+    }
+   ],
+   "11": [
+    {
+     "note": "Every battery in the crew refills free this break."
+    }
+   ],
+   "12": [
+    {
+     "choice": [
+      {
+       "label": "+15 parts",
+       "effects": [
+        {
+         "parts": 15
+        }
+       ]
+      },
+      {
+       "label": "Keep it as a spare cell",
+       "effects": [
+        {
+         "item": {
+          "key": "spare cell",
+          "source": "old stock"
+         }
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "Work a job": {
+   "2": [
+    {
+     "status": "Laid up",
+     "who": "self"
+    },
+    {
+     "taskPay": 0
+    }
+   ],
+   "3": [
+    {
+     "choice": [
+      {
+       "label": "Pay back 4 parts",
+       "effects": [
+        {
+         "parts": -4
+        }
+       ]
+      },
+      {
+       "label": "Refuse: the patron is a rival",
+       "effects": [
+        {
+         "rival": true
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "4": [
+    {
+     "parts": -2
+    }
+   ],
+   "5": [
+    {
+     "choice": [
+      {
+       "label": "Squeeze them: +3 parts and Butchers",
+       "effects": [
+        {
+         "parts": 3
+        },
+        {
+         "tag": "Butchers"
+        }
+       ]
+      },
+      {
+       "label": "Let them off",
+       "effects": []
+      }
+     ]
+    }
+   ],
+   "6": [
+    {
+     "taskPay": 0.5
+    },
+    {
+     "next": "Hyped",
+     "who": "self"
+    }
+   ],
+   "7": [
+    {
+     "parts": 3
+    }
+   ],
+   "8": [
+    {
+     "title": "Deputy",
+     "who": "self"
+    },
+    {
+     "note": "The crew pays no Inspectorate fee or fine this break."
+    }
+   ],
+   "9": [
+    {
+     "choice": [
+      {
+       "label": "Take +5 parts; the first patron is a rival",
+       "effects": [
+        {
+         "parts": 5
+        },
+        {
+         "rival": true
+        }
+       ]
+      },
+      {
+       "label": "Stay loyal: gain Reliable",
+       "effects": [
+        {
+         "tag": "Reliable"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "10": [
+    {
+     "item": {
+      "source": "copy",
+      "maxPrice": 8,
+      "kinds": [
+       "weapon",
+       "armour"
+      ]
+     }
+    }
+   ],
+   "11": [
+    {
+     "note": "One other fighter who has not taken their task yet may Work a job this break at Routine (6)."
+    }
+   ],
+   "12": [
+    {
+     "parts": 15
+    }
+   ]
+  },
+  "Hunt rumours": {
+   "2": [
+    {
+     "sellItem": {
+      "fraction": 0.5,
+      "who": "self"
+     }
+    }
+   ],
+   "3": [
+    {
+     "choice": [
+      {
+       "label": "Buy the room a round: 3 parts",
+       "effects": [
+        {
+         "parts": -3
+        }
+       ]
+      },
+      {
+       "label": "Gain Oathbreakers",
+       "effects": [
+        {
+         "tag": "Oathbreakers"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "4": [
+    {
+     "noFinds": true
+    }
+   ],
+   "5": [
+    {
+     "parts": -2
+    }
+   ],
+   "6": [
+    {
+     "rumour": true
+    }
+   ],
+   "7": [
+    {
+     "hire": {
+      "discount": 5
+     }
+    }
+   ],
+   "8": [
+    {
+     "contact": "choose"
+    }
+   ],
+   "9": [
+    {
+     "parts": 3
+    }
+   ],
+   "10": [
+    {
+     "finds": 2,
+     "keep": 1
+    }
+   ],
+   "11": [
+    {
+     "xp": 1,
+     "who": "self"
+    },
+    {
+     "tag": "Showboats"
+    }
+   ],
+   "12": [
+    {
+     "xp": 2,
+     "who": "self"
+    },
+    {
+     "note": "Write one true thing about the world on the roster."
+    }
+   ]
+  },
+  "Train": {
+   "2": [
+    {
+     "status": "Laid up",
+     "who": "self"
+    }
+   ],
+   "3": [
+    {
+     "status": "Sore",
+     "who": "self"
+    }
+   ],
+   "4": [
+    {
+     "status": "Sore",
+     "who": "teacher"
+    }
+   ],
+   "5": [
+    {
+     "parts": -3
+    }
+   ],
+   "6": [
+    {
+     "note": "The trainee picks a Word for the next battle now (any tier) and writes it on their card."
+    }
+   ],
+   "7": [
+    {
+     "next": "Hyped",
+     "who": "self"
+    }
+   ],
+   "8": [
+    {
+     "next": "Under warranty",
+     "who": "self"
+    }
+   ],
+   "9": [
+    {
+     "parts": 3
+    },
+    {
+     "tag": "Showboats"
+    }
+   ],
+   "10": [
+    {
+     "swapAdvance": "qualify"
+    }
+   ],
+   "11": [
+    {
+     "swapAdvance": "any"
+    }
+   ],
+   "12": [
+    {
+     "swapAdvance": "teacher"
+    }
+   ]
+  }
+ },
+ "ownTasks": {
+  "The Bodgers": {
+   "success": [
+    {
+     "choice": [
+      {
+       "label": "Sell one item at full price",
+       "effects": [
+        {
+         "sellItem": {
+          "fraction": 1
+         }
+        }
+       ]
+      },
+      {
+       "label": "Buy one copy item at half price",
+       "effects": [
+        {
+         "buyItem": {
+          "source": "copy",
+          "fraction": 0.5
+         }
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "failure": [],
+   "table": {
+    "1": [
+     {
+      "sellItem": {
+       "fraction": 0.5,
+       "kinds": [
+        "weapon"
+       ],
+       "source": "copy"
+      }
+     }
+    ],
+    "2": [
+     {
+      "choice": [
+       {
+        "label": "Pay 2 parts for a permit",
+        "effects": [
+         {
+          "parts": -2
+         }
+        ]
+       },
+       {
+        "label": "Start the next battle Announced",
+        "effects": [
+         {
+          "next": "Announced",
+          "who": "self"
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "3": [
+     {
+      "d6": [
+       {
+        "range": "1-3",
+        "effects": [
+         {
+          "parts": 1
+         }
+        ]
+       },
+       {
+        "range": "4-6",
+        "effects": [
+         {
+          "item": {
+           "source": "copy",
+           "maxPrice": 5
+          }
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "4": [
+     {
+      "sellItem": {
+       "fraction": 1
+      }
+     }
+    ],
+    "5": [
+     {
+      "drop": true
+     }
+    ],
+    "6": [
+     {
+      "finds": 1
+     }
+    ]
+   }
+  },
+  "The Inspectorate": {
+   "success": [
+    {
+     "parts": 8
+    }
+   ],
+   "failure": [],
+   "table": {
+    "1": [
+     {
+      "taskPay": 0
+     },
+     {
+      "rival": true
+     }
+    ],
+    "2": [
+     {
+      "parts": -2
+     },
+     {
+      "tag": "Reliable"
+     }
+    ],
+    "3": [
+     {
+      "next": "Announced",
+      "who": "self"
+     },
+     {
+      "next": "Hyped",
+      "who": "self"
+     }
+    ],
+    "4": [
+     {
+      "taskPay": 2
+     }
+    ],
+    "5": [
+     {
+      "tag": "Showboats"
+     }
+    ],
+    "6": [
+     {
+      "sellerFound": true
+     }
+    ]
+   }
+  },
+  "The Waiting": {
+   "success": [
+    {
+     "choice": [
+      {
+       "label": "+1 XP",
+       "effects": [
+        {
+         "xp": 1,
+         "who": "self"
+        }
+       ]
+      },
+      {
+       "label": "A relic at half price this break",
+       "effects": [
+        {
+         "relicLead": {
+          "noRoll": false
+         }
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "failure": [],
+   "table": {
+    "1": [
+     {
+      "status": "Sore",
+      "who": "self"
+     }
+    ],
+    "2": [
+     {
+      "choice": [
+       {
+        "label": "Pay 3 parts",
+        "effects": [
+         {
+          "parts": -3
+         }
+        ]
+       },
+       {
+        "label": "Start the next battle Shook",
+        "effects": [
+         {
+          "next": "Shook",
+          "who": "self"
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "3": [
+     {
+      "next": "Hyped",
+      "who": "self"
+     }
+    ],
+    "4": [
+     {
+      "relicLead": {
+       "noRoll": true
+      }
+     }
+    ],
+    "5": [
+     {
+      "gift": "choose"
+     }
+    ],
+    "6": [
+     {
+      "xp": 2,
+      "who": "self"
+     },
+     {
+      "rumour": true
+     }
+    ]
+   }
+  },
+  "Ledgerhands": {
+   "success": [
+    {
+     "parts": 8
+    }
+   ],
+   "failure": [],
+   "table": {
+    "1": [
+     {
+      "parts": -3
+     }
+    ],
+    "2": [
+     {
+      "taskPay": 0
+     },
+     {
+      "next": "Hyped",
+      "who": "self"
+     }
+    ],
+    "3": [
+     {
+      "parts": 2,
+      "ifDebt": 5
+     }
+    ],
+    "4": [
+     {
+      "hire": {
+       "discount": 5
+      }
+     }
+    ],
+    "5": [
+     {
+      "item": {
+       "source": "copy",
+       "maxPrice": 8,
+       "kinds": [
+        "weapon",
+        "armour"
+       ]
+      }
+     }
+    ],
+    "6": [
+     {
+      "parts": 10
+     }
+    ]
+   }
+  },
+  "The Control Group": {
+   "success": [
+    {
+     "xp": 2,
+     "who": "bot"
+    }
+   ],
+   "failure": [],
+   "table": {
+    "1": [
+     {
+      "parts": -3
+     }
+    ],
+    "2": [
+     {
+      "status": "Sore",
+      "who": "type:Volunteer"
+     }
+    ],
+    "3": [
+     {
+      "retest": true
+     }
+    ],
+    "4": [
+     {
+      "tag": "Reliable"
+     }
+    ],
+    "5": [
+     {
+      "xp": 2,
+      "who": "bot"
+     }
+    ],
+    "6": [
+     {
+      "parts": 6
+     },
+     {
+      "tag": "Showboats"
+     }
+    ]
+   }
+  },
+  "Hollowood": {
+   "success": [
+    {
+     "parts": 8
+    }
+   ],
+   "failure": [],
+   "table": {
+    "1": [
+     {
+      "status": "Sore",
+      "who": "self"
+     }
+    ],
+    "2": [
+     {
+      "next": "Flustered",
+      "who": "self"
+     }
+    ],
+    "3": [
+     {
+      "next": "Hyped",
+      "who": "self"
+     }
+    ],
+    "4": [
+     {
+      "tag": "Showboats"
+     }
+    ],
+    "5": [
+     {
+      "parts": 2
+     },
+     {
+      "rumour": true
+     }
+    ],
+    "6": [
+     {
+      "xp": 3,
+      "who": "self"
+     }
+    ]
+   }
+  }
+ },
+ "finds": {
+  "1": [
+   {
+    "parts": 4
+   }
+  ],
+  "2": [
+   {
+    "item": {
+     "source": "copy",
+     "maxPrice": 8,
+     "kinds": [
+      "weapon",
+      "armour"
+     ]
+    }
+   }
+  ],
+  "3": [
+   {
+    "item": {
+     "key": "spare cell",
+     "source": "old stock"
+    }
+   }
+  ],
+  "4": [
+   {
+    "relicLead": {
+     "noRoll": true
+    }
+   }
+  ],
+  "5": [
+   {
+    "item": {
+     "kinds": [
+      "grenade"
+     ],
+     "source": "old stock"
+    }
+   }
+  ],
+  "6": [
+   {
+    "choice": [
+     {
+      "label": "An old-stock weapon or frame worth up to 40 parts",
+      "effects": [
+       {
+        "item": {
+         "kinds": [
+          "weapon",
+          "frame"
+         ],
+         "source": "old stock",
+         "maxPrice": 40
+        }
+       }
+      ]
+     },
+     {
+      "label": "An advanced med-unit",
+      "effects": [
+       {
+        "note": "Write the advanced med-unit in the stash notes: it is never sold (7.6)."
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "dropTable": {
+  "11-12": [
+   {
+    "item": {
+     "key": "strange pistol",
+     "source": "drop"
+    }
+   }
+  ],
+  "13-14": [
+   {
+    "item": {
+     "key": "strange rifle",
+     "source": "drop"
+    }
+   }
+  ],
+  "15-16": [
+   {
+    "item": {
+     "key": "hum-blade",
+     "source": "drop"
+    }
+   }
+  ],
+  "21-22": [
+   {
+    "item": {
+     "key": "arc-caster",
+     "source": "drop"
+    }
+   }
+  ],
+  "23": [
+   {
+    "item": {
+     "key": "slow gun",
+     "source": "drop"
+    }
+   }
+  ],
+  "24": [
+   {
+    "item": {
+     "key": "weird grenades",
+     "source": "drop"
+    }
+   }
+  ],
+  "25-26": [
+   {
+    "item": {
+     "key": "drop armour",
+     "source": "drop"
+    }
+   }
+  ],
+  "31-32": [
+   {
+    "item": {
+     "key": "drop arm",
+     "source": "drop"
+    }
+   }
+  ],
+  "33": [
+   {
+    "item": {
+     "key": "drop field",
+     "source": "drop"
+    }
+   }
+  ],
+  "34": [
+   {
+    "item": {
+     "key": "drop scanner",
+     "source": "drop"
+    }
+   }
+  ],
+  "35": [
+   {
+    "item": {
+     "key": "drop grapnel",
+     "source": "drop"
+    }
+   }
+  ],
+  "36": [
+   {
+    "item": {
+     "key": "a cell nobody can explain",
+     "source": "drop"
+    }
+   }
+  ],
+  "41-43": [
+   {
+    "hire": {
+     "free": true,
+     "past": "Unwritten",
+     "note": "an arrival, if led off your edge"
+    }
+   }
+  ],
+  "44": [
+   {
+    "hire": {
+     "free": true,
+     "past": "Unwritten",
+     "note": "an arrival"
+    }
+   },
+   {
+    "hire": {
+     "free": true,
+     "past": "Unwritten",
+     "note": "the second arrival"
+    }
+   }
+  ],
+  "45": [
+   {
+    "rumour": true
+   }
+  ],
+  "46": [],
+  "51-52": [],
+  "53": [
+   {
+    "parts": 8
+   }
+  ],
+  "54": [
+   {
+    "note": "Roll twice more and place both."
+   }
+  ],
+  "55": [
+   {
+    "note": "Something that breathes: see the drop table (9.7)."
+   }
+  ],
+  "56": [
+   {
+    "note": "A beacon: see the drop table (9.7)."
+   }
+  ],
+  "61-63": [
+   {
+    "item": {
+     "source": "drop"
+    }
+   }
+  ],
+  "64-65": [
+   {
+    "hire": {
+     "free": true,
+     "past": "Unwritten",
+     "note": "an arrival in light drop armour"
+    }
+   },
+   {
+    "item": {
+     "key": "drop armour",
+     "source": "drop"
+    }
+   }
+  ],
+  "66": [
+   {
+    "note": "Roll twice more on 11 to 36 and place both."
+   }
+  ]
+ }
+}

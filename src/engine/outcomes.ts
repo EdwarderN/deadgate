@@ -1,10 +1,8 @@
-// Reading what a table result asks for, and applying it to the crew.
-// A result's text is the book's own; this reads the parts, XP, statuses, states,
-// tags, contacts and silly traits it names, so the player ticks instead of typing.
+// Changes to a crew from the after-battle steps, and applying them.
+// What a table row does is data (data/manual/outcomes.json), resolved in effects.ts.
 import { plain, type Rules } from '../data/rules';
-import { statusForWord } from './battle';
 import { addLedger, isBot } from './crew';
-import { uid, type Crew, type Fighter } from './model';
+import { uid, type Crew, type Fighter, type ItemSlot } from './model';
 
 export type Change =
   | { kind: 'parts'; amount: number; note: string }
@@ -17,63 +15,18 @@ export type Change =
   | { kind: 'contact'; value: string }
   | { kind: 'rival'; value: string }
   | { kind: 'nextBattle'; fid: string; value: string }
-  | { kind: 'leave'; fid: string; fate: string; note: string };
-
-/** An outcome read from text: a change that may still need a fighter, and whether it is ticked by default. */
-export interface Outcome { key: string; change: Change; needsFighter: boolean; checked: boolean; label: string }
-
-const COST = /\b(lose|loses|pay|pays back|pay back|hand over|costs?|charges?|wants|fee|fees|docks?)\b[^.;]*?$/i;
-
-/** Read a result text. fid: the fighter it is about, if the context says (a task, an injury). cost: a "Pay" column. */
-export function readOutcomes(rules: Rules, text: string, opts: { fid?: string; cost?: boolean; note: string } = { note: '' }): Outcome[] {
-  const t = plain(text).replace(/\s+/g, ' ');
-  const out: Outcome[] = [];
-  const choice = /\bor\b|\brefuse\b|\binstead\b|\bif\b/i.test(t);
-  const add = (key: string, change: Change, label: string, fighterLevel = false) =>
-    out.push({ key, change, label, needsFighter: fighterLevel && !opts.fid, checked: !choice });
-  const fid = opts.fid ?? '';
-
-  // Parts: "+3 parts", "lose 2 parts", "Pay 3 parts", "pay 8" (a cost verb before the number makes it negative).
-  const partsRe = /(\+)?(\d+)\s+parts?\b(?!\s+(?:less|off|more))/gi;
-  let m: RegExpExecArray | null;
-  let i = 0;
-  while ((m = partsRe.exec(t))) {
-    const before = t.slice(Math.max(0, m.index - 40), m.index);
-    if (/worth up to\s*$|up to\s*$|for\s*$|buy back|a price/i.test(before)) continue;
-    const negative = opts.cost || (!m[1] && COST.test(before.split(/[.;:,]/).pop() ?? ''));
-    const n = +m[2];
-    if (!n) continue;
-    add(`p${i++}`, { kind: 'parts', amount: negative ? -n : n, note: opts.note }, `${negative ? '−' : '+'}${n} parts`);
-  }
-  const bare = /\b(pay|lose)\s+(\d+)\b(?!\s*(?:parts?|XP|inch|die))/gi;
-  while ((m = bare.exec(t))) add(`p${i++}`, { kind: 'parts', amount: -+m[2], note: opts.note }, `−${m[2]} parts`);
-
-  // XP: "+1 XP"
-  const xpRe = /\+(\d+) XP/g;
-  let j = 0;
-  while ((m = xpRe.exec(t))) add(`x${j++}`, { kind: 'xp', fid, amount: +m[1], note: opts.note }, `+${m[1]} XP`, true);
-
-  // Statuses (Sore, Laid up) named as recovery words.
-  const statuses = rules.crew.campaign.statuses.value;
-  for (const w of rules.data.recovery_words.map((r) => plain(r['Recovery word']))) {
-    if (!new RegExp(`\\b${w}\\b`).test(t)) continue;
-    const s = statusForWord(rules, w);
-    if (s && s !== statuses[0]) { add(`s${w}`, { kind: 'status', fid, value: s }, s, true); break; }
-  }
-
-  // "starts the next battle Hyped and Under warranty", "start prone"
-  const nb = t.match(/start(?:s)? (?:the next battle|it)\s+([^.;]*)/i);
-  if (nb) {
-    const names = [...rules.data.states.map((s) => plain(s.State)), ...rules.crew.battle.positions.value.map((p) => p.name)];
-    for (const n of names) if (new RegExp(`\\b${n}\\b`, 'i').test(nb[1])) add(`n${n}`, { kind: 'nextBattle', fid, value: n }, `starts the next battle ${n}`, true);
-  }
-
-  // Tags, contacts and silly traits named in the text.
-  for (const tag of rules.tags.map((x) => x.name)) if (new RegExp(`\\b(gain|gains|gets)\\b[^.;/]*\\b${tag}\\b`).test(t)) add(`t${tag}`, { kind: 'tag', value: tag }, `gain ${tag}`);
-  if (/\bcontact\b/i.test(t)) for (const c of rules.contacts.map((x) => x.name)) if (t.includes(c)) add(`c${c}`, { kind: 'contact', value: c }, `contact: ${c}`);
-  for (const s of rules.silly) if (t.includes(`"${s.name}"`)) add(`y${s.name}`, { kind: 'silly', fid, value: s.name }, `silly trait ${s.name}`, true);
-  return out;
-}
+  | { kind: 'leave'; fid: string; fate: string; note: string }
+  | { kind: 'addItem'; itemId: string; fid: string | null; slot: ItemSlot }
+  | { kind: 'removeItem'; uid: string; label: string }
+  | { kind: 'hireOffer'; discount: number | null; note: string; past?: string }
+  | { kind: 'relicLead'; noRoll: boolean }
+  | { kind: 'sellerFound'; itemId: string }
+  | { kind: 'rumour'; text: string }
+  | { kind: 'gift'; fid: string }
+  | { kind: 'healInjury'; fid: string; value: string }
+  | { kind: 'laidUpToSore' }
+  | { kind: 'title'; fid: string; value: string }
+  | { kind: 'note'; text: string };
 
 /** The two halves of a story event's twist: "Nerve: success / failure". */
 export function splitTwist(text: string): { rating: string | null; success: string; failure: string } {
@@ -83,6 +36,9 @@ export function splitTwist(text: string): { rating: string | null; success: stri
   const [success, failure = ''] = body.split(' / ');
   return { rating: m ? m[1] : null, success: success.trim(), failure: failure.trim() };
 }
+
+let itemName = (id: string) => id.split('|')[0];
+export const setItemNamer = (fn: (id: string) => string) => { itemName = fn; };
 
 export function describe(crew: Crew, c: Change): string {
   const who = (fid: string) => crew.fighters.find((f) => f.id === fid)?.name || 'a fighter';
@@ -98,6 +54,17 @@ export function describe(crew: Crew, c: Change): string {
     case 'rival': return `New rival: ${c.value}`;
     case 'nextBattle': return `${who(c.fid)} starts the next battle ${c.value}`;
     case 'leave': return `${who(c.fid)}: ${c.fate}`;
+    case 'addItem': return `${c.fid ? `${who(c.fid)} gets` : 'Into the stash:'} ${itemName(c.itemId)}`;
+    case 'removeItem': return `Lose ${c.label}`;
+    case 'hireOffer': return `A recruit ${c.discount === null ? 'for free' : `for ${c.discount} parts less`}${c.note ? ` (${c.note})` : ''}, this break`;
+    case 'relicLead': return `A relic lead: one relic at half price${c.noRoll ? ', no seller roll' : ''}, this break`;
+    case 'sellerFound': return `A seller for the ${itemName(c.itemId)} this break`;
+    case 'rumour': return `Crew rumour: ${c.text}`;
+    case 'gift': return `${who(c.fid)} gains the gift`;
+    case 'healInjury': return `${who(c.fid)}: ${c.value} healed`;
+    case 'laidUpToSore': return 'Every Laid up fighter is only Sore';
+    case 'title': return `${who(c.fid)} takes the title "${c.value}"`;
+    case 'note': return `Remember: ${c.text}`;
   }
 }
 
@@ -137,6 +104,21 @@ export function applyChanges(rules: Rules, crew: Crew, changes: Change[]): { cre
         };
         break;
       }
+      case 'addItem': c = { ...c, items: [...c.items, { uid: uid('i'), itemId: ch.itemId, fighterId: ch.fid, slot: ch.fid ? ch.slot : 'stash', paid: 0, note: 'found' }] }; break;
+      case 'removeItem': c = { ...c, items: c.items.filter((o) => o.uid !== ch.uid) }; break;
+      case 'hireOffer': c = { ...c, hireOffers: [...(c.hireOffers ?? []), { id: uid('h'), discount: ch.discount, note: ch.note, past: ch.past }] }; break;
+      case 'relicLead': c = { ...c, relicLead: { noRoll: ch.noRoll || !!c.relicLead?.noRoll } }; break;
+      case 'sellerFound': c = { ...c, sellers: { ...(c.sellers ?? {}), [ch.itemId]: { found: true } } }; break;
+      case 'rumour': c = { ...c, notes: { ...c.notes, rumour: ch.text } }; break;
+      case 'gift': fx(ch.fid, (f) => ({ ...f, gift: true })); break;
+      case 'healInjury': fx(ch.fid, (f) => ({ ...f, injuries: f.injuries.filter((i) => i !== ch.value) })); break;
+      case 'laidUpToSore': {
+        const [, sore, laid] = rules.crew.campaign.statuses.value;
+        c = { ...c, fighters: c.fighters.map((f) => (f.status === laid ? { ...f, status: sore } : f)) };
+        break;
+      }
+      case 'title': fx(ch.fid, (f) => ({ ...f, titles: Array.from(new Set([...f.titles, ch.value])), title: f.title || ch.value })); break;
+      case 'note': break;
     }
   }
   return { crew: c, lines };

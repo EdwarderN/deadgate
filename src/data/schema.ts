@@ -270,6 +270,7 @@ export const crewRulesSchema = z.object({
     fenceContact: sourced(str),
     statuses: sourced(z.array(str)),
     fates: sourced(z.array(str)),
+    relicLeadKind: sourced(str),
   }),
   sections: z.object({ value: z.record(str) }).passthrough(),
   dice: z.object({ netEdgeCap: num, badKeptTotal: num }),
@@ -311,3 +312,53 @@ export type KitEntry = z.infer<typeof kitEntry>;
 export type CatalogItem = z.infer<typeof catalogItemSchema>;
 export type Faction = z.infer<typeof factionSchema>;
 export type Row = Record<string, string>;
+
+// ---------- outcomes.json (hand-kept): what each table row does ----------
+export type Who = string;
+export interface Eff {
+  parts?: number; ifDebt?: number;
+  xp?: number; who?: Who;
+  status?: string; next?: string; tag?: string; contact?: string; rival?: boolean; rumour?: boolean; silly?: string;
+  item?: { key?: string; source?: 'copy' | 'old stock' | 'drop'; kinds?: string[]; maxPrice?: number; any?: boolean; label?: string; fit?: boolean };
+  loseItem?: { who?: Who; kinds?: string[]; source?: string; count?: number; label?: string };
+  sellItem?: { fraction: number; who?: Who; kinds?: string[]; source?: string };
+  buyItem?: { source?: string; fraction: number };
+  hire?: { discount?: number; free?: boolean; past?: string; note?: string };
+  relicLead?: { noRoll: boolean }; sellerFound?: boolean; noTasks?: boolean; noTask?: Who; gift?: Who; healInjury?: Who; prosthetic?: Who;
+  allLaidUpToSore?: boolean; injury?: string; injuryRoll?: string; times?: number; reroll?: number; dead?: boolean; leave?: Who; title?: string;
+  finds?: number; keep?: number; drop?: boolean;
+  d6?: { range: string; effects: Eff[] }[];
+  test?: { rating: string; target: number }; success?: Eff[]; failure?: Eff[];
+  choice?: { label: string; effects: Eff[] }[];
+  taskPay?: number | 'failure'; noFinds?: boolean; retest?: boolean; swapAdvance?: string; note?: string;
+}
+export const effSchema: z.ZodType<Eff> = z.lazy(() => z.object({
+  parts: z.number().optional(), ifDebt: z.number().optional(),
+  xp: z.number().optional(), who: str.optional(),
+  status: str.optional(), next: str.optional(), tag: str.optional(), contact: str.optional(), rival: z.boolean().optional(), rumour: z.boolean().optional(), silly: str.optional(),
+  item: z.object({ key: str.optional(), source: z.enum(['copy', 'old stock', 'drop']).optional(), kinds: z.array(str).optional(), maxPrice: z.number().optional(), any: z.boolean().optional(), label: str.optional(), fit: z.boolean().optional() }).optional(),
+  loseItem: z.object({ who: str.optional(), kinds: z.array(str).optional(), source: str.optional(), count: z.number().optional(), label: str.optional() }).optional(),
+  sellItem: z.object({ fraction: z.number(), who: str.optional(), kinds: z.array(str).optional(), source: str.optional() }).optional(),
+  buyItem: z.object({ source: str.optional(), fraction: z.number() }).optional(),
+  hire: z.object({ discount: z.number().optional(), free: z.boolean().optional(), past: str.optional(), note: str.optional() }).optional(),
+  relicLead: z.object({ noRoll: z.boolean() }).optional(), sellerFound: z.boolean().optional(), noTasks: z.boolean().optional(), noTask: str.optional(),
+  gift: str.optional(), healInjury: str.optional(), prosthetic: str.optional(), allLaidUpToSore: z.boolean().optional(),
+  injury: str.optional(), injuryRoll: str.optional(), times: z.number().optional(), reroll: z.number().optional(), dead: z.boolean().optional(), leave: str.optional(), title: str.optional(),
+  finds: z.number().optional(), keep: z.number().optional(), drop: z.boolean().optional(),
+  d6: z.array(z.object({ range: str, effects: z.array(effSchema) })).optional(),
+  test: z.object({ rating: str, target: z.number() }).optional(), success: z.array(effSchema).optional(), failure: z.array(effSchema).optional(),
+  choice: z.array(z.object({ label: str, effects: z.array(effSchema) })).optional(),
+  taskPay: z.union([z.number(), z.literal('failure')]).optional(), noFinds: z.boolean().optional(), retest: z.boolean().optional(), swapAdvance: str.optional(), note: str.optional(),
+}).strict());
+const effs = z.array(effSchema);
+export const outcomesSchema = z.object({
+  _about: str, source: str,
+  storyEvents: z.record(z.record(z.object({ accept: effs, pay: effs.optional(), twist: z.object({ rating: str, success: effs, failure: effs }).optional() }))),
+  injuryTables: z.record(z.record(effs)),
+  taskBase: z.record(z.object({ success: effs, failure: effs, needs: z.enum(['patient', 'teacher']).optional() })),
+  taskTables: z.record(z.record(effs)),
+  ownTasks: z.record(z.object({ success: effs, failure: effs, table: z.record(effs) })),
+  finds: z.record(effs),
+  dropTable: z.record(effs),
+});
+export type Outcomes = z.infer<typeof outcomesSchema>;

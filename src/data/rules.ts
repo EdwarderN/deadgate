@@ -2,7 +2,7 @@
 // Nothing here knows a price, a name or a number of the game: it all comes
 // from data/generated (the rulebook) and data/manual/crew-rules.json.
 import { z } from 'zod';
-import { crewRulesSchema, generatedSchemas, type CatalogItem, type CrewRules, type Faction, type FactionRules, type Row } from './schema';
+import { crewRulesSchema, generatedSchemas, outcomesSchema, type Outcomes, type CatalogItem, type CrewRules, type Faction, type FactionRules, type Row } from './schema';
 
 import _meta from '../../data/generated/_meta.json';
 import species from '../../data/generated/species.json';
@@ -60,6 +60,7 @@ import finds from '../../data/generated/finds.json';
 import league_points from '../../data/generated/league_points.json';
 import bot_states from '../../data/generated/bot_states.json';
 import crewRulesJson from '../../data/manual/crew-rules.json';
+import outcomesJson from '../../data/manual/outcomes.json';
 
 export const rawData = {
   _meta, species, slots, weapon_traits, weapons, armour, armour_by_source, frames, robo_arms, grenades, devices,
@@ -137,6 +138,7 @@ export interface Rules {
   meta: z.infer<typeof generatedSchemas._meta>;
   data: Data;
   crew: CrewRules;
+  outcomes: Outcomes;
   factions: Faction[];
   faction(name: string): Faction | undefined;
   factionRules(name: string): FactionRules | undefined;
@@ -252,9 +254,16 @@ function buildItems(crew: CrewRules, raw: RawData, cat: CatalogItem[]): ItemDef[
   return items;
 }
 
-export function buildRules(raw: RawData = rawData, crewJson: unknown = crewRulesJson): Rules {
+export function validateOutcomes(json: unknown): Outcomes {
+  const res = outcomesSchema.safeParse(json);
+  if (!res.success) throw new Error(`data/manual/outcomes.json does not match its schema: ${res.error.issues.slice(0, 5).map((i) => `${i.path.join('.')}: ${i.message}`).join('; ')}`);
+  return res.data;
+}
+
+export function buildRules(raw: RawData = rawData, crewJson: unknown = crewRulesJson, outcomesData: unknown = outcomesJson): Rules {
   validateRaw(raw);
   const crew = validateCrewRules(crewJson);
+  const outcomes = validateOutcomes(outcomesData);
   const sections = crew.sections.value;
   const cat = raw.catalog as CatalogItem[];
   const items = buildItems(crew, raw, cat);
@@ -312,6 +321,7 @@ export function buildRules(raw: RawData = rawData, crewJson: unknown = crewRules
     meta: raw._meta,
     data: raw as unknown as Data,
     crew,
+    outcomes,
     factions: facs,
     faction: (n) => facs.find((f) => f.name === n),
     factionRules: (n) => crew.factions[n],
@@ -344,3 +354,4 @@ export function getRules(): Rules {
   if (!cached) cached = buildRules();
   return cached;
 }
+export type { Eff } from './schema';

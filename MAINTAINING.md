@@ -26,6 +26,7 @@ This is for the game's owner. You don't need to be a programmer. When the rules 
    - Starting parts go from 60 to 70: change `creation.startingParts.value` to `70`.
    - The Bodgers' discount becomes 2 parts: change `amount` in the Bodgers' `priceRules` to `2`.
    - A faction's starting kit changes: edit its `startingKit` list (item name, `copy` or `old stock`, and how many).
+   And if a **table row** changed (a story event, an injury result, a task table, finds, the drop table), update its entry in `data/manual/outcomes.json`. Each row lists what it does, for example `{"parts": -5}, {"tag": "Reliable"}` for "5 parts: the crew gains Reliable". The tests tell you if a row is missing or a name is wrong.
 5. **Run the tests.**
 
    ```

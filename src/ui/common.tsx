@@ -143,7 +143,9 @@ export function Shop({ crew, update }: { crew: Crew; update: Update }) {
   const restricted = rules.crew.gear.restrictedItems.value;
   const visible = rules.shopItems.filter((i) => !restricted.some((r) => r.key === i.key && !r.factions.includes(crew.faction ?? '')));
   // An old-stock item with no seller this break is off the list until the next break (11.3).
-  const noSeller = visible.filter((i) => needsSeller(rules, crew, i) && crew.sellers?.[i.id]?.found === false);
+  const lead = crew.relicLead;
+  const leadFor = (i: ItemDef) => !!lead && i.kind === rules.crew.campaign.relicLeadKind.value;
+  const noSeller = visible.filter((i) => needsSeller(rules, crew, i) && crew.sellers?.[i.id]?.found === false && !(leadFor(i) && lead?.noRoll));
   const list = visible.filter((i) => !noSeller.includes(i) && (group === 'All' || i.group === group) && i.name.toLowerCase().includes(q.toLowerCase()));
   const campaign = crew.phase === 'campaign';
   const target = sellerTarget(rules, crew);
@@ -158,6 +160,11 @@ export function Shop({ crew, update }: { crew: Crew; update: Update }) {
     });
   };
   const [last, setLast] = useState<{ name: string; roll: number | null; found: boolean } | null>(null);
+  /** A relic lead: one relic at half price, maybe with no seller roll (14.7). */
+  const buyWithLead = (it: ItemDef) => {
+    const price = Math.floor(itemPrice(rules, crew, it) / 2);
+    update((c) => addLedger({ ...c, relicLead: null, items: [...c.items, { uid: uid('i'), itemId: it.id, fighterId: null, slot: 'stash', seller: 'found', paid: price, note: 'relic lead' }] }, -price, `Bought ${it.name} with a relic lead`));
+  };
   const setSeller = (it: ItemDef, roll: number | null) => {
     setLast({ name: it.name, roll, found: roll === null || roll >= target.value });
     update((c) => setSellerResult(rules, c, it.id, roll));
@@ -171,6 +178,7 @@ export function Shop({ crew, update }: { crew: Crew; update: Update }) {
           <select value={group} onChange={(e) => setGroup(e.target.value)}>{groups.map((g) => <option key={g}>{g}</option>)}</select>
         </label>
       </div>
+      {lead && campaign && <p className="note small">A relic lead this break: one relic at half price{lead.noRoll ? ', with no seller roll' : ''} (14.7).</p>}
       <p className="muted small">Copies are always for sale. Old stock needs a seller first: one d6 per item per break, {target.value}+{target.why ? ` (${target.why})` : ''} (11.3). Roll in the app, type your own roll, or tick "found". Tap a name to read its rules.</p>
       {last && (
         <p className={`seller-result ${last.found ? 'ok' : 'bad'}`} role="status">
@@ -188,6 +196,7 @@ export function Shop({ crew, update }: { crew: Crew; update: Update }) {
           const ok = canSpend(rules, crew, price);
           const needs = needsSeller(rules, crew, it);
           const found = !needs || crew.sellers?.[it.id]?.found === true;
+          const withLead = leadFor(it) && campaign && (found || lead!.noRoll);
           return (
             <li key={it.id} className={`shop-row ${found ? '' : 'needs-seller'}`}>
               <RuleLink rule={itemRule(rules, it)} className="shop-name">{it.name}</RuleLink>
@@ -195,8 +204,9 @@ export function Shop({ crew, update }: { crew: Crew; update: Update }) {
               <span className="price">{price !== it.price && <s className="muted">{it.price}</s>} {price}</span>
               {found
                 ? <button className="btn small" onClick={() => buy(it)} disabled={!ok} aria-label={`Buy ${it.name} (${it.source}) for ${price} parts`}>Buy</button>
-                : <span />}
-              {!found && (
+                : withLead ? <span /> : <span />}
+              {withLead && <button className="btn small primary lead-btn" onClick={() => buyWithLead(it)} disabled={!canSpend(rules, crew, Math.floor(price / 2))}>Relic lead: {Math.floor(price / 2)}</button>}
+              {!found && !withLead && (
                 <div className="seller-find">
                   <RollOrEnter die="d6" label={`Find a seller (${target.value}+)`} onResult={(n) => setSeller(it, n)} />
                   <label className="check small"><input type="checkbox" onChange={() => setSeller(it, null)} /> Found (a lead, or no roll needed)</label>
@@ -220,16 +230,21 @@ export function Hire({ crew, update }: { crew: Crew; update: Update }) {
   const price = hirePrice(rules, crew, draft);
   const gp = draft.gift ? giftPrice(rules, crew, draft) ?? 0 : 0;
   const rp = draft.rites ? ritesPrice(rules, crew, draft) ?? 0 : 0;
-  const total = price + gp + rp;
+  const offers = crew.phase === 'campaign' ? crew.hireOffers ?? [] : [];
+  const [offerId, setOfferId] = useState('');
+  const offer = offers.find((o) => o.id === offerId);
+  const hireCost = offer ? (offer.discount === null ? 0 : Math.max(0, price - offer.discount)) : price;
+  const total = hireCost + gp + rp;
   const ok = !full && canSpend(rules, crew, total) && (!fr?.types || !!draft.type);
   const campaign = crew.phase === 'campaign';
   const hire = () => {
     update((c) => {
-      let next: Crew = { ...c, fighters: [...c.fighters, { ...draft, id: uid('f'), rookie: false, hirePaid: total }] };
+      let next: Crew = { ...c, hireOffers: (c.hireOffers ?? []).filter((o) => o.id !== offerId), fighters: [...c.fighters, { ...draft, past: offer?.past ?? draft.past, id: uid('f'), rookie: false, hirePaid: total }] };
       if (campaign) next = addLedger(next, -total, `Hired ${draft.name || recruitKey(rules, draft)}`);
       return next;
     });
     setDraft(newFighter(rules, { baseRatings: draft.baseRatings, species: draft.species }));
+    setOfferId('');
   };
   if (!fac) return null;
   const canGift = rules.crew.limits.giftSpecies.value.includes(draft.species) && giftPrice(rules, crew, draft) !== null;
@@ -240,6 +255,14 @@ export function Hire({ crew, update }: { crew: Crew; update: Update }) {
       {full ? <p className="note">The crew is full.</p> : (
         <>
           <FighterBasics crew={crew} fighter={draft} onChange={setDraft} />
+          {offers.length > 0 && (
+            <label className="field"><span>An offer this break</span>
+              <select value={offerId} onChange={(e) => setOfferId(e.target.value)}>
+                <option value="">No offer: full price</option>
+                {offers.map((o) => <option key={o.id} value={o.id}>{o.discount === null ? 'Free' : `${o.discount} parts less`}{o.note ? ` (${o.note})` : ''}{o.past ? `, Past "${o.past}"` : ''}</option>)}
+              </select>
+            </label>
+          )}
           <div className="row gap wrap">
             {canGift && <label className="check"><input type="checkbox" checked={draft.gift} onChange={(e) => setDraft({ ...draft, gift: e.target.checked })} /> The gift (+{giftPrice(rules, crew, draft)})</label>}
             {ritesPrice(rules, crew, draft) !== null && <label className="check"><input type="checkbox" checked={draft.rites} onChange={(e) => setDraft({ ...draft, rites: e.target.checked })} /> Rites (+{ritesPrice(rules, crew, draft)})</label>}

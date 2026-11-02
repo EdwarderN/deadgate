@@ -113,7 +113,9 @@ export interface AfterBattle {
   captive?: { income: number | null; roll: number | null; xpWho: string | null; picks?: Record<string, boolean> };
   taxUnpaid?: string[];
   story: { row: string; roll: number | null; notes: string; choice?: string; twistWho?: string | null; twistOk?: boolean | null; picks?: Record<string, boolean>; who?: Record<string, string> };
-  tasks: Record<string, { task: string; success: boolean | null; testTotal: number | null; tableRoll: number | null; paid?: boolean; picks?: Record<string, boolean>; rating?: string }>;
+  tasks: Record<string, { task: string; success: boolean | null; testTotal: number | null; tableRoll: number | null; paid?: boolean; picks?: Record<string, boolean>; rating?: string; patient?: string | null; teacher?: string | null }>;
+  /** decisions made on table results, by path */
+  eff?: Record<string, unknown>;
   history: Record<string, string>;
   faction?: { asks: Record<string, boolean | number>; stars: Record<string, number>; researchDone: boolean; researchWho: string | null; applied?: boolean };
   /** a type's put-down XP given to another fighter (Stunt double to an Action star) */
@@ -164,6 +166,10 @@ export interface Crew {
   breakNo?: number;
   battle?: Battle | null;
   after?: AfterBattle | null;
+  /** recruits offered cheaper this break (story events, tasks): discount null means free */
+  hireOffers?: { id: string; discount: number | null; note: string; past?: string }[];
+  /** a relic lead this break (14.7): one relic at half price */
+  relicLead?: { noRoll: boolean } | null;
 }
 
 let counter = 0;

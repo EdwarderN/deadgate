@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { getRules, plain } from '../data/rules';
 import {
-  battleXp, botWord, finishAfterBattle, injuryActions, injuryResult, injuryTableFor, leaguePoints, legendFor, partsIn, positionDef,
+  battleXp, botWord, finishAfterBattle, injuryResult, injuryTableFor, leaguePoints, legendFor, positionDef,
   sillyTableFor, stateNames, taskBlocked, taskDefs, totalLeaguePoints,
 } from '../engine/battle';
 import {
@@ -11,7 +11,8 @@ import {
 } from '../engine/faction';
 import { advancesEarned, airTax, currentRatings, hirePrice, isBot, ratingNames } from '../engine/crew';
 import { lookup } from '../engine/dice';
-import { applyChanges, deathFate, describe, readOutcomes, splitTwist, type Change, type Outcome } from '../engine/outcomes';
+import { applyChanges, describe, setItemNamer, splitTwist, type Change } from '../engine/outcomes';
+import { resolveEffects, type EffCtx, type EffState, type Node, type Resolved } from '../engine/effects';
 import { uid, type AfterBattle as After, type Crew, type Fighter } from '../engine/model';
 import { go } from '../App';
 import { Hire, Md, Shop, Stash, fighterLabel, type Update } from './common';
@@ -19,7 +20,9 @@ import { Experience } from './Campaign';
 import { PoolRoller, RollOrEnter } from './Dice';
 import { FactionNote } from './Battle';
 import { useAsk } from './confirm';
-import { RuleLink, injuryRule, legendRule, sillyRule } from './rule';
+
+setItemNamer((id) => getRules().item(id)?.name ?? id.split('|')[0]);
+import { RuleLink, legendRule, sillyRule } from './rule';
 
 type P = { crew: Crew; a: After; setA: (fn: (x: After) => After) => void; update: Update };
 type StepId = 'battle' | 'injuries' | 'advances' | 'break' | 'spend' | 'done';
@@ -113,40 +116,6 @@ function Step({ id, a, crew, intro, changes, confirm, next, children, cta, block
       </div>
     </div>
   );
-}
-
-// ---------- tickable outcomes ----------
-function Outcomes({ outcomes, picks, setPick, fighters, who, setWho }: {
-  outcomes: Outcome[]; picks?: Record<string, boolean>; setPick: (k: string, v: boolean) => void;
-  fighters?: Fighter[]; who?: Record<string, string>; setWho?: (k: string, fid: string) => void;
-}) {
-  if (!outcomes.length) return <p className="small muted">Nothing for the app to record here: apply it at the table, or add parts below.</p>;
-  return (
-    <div className="outcomes">
-      {outcomes.map((o) => {
-        const on = picks?.[o.key] ?? o.checked;
-        return (
-          <div key={o.key} className={`outcome ${on ? 'on' : ''}`}>
-            <label className="check small"><input type="checkbox" checked={on} onChange={(e) => setPick(o.key, e.target.checked)} /> {o.label}</label>
-            {o.needsFighter && on && fighters && setWho && (
-              <select aria-label={`Who: ${o.label}`} value={who?.[o.key] ?? ''} onChange={(e) => setWho(o.key, e.target.value)}>
-                <option value="">Which fighter?</option>{fighters.map((f) => <option key={f.id} value={f.id}>{fighterLabel(f)}</option>)}
-              </select>
-            )}
-          </div>
-        );
-      })}
-    </div>
-  );
-}
-
-/** The changes of the ticked outcomes, with fighters filled in. */
-function picked(outcomes: Outcome[], picks: Record<string, boolean> | undefined, who?: Record<string, string>): Change[] {
-  return outcomes.filter((o) => picks?.[o.key] ?? o.checked).flatMap((o) => {
-    if (!o.needsFighter) return [o.change];
-    const fid = who?.[o.key];
-    return fid ? [{ ...o.change, fid } as Change] : [];
-  });
 }
 
 // ---------- 1. The battle: Words, XP, faction pay ----------
@@ -331,14 +300,17 @@ function InjuriesStep(p: SP) {
   const b = a.battle;
   const rolling = took(crew, a).filter((f) => injuryTableFor(rules, b, f.id, crew));
   const captured = took(crew, a).filter((f) => positionDef(rules, b.fighters[f.id].position)?.captured);
-  const setInj = (fid: string, x: Partial<After['injuries'][string]>) => setA((y) => ({ ...y, injuries: { ...y.injuries, [fid]: { ...(y.injuries[fid] ?? { rolls: [] }), ...x } } }));
+  const st = a.eff ?? {};
+  const setSt = (path: string, v: unknown) => setA((x) => ({ ...x, eff: { ...(x.eff ?? {}), [path]: v } }));
   const changes: Change[] = [];
-  const pending: string[] = [];
-  for (const f of rolling) {
-    const r = injuryState(rules, crew, a, f);
-    if (!r.row) { pending.push(fighterLabel(f)); continue; }
-    changes.push(...r.changes);
-  }
+  const missing: string[] = [];
+  const cards = rolling.map((f) => {
+    const r = injuryResolve(rules, crew, a, f);
+    changes.push(...r.res.changes);
+    if (!r.row) missing.push(`roll for ${fighterLabel(f)}`);
+    else missing.push(...r.res.missing.map((m) => `${fighterLabel(f)}: ${m}`));
+    return { f, r };
+  });
   const taken = rules.crew.afterBattle.takenFate.value;
   for (const f of captured) {
     const r = a.ransom?.[f.id];
@@ -348,28 +320,38 @@ function InjuriesStep(p: SP) {
   const cap = a.captive ?? { income: null, roll: null, xpWho: null };
   const setCap = (x: Partial<typeof cap>) => setA((y) => ({ ...y, captive: { ...cap, ...x } }));
   const fates = activeEffects(rules, crew, 'captive');
+  const own = rules.outcomes.ownTasks[crew.faction ?? ''];
   const fac = rules.faction(crew.faction ?? '');
+  const fateRes = a.tookCaptive && cap.roll && own ? resolveEffects(rules, crew, own.table[String(cap.roll)] ?? [], { note: 'Captive fate', battle: b }, st, 'captive') : null;
   if (a.tookCaptive) {
     if (cap.income) changes.push({ kind: 'parts', amount: cap.income, note: 'Ransom or half price for a captive' });
-    for (const e of fates) {
-      if (e.effect.kind === 'rollOwnTaskTable' && cap.roll && fac) {
-        const row = lookup(fac.ownTaskTable, cap.roll);
-        if (row) changes.push(...picked(readOutcomes(rules, row.Result, { note: `Captive fate: ${plain(row.Result).split('.')[0]}` }), cap.picks));
-      }
-      if (e.effect.kind === 'captiveXp' && cap.xpWho) changes.push({ kind: 'xp', fid: cap.xpWho, amount: e.effect.amount ?? 0, note: e.title });
-    }
+    if (fateRes) { changes.push(...fateRes.changes); missing.push(...fateRes.missing); }
+    for (const e of fates) if (e.effect.kind === 'captiveXp' && cap.xpWho) changes.push({ kind: 'xp', fid: cap.xpWho, amount: e.effect.amount ?? 0, note: e.title });
   }
   return (
     <Step id="injuries" {...p} intro="Fighters who ended the battle down roll their injury table (13.2). Then captives are ransomed or meet their fate (14.4)." changes={changes}
-      blocked={pending.length ? `Roll for ${pending.join(', ')}.` : undefined}>
-      {rolling.map((f) => <InjuryCard key={f.id} crew={crew} f={f} a={a} setInj={(x) => setInj(f.id, x)} />)}
+      blocked={missing.length ? `Still to do: ${missing.join('; ')}.` : undefined}>
+      {cards.map(({ f, r }) => (
+        <div key={f.id} className="card stack-s">
+          <div className="row between gap-s wrap">
+            <strong>{fighterLabel(f)}</strong>
+            <span className="small muted">{b.fighters[f.id].position} · {r.t.table}{r.t.times > 1 ? ', twice: take the worse' : ''}{isBot(rules, f) ? ' · bot words and glitches (13.3)' : ''}</span>
+          </div>
+          {r.rolls.length < r.t.times && <RollOrEnter die="d66" onResult={(n) => setSt(`inj:${f.id}`, [...r.rolls, n])} label={r.rolls.length ? 'Second roll' : 'Roll d66'} />}
+          {r.rolls.length > 1 && (
+            <div className="seg wrap">{r.rolls.map((n, k) => <button key={k} className={`seg-btn tight ${r.chosen === k ? 'on' : ''}`} onClick={() => setSt(`inj:${f.id}.c`, k)}>{n}: {plain(injuryResult(rules, r.t.table, n)?.Result ?? '').split('.')[0]}</button>)}</div>
+          )}
+          {r.row && <p className="result"><strong>{r.roll}:</strong> <Md text={r.row.Result} /></p>}
+          {r.row && <EffectNodes nodes={r.res.nodes} st={st} set={setSt} crew={crew} botWords={isBot(rules, f)} />}
+        </div>
+      ))}
       {captured.map((f) => {
         const r = a.ransom?.[f.id] ?? { pay: null, refuse: false };
         const setR = (x: Partial<typeof r>) => setA((y) => ({ ...y, ransom: { ...(y.ransom ?? {}), [f.id]: { ...r, ...x } } }));
         return (
           <div key={f.id} className="card stack-s">
             <strong>{fighterLabel(f)} was captured</strong>
-            <p className="small muted">The captor names a price from 10 to 10 + their Experience ({10 + f.xp}), at most 30. Pay it, or refuse and they are {taken}.</p>
+            <p className="small muted">The captor names a price from 10 to 10 + their Experience ({Math.min(30, 10 + f.xp)}), at most 30. Pay it, or refuse and they are {taken}.</p>
             <div className="row gap-s wrap">
               <label className="field inline-field"><span className="small">Ransom paid</span><input className="num" inputMode="numeric" value={r.pay ?? ''} disabled={r.refuse} onChange={(e) => setR({ pay: +e.target.value.replace(/\D/g, '') || null })} /></label>
               <label className="check small"><input type="checkbox" checked={r.refuse} onChange={(e) => setR({ refuse: e.target.checked })} /> Refused: {taken}</label>
@@ -383,17 +365,13 @@ function InjuriesStep(p: SP) {
           <label className="field inline-field"><span className="small">Parts received (the ransom, or half the price if refused)</span><input className="num" inputMode="numeric" value={cap.income ?? ''} onChange={(e) => setCap({ income: +e.target.value.replace(/\D/g, '') || null })} /></label>
           {fates.map((e) => (
             <FactionNote key={e.effect.id} e={e} small>
-              {e.effect.kind === 'rollOwnTaskTable' && fac && (() => {
-                const row = cap.roll ? lookup(fac.ownTaskTable, cap.roll) : null;
-                const outs = row ? readOutcomes(rules, row.Result, { note: 'Captive fate' }) : [];
-                return (
-                  <>
-                    <RollOrEnter die="d6" value={cap.roll} onResult={(n) => setCap({ roll: n, picks: {} })} label="If refused: roll" />
-                    {row && <p className="result small"><Md text={row.Result} /></p>}
-                    {row && <Outcomes outcomes={outs} picks={cap.picks} setPick={(k, v) => setCap({ picks: { ...(cap.picks ?? {}), [k]: v } })} />}
-                  </>
-                );
-              })()}
+              {e.effect.kind === 'rollOwnTaskTable' && fac && (
+                <>
+                  <RollOrEnter die="d6" value={cap.roll} onResult={(n) => setCap({ roll: n })} label="If refused: roll" />
+                  {cap.roll && <p className="result small"><Md text={lookup(fac.ownTaskTable, cap.roll)?.Result ?? ''} /></p>}
+                  {fateRes && <EffectNodes nodes={fateRes.nodes} st={st} set={setSt} crew={crew} />}
+                </>
+              )}
               {e.effect.kind === 'captiveXp' && (
                 <select aria-label="Who gains the XP" value={cap.xpWho ?? ''} onChange={(ev) => setCap({ xpWho: ev.target.value || null })}>
                   <option value="">If refused: who gains +{e.effect.amount} XP?</option>
@@ -408,70 +386,17 @@ function InjuriesStep(p: SP) {
   );
 }
 
-/** One fighter's injury: the table, the roll(s), and what the result asks for. */
-function injuryState(rules: ReturnType<typeof getRules>, crew: Crew, a: After, f: Fighter) {
+/** One fighter's injury roll(s), the row, and its effects. */
+function injuryResolve(rules: ReturnType<typeof getRules>, crew: Crew, a: After, f: Fighter) {
   const t = injuryTableFor(rules, a.battle, f.id, crew)!;
-  const st = a.injuries[f.id] ?? { rolls: [] };
-  const roll = st.rolls.length >= t.times ? (t.times === 1 ? st.rolls[0] : st.chosen ?? null) : null;
+  const st = a.eff ?? {};
+  const rolls = (st[`inj:${f.id}`] as number[]) ?? [];
+  const chosen = st[`inj:${f.id}.c`] as number | undefined;
+  const roll = rolls.length >= t.times ? (t.times === 1 ? rolls[0] : chosen !== undefined ? rolls[chosen] : null) : null;
   const row = roll !== null ? injuryResult(rules, t.table, roll) : undefined;
-  const bot = isBot(rules, f);
-  const actions = row ? injuryActions(rules, row.Result) : [];
-  const changes: Change[] = [];
-  let listRow: { name: string; title: string | null; text: string } | null = null;
-  let listNote = '';
-  const list = actions.find((x) => x.kind === 'injuryList');
-  if (list) {
-    const rows = bot ? rules.glitches : rules.injuries.filter((i) => i.table === list.value);
-    const lr = st.listRolls ?? [];
-    const pick = lr.length ? rows[lr[lr.length - 1] - 1] : null;
-    const max = rules.crew.limits.maxLastingInjuries.value;
-    if (f.injuries.length >= max) {
-      const laid = rules.crew.campaign.statuses.value.find((s) => /laid/i.test(s));
-      if (laid) changes.push({ kind: 'status', fid: f.id, value: laid });
-      listNote = `Already ${max} lasting injuries: Laid up instead (13.2).`;
-    } else if (pick && f.injuries.includes(pick.name)) listNote = `${pick.name}: they have it already. Roll again (13.2).`;
-    else if (pick) { listRow = pick; changes.push({ kind: 'injury', fid: f.id, value: pick.name, title: canTakeTitleFor(rules, crew, f) ? pick.title : null }); }
-  }
-  const dead = actions.some((x) => x.kind === 'dead');
-  if (dead) changes.push({ kind: 'leave', fid: f.id, fate: deathFate(rules, f), note: a.battle.opponent ? `After the battle against ${a.battle.opponent}` : 'After a battle' });
-  const status = actions.find((x) => x.kind === 'status');
-  if (status && !dead) changes.push({ kind: 'status', fid: f.id, value: status.value });
-  const extra = row && !dead ? readOutcomes(rules, row.Result, { fid: f.id, note: `${fighterLabel(f)}: ${plain(row.Result).split('.')[0]}` }).filter((o) => o.change.kind !== 'status') : [];
-  changes.push(...picked(extra, st.picks));
-  return { t, st, row, roll, bot, actions, list, listRow, listNote, dead, status, extra, changes, needsList: !!list && !listRow && !listNote.startsWith('Already') };
-}
-const canTakeTitleFor = (rules: ReturnType<typeof getRules>, crew: Crew, f: Fighter) => canTakeTitle(rules, crew, f);
-
-function InjuryCard({ crew, f, a, setInj }: { crew: Crew; f: Fighter; a: After; setInj: (x: Partial<After['injuries'][string]>) => void }) {
-  const rules = getRules();
-  const s = injuryState(rules, crew, a, f);
-  const st = s.st;
-  return (
-    <div className="card stack-s">
-      <div className="row between gap-s wrap">
-        <strong>{fighterLabel(f)}</strong>
-        <span className="small muted">{a.battle.fighters[f.id].position} · {s.t.table}{s.t.times > 1 ? ', twice: take the worse' : ''}</span>
-      </div>
-      {st.rolls.length < s.t.times && <RollOrEnter die="d66" onResult={(n) => setInj({ rolls: [...st.rolls, n] })} label={st.rolls.length ? 'Second roll' : 'Roll d66'} />}
-      {st.rolls.length > 1 && (
-        <div className="seg wrap">{st.rolls.map((r, i) => <button key={i} className={`seg-btn tight ${st.chosen === r ? 'on' : ''}`} onClick={() => setInj({ chosen: r })}>{r}: {plain(injuryResult(rules, s.t.table, r)?.Result ?? '').split('.')[0]}</button>)}</div>
-      )}
-      {s.row && (
-        <p className="result"><strong>{s.roll}:</strong> <Md text={s.row.Result} />
-          {s.bot && s.status && <span className="muted small"> (a bot: {botWord(rules, s.status.word ?? s.status.value)})</span>}
-        </p>
-      )}
-      {s.list && (
-        <div className="row gap-s wrap">
-          <span className="small">{s.bot ? 'Glitch (13.3)' : `${s.list.value} lasting injury`}:</span>
-          {!s.listNote.startsWith('Already') && <RollOrEnter die="d6" value={st.listRolls?.[st.listRolls.length - 1] ?? null} onResult={(n) => setInj({ listRolls: [...(st.listRolls ?? []), n] })} />}
-          {s.listRow && <span className="small"><RuleLink rule={injuryRule(rules, s.listRow.name)}>{s.listRow.name}</RuleLink> ("{s.listRow.title}")</span>}
-          {s.listNote && <span className="small err-text">{s.listNote}</span>}
-        </div>
-      )}
-      {s.extra.length > 0 && <Outcomes outcomes={s.extra} picks={st.picks} setPick={(k, v) => setInj({ picks: { ...(st.picks ?? {}), [k]: v } })} />}
-    </div>
-  );
+  const effs = row ? rules.outcomes.injuryTables[t.table]?.[row.d66] ?? [] : [];
+  const res = resolveEffects(rules, crew, effs, { self: f.id, battle: a.battle, injuryTable: t.table, note: `${fighterLabel(f)}: ${row ? plain(row.Result).split('.')[0] : ''}` }, st, `inj:${f.id}:e`);
+  return { t, rolls, chosen, roll, row, res };
 }
 
 // ---------- 3. Advances ----------
@@ -493,42 +418,49 @@ function AdvancesStep({ crew, update, confirm }: SP) {
 function BreakStep(p: SP) {
   const { crew, a, setA } = p;
   const rules = getRules();
+  const st = a.eff ?? {};
+  const setSt = (path: string, v: unknown) => setA((x) => ({ ...x, eff: { ...(x.eff ?? {}), [path]: v } }));
   const tax = airTax(rules, crew);
   const unpaid = a.taxUnpaid ?? [];
   const payers = tax.payers.filter((f) => !unpaid.includes(f.id));
   const taxAmount = payers.length * rules.crew.campaign.airTax.value;
   const changes: Change[] = [];
+  const missing: string[] = [];
   if (taxAmount) changes.push({ kind: 'parts', amount: -taxAmount, note: `Air tax (${payers.length} fighters)` });
 
   // Story event.
   const story = a.story;
   const setStory = (x: Partial<After['story']>) => setA((y) => ({ ...y, story: { ...y.story, ...x } }));
-  const keys = Object.keys(rules.data.story_events);
-  const key = keys.find((k) => k.startsWith(`Row ${story.row}:`));
+  const key = Object.keys(rules.data.story_events).find((k) => k.startsWith(`Row ${story.row}:`));
   const ev = key && story.roll ? lookup(rules.data.story_events[key], story.roll) : null;
+  const evO = key && story.roll ? rules.outcomes.storyEvents[key]?.[String(story.roll)] : undefined;
   const twist = ev && ev.Twist !== 'None' ? splitTwist(ev.Twist) : null;
-  const storyText = !ev ? '' : story.choice === 'Pay' ? ev.Pay : story.choice === 'Twist' && twist ? (story.twistOk === true ? twist.success : story.twistOk === false ? twist.failure : '') : story.choice === 'Accept' ? ev.Accept : '';
-  const storyOuts = storyText ? readOutcomes(rules, storyText, { cost: story.choice === 'Pay' && /^\s*\d+ parts?:/.test(plain(storyText)), note: `Story: ${plain(ev!.Event).replace(/\.$/, '')}` }) : [];
-  changes.push(...picked(storyOuts, story.picks, story.who));
+  const storyEffs = !evO ? [] : story.choice === 'Pay' ? evO.pay ?? [] : story.choice === 'Twist' ? (story.twistOk === true ? evO.twist?.success ?? [] : story.twistOk === false ? evO.twist?.failure ?? [] : []) : story.choice === 'Accept' ? evO.accept : [];
+  const storyRes = resolveEffects(rules, crew, storyEffs, { battle: a.battle, note: ev ? `Story: ${plain(ev.Event).replace(/\.$/, '')}` : '' }, st, `story:${story.row}.${story.roll}.${story.choice}.${story.twistOk}`);
+  changes.push(...storyRes.changes);
+  if (ev && !story.choice) missing.push('choose Accept, Pay or Twist');
+  if (story.choice === 'Twist' && story.twistOk == null) missing.push('make the twist test');
+  if (!story.roll) missing.push('roll the story event');
+  missing.push(...storyRes.missing.map((m) => `story: ${m}`));
   const hints = rowHints(rules, crew, a);
 
   // Tasks.
   const defs = taskDefs(rules, crew);
-  const workers = crew.fighters.filter((f) => !taskBlocked(rules, f) && !unpaid.includes(f.id));
-  for (const f of crew.fighters) {
+  const blocked = new Set<string>([...storyRes.noTask, ...unpaid]);
+  const teachers = new Set(Object.values(a.tasks).map((t) => t.teacher).filter(Boolean) as string[]);
+  const results = crew.fighters.map((f) => {
+    const off = storyRes.noTasks || blocked.has(f.id) || taskBlocked(rules, f) || teachers.has(f.id);
     const t = a.tasks[f.id];
-    const def = t && defs.find((d) => d.name === t.task);
-    if (!t || !def || t.success === null) continue;
-    const pay = t.success ? def.success : def.failure;
-    const tp = taskPay(rules, crew, def.name, t.success, pay ? partsIn(pay) : null);
-    if (tp.parts) changes.push({ kind: 'parts', amount: tp.parts, note: `${fighterLabel(f)}: ${def.name}` });
-    if (tp.xp) changes.push({ kind: 'xp', fid: f.id, amount: tp.xp, note: def.name });
-    const row = t.tableRoll ? lookup(def.table, t.tableRoll) : null;
-    if (row) changes.push(...picked(readOutcomes(rules, row.Result, { fid: f.id, note: `${fighterLabel(f)}: ${plain(row.Result).split('.')[0]}` }), t.picks));
-  }
+    if (off || !t?.task) return { f, off, r: null };
+    const r = taskResolve(rules, crew, a, f, t, defs, st);
+    changes.push(...r.changes);
+    missing.push(...r.missing.map((m) => `${fighterLabel(f)}: ${m}`));
+    return { f, off, r };
+  });
 
   return (
-    <Step id="break" {...p} intro="The air tax, one story event, and a downtime task for each fighter who may take one (14.1)." changes={changes}>
+    <Step id="break" {...p} intro="The air tax, one story event, and a downtime task for each fighter who may take one (14.1)." changes={changes}
+      blocked={missing.length ? `Still to do: ${missing.join('; ')}.` : undefined}>
       <div className="card stack-s">
         <h3>Air tax <span className="section-tag">§ 14.3</span></h3>
         <p className="small">{rules.crew.campaign.airTax.value} parts a fighter; {rules.crew.campaign.airTax.exempt.join(', ')} fighters don't pay. Untick anyone you can't pay for: they take no task.</p>
@@ -542,46 +474,138 @@ function BreakStep(p: SP) {
         <div className="stack-s" role="radiogroup" aria-label="Story row">
           {rules.data.story_rows.map((r) => (
             <label key={r.Row} className={`option tight ${story.row === r.Row ? 'on' : ''}`}>
-              <input type="radio" name="story-row" checked={story.row === r.Row} onChange={() => setStory({ row: r.Row, roll: null, choice: undefined, twistOk: null, picks: {} })} />
+              <input type="radio" name="story-row" checked={story.row === r.Row} onChange={() => setStory({ row: r.Row, roll: null, choice: undefined, twistOk: null })} />
               <span className="small">{r.Row}. <Md text={r['Choose it when the crew...']} />{hints.includes(r.Row) && <span className="badge ok">fits</span>}</span>
             </label>
           ))}
         </div>
-        {key && <RollOrEnter die="d6" value={story.roll} onResult={(n) => setStory({ roll: n, choice: undefined, twistOk: null, picks: {} })} />}
+        {key && <RollOrEnter die="d6" value={story.roll} onResult={(n) => setStory({ roll: n, choice: undefined, twistOk: null })} />}
         {ev && (
           <div className="stack-s">
             <strong><Md text={ev.Event} /></strong>
             <div className="choices">
               {(['Accept', 'Pay', 'Twist'] as const).filter((c) => ev[c] !== 'None').map((c) => (
                 <label key={c} className={`option tight ${story.choice === c ? 'on' : ''}`}>
-                  <input type="radio" name="story-choice" checked={story.choice === c} onChange={() => setStory({ choice: c, picks: {}, twistOk: null })} />
+                  <input type="radio" name="story-choice" checked={story.choice === c} onChange={() => setStory({ choice: c, twistOk: null })} />
                   <span className="small"><strong>{c}:</strong> <Md text={ev[c]} /></span>
                 </label>
               ))}
             </div>
             {story.choice === 'Twist' && twist && (
-              <TwistTest crew={crew} rating={twist.rating} who={story.twistWho ?? null} setWho={(w) => setStory({ twistWho: w })} ok={story.twistOk ?? null} setOk={(v) => setStory({ twistOk: v, picks: {} })} />
+              <TwistTest crew={crew} rating={twist.rating} who={story.twistWho ?? null} setWho={(w) => setStory({ twistWho: w })} ok={story.twistOk ?? null} setOk={(v) => setStory({ twistOk: v })} />
             )}
-            {storyText && <Outcomes outcomes={storyOuts} picks={story.picks} setPick={(k, v) => setStory({ picks: { ...(story.picks ?? {}), [k]: v } })} fighters={crew.fighters} who={story.who} setWho={(k, fid) => setStory({ who: { ...(story.who ?? {}), [k]: fid } })} />}
+            {story.choice && <EffectNodes nodes={storyRes.nodes} st={st} set={setSt} crew={crew} empty="Nothing happens." />}
           </div>
         )}
       </div>
 
       <div className="card stack-s">
         <h3>Downtime tasks <span className="section-tag">§ 14.6</span></h3>
-        <p className="small muted">Choose a task, roll its test, then win or lose roll its table. Sore, Laid up, unpaid tax or hired this break: no task. Teaching Train takes the teacher's task too.</p>
-        {crew.fighters.map((f) => <TaskRow key={f.id} crew={crew} f={f} a={a} setA={setA} defs={defs} blocked={!workers.includes(f)} />)}
+        <p className="small muted">Choose a task, roll its test, then win or lose roll its table. Sore, Laid up, unpaid tax, teaching, or a story event that says so: no task.</p>
+        {results.map(({ f, off, r }) => <TaskRow key={f.id} crew={crew} f={f} a={a} setA={setA} defs={defs} off={off} r={r} st={st} setSt={setSt} />)}
       </div>
     </Step>
+  );
+}
+
+type TaskState = After['tasks'][string];
+
+/** A task: its test, its pay (after faction rules and the table), and its table row's effects. */
+function taskResolve(rules: ReturnType<typeof getRules>, crew: Crew, a: After, f: Fighter, t: TaskState, defs: ReturnType<typeof taskDefs>, st: EffState) {
+  const def = defs.find((d) => d.name === t.task);
+  const out = { def, changes: [] as Change[], missing: [] as string[], table: null as Resolved | null, base: null as Resolved | null, row: null as Record<string, string> | null, pay: '' };
+  if (!def) return out;
+  const base = def.own ? rules.outcomes.ownTasks[crew.faction ?? ''] : rules.outcomes.taskBase[def.name];
+  const needs = def.own ? undefined : rules.outcomes.taskBase[def.name]?.needs;
+  if (needs === 'patient' && !t.patient) out.missing.push('choose the patient');
+  if (needs === 'teacher' && !t.teacher) out.missing.push('choose the teacher');
+  if (t.success == null) { out.missing.push('roll the test'); return out; }
+  const ctx: EffCtx = { self: f.id, patient: t.patient ?? null, teacher: t.teacher ?? null, battle: a.battle, note: `${fighterLabel(f)}: ${def.name}` };
+  // The table row first: it can change the task's pay or stop the finds roll.
+  if (def.table.length) {
+    if (!t.tableRoll) out.missing.push(`roll the ${def.name} table`);
+    else {
+      const row = lookup(def.table, t.tableRoll);
+      out.row = row ?? null;
+      const effs = row ? (def.own ? rules.outcomes.ownTasks[crew.faction ?? '']?.table[row.d6] : rules.outcomes.taskTables[def.name]?.[row['2d6']]) ?? [] : [];
+      out.table = resolveEffects(rules, crew, effs, { ...ctx, note: `${fighterLabel(f)}: ${row ? plain(row.Result).split('.')[0] : ''}` }, st, `task:${f.id}:${def.name}:${t.tableRoll}`);
+    }
+  }
+  const mult = out.table?.taskPay;
+  const useFailure = mult === 'failure' || (!t.success);
+  let baseEffs = (useFailure ? base?.failure : base?.success) ?? [];
+  if (out.table?.noFinds) baseEffs = baseEffs.filter((e) => !e.finds);
+  out.base = resolveEffects(rules, crew, baseEffs, ctx, st, `taskbase:${f.id}:${def.name}:${useFailure}`);
+  // Faction rules, captain traits and tags change the pay (12.5, 11.2, 14.10); the table can halve, double or cancel it.
+  const baseParts = out.base.changes.filter((c) => c.kind === 'parts').reduce((s, c) => s + (c as { amount: number }).amount, 0);
+  const tp = taskPay(rules, crew, def.name, !!t.success && mult !== 'failure', baseParts || null);
+  let parts = tp.parts ?? 0;
+  if (typeof mult === 'number') parts = mult === 2 && !t.success ? parts : Math.floor(parts * mult);
+  out.changes.push(...out.base.changes.filter((c) => c.kind !== 'parts'));
+  if (parts) out.changes.push({ kind: 'parts', amount: parts, note: `${fighterLabel(f)}: ${def.name}` });
+  if (tp.xp) out.changes.push({ kind: 'xp', fid: f.id, amount: tp.xp, note: def.name });
+  out.pay = [parts ? `${parts} parts` : '', tp.xp ? `+${tp.xp} XP` : '', ...tp.notes].filter(Boolean).join(', ');
+  out.missing.push(...out.base.missing);
+  if (out.table) { out.changes.push(...out.table.changes); out.missing.push(...out.table.missing); }
+  return out;
+}
+
+function TaskRow({ crew, f, a, setA, defs, off, r, st, setSt }: { crew: Crew; f: Fighter; a: After; setA: P['setA']; defs: ReturnType<typeof taskDefs>; off: boolean; r: ReturnType<typeof taskResolve> | null; st: EffState; setSt: (p: string, v: unknown) => void }) {
+  const rules = getRules();
+  const t: TaskState = a.tasks[f.id] ?? { task: '', success: null, testTotal: null, tableRoll: null };
+  const set = (x: Partial<TaskState>) => setA((y) => ({ ...y, tasks: { ...y.tasks, [f.id]: { ...t, ...x } } }));
+  const def = defs.find((d) => d.name === t.task);
+  const rt = currentRatings(rules, f);
+  if (off) return <div className="task-row muted small">{fighterLabel(f)}: no task this break{f.status !== rules.crew.campaign.statuses.value[0] ? ` (${f.status})` : ''}.</div>;
+  const ratingUsed = def ? (def.ratings === 'any' ? t.rating ?? ratingNames(rules).find((n) => rt[n] >= 1) ?? ratingNames(rules)[0] : def.ratings.length > 1 ? t.rating ?? def.ratings[0] : def.ratings[0]) : '';
+  const needs = def && !def.own ? rules.outcomes.taskBase[def.name]?.needs : undefined;
+  const laid = rules.crew.campaign.statuses.value.find((x) => /laid/i.test(x));
+  const patients = crew.fighters.filter((x) => x.id !== f.id && x.status === laid);
+  const teachers = crew.fighters.filter((x) => x.id !== f.id && (currentRatings(rules, x)[ratingUsed] ?? 0) > (rt[ratingUsed] ?? 0));
+  return (
+    <div className="task-row stack-s">
+      <div className="row gap-s wrap between">
+        <strong>{fighterLabel(f)}</strong>
+        <select aria-label={`Task for ${fighterLabel(f)}`} value={t.task} onChange={(e) => set({ task: e.target.value, success: null, testTotal: null, tableRoll: null, patient: null, teacher: null })}>
+          <option value="">No task</option>{defs.map((d) => <option key={d.name} value={d.name}>{d.name}{d.own ? ' (faction)' : ''}</option>)}
+        </select>
+      </div>
+      {def && (
+        <>
+          <p className="small muted">{plain(def.test)}. Success: {plain(def.success)}{def.failure ? `. Failure: ${plain(def.failure)}` : ''}</p>
+          {(def.ratings === 'any' || def.ratings.length > 1) && (
+            <select aria-label="Rating used" value={ratingUsed} onChange={(e) => set({ rating: e.target.value, teacher: null })}>{(def.ratings === 'any' ? ratingNames(rules) : def.ratings).map((n) => <option key={n} value={n}>{n} {rt[n]}</option>)}</select>
+          )}
+          {needs === 'patient' && (patients.length
+            ? <select aria-label="Patient" value={t.patient ?? ''} onChange={(e) => set({ patient: e.target.value || null })}><option value="">Who is nursed? (Laid up)</option>{patients.map((x) => <option key={x.id} value={x.id}>{fighterLabel(x)}</option>)}</select>
+            : <p className="small err-text">Nobody is Laid up: this task can't be taken.</p>)}
+          {needs === 'teacher' && (teachers.length
+            ? <select aria-label="Teacher" value={t.teacher ?? ''} onChange={(e) => set({ teacher: e.target.value || null })}><option value="">Who teaches? (higher {ratingUsed})</option>{teachers.map((x) => <option key={x.id} value={x.id}>{fighterLabel(x)} ({ratingUsed} {currentRatings(rules, x)[ratingUsed]})</option>)}</select>
+            : <p className="small err-text">Nobody has a higher {ratingUsed} to teach them.</p>)}
+          <PoolRoller key={`${def.name}-${ratingUsed}`} initialExtra={rt[ratingUsed] ?? 0} target={def.target} label={`${ratingUsed} ${rt[ratingUsed] ?? 0}`} onResult={(tot) => set({ testTotal: tot, success: def.target !== null ? tot >= def.target : null })} />
+          <div className="seg"><button className={`seg-btn tight ${t.success === true ? 'on' : ''}`} onClick={() => set({ success: true })}>Success</button><button className={`seg-btn tight ${t.success === false ? 'on' : ''}`} onClick={() => set({ success: false })}>Failure</button></div>
+          {r?.base && <EffectNodes nodes={r.base.nodes.filter((n) => !(n.kind === 'auto' && /parts$/.test(n.text)))} st={st} set={setSt} crew={crew} />}
+          {t.success != null && <p className="small">Pay: <strong>{r?.pay || 'nothing'}</strong></p>}
+          {t.success != null && def.table.length > 0 && (
+            <>
+              <RollOrEnter die={def.die === 'd6' ? 'd6' : '2d6'} value={t.tableRoll} onResult={(n) => set({ tableRoll: n })} label={`${def.name} table`} />
+              {r?.row && <p className="result small"><Md text={r.row.Result} /></p>}
+              {r?.table && <EffectNodes nodes={r.table.nodes} st={st} set={setSt} crew={crew} />}
+            </>
+          )}
+        </>
+      )}
+    </div>
   );
 }
 
 function rowHints(rules: ReturnType<typeof getRules>, crew: Crew, a: After): string[] {
   const b = a.battle;
   const hints = rules.crew.afterBattle.storyRowHints.value;
-  const lost = Object.values(a.injuries).some((i) => i.rolls.length) && crew.notes.roll.some((r) => /after the battle|taken by/i.test(r.note));
+  const lost = (a.done?.injuries ?? []).some((l) => /: (Dead|Destroyed|Taken)/.test(l)) || Object.values(a.ransom ?? {}).some((r) => r.refuse);
   const legend = Object.values(b.fighters).some((f) => f.word?.result === 'fulfilled' && rules.crew.battle.legendTiers.value.some((t) => rules.deeds.find((d) => d.id === f.word!.deed)?.tier.startsWith(t)));
   const facts: Record<string, boolean> = { heldField: b.heldField, notHeldField: !b.heldField, ran: !b.stoodGround, lostSomeone: lost, captive: !!a.tookCaptive || Object.values(a.ransom ?? {}).some((r) => r.pay), legend };
+  void crew;
   return Object.entries(hints).filter(([, why]) => facts[why]).map(([row]) => row);
 }
 
@@ -604,45 +628,65 @@ function TwistTest({ crew, rating, who, setWho, ok, setOk }: { crew: Crew; ratin
   );
 }
 
-function TaskRow({ crew, f, a, setA, defs, blocked }: { crew: Crew; f: Fighter; a: After; setA: P['setA']; defs: ReturnType<typeof taskDefs>; blocked: boolean }) {
+// ---------- the effects of a table row: shown, and decided ----------
+function EffectNodes({ nodes, st, set, crew, empty, botWords }: { nodes: Node[]; st: EffState; set: (p: string, v: unknown) => void; crew: Crew; empty?: string; botWords?: boolean }) {
   const rules = getRules();
-  const t = a.tasks[f.id] ?? { task: '', success: null, testTotal: null, tableRoll: null };
-  const set = (x: Partial<typeof t>) => setA((y) => ({ ...y, tasks: { ...y.tasks, [f.id]: { ...t, ...x } } }));
-  const def = defs.find((d) => d.name === t.task);
-  const r = currentRatings(rules, f);
-  if (blocked) return <div className="task-row muted small">{fighterLabel(f)}: no task this break{f.status !== rules.crew.campaign.statuses.value[0] ? ` (${f.status})` : ''}.</div>;
-  const ratingUsed = def ? (def.ratings === 'any' ? t.rating ?? ratingNames(rules).find((n) => r[n] >= 1) ?? ratingNames(rules)[0] : def.ratings.length > 1 ? t.rating ?? def.ratings[0] : def.ratings[0]) : '';
-  const pay = def && t.success !== null ? (t.success ? def.success : def.failure) : '';
-  const tp = def && t.success !== null ? taskPay(rules, crew, def.name, t.success, pay ? partsIn(pay) : null) : null;
-  const row = def && t.tableRoll ? lookup(def.table, t.tableRoll) : null;
-  const outs = row ? readOutcomes(rules, row.Result, { fid: f.id, note: '' }) : [];
+  if (!nodes.length) return empty ? <p className="small muted">{empty}</p> : null;
+  const shown = (t: string) => (botWords ? t.replace(/\b(is|are) (\w[\w ]*)$/, (_m, v, w) => `${v} ${botWord(rules, w)}`) : t);
   return (
-    <div className="task-row stack-s">
-      <div className="row gap-s wrap between">
-        <strong>{fighterLabel(f)}</strong>
-        <select aria-label={`Task for ${fighterLabel(f)}`} value={t.task} onChange={(e) => set({ task: e.target.value, success: null, testTotal: null, tableRoll: null, picks: {} })}>
-          <option value="">No task</option>{defs.map((d) => <option key={d.name} value={d.name}>{d.name}{d.own ? ' (faction)' : ''}</option>)}
-        </select>
-      </div>
-      {def && (
-        <>
-          <p className="small muted">{plain(def.test)}. Success: {plain(def.success)}{def.failure ? `. Failure: ${plain(def.failure)}` : ''}</p>
-          {(def.ratings === 'any' || def.ratings.length > 1) && (
-            <select aria-label="Rating used" value={ratingUsed} onChange={(e) => set({ rating: e.target.value })}>{(def.ratings === 'any' ? ratingNames(rules) : def.ratings).map((n) => <option key={n} value={n}>{n} {r[n]}</option>)}</select>
-          )}
-          <PoolRoller key={`${def.name}-${ratingUsed}`} initialExtra={r[ratingUsed] ?? 0} target={def.target} label={`${ratingUsed} ${r[ratingUsed] ?? 0}`} onResult={(tot) => set({ testTotal: tot, success: def.target !== null ? tot >= def.target : null })} />
-          <div className="seg"><button className={`seg-btn tight ${t.success === true ? 'on' : ''}`} onClick={() => set({ success: true })}>Success</button><button className={`seg-btn tight ${t.success === false ? 'on' : ''}`} onClick={() => set({ success: false })}>Failure</button></div>
-          {tp && (tp.parts || tp.xp || tp.notes.length > 0) && <p className="small">Pay: {[tp.parts ? `${tp.parts} parts` : '', tp.xp ? `+${tp.xp} XP` : ''].filter(Boolean).join(', ') || 'nothing'}{tp.notes.length ? ` (${tp.notes.join(', ')})` : ''}</p>}
-          {t.success !== null && def.table.length > 0 && (
-            <>
-              <RollOrEnter die={def.die === 'd6' ? 'd6' : '2d6'} value={t.tableRoll} onResult={(n) => set({ tableRoll: n, picks: {} })} label={`${def.name} table`} />
-              {row && <p className="result small"><Md text={row.Result} /></p>}
-              {row && <Outcomes outcomes={outs} picks={t.picks} setPick={(k, v) => set({ picks: { ...(t.picks ?? {}), [k]: v } })} />}
-            </>
-          )}
-        </>
-      )}
-    </div>
+    <ul className="effects plain-list">
+      {nodes.map((n) => {
+        switch (n.kind) {
+          case 'auto': return <li key={n.path + n.text} className="eff auto">✓ {shown(n.text)}</li>;
+          case 'note': return <li key={n.path + n.text} className="eff note-eff">ⓘ {n.text}</li>;
+          case 'select': {
+            const vals = n.value ? n.value.split(',') : [];
+            if (n.multi && n.multi > 1) return (
+              <li key={n.path} className="eff ask"><span className="small">{n.label} ({n.multi})</span>
+                <div className="row gap-s wrap">{n.options.map((o) => (
+                  <label key={o.value} className="check small"><input type="checkbox" checked={vals.includes(o.value)} onChange={(e) => set(n.path, e.target.checked ? [...vals, o.value] : vals.filter((x) => x !== o.value))} /> {o.label}</label>
+                ))}</div>
+              </li>
+            );
+            return (
+              <li key={n.path} className="eff ask">
+                <select aria-label={n.label} value={n.value} onChange={(e) => set(n.path, e.target.value)}>
+                  <option value="">{n.label}</option>{n.options.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+                </select>
+              </li>
+            );
+          }
+          case 'text': return <li key={n.path} className="eff ask"><input aria-label={n.label} placeholder={`${n.label}: ${n.placeholder ?? ''}`} value={n.value} onChange={(e) => set(n.path, e.target.value)} /></li>;
+          case 'choice': return (
+            <li key={n.path} className="eff ask"><div className="choices">{n.options.map((o, k) => (
+              <label key={k} className={`option tight ${n.value === k ? 'on' : ''}`}><input type="radio" name={n.path} checked={n.value === k} onChange={() => set(n.path, k)} /> <span className="small">{o}</span></label>
+            ))}</div></li>
+          );
+          case 'roll': return (
+            <li key={n.path} className="eff ask stack-s">
+              <span className="small">{n.label}{n.rolls.length ? `: ${n.rolls.join(', ')}` : ''}</span>
+              {n.rolls.length < n.times && <RollOrEnter die={n.die} onResult={(v) => set(n.path, [...n.rolls, v])} />}
+              {n.pick && <div className="choices">{n.pick.labels.map((l, k) => (
+                <label key={k} className={`option tight ${n.pick!.value === k ? 'on' : ''}`}><input type="radio" name={n.pick!.path} checked={n.pick!.value === k} onChange={() => set(n.pick!.path, k)} /> <span className="small">{l}</span></label>
+              ))}</div>}
+              {n.rolls.length > 0 && <button className="link small" onClick={() => { set(n.path, []); if (n.pick) set(n.pick.path, undefined); }}>Roll again from the start</button>}
+            </li>
+          );
+          case 'test': {
+            const f = crew.fighters.find((x) => x.id === n.fid);
+            const r = f ? currentRatings(rules, f)[n.rating] ?? 0 : 0;
+            return (
+              <li key={n.path} className="eff ask stack-s">
+                <span className="small">{n.label}{f ? ` for ${fighterLabel(f)}` : ''}</span>
+                <PoolRoller initialExtra={r} target={n.target} onResult={(tot) => set(n.path, tot >= n.target)} />
+                <div className="seg"><button className={`seg-btn tight ${n.value === true ? 'on' : ''}`} onClick={() => set(n.path, true)}>Passed</button><button className={`seg-btn tight ${n.value === false ? 'on' : ''}`} onClick={() => set(n.path, false)}>Failed</button></div>
+              </li>
+            );
+          }
+          case 'group': return <li key={n.path} className="eff group"><span className="small strong">{n.title}</span><EffectNodes nodes={n.children} st={st} set={set} crew={crew} /></li>;
+        }
+      })}
+    </ul>
   );
 }
 

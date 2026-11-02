@@ -339,3 +339,11 @@ button.seg-btn.on { color: #fff; }
 .step-back { margin-top: 1rem; }
 fieldset:disabled { opacity: 0.75; }
 @media (max-width: 640px) { .summary ul { max-height: 4.6rem; } }
+.effects { display: grid; gap: 0.35rem; margin: 0.2rem 0 0; }
+.eff { font-size: 0.9rem; }
+.eff.auto { color: var(--ok); font-weight: 600; }
+.eff.note-eff { color: var(--warn); }
+.eff.ask { border-left: 3px solid var(--tape); padding-left: 0.5rem; }
+.eff.group { border-left: 3px solid var(--line); padding-left: 0.5rem; }
+.eff.ask select, .eff.ask input:not([type]) { max-width: 100%; }
+.lead-btn { grid-column: 1 / -1; justify-self: start; }

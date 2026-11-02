@@ -960,6 +960,11 @@
         "Destroyed"
       ],
       "source": "13.2, 13.3"
+    },
+    "relicLeadKind": {
+      "value": "relic",
+      "source": "14.7",
+      "note": "the item kind a relic lead buys"
     }
   },
   "sections": {
