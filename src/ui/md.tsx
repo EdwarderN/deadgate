@@ -25,11 +25,12 @@ export function MdBlock({ text }: { text: string }) {
       i--;
       const [head, ...rest] = rows;
       const body = rest.filter((r) => !isRule(r));
+      const heads = cells(head);
       out.push(
         <div key={i} className="table-wrap">
-          <table className="md-table">
+          <table className={`md-table${heads.length > 2 ? ' wide' : ''}`}>
             <thead><tr>{cells(head).map((c, k) => <th key={k} scope="col"><Md text={c} /></th>)}</tr></thead>
-            <tbody>{body.map((r, j) => <tr key={j}>{cells(r).map((c, k) => <td key={k}><Md text={c} /></td>)}</tr>)}</tbody>
+            <tbody>{body.map((r, j) => <tr key={j}>{cells(r).map((c, k) => <td key={k} data-label={heads[k]?.replace(/\*\*/g, '')}><Md text={c} /></td>)}</tr>)}</tbody>
           </table>
         </div>,
       );
