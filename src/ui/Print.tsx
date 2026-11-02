@@ -4,6 +4,8 @@ import { getRules } from '../data/rules';
 import { advancesEarned, captainOf, captainTraitNames, currentRatings, equipped, fighterStats, hasGift, hasRites, partsLeft, ratingNames, ritesKnown, traitBudgetUsed } from '../engine/crew';
 import type { Crew, Fighter } from '../engine/model';
 import { describeType, fighterLabel } from './common';
+import { Md } from './md';
+import { powersFor } from './rule';
 
 export function PrintView({ crew }: { crew: Crew }) {
   const [paper, setPaper] = useState<'A4' | 'letter'>(() => (navigator.language === 'en-US' ? 'letter' : 'A4'));
@@ -94,6 +96,12 @@ function FighterCard({ crew, fighter: f }: { crew: Crew; fighter: Fighter }) {
           <div className="fc-line"><Lines items={f.injuries} n={rules.crew.limits.maxLastingInjuries.value} /></div>
         </div>
       </div>
+      {hasGift(rules, crew, f) && (
+        <div className="fc-powers">
+          <div className="fc-h">Psionic powers <i>(§ {rules.section('gift')}{rules.data.gift_rules.filter((g) => g.label.includes(':')).map((g) => `; ${g.label}`).join('')})</i></div>
+          <ul>{powersFor(rules, f.species).map((p) => <li key={p.name}><b>{p.name.replace(/\s*\(.+? only\)/, '')}</b> <i>{p.number}</i>: <Md text={p.text} /></li>)}</ul>
+        </div>
+      )}
       <div className="fc-foot">
         <div className="fc-line"><b>XP</b><span className="box sm">{f.xp}</span> {th.map((t) => <span key={t} className="thr">{t} <span className={`pip ${f.xp >= t ? 'fill' : ''}`} /></span>)} <b className="gap">Ended</b> {ended.map((e) => <span key={e} className="thr"><span className="pip" /> {e}</span>)}</div>
         <div className="fc-line"><b>Word</b><span className="ul">{f.word}</span><b>Silly trait</b><span className="ul">{silly}</span></div>

@@ -13,7 +13,8 @@ import { go } from '../App';
 import { Md, describeType, fighterLabel, type Update } from './common';
 import { PoolRoller, RollOrEnter } from './Dice';
 import { useAsk } from './confirm';
-import { RuleLink, itemRule, sectionRule } from './rule';
+import { RuleLink, giftRule, itemRule, powersFor, sectionRule } from './rule';
+import { MdBlock } from './md';
 import { BreakingCard, GearFailTool, GlossaryTool, Grenades, GrenadeTool, Madness, MoreTables, WorldPanel, WorldSetup, scenarioOf } from './BattleExtras';
 
 export function BattleView({ crew, update }: { crew: Crew; update: Update }) {
@@ -154,17 +155,20 @@ function Playing({ crew, b, setB, setF, update }: { crew: Crew; b: Battle; setB:
   const over = () => setB((x) => ({ ...x, phase: 'ended', log: [...x.log, { round: x.round, text: 'Battle over' }] }));
   return (
     <div className="stack">
-      <div className="round-bar card">
-        <div className="row between wrap gap-s">
-          <strong className="round-num">Round {b.round}</strong>
-          <span className="muted small">{fighters.filter((f) => b.fighters[f.id].activated).length}/{fighters.length} activated</span>
-        </div>
+      {/* a slim bar that stays on screen; everything else about the round scrolls with the page */}
+      <div className="round-bar">
+        <strong className="round-num">Round {b.round}</strong>
+        <span className="muted small">{fighters.filter((f) => b.fighters[f.id].activated).length}/{fighters.length} activated</span>
+        <span className="grow" />
+        {end === 'continue' && <button className={`btn small ${allDone ? 'primary' : ''}`} onClick={next}>End round {b.round}</button>}
+        {end === 'roll' && <a className="btn small" href="#round-end" onClick={(e) => { e.preventDefault(); document.getElementById('round-end')?.scrollIntoView({ behavior: 'smooth' }); }}>End of round ↓</a>}
+      </div>
+      <div className="card stack-s">
         <BreakingCard crew={crew} b={b} setB={setB} />
         {b.round === R.pod.value && <PodRoll crew={crew} b={b} setB={setB} />}
         <RoundStart crew={crew} b={b} />
         <WorldPanel b={b} setB={setB} />
-        <div className="row gap-s wrap">
-          {end === 'continue' && <button className={`btn ${allDone ? 'primary' : ''}`} onClick={next}>End round {b.round}</button>}
+        <div className="row gap-s wrap" id="round-end">
           {end === 'roll' && (
             <div className="stack-s">
               <span className="small">End of round {b.round}: a d6, {R.rounds.extraRoundOn}+ plays another round (9.3).</span>
@@ -301,6 +305,15 @@ function BattleCard({ crew, f, bf, set, update }: { crew: Crew; f: Fighter; bf: 
 
       {bf.putDowns > 0 && onPutDown.map((e) => <FactionNote key={e.effect.id} e={e} small />)}
       <Grenades crew={crew} f={f} bf={bf} set={set} />
+      {hasGift(rules, crew, f) && (
+        <details className="powers small">
+          <summary>Psionic powers&nbsp;<span className="muted">(§ {rules.section('gift')})</span></summary>
+          <ul className="plain-list stack-s">
+            {powersFor(rules, f.species).map((p) => <li key={p.name}><strong>{p.name}</strong> <span className="badge">{p.number}</span> <Md text={p.text} /></li>)}
+          </ul>
+          <RuleLink rule={giftRule(rules, f.species)}>Using it, the drain and madness</RuleLink>
+        </details>
+      )}
       {hasGift(rules, crew, f) && !down && <Madness f={f} bf={bf} set={set} update={update} />}
       {isBot(rules, f) && (
         <div className="seg wrap">
@@ -437,6 +450,11 @@ function QuickRef() {
       <ul className="plain-list">{rules.data.actions.map((a) => <li key={a.Action}><Md text={a.Action} />: <Md text={a['What it does']} /></li>)}</ul>
       <h4>States (5.9)</h4>
       <ul className="plain-list">{rules.data.states.map((s) => <li key={s.State}><Md text={s.State} />: {s['What it does']}. <span className="muted">Ends: {s['When it ends']}</span></li>)}</ul>
+      <h4>Psionic powers ({rules.section('gift')})</h4>
+      <ul className="plain-list">
+        {rules.data.gift_rules.map((g) => <li key={g.label}><strong>{g.label}.</strong> <MdBlock text={g.text} /></li>)}
+        {rules.powers.map((p) => <li key={p.name}><strong>{p.name}</strong> ({p.number}): <Md text={p.text} /></li>)}
+      </ul>
       <h4>Lasting conditions (6.3)</h4>
       <ul className="plain-list">{rules.data.lasting_conditions.map((c) => <li key={c.Condition}><Md text={c.Condition} /> <span className="muted">({plain(c['Bot name'])})</span>: <Md text={c['What it does']} /></li>)}</ul>
     </div>

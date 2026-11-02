@@ -174,6 +174,24 @@ def final():
     return out
 
 
+def bold_paragraphs(file, heading):
+    """The paragraphs of a section that start with a bold label ("**Using it.** ..."); bullets join the paragraph above."""
+    lines = read(file)
+    i = next((k for k, l in enumerate(lines) if l.startswith(heading)), None)
+    if i is None:
+        sys.exit(f"extract_rules: section '{heading}' not found in {file}.")
+    out = []
+    for l in lines[i + 1:]:
+        if l.startswith("#"):
+            break
+        m = re.match(r"\*\*(.+?)\*\* ?(.*)$", l)
+        if m:
+            out.append({"label": m.group(1).rstrip(".:"), "text": m.group(2)})
+        elif l.startswith("- ") and out:
+            out[-1]["text"] += "\n" + l
+    return out
+
+
 def plain(md):
     return re.sub(r"\*\*(.+?)\*\*", r"\1", md).strip()
 
@@ -265,6 +283,7 @@ DATA = {
     "drop_items": lambda: find_table("07-gear.md", "| Drop item | Slot"),
     "relics": lambda: find_table("08-special.md", "| Relic (rite)"),
     "psionic_powers": lambda: find_table("08-special.md", "| Power | Number"),
+    "gift_rules": lambda: bold_paragraphs("08-special.md", "## 8.4"),
     "captain_traits": lambda: find_table("11-crews.md", "| Captain trait | Rule"),
     "shop": shop,
     "recruits": recruits,

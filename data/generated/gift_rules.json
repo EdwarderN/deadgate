@@ -1,0 +1,14 @@
+[
+  {
+    "label": "Using it",
+    "text": "A Use action: choose a **power**, a target in view within **12 inches** (an Announced target needs no line of sight), and make a **Nerve test** against the power's number. **Win or lose, the drain must be paid: two Shook tokens.**"
+  },
+  {
+    "label": "The drain: two Shook tokens",
+    "text": "Each token goes on a **different eligible fighter**: not down, and not already Shook. **If there are not two eligible fighters, the gift cannot be used.** The psion's player chooses from: the psion themselves, **any ally in view within 12 inches**, or **an enemy in base contact with the psion**. Shook is -1 die on that fighter's next attack, test or save (section 5.9); it never puts anyone down."
+  },
+  {
+    "label": "Madness",
+    "text": "If the kept total of the Nerve test is **3 or less** (section 3.5), roll a d6:\n- **1 to 5: gone for the day.** For the rest of the battle the psion is **Frenzied**: on each activation they go for the **closest enemy**. With a ranged weapon they move toward that enemy and shoot the closest enemy in view. Without one they spend both actions moving toward it, and attack in melee as soon as they are in base contact. Their player rolls the dice but makes no choices.\n- **6: for good.** The psion gains the title \"the Cracked\" and the trait **Cracked**: from now on madness comes on a kept total of **5 or less**, and they are Frenzied each time."
+  }
+]

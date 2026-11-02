@@ -122,10 +122,16 @@ export const contactRule = (rules: Rules, name: string): RuleRef | null => {
   return t ? { title: t.name, section: rules.section('contact'), lines: [['Use them to', t.text]] } : null;
 };
 
-export const giftRule = (rules: Rules): RuleRef => ({
-  title: 'The gift', section: rules.section('gift'),
+/** The psionic powers a fighter of this species may use: a power marked "(X only)" is for species X alone (8.4). */
+export const powersFor = (rules: Rules, species?: string | null) =>
+  rules.powers.filter((p) => { const m = p.name.match(/\((.+?) only\)/); return !species || !m || m[1] === species; });
+
+/** The gift (8.4): how it is used, the drain, madness, and the powers (only the fighter's own, when a species is given). */
+export const giftRule = (rules: Rules, species?: string | null): RuleRef => ({
+  title: 'The gift: psionic powers', section: rules.section('gift'),
   lines: [['Who', `Only ${rules.crew.limits.giftSpecies.value.join(' and ')}s, at most ${rules.crew.limits.maxGifted.value} in a crew (${rules.crew.limits.giftSpecies.source}, 11.4)`],
-    ...rules.powers.map((p) => [`${p.name} (${p.number})`, p.text] as [string, string])],
+    ...rules.data.gift_rules.map((g) => [g.label, g.text] as [string, string]),
+    ...powersFor(rules, species).map((p) => [`${p.name} (${p.number})`, p.text] as [string, string])],
 });
 
 export const ritesRule = (rules: Rules): RuleRef => ({

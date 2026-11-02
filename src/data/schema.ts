@@ -120,6 +120,7 @@ export const generatedSchemas = {
     scenarios: z.array(z.object({ name: str, title: str, lore: str, sections: z.array(z.object({ label: str, text: str })).min(4) })).length(3),
   })).min(1),
   final: z.array(z.object({ label: str, text: str })).min(1),
+  gift_rules: z.array(z.object({ label: str, text: str })).min(1),
 };
 export type Effect = z.infer<typeof effectSchema>;
 export type TaskPay = z.infer<typeof taskPaySchema>;

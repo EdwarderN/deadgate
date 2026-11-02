@@ -113,7 +113,7 @@ function FighterPanel({ crew, fighter: f, update, open, toggle, messages }: { cr
           <p className="small">
             <RuleLink rule={speciesRule(rules, f.species)}>{f.species}</RuleLink>
             {f.type && <> · <RuleLink rule={typeRule(rules, crew.faction, f.type)}>{f.type}</RuleLink></>}
-            {hasGift(rules, crew, f) && <> · <RuleLink rule={giftRule(rules)}>The gift</RuleLink></>}
+            {hasGift(rules, crew, f) && <> · <RuleLink rule={giftRule(rules, f.species)}>The gift</RuleLink></>}
             {hasRites(rules, crew, f) && <> · <RuleLink rule={ritesRule(rules)}>Rites</RuleLink>: {ritesKnown(rules, f).join(', ') || 'none chosen'}</>}
             {(f.marks ?? []).map((m) => <span key={m}> · <strong>{m}</strong> <button className="link danger" onClick={() => set({ marks: (f.marks ?? []).filter((x) => x !== m) })}>remove</button></span>)}
             {f.rumour?.name && <> · Rumour: <strong>{f.rumour.name}</strong>{f.rumour.done ? ' (fulfilled)' : ''}</>}
