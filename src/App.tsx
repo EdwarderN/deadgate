@@ -4,7 +4,7 @@ import { newCrew } from './engine/crew';
 import type { Crew } from './engine/model';
 import { uid } from './engine/model';
 import { validate } from './engine/validate';
-import { crewFromShare, crewToJson, download, fileName, loadCrews, parseCrewJson, saveCrews } from './store';
+import { crewFromShare, crewToJson, download, fileName, loadCrews, parseCrewJson, safeColour, saveCrews } from './store';
 import { RuleProvider } from './ui/rule';
 import { Builder } from './ui/Builder';
 import { Campaign } from './ui/Campaign';
@@ -136,7 +136,7 @@ function Home({ crews, put, remove, setNotice }: { crews: Crew[]; put: (c: Crew)
       ) : (
         <ul className="crew-list">
           {crews.map((c) => (
-            <li key={c.id} className="crew-item" style={{ borderLeftColor: c.tape || undefined }}>
+            <li key={c.id} className="crew-item" style={{ borderLeftColor: safeColour(c.tape) }}>
               <a href={`#/crew/${c.id}`} className="crew-link">
                 <strong>{c.name || 'Unnamed crew'}</strong>
                 <span className="muted">{[c.faction, c.subfaction].filter(Boolean).join(', ') || 'No faction yet'} · {c.fighters.length} fighters</span>

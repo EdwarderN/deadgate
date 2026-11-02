@@ -29,7 +29,7 @@ To do it yourself, in this folder:
    - **Renamed injuries, traits or items:** players' saved crews keep the old name. The app shows a warning on those crews, and the player picks the new one on the card.
 4. **Run the tests** (`npm test`) until they pass. They fail if a table row has no entry, if a number in an entry no longer matches the book (say a story event now pays 5 parts and its entry still says 4), or if a name in the hand-kept files no longer exists in the book. The message names the file and the row.
 5. **The version** shown in the app comes from the "Version" line in the rulebook's `00-front.md`. The report warns if it didn't change.
-6. **Build and publish:** `npm run build`, then copy `dist/` to the web host.
+6. **Publish:** push to GitHub. The site at https://edwardern.github.io/deadgate/ rebuilds itself after the tests pass (watch the *Actions* tab on GitHub; a red cross means a test failed and the old version stays up).
 
 ## The battle companion and the after-battle steps
 

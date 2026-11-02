@@ -5,7 +5,7 @@ import { z } from 'zod';
 const str = z.string();
 const row = (...keys: string[]) => z.object(Object.fromEntries(keys.map((k) => [k, str]))).passthrough();
 const rows = (...keys: string[]) => z.array(row(...keys)).min(1);
-const listsOf = (...keys: string[]) => z.record(rows(...keys));
+const listsOf = (...keys: string[]) => z.record(z.string(), rows(...keys));
 
 export const sourceSchema = z.enum(['copy', 'old stock']);
 
@@ -17,7 +17,7 @@ export const catalogItemSchema = z.object({
   note: str.nullable(),
   key: str,
   kind: z.enum(['weapon', 'armour', 'frame', 'grenade', 'device', 'medical kit', 'relic', 'robo-arm', 'prosthetic', 'shield', 'force field']),
-  rules: z.record(z.unknown()),
+  rules: z.record(z.string(), z.unknown()),
 });
 
 export const factionSchema = z.object({
@@ -37,7 +37,7 @@ export const factionSchema = z.object({
 
 export const metaSchema = z.object({
   rulebookVersion: str,
-  files: z.record(z.number()),
+  files: z.record(z.string(), z.number()),
   unlinkedShopItems: z.array(str),
 });
 
@@ -84,10 +84,10 @@ export const generatedSchemas = {
   consequences: listsOf('d6', 'Result'),
   lasting_conditions: rows('Condition', 'Bot name', 'What it does'),
   clashes: listsOf('d66', 'Result'),
-  voices: z.record(z.object({ intro: str, rows: rows('d6', 'Result', 'Effect', 'Mark') })),
+  voices: z.record(z.string(), z.object({ intro: str, rows: rows('d6', 'Result', 'Effect', 'Mark') })),
   drop_table: rows('d66', 'What came out'),
   generic_xp: rows('Deed', 'XP'),
-  deed_tiers: z.record(z.object({ tier: str, xp: z.number() })),
+  deed_tiers: z.record(z.string(), z.object({ tier: str, xp: z.number() })),
   word_audiences: rows('Audience', 'What it is', 'Fulfilled', 'Failed'),
   injury_tables: listsOf('d66', 'Result'),
   bot_words: rows('Organic result', 'Bot result'),
@@ -196,19 +196,19 @@ export const factionRulesSchema = z.object({
   priceRules: z.array(priceRule).optional(),
   specials: z.object({ gift: z.number().nullable(), rites: z.number().nullable(), bots: z.boolean(), volunteer: z.number().optional() }),
   types: z.boolean(),
-  typeGrants: z.record(z.object({ carriesRelics: z.boolean().optional(), note: str.optional(), rites: z.boolean().optional(), ritesKnown: z.number().optional(), gift: z.boolean().optional(), speciesOnly: z.array(str).optional() })).optional(),
+  typeGrants: z.record(z.string(), z.object({ carriesRelics: z.boolean().optional(), note: str.optional(), rites: z.boolean().optional(), ritesKnown: z.number().optional(), gift: z.boolean().optional(), speciesOnly: z.array(str).optional() })).optional(),
   ritesKnownByAnyPriest: z.object({ value: z.number(), rule: z.number() }).optional(),
   credit: z.object({ value: z.number(), rule: z.number(), note: str.optional() }).optional(),
   fixedRookies: z.array(str).optional(),
   captainType: str.optional(),
-  typeSpecies: z.record(str).optional(),
+  typeSpecies: z.record(z.string(), str).optional(),
   rookiesMayBeBots: sourced(z.boolean()).optional(),
   noWords: z.boolean().optional(),
   wordKind: sourced(str).optional(),
   effects: z.array(effectSchema).optional(),
   taskPay: z.array(taskPaySchema).optional(),
-  typeRules: z.record(z.object({ injuryTable: z.enum(['gentle', 'harsh']).optional(), putDownXpTo: str.optional(), noTitle: z.boolean().optional(), builtIn: z.object({ kind: str, source: sourceSchema, maxPrice: z.number() }).optional(), note: str.optional(), source: str })).optional(),
-  typeLimits: sourced(z.record(z.number())).optional(),
+  typeRules: z.record(z.string(), z.object({ injuryTable: z.enum(['gentle', 'harsh']).optional(), putDownXpTo: str.optional(), noTitle: z.boolean().optional(), builtIn: z.object({ kind: str, source: sourceSchema, maxPrice: z.number() }).optional(), note: str.optional(), source: str })).optional(),
+  typeLimits: sourced(z.record(z.string(), z.number())).optional(),
 });
 
 const slotRule = z.object({
@@ -257,22 +257,22 @@ export const crewRulesSchema = z.object({
     heavyArmourWithFrame: sourced(z.boolean()),
     civilianFrameArmour: sourced(z.array(str)),
     battery: sourced(z.object({ default: z.number(), militaryFrame: z.number() })),
-    kindSlots: sourced(z.record(slotRule)),
+    kindSlots: sourced(z.record(z.string(), slotRule)),
     frameKeys: sourced(z.object({ military: str, civilian: str })),
     heavyArmourKey: sourced(str),
     mountWeapons: sourced(z.object({ hands: str, alsoTwoHanded: z.boolean() })),
-    moveModifiers: sourced(z.record(z.number())),
-    saveDice: sourced(z.record(z.number())),
-    prosthetics: sourced(z.record(str)),
-    injuryEffects: sourced(z.record(z.object({
+    moveModifiers: sourced(z.record(z.string(), z.number())),
+    saveDice: sourced(z.record(z.string(), z.number())),
+    prosthetics: sourced(z.record(z.string(), str)),
+    injuryEffects: sourced(z.record(z.string(), z.object({
       hands: z.number().optional(),
       moveHalved: z.boolean().optional(),
-      fixedBy: z.record(z.object({ move: z.number() })).optional(),
+      fixedBy: z.record(z.string(), z.object({ move: z.number() })).optional(),
     }))),
     minHands: num,
     restrictedItems: sourced(z.array(z.object({ key: str, factions: z.array(str) }))),
     singleUse: sourced(z.array(str)).extend({ uses: z.number() }),
-    grenadeDistance: sourced(z.record(z.number())).extend({ copyExtra: z.number(), blindExtra: z.number() }),
+    grenadeDistance: sourced(z.record(z.string(), z.number())).extend({ copyExtra: z.number(), blindExtra: z.number() }),
   }).passthrough(),
   experience: z.object({
     ladder: sourced(z.array(z.number())).extend({ gapAfter: z.object({ value: z.number(), growth: z.number() }) }),
@@ -300,12 +300,12 @@ export const crewRulesSchema = z.object({
     statuses: sourced(z.array(str)),
     fates: sourced(z.array(str)),
     relicLeadKind: sourced(str),
-    contactUses: sourced(z.record(z.object({ task: str.optional(), target: z.number().optional(), laidUpToSore: z.boolean().optional(), prostheticFraction: z.number().optional(), findsOnFailure: z.number().optional(), hireDiscount: z.number().optional(), airTaxFraction: z.number().optional() }))),
-    sillyEffects: sourced(z.record(z.object({ noAdvances: z.boolean().optional(), tierUp: z.boolean().optional() }))),
+    contactUses: sourced(z.record(z.string(), z.object({ task: str.optional(), target: z.number().optional(), laidUpToSore: z.boolean().optional(), prostheticFraction: z.number().optional(), findsOnFailure: z.number().optional(), hireDiscount: z.number().optional(), airTaxFraction: z.number().optional() }))),
+    sillyEffects: sourced(z.record(z.string(), z.object({ noAdvances: z.boolean().optional(), tierUp: z.boolean().optional() }))),
     season: sourced(z.tuple([z.number(), z.number()])),
   }),
   final: z.object({ words: num, spotlightFrom: num, title: sourced(str), deployment: sourced(str) }),
-  sections: z.object({ value: z.record(str) }).passthrough(),
+  sections: z.object({ value: z.record(z.string(), str) }).passthrough(),
   dice: z.object({ netEdgeCap: num, badKeptTotal: num }),
   factionPayCap: num,
   taskPay: sourced(z.array(taskPaySchema)),
@@ -321,13 +321,13 @@ export const crewRulesSchema = z.object({
     boastXpBonus: num,
     boastAudience: sourced(str),
     legendTiers: sourced(z.array(str)),
-    sillyTables: sourced(z.record(str)),
-    breaking: sourced(z.number()).extend({ roundUp: z.boolean(), rating: str, target: z.number(), captainTraits: z.record(z.number()) }),
+    sillyTables: sourced(z.record(z.string(), str)),
+    breaking: sourced(z.number()).extend({ roundUp: z.boolean(), rating: str, target: z.number(), captainTraits: z.record(z.string(), z.number()) }),
     worldEventRound: num,
     tableSize: num.extend({ small: str, large: str }),
     madness: sourced(str).extend({ frenzied: str, cracked: str, trait: str, title: str }),
     rumourWord: num.extend({ tier: str, audience: str, silly: str, past: str }),
-    wagerStakes: sourced(z.record(z.number())).extend({ audience: str, noTakerTag: str }),
+    wagerStakes: sourced(z.record(z.string(), z.number())).extend({ audience: str, noTakerTag: str }),
   }),
   afterBattle: z.object({
     injuryTables: sourced(z.object({ gentle: str, harsh: str })),
@@ -335,7 +335,7 @@ export const crewRulesSchema = z.object({
     botDeadFate: sourced(str),
     takenFate: sourced(str),
     genericXp: sourced(z.object({ cameHome: str, putDown: str, didJob: str })),
-    leaguePoints: sourced(z.record(str)),
+    leaguePoints: sourced(z.record(z.string(), str)),
     taskBlockedStatuses: sourced(z.array(str)),
     taskTableDie: sourced(str).extend({ ownTask: str }),
     resetStatusesAtBreak: sourced(z.boolean()),
@@ -343,9 +343,9 @@ export const crewRulesSchema = z.object({
     botCore: num,
     twistTest: sourced(str),
     taskPayDoubleIsPrinted: sourced(z.boolean()),
-    storyRowHints: sourced(z.record(z.enum(['heldField', 'notHeldField', 'ran', 'lostSomeone', 'captive', 'legend']))),
+    storyRowHints: sourced(z.record(z.string(), z.enum(['heldField', 'notHeldField', 'ran', 'lostSomeone', 'captive', 'legend']))),
   }),
-  factions: z.record(factionRulesSchema),
+  factions: z.record(z.string(), factionRulesSchema),
 }).passthrough();
 
 export type CrewRules = z.infer<typeof crewRulesSchema>;
@@ -398,13 +398,13 @@ export const effSchema: z.ZodType<Eff> = z.lazy(() => z.object({
 const effs = z.array(effSchema);
 export const outcomesSchema = z.object({
   _about: str, source: str,
-  storyEvents: z.record(z.record(z.object({ accept: effs, pay: effs.optional(), twist: z.object({ rating: str, success: effs, failure: effs }).optional() }))),
-  injuryTables: z.record(z.record(effs)),
-  taskBase: z.record(z.object({ success: effs, failure: effs, needs: z.enum(['patient', 'teacher']).optional() })),
-  taskTables: z.record(z.record(effs)),
-  ownTasks: z.record(z.object({ success: effs, failure: effs, table: z.record(effs) })),
-  finds: z.record(effs),
-  dropTable: z.record(effs),
+  storyEvents: z.record(z.string(), z.record(z.string(), z.object({ accept: effs, pay: effs.optional(), twist: z.object({ rating: str, success: effs, failure: effs }).optional() }))),
+  injuryTables: z.record(z.string(), z.record(z.string(), effs)),
+  taskBase: z.record(z.string(), z.object({ success: effs, failure: effs, needs: z.enum(['patient', 'teacher']).optional() })),
+  taskTables: z.record(z.string(), z.record(z.string(), effs)),
+  ownTasks: z.record(z.string(), z.object({ success: effs, failure: effs, table: z.record(z.string(), effs) })),
+  finds: z.record(z.string(), effs),
+  dropTable: z.record(z.string(), effs),
   prize: effs,
   finalPrize: effs,
 });

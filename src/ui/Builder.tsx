@@ -6,7 +6,7 @@ import {
 } from '../engine/crew';
 import type { Crew, Fighter } from '../engine/model';
 import { validate, type Message, type Step } from '../engine/validate';
-import { crewToJson, download, fileName, shareLink } from '../store';
+import { crewToJson, download, fileName, safeColour, shareLink } from '../store';
 import { go } from '../App';
 import { Equip, FighterBasics, Hire, ItemChip, Md, Messages, PartsCounter, SellerControl, Shop, Stash, describeType, fighterLabel, patchFighter, type Update } from './common';
 import { copyLink, useAsk } from './confirm';
@@ -106,7 +106,7 @@ function FactionStep({ crew, update }: { crew: Crew; update: Update }) {
           <span>Tape colour <span className="muted">(optional)</span></span>
           <span className="row gap-s">
             <input list="tapes" value={crew.tape} onChange={(e) => update((c) => ({ ...c, tape: e.target.value }))} placeholder="yellow" />
-            <span className="swatch" style={{ background: TAPE_CSS[crew.tape] ?? (crew.tape || 'transparent') }} aria-hidden="true" />
+            <span className="swatch" style={{ background: TAPE_CSS[crew.tape] ?? safeColour(crew.tape) ?? 'transparent' }} aria-hidden="true" />
           </span>
           <datalist id="tapes">{TAPES.map((t) => <option key={t} value={t} />)}</datalist>
         </label>

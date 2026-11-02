@@ -6,7 +6,7 @@ import {
 } from '../engine/crew';
 import { uid, type Advance, type Crew, type Fighter } from '../engine/model';
 import { validate, type Message } from '../engine/validate';
-import { crewToJson, download, fileName, shareLink } from '../store';
+import { crewToJson, download, fileName, safeColour, shareLink } from '../store';
 import { go } from '../App';
 import { Chassis, Equip, Hire, Recharge, Messages, PartsCounter, Shop, Stash, describeType, fighterLabel, patchFighter, type Update } from './common';
 import { copyLink, useAsk } from './confirm';
@@ -28,7 +28,7 @@ export function Campaign({ crew, update }: { crew: Crew; update: Update }) {
     <div className="campaign">
       <div className="build-head">
         <div>
-          <h1 className="crew-title" style={{ borderBottomColor: crew.tape || undefined }}>{crew.name || 'Unnamed crew'}</h1>
+          <h1 className="crew-title" style={{ borderBottomColor: safeColour(crew.tape) }}>{crew.name || 'Unnamed crew'}</h1>
           <p className="muted small">{crew.faction}, {crew.subfaction} · {crew.fighters.length} fighters · captain {captainOf(crew)?.name || 'none'}</p>
           {errors.length ? <span className="badge err">{errors.length} to fix</span> : <span className="badge ok">Legal</span>}
         </div>
