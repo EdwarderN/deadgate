@@ -111,6 +111,8 @@ function FighterPanel({ crew, fighter: f, update, open, toggle, messages }: { cr
             {f.type && <> · <RuleLink rule={typeRule(rules, crew.faction, f.type)}>{f.type}</RuleLink></>}
             {hasGift(rules, crew, f) && <> · <RuleLink rule={giftRule(rules)}>The gift</RuleLink></>}
             {hasRites(rules, crew, f) && <> · <RuleLink rule={ritesRule(rules)}>Rites</RuleLink>: {ritesKnown(rules, f).join(', ') || 'none chosen'}</>}
+            {(f.marks ?? []).map((m) => <span key={m}> · <strong>{m}</strong> <button className="link danger" onClick={() => set({ marks: (f.marks ?? []).filter((x) => x !== m) })}>remove</button></span>)}
+            {f.rumour?.name && <> · Rumour: <strong>{f.rumour.name}</strong>{f.rumour.done ? ' (fulfilled)' : ''}</>}
           </p>
           {f.id !== crew.captainId && (
             <button className="btn small" onClick={async () => { if (await ask(`Make ${fighterLabel(f)} the captain? A new captain takes one captain trait free (11.2).`)) update((c) => ({ ...c, captainId: f.id })); }}>Make captain</button>
@@ -207,7 +209,9 @@ export function Experience({ crew, fighter: f, update }: { crew: Crew; fighter: 
           </li>
         ))}
       </ol>
-      {pending > 0 ? (
+      {pending > 0 && f.sillyTrait && rules.crew.campaign.sillyEffects.value[f.sillyTrait]?.noAdvances ? (
+        <p className="note small">{f.sillyTrait}: {fighterLabel(f)} takes no advance until they fulfil a Word. Their XP still counts, so they catch up at once ({rules.crew.campaign.sillyEffects.source}).</p>
+      ) : pending > 0 ? (
         <div className="take-advance row gap wrap">
           <label className="field"><span>Advance {f.advances.length + 1}</span>
             <select value={kind} onChange={(ev) => { setKind(ev.target.value as Advance['kind']); setPick(''); }}>
@@ -467,10 +471,18 @@ function SeasonTab({ crew, update }: { crew: Crew; update: Update }) {
   const s = crew.notes.season;
   const set = (season: Crew['notes']['season']) => update((c) => ({ ...c, notes: { ...c.notes, season } }));
   const total = s.reduce((a, x) => a + (x.points || 0), 0);
+  const rules = getRules();
+  const [lo, hi] = rules.crew.campaign.season.value;
+  const played = s.filter((x) => x.battle !== 'Final').length;
   const cols: [keyof Crew['notes']['season'][number], string][] = [['battle', 'Battle'], ['world', 'World'], ['opponent', 'Opponent'], ['winCond', 'Winning condition'], ['heldField', 'Held the field'], ['story', 'Story event']];
   return (
     <div className="stack">
-      <p>League points: <strong>{total}</strong> over {s.length} battle{s.length === 1 ? '' : 's'} (14.12).</p>
+      <p>League points: <strong>{total}</strong> over {played} battle{played === 1 ? '' : 's'} (14.12). A season is {lo} to {hi} battles, then the Final for the top two ({rules.crew.campaign.season.source}).</p>
+      {crew.parts < 0 && played >= lo && (
+        <div className="note small">
+          <strong>Debts come due.</strong> After its last battle of the season, a crew below 0 parts sells items at half price until it reaches 0; the opponent of its last battle picks the items (14.11). Sell them from the stash or a fighter's gear ({-crew.parts} parts to go).
+        </div>
+      )}
       <div className="table-scroll">
         <table className="tbl season">
           <thead><tr>{cols.map(([, l]) => <th key={l}>{l}</th>)}<th>Points</th><th /></tr></thead>

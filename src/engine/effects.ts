@@ -5,7 +5,7 @@
 import { plain, type Eff, type ItemDef, type Rules } from '../data/rules';
 import { captainOf, isBot, itemPrice } from './crew';
 import { cellCovers, lookup } from './dice';
-import { positionDef } from './battle';
+import { makesLegend, positionDef } from './battle';
 import { deathFate, type Change } from './outcomes';
 import type { Battle, Crew, Fighter } from './model';
 
@@ -17,6 +17,8 @@ export interface EffCtx {
   battle?: Battle | null;
   /** the injury table the row came from, for re-rolls */
   injuryTable?: string;
+  /** a bot's core got home (evacuated, captured, held the field, 13.3) */
+  coreHome?: boolean;
   note: string;
 }
 export type EffState = Record<string, unknown>;
@@ -64,8 +66,7 @@ export function whoOptions(rules: Rules, crew: Crew, who: string, ctx: EffCtx): 
       return { auto: null, options: ev.length ? ev : crew.fighters, label: 'a fighter who was evacuated' };
     }
     case 'legend': {
-      const tiers = rules.crew.battle.legendTiers.value;
-      const lg = b ? crew.fighters.filter((x) => { const w = b.fighters[x.id]?.word; return w?.result === 'fulfilled' && tiers.some((t) => rules.deeds.find((d) => d.id === w.deed)?.tier.startsWith(t)); }) : [];
+      const lg = b ? crew.fighters.filter((x) => { const w = b.fighters[x.id]?.word; return w?.result === 'fulfilled' && makesLegend(rules, w.deed); }) : [];
       return lg.length === 1 ? { auto: lg, options: [], label: 'the legend' } : { auto: null, options: lg.length ? lg : crew.fighters, label: 'the legend' };
     }
     case 'bot': return { auto: null, options: crew.fighters.filter((x) => isBot(rules, x)), label: 'a bot' };
@@ -174,9 +175,9 @@ export function resolveEffects(rules: Rules, crew: Crew, effs: Eff[], ctx: EffCt
       }
     }
     if (e.buyItem) {
-      const opts = rules.shopItems.filter((d) => !e.buyItem!.source || d.source === e.buyItem!.source);
+      const opts = rules.shopItems.filter((d) => (!e.buyItem!.source || d.source === e.buyItem!.source) && (!e.buyItem!.kinds || e.buyItem!.kinds.includes(d.kind)));
       const v = String(st[p] ?? '');
-      out.nodes.push({ kind: 'select', path: p, label: `Buy one ${e.buyItem.source ?? ''} item at ${e.buyItem.fraction === 0.5 ? 'half' : ''} price`, options: opts.map((d) => ({ value: d.id, label: `${d.name} (${Math.floor(itemPrice(rules, crew, d) * e.buyItem!.fraction)})` })), value: v });
+      out.nodes.push({ kind: 'select', path: p, label: `Buy one ${e.buyItem.source ?? ''} ${e.buyItem.kinds?.join(' or ') ?? 'item'} at ${e.buyItem.fraction === 0.5 ? 'half ' : ''}price`, options: opts.map((d) => ({ value: d.id, label: `${d.name} (${Math.floor(itemPrice(rules, crew, d) * e.buyItem!.fraction)})` })), value: v });
       const d = opts.find((x) => x.id === v);
       if (d) { out.changes.push({ kind: 'addItem', itemId: d.id, fid: null, slot: 'stash' }, { kind: 'parts', amount: -Math.floor(itemPrice(rules, crew, d) * e.buyItem.fraction), note: `Bought ${d.name}` }); }
     }
@@ -231,7 +232,11 @@ export function resolveEffects(rules: Rules, crew: Crew, effs: Eff[], ctx: EffCt
         r.nodes = []; merge(r);
       }
     }
-    if (e.dead) for (const f of people('self', p)) auto({ kind: 'leave', fid: f.id, fate: deathFate(rules, f), note: ctx.note }, `${name(f)}: ${deathFate(rules, f)}. Their gear returns to the crew`);
+    if (e.dead) for (const f of people('self', p)) {
+      // A destroyed bot whose core got home is rebuilt with half its Experience (13.3).
+      if (isBot(rules, f) && ctx.coreHome) auto({ kind: 'botReplace', fid: f.id, fraction: rules.crew.afterBattle.botCore.value }, `${name(f)}: ${deathFate(rules, f)}, but the core came home: a new chassis, half the Experience`);
+      else auto({ kind: 'leave', fid: f.id, fate: deathFate(rules, f), note: ctx.note }, `${name(f)}: ${deathFate(rules, f)}. Their gear returns to the crew`);
+    }
     if (e.leave) for (const f of people(e.leave, p)) auto({ kind: 'leave', fid: f.id, fate: 'Left the crew', note: ctx.note }, `${name(f)} leaves the crew (their gear stays)`);
     if (e.finds) {
       const rolls = ((st[p] as number[]) ?? []);

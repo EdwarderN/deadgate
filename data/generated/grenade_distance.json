@@ -1,0 +1,16 @@
+[
+  {
+    "Thrower's Shoot": "Distance off the point",
+    "0": "2 to 4",
+    "1": "1 to 3",
+    "2": "0 to 2",
+    "3": "0 or 1"
+  },
+  {
+    "Thrower's Shoot": "Lands on the point",
+    "0": "never",
+    "1": "never",
+    "2": "1 in 3",
+    "3": "2 in 3"
+  }
+]

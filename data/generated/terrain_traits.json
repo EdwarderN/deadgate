@@ -1,0 +1,34 @@
+[
+  {
+    "Trait": "**Light cover**",
+    "What it does": "A shooter has -1 die against a target if any part of the target is hidden by this piece"
+  },
+  {
+    "Trait": "**Heavy cover**",
+    "What it does": "A shooter has -2 dice against a target if any part of the target is hidden by this piece"
+  },
+  {
+    "Trait": "**Solid**",
+    "What it does": "Thick concrete, hull plate, bulkheads. Blocks sight and shots completely, **even against an Announced target**"
+  },
+  {
+    "Trait": "**Difficult**",
+    "What it does": "Rubble, thick growth, deep mud. Moving through it halves the distance"
+  },
+  {
+    "Trait": "**Dangerous**",
+    "What it does": "Fire, live wires, acid. A fighter who **enters** it (moving, pushed or thrown) makes a Routine Grit test, once per move; on a failure they take a **glance** (their save applies)"
+  },
+  {
+    "Trait": "**Wet**",
+    "What it does": "Water. Halves movement for a fighter who cannot swim; Brinies move at their water Move"
+  },
+  {
+    "Trait": "**Deep water**",
+    "What it does": "A river, a flooded hold, a sump. It is also **Wet**. A fighter who enters it, and again each time they start an activation in it, makes a Routine Grit test. On a failure the current takes them: they are moved d6 inches **downstream** (the players agree which way that is before the battle) and left prone. Brinies make no test: they just move"
+  },
+  {
+    "Trait": "**Powered**",
+    "What it does": "A machine with a voice: a door, lift, charging station or turret. It can be prompted (section 8.2)"
+  }
+]

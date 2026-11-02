@@ -1,0 +1,18 @@
+[
+  {
+    "Shot total": "Under 7",
+    "Result": "A miss"
+  },
+  {
+    "Shot total": "7 or 8",
+    "Result": "**Glance**"
+  },
+  {
+    "Shot total": "9 or 10",
+    "Result": "**Solid**"
+  },
+  {
+    "Shot total": "11 or more",
+    "Result": "**Crushing**"
+  }
+]

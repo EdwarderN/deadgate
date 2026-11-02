@@ -1,0 +1,30 @@
+[
+  {
+    "Helps the shooter": "Shoot rating",
+    "Dice": "+1 per point"
+  },
+  {
+    "Helps the shooter": "Aim (the action)",
+    "Dice": "+1"
+  },
+  {
+    "Helps the shooter": "Short range (within half the weapon's range)",
+    "Dice": "+1"
+  },
+  {
+    "Helps the shooter": "Shooter on higher ground (at least 1 inch above, section 5.10)",
+    "Dice": "+1"
+  },
+  {
+    "Helps the shooter": "Hyped (spent)",
+    "Dice": "+1"
+  },
+  {
+    "Helps the shooter": "Power weapon pushed (1 more Energy)",
+    "Dice": "+1"
+  },
+  {
+    "Helps the shooter": "Gear, traits and conditions",
+    "Dice": "As listed"
+  }
+]

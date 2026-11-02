@@ -97,6 +97,79 @@ def deed_tiers():
     return out
 
 
+def labelled_sections(lines):
+    """Paragraphs that start with a **Label.**, each with the bullets and tables under it."""
+    out, cur = [], None
+    for l in lines:
+        m = re.match(r"\*\*([^*]+?)[.:]?\*\*[.:]?\s*(.*)$", l)
+        if m and not l.startswith("**Battles**"):
+            cur = {"label": m.group(1).strip().rstrip(".:"), "text": m.group(2).strip()}
+            out.append(cur)
+        elif cur is not None and (l.startswith("- ") or l.startswith("|")):
+            cur["text"] += ("\n" if cur["text"] else "") + l
+        elif l.startswith(":::") or l.startswith("<div") or l.startswith("##"):
+            cur = None
+    return out
+
+
+def worlds():
+    """Chapter 10: each world's always-on rule, terrain, round 3 events and its three battles."""
+    lines = read("10-worlds.md")
+    starts = [i for i, l in enumerate(lines) if re.match(r"## 10\.\d+ ", l)]
+    out = []
+    for n, s in enumerate(starts):
+        e = starts[n + 1] if n + 1 < len(starts) else len(lines)
+        block = lines[s:e]
+        name = re.sub(r"## 10\.\d+ ", "", block[0]).strip()
+        sec = re.match(r"## (10\.\d+)", block[0]).group(1)
+        if not any(l.startswith(":::worldsheet") for l in block):
+            continue  # 10.9, terrain to build
+        w = {"section": sec, "name": name, "ground": "", "alwaysOn": "", "terrain": "", "events": [], "battles": [], "scenarios": []}
+        for i, l in enumerate(block):
+            m = re.match(r"\*\*(.+?)\*\* World table: ([\d-]+)", l)
+            if m:
+                w["ground"] = m.group(1).rstrip(".")
+            if l.startswith("**Always on") and not w["alwaysOn"]:
+                w["alwaysOn"] = l
+            if l.startswith("**Typical terrain") and not w["terrain"]:
+                w["terrain"] = l
+            if l.startswith("**Event at the start") and not w["events"]:
+                k = i + 1
+                while k < len(block) and not block[k].startswith("|"):
+                    k += 1
+                w["events"] = table_at(block, k)[1]
+            if l.startswith("**Battles**") and not w["battles"]:
+                w["battles"] = [{"d6": d, "name": nm} for d, nm in re.findall(r"(\d-\d) \*\*(.+?)\*\*", l)]
+        heads = [i for i, l in enumerate(block) if l.startswith("### ")]
+        for h, i in enumerate(heads):
+            j = heads[h + 1] if h + 1 < len(heads) else len(block)
+            title = block[i][4:].strip()
+            body = [l for l in block[i + 1:j]]
+            lore = next((re.sub(r"<[^>]+>", "", l).strip() for l in body if l.startswith('<div class="scen-lore">')), "")
+            w["scenarios"].append({"name": title.split(": ", 1)[-1], "title": title, "lore": lore, "sections": labelled_sections(body)})
+        if len(w["scenarios"]) != len(w["battles"]):
+            sys.exit(f"extract_rules: {name} lists {len(w['battles'])} battles but has {len(w['scenarios'])} scenario pages.")
+        out.append(w)
+    if not out:
+        sys.exit("extract_rules: no worlds found in 10-worlds.md.")
+    return out
+
+
+def final():
+    lines = read("14-break.md")
+    i = next((k for k, l in enumerate(lines) if l.startswith("## 14.13")), None)
+    if i is None:
+        sys.exit("extract_rules: section 14.13 (The Final) not found.")
+    out = []
+    for l in lines[i + 1:]:
+        if l.startswith("## "):
+            break
+        m = re.match(r"- \*\*(.+?)\*\* ?(.*)$", l)
+        if m:
+            out.append({"label": m.group(1).rstrip("."), "text": m.group(2)})
+    return out
+
+
 def plain(md):
     return re.sub(r"\*\*(.+?)\*\*", r"\1", md).strip()
 
@@ -216,6 +289,24 @@ DATA = {
     "lasting_conditions": lambda: find_table("06-hits.md", "| Condition | Bot name"),
     "clashes": lambda: tables_under_bold("06-hits.md", "| d66 | Result"),
     "voices": lambda: tables_under_heading("08-special.md", "| d6 | Result | Effect | Mark"),
+    "gear_failure": lambda: tables_under_bold("07-gear.md", "| d6 | Result"),
+    "grenade_scatter": lambda: find_table("07-gear.md", "| Direction die | The grenade lands"),
+    "grenade_distance": lambda: find_table("07-gear.md", "| Thrower's Shoot"),
+    "prompt_targets": lambda: find_table("08-special.md", "| Target | Number | Effects"),
+    "melee_results": lambda: find_table("05-battle.md", "| Result | What happens"),
+    "melee_dice": lambda: find_table("05-battle.md", "| Source | Who gets it"),
+    "shot_results": lambda: find_table("05-battle.md", "| Shot total | Result"),
+    "shooting_helps": lambda: find_table("05-battle.md", "| Helps the shooter"),
+    "shooting_protects": lambda: find_table("05-battle.md", "| Protects the target"),
+    "reactions": lambda: find_table("05-battle.md", "| Reaction | What it does | The price"),
+    "force_field_saves": lambda: find_table("05-battle.md", "| What hit the wearer"),
+    "terrain_traits": lambda: find_table("05-battle.md", "| Trait | What it does"),
+    "doors": lambda: find_table("05-battle.md", "| Condition | Token"),
+    "deployment": lambda: find_table("09-setup.md", "| d6 | Deployment"),
+    "world_table": lambda: find_table("09-setup.md", "| d66 | World | Ground"),
+    "npm": lambda: find_table("09-setup.md", "| Model | Move | Fight"),
+    "worlds": worlds,
+    "final": final,
     "bot_states": lambda: find_table("08-special.md", "| State | When | What it does"),
     "drop_table": lambda: find_table("09-setup.md", "| d66 | What came out"),
     "generic_xp": lambda: find_table("13-after.md", "| Deed | XP"),

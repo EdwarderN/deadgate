@@ -1,0 +1,27 @@
+[
+  {
+    "d6": "1-2",
+    "Deployment": "**Battle lines**",
+    "Each side's zone": "A strip within **6 inches** of its own table edge, on opposite edges"
+  },
+  {
+    "d6": "3",
+    "Deployment": "**Corners**",
+    "Each side's zone": "A square **12 inches** along each edge from its own corner, on opposite corners"
+  },
+  {
+    "d6": "4",
+    "Deployment": "**Pincers**",
+    "Each side's zone": "Within **4 inches** of two adjacent edges, an L-shape. The sides take opposite Ls, so each L meets the other's at two corners; the 6-inch rule above keeps the fighters apart"
+  },
+  {
+    "d6": "5",
+    "Deployment": "**Drop circles**",
+    "Each side's zone": "An **8-inch circle** (a template). In turn, the first player and then the other put their template at the centre of the table and scatter it: a direction die and 2d6 inches. A circle stays wholly on the table and must end at least **12 inches** from the centre of the table and at least **6 inches** from the other circle: if it would not, it slides straight away from the centre, or from the other circle, until it does"
+  },
+  {
+    "d6": "6",
+    "Deployment": "**From anywhere**",
+    "Each side's zone": "Nobody deploys. The first player picks a **home edge** and its 6-inch strip is that side's zone; the other side's is the strip on the opposite edge. Each fighter starts **off the table**: the first time it activates, its first Move enters from **any point on any table edge** (the Move is measured from that point). A fighter off the table cannot be targeted. Any fighter who has not entered by the end of round 1 enters at the start of round 2, in its home strip"
+  }
+]

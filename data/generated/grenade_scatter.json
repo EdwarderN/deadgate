@@ -1,0 +1,26 @@
+[
+  {
+    "Direction die": "1",
+    "The grenade lands": "Back toward the thrower"
+  },
+  {
+    "Direction die": "2",
+    "The grenade lands": "Back and to the left"
+  },
+  {
+    "Direction die": "3",
+    "The grenade lands": "To the left"
+  },
+  {
+    "Direction die": "4",
+    "The grenade lands": "To the right"
+  },
+  {
+    "Direction die": "5",
+    "The grenade lands": "Forward and to the right"
+  },
+  {
+    "Direction die": "6",
+    "The grenade lands": "Straight on, past the point"
+  }
+]

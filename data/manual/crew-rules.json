@@ -329,6 +329,25 @@
         }
       ],
       "source": "7.6, 11.3"
+    },
+    "singleUse": {
+      "value": [
+        "grenade"
+      ],
+      "uses": 2,
+      "source": "7.6",
+      "note": "items of these kinds are used up when thrown; a pair has two"
+    },
+    "grenadeDistance": {
+      "value": {
+        "1-2": 2,
+        "3-4": 3,
+        "5-6": 4
+      },
+      "copyExtra": 1,
+      "blindExtra": 2,
+      "source": "7.6",
+      "note": "the distance die, then subtract the thrower's Shoot (never below 0)"
     }
   },
   "experience": {
@@ -557,6 +576,22 @@
           "subfaction": "Fire Marshals",
           "when": "setup",
           "kind": "reminder"
+        },
+        {
+          "id": "strong-boss-up",
+          "rule": 3,
+          "when": "breaking",
+          "kind": "breakingDice",
+          "amount": 1,
+          "captain": "standing"
+        },
+        {
+          "id": "strong-boss-down",
+          "rule": 3,
+          "when": "breaking",
+          "kind": "breakingDice",
+          "amount": -1,
+          "captain": "down"
         }
       ]
     },
@@ -651,6 +686,13 @@
           "kind": "captiveXp",
           "amount": 1,
           "who": "anyFighter"
+        },
+        {
+          "id": "still-waiting",
+          "rule": 1,
+          "when": "breaking",
+          "kind": "breakingDice",
+          "amount": 1
         }
       ]
     },
@@ -816,6 +858,13 @@
           "kind": "captiveXp",
           "amount": 2,
           "who": "bots"
+        },
+        {
+          "id": "remote-operation",
+          "rule": 1,
+          "when": "breaking",
+          "kind": "breakingThreshold",
+          "fraction": 0.75
         }
       ],
       "typeRules": {
@@ -965,6 +1014,48 @@
       "value": "relic",
       "source": "14.7",
       "note": "the item kind a relic lead buys"
+    },
+    "contactUses": {
+      "value": {
+        "Patron": {
+          "task": "Work a job",
+          "target": 6
+        },
+        "Medic": {
+          "laidUpToSore": true,
+          "prostheticFraction": 0.5
+        },
+        "Informer": {
+          "task": "Hunt rumours",
+          "findsOnFailure": 1
+        },
+        "Fixer": {
+          "hireDiscount": 5
+        },
+        "Friend at the meter": {
+          "airTaxFraction": 0.5
+        }
+      },
+      "source": "14.8",
+      "note": "what each contact does when used; each is used once"
+    },
+    "sillyEffects": {
+      "value": {
+        "Laughed at": {
+          "noAdvances": true
+        },
+        "Doubled down": {
+          "tierUp": true
+        }
+      },
+      "source": "13.7"
+    },
+    "season": {
+      "value": [
+        8,
+        12
+      ],
+      "source": "14.11"
     }
   },
   "sections": {
@@ -1076,10 +1167,16 @@
           "name": "Dragged off",
           "injury": "harshTwice",
           "down": true
+        },
+        {
+          "name": "Core pulled",
+          "botOnly": true,
+          "down": true,
+          "corePulled": true
         }
       ],
       "source": "5.8, 6.4, 9.6, 13.2, 13.4",
-      "note": "injury: which table a fighter who ended the battle so rolls; heldField means gentle if the crew held the field, else harsh"
+      "note": "injury: which table a fighter who ended the battle so rolls; heldField means gentle if the crew held the field, else harsh; corePulled: a bot whose core was pulled (13.3): destroyed without a roll, replaced with half its XP if the core got home"
     },
     "wordsPerSide": {
       "value": 2,
@@ -1115,6 +1212,55 @@
         "Legendary": "Sillier"
       },
       "source": "13.7"
+    },
+    "breaking": {
+      "value": 0.5,
+      "roundUp": true,
+      "rating": "Nerve",
+      "target": 6,
+      "captainTraits": {
+        "Steady crew": 1
+      },
+      "source": "9.4",
+      "note": "once this share of the crew (rounded up) is down, captured or gone, the captain tests at the start of each round"
+    },
+    "worldEventRound": {
+      "value": 3,
+      "source": "9.1"
+    },
+    "tableSize": {
+      "value": 6,
+      "small": "3 by 3 feet",
+      "large": "4 by 4 feet",
+      "source": "9.1",
+      "note": "the small table if neither crew has more than this many fighters"
+    },
+    "madness": {
+      "value": "Frenzied",
+      "frenzied": "1-5",
+      "cracked": "6",
+      "trait": "Cracked",
+      "title": "the Cracked",
+      "source": "8.4"
+    },
+    "rumourWord": {
+      "value": 5,
+      "tier": "Big",
+      "audience": "Vow",
+      "silly": "Sillier",
+      "source": "13.9",
+      "note": "an arrival's rumour: sworn as a Big vow; fulfilled gives its Legend and this XP",
+      "past": "Unwritten"
+    },
+    "wagerStakes": {
+      "value": {
+        "Small": 1,
+        "Big": 2,
+        "Legendary": 3
+      },
+      "audience": "Wager",
+      "noTakerTag": "Oathbreakers",
+      "source": "13.5, 14.10"
     }
   },
   "afterBattle": {
@@ -1188,6 +1334,15 @@
       },
       "source": "14.5",
       "note": "which story rows fit the battle, for the app's suggestion; the player still chooses"
+    },
+    "evacTag": {
+      "value": "Ran",
+      "source": "9.6"
+    },
+    "botCore": {
+      "value": 0.5,
+      "source": "13.3",
+      "note": "left behind: all XP lost; destroyed with the core home: the replacement keeps this share, rounded down"
     }
   },
   "factionPayCap": {
@@ -1219,5 +1374,23 @@
     "source": "11.2, 14.10",
     "note": "changes to a task's pay from captain traits and tags"
   },
-  "_effectsNote": "factions[].effects: faction rules the app acts on. 'rule' (a numbered rule, off when the subfaction replaces it), 'subfaction' or 'type' says whose; 'when' says where it shows (setup, roundStart, pod, putDown, voice, voiceGood, afterBattle, captive, break, legend); 'kind' says what the app does. The rule text shown is the book's own, from data/generated/factions.json."
+  "_effectsNote": "factions[].effects: faction rules the app acts on. 'rule' (a numbered rule, off when the subfaction replaces it), 'subfaction' or 'type' says whose; 'when' says where it shows (setup, roundStart, pod, putDown, voice, voiceGood, afterBattle, captive, break, legend); 'kind' says what the app does. The rule text shown is the book's own, from data/generated/factions.json.",
+  "final": {
+    "words": {
+      "value": 3,
+      "source": "14.13"
+    },
+    "spotlightFrom": {
+      "value": 2,
+      "source": "14.13"
+    },
+    "title": {
+      "value": "Champions",
+      "source": "14.13"
+    },
+    "deployment": {
+      "value": "Battle lines",
+      "source": "14.13"
+    }
+  }
 }

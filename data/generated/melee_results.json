@@ -1,0 +1,18 @@
+[
+  {
+    "Result": "**Attacker wins**",
+    "What happens": "A hit at the margin's severity. The defender saves if they have armour (section 5.7), then rolls on the consequence table (section 6.2). The attacker may take **Press**"
+  },
+  {
+    "Result": "**Defender wins by 1 or 2**",
+    "What happens": "Nothing happens. The defender may take **Press**"
+  },
+  {
+    "Result": "**Defender wins by 3 or more**",
+    "What happens": "**The blow turns back:** the same sequence is run against the attacker, at the severity the margin sets (3 to 5 solid, 6 or more crushing). The defender may take **Press**"
+  },
+  {
+    "Result": "**Tie**",
+    "What happens": "A **clash** (section 6.5)"
+  }
+]

@@ -1,0 +1,80 @@
+{
+  "The weird table.": [
+    {
+      "d6": "1",
+      "Result": "It hums a tune and does nothing. The action is lost"
+    },
+    {
+      "d6": "2",
+      "Result": "It works on the wrong target: the nearest other fighter, friend or foe, gets the effect instead (an item that only helps its user does nothing)"
+    },
+    {
+      "d6": "3",
+      "Result": "**It malfunctions.** Something shorts, heats up or kicks: a glance on the user (their save applies)"
+    },
+    {
+      "d6": "4",
+      "Result": "It works far too well: the effect is as strong as it can be (a hit is crushing, an armour save is passed automatically, and any test the effect would need is passed), then the item is dead until the next battle"
+    },
+    {
+      "d6": "5",
+      "Result": "**Strange field.** The air flickers: every fighter within 2 inches of the user, friend or foe, is **Shook**. The action is lost"
+    },
+    {
+      "d6": "6",
+      "Result": "**It drinks the cell.** The item works, and the user loses 1 Energy (with no Energy, the user is **Shook** instead)"
+    }
+  ],
+  "The bodge table.": [
+    {
+      "d6": "1",
+      "Result": "**The tape gives way.** The item comes apart in the user's hands. If they still have an action this activation, they may spend it on a Routine Tech test to put it back together; otherwise the item is **destroyed for good**: it cannot be recovered after the battle, and can only be bought again"
+    },
+    {
+      "d6": "2",
+      "Result": "**Smoke.** Smoke pours out of the item: a smoke cloud 2 inches across around the user, until the end of the next round"
+    },
+    {
+      "d6": "3",
+      "Result": "**Loud bang.** Nobody is hurt, but the user is **Announced**"
+    },
+    {
+      "d6": "4",
+      "Result": "**Something flies off.** A bolt, a round or a loose part: a glance on the nearest other fighter, friend or foe"
+    },
+    {
+      "d6": "5",
+      "Result": "**It kicks.** The user is thrown back 1 inch and knocked prone"
+    },
+    {
+      "d6": "6",
+      "Result": "**It sulks.** The item clears itself. No further effect"
+    }
+  ],
+  "The weird grenade table.": [
+    {
+      "d6": "1",
+      "Result": "**Dragged in.** Each fighter in the blast is pulled 2 inches straight toward where the grenade landed (they stop at a fighter or a wall)"
+    },
+    {
+      "d6": "2",
+      "Result": "**Thrown out.** Each fighter in the blast is thrown 2 inches straight away from where the grenade landed (they stop at a fighter or a wall)"
+    },
+    {
+      "d6": "3",
+      "Result": "**Knocked down.** Each fighter in the blast is knocked **prone**"
+    },
+    {
+      "d6": "4",
+      "Result": "**Swapped round.** Line the fighters up in order of distance from where the grenade landed (a tie: the thrower's player chooses). Each takes the place of the next one in the line, and the last takes the place of the first. With only one fighter in the blast, nothing happens"
+    },
+    {
+      "d6": "5",
+      "Result": "**Scattered.** Each fighter in the blast rolls a direction die (as on the grenade chart, seen from the thrower) and a d6, and is moved that many inches that way. They stop at a wall or at the first fighter they would pass through"
+    },
+    {
+      "d6": "6",
+      "Result": "**Elsewhere.** Each fighter in the blast is teleported to the **nearest point of the nearest deployment zone**, either side's, and placed on that point (if it is taken, as close to it as possible, and never in base contact with an enemy if it can be avoided)"
+    }
+  ]
+}

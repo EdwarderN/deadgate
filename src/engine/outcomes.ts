@@ -1,7 +1,7 @@
 // Changes to a crew from the after-battle steps, and applying them.
 // What a table row does is data (data/manual/outcomes.json), resolved in effects.ts.
 import { plain, type Rules } from '../data/rules';
-import { addLedger, battery, isBot } from './crew';
+import { addLedger, advancesEarned, battery, isBot } from './crew';
 import { uid, type Crew, type Fighter, type ItemSlot } from './model';
 
 export type Change =
@@ -10,7 +10,7 @@ export type Change =
   | { kind: 'status'; fid: string; value: string }
   | { kind: 'injury'; fid: string; value: string; title: string | null }
   | { kind: 'legend'; fid: string; name: string; title: string | null }
-  | { kind: 'silly'; fid: string; value: string | null }
+  | { kind: 'silly'; fid: string; value: string | null; tier?: string }
   | { kind: 'tag'; value: string }
   | { kind: 'contact'; value: string }
   | { kind: 'rival'; value: string }
@@ -27,6 +27,13 @@ export type Change =
   | { kind: 'laidUpToSore' }
   | { kind: 'title'; fid: string; value: string }
   | { kind: 'recharge'; fid: string | null; amount: number | null; note: string }
+  | { kind: 'useContact'; name: string; why: string }
+  | { kind: 'botCoreLost'; fid: string }
+  | { kind: 'botReplace'; fid: string; fraction: number }
+  | { kind: 'mark'; fid: string; value: string; title: string | null }
+  | { kind: 'rumourPick'; fid: string; value: string }
+  | { kind: 'rumourEnd'; fid: string; fulfilled: boolean }
+  | { kind: 'crewRoll'; name: string; titles: string; fate: string }
   | { kind: 'note'; text: string };
 
 /** The two halves of a story event's twist: "Nerve: success / failure". */
@@ -66,6 +73,13 @@ export function describe(crew: Crew, c: Change): string {
     case 'laidUpToSore': return 'Every Laid up fighter is only Sore';
     case 'title': return `${who(c.fid)} takes the title "${c.value}"`;
     case 'recharge': return `${c.fid ? who(c.fid) : 'Every fighter'}: battery ${c.amount === null ? 'refilled' : `+${c.amount} Energy`}${c.note ? ` (${c.note})` : ''}`;
+    case 'useContact': return `The ${c.name} is used${c.why ? `: ${c.why}` : ''}`;
+    case 'botCoreLost': return `${who(c.fid)}'s core is lost: Experience, advances and Legends are gone (13.3)`;
+    case 'botReplace': return `${who(c.fid)} is rebuilt in a new chassis with ${c.fraction === 0.5 ? 'half' : `${c.fraction}`} their Experience (13.3)`;
+    case 'mark': return `${who(c.fid)} gains ${c.value}${c.title ? ` ("${c.title}")` : ''}`;
+    case 'rumourPick': return `${who(c.fid)}'s rumour: ${c.value}`;
+    case 'rumourEnd': return `${who(c.fid)}'s rumour is ${c.fulfilled ? 'fulfilled' : 'disproved'}`;
+    case 'crewRoll': return `On the crew's roll: ${c.name}, ${c.fate}`;
     case 'note': return `Remember: ${c.text}`;
   }
 }
@@ -85,7 +99,7 @@ export function applyChanges(rules: Rules, crew: Crew, changes: Change[]): { cre
       case 'status': fx(ch.fid, (f) => ({ ...f, status: ch.value })); break;
       case 'injury': fx(ch.fid, (f) => (f.injuries.includes(ch.value) ? f : { ...f, injuries: [...f.injuries, ch.value], titles: ch.title ? Array.from(new Set([...f.titles, ch.title])) : f.titles })); break;
       case 'legend': fx(ch.fid, (f) => (f.legends.some((l) => l.name === ch.name) ? f : { ...f, legends: [...f.legends, { id: uid('g'), name: ch.name, title: ch.title }] })); break;
-      case 'silly': fx(ch.fid, (f) => ({ ...f, sillyTrait: ch.value })); break;
+      case 'silly': fx(ch.fid, (f) => ({ ...f, sillyTrait: ch.value, lastFailedTier: ch.tier ?? f.lastFailedTier })); break;
       case 'tag': {
         const max = rules.crew.limits.maxTags.value;
         let tags = c.notes.tags.filter((x) => x !== ch.value);
@@ -130,6 +144,34 @@ export function applyChanges(rules: Rules, crew: Crew, changes: Change[]): { cre
         c = { ...c, fighters: c.fighters.map((f) => (ch.fid === null || f.id === ch.fid ? fill(f) : f)) };
         break;
       }
+      case 'useContact': {
+        const i = c.notes.contacts.findIndex((x) => x.name === ch.name && !x.used);
+        c = { ...c, notes: { ...c.notes, contacts: c.notes.contacts.map((x, j) => (j === i ? { ...x, used: true } : x)) } };
+        break;
+      }
+      case 'botCoreLost': {
+        const f = c.fighters.find((x) => x.id === ch.fid)!;
+        const titles = [f.title, ...f.titles, ...f.legends.map((l) => l.title ?? '')].filter(Boolean);
+        if (titles.length) c = { ...c, notes: { ...c.notes, roll: [...c.notes.roll, { id: uid('r'), name: f.name || 'A bot', titles: Array.from(new Set(titles)).join(', '), fate: 'Core lost', note: 'Left behind; the titles go on the roll (13.3)' }] } };
+        fx(ch.fid, (x) => ({ ...x, xp: 0, advances: [], legends: [], title: '', titles: [] }));
+        break;
+      }
+      case 'botReplace': {
+        // Half kept: as many advances and Legends as the new total buys; the player can change which on the card (13.3).
+        fx(ch.fid, (f) => {
+          const xp = Math.floor(f.xp * ch.fraction);
+          const n = advancesEarned(rules, xp);
+          return { ...f, xp, advances: f.advances.slice(0, n), legends: f.legends.slice(0, Math.max(0, n - Math.min(n, f.advances.length))), energy: undefined };
+        });
+        break;
+      }
+      case 'mark': fx(ch.fid, (f) => ({ ...f, marks: Array.from(new Set([...(f.marks ?? []), ch.value])), titles: ch.title ? Array.from(new Set([...f.titles, ch.title])) : f.titles, title: f.title || ch.title || '' })); break;
+      case 'rumourPick': fx(ch.fid, (f) => ({ ...f, rumour: { name: ch.value, disproved: f.rumour?.disproved ?? [] }, past: ch.value })); break;
+      case 'rumourEnd': fx(ch.fid, (f) => {
+        const r = f.rumour ?? { name: null, disproved: [] };
+        return ch.fulfilled ? { ...f, rumour: { ...r, name: r.name, done: true } } : { ...f, rumour: { name: null, disproved: [...r.disproved, r.name ?? ''].filter(Boolean) } };
+      }); break;
+      case 'crewRoll': c = { ...c, notes: { ...c.notes, roll: [...c.notes.roll, { id: uid('r'), name: ch.name, titles: ch.titles, fate: ch.fate, note: '' }] } }; break;
       case 'note': break;
     }
   }

@@ -59,6 +59,24 @@ import task_tables from '../../data/generated/task_tables.json';
 import finds from '../../data/generated/finds.json';
 import league_points from '../../data/generated/league_points.json';
 import bot_states from '../../data/generated/bot_states.json';
+import gear_failure from '../../data/generated/gear_failure.json';
+import grenade_scatter from '../../data/generated/grenade_scatter.json';
+import grenade_distance from '../../data/generated/grenade_distance.json';
+import prompt_targets from '../../data/generated/prompt_targets.json';
+import melee_results from '../../data/generated/melee_results.json';
+import melee_dice from '../../data/generated/melee_dice.json';
+import shot_results from '../../data/generated/shot_results.json';
+import shooting_helps from '../../data/generated/shooting_helps.json';
+import shooting_protects from '../../data/generated/shooting_protects.json';
+import reactions from '../../data/generated/reactions.json';
+import force_field_saves from '../../data/generated/force_field_saves.json';
+import terrain_traits from '../../data/generated/terrain_traits.json';
+import doors from '../../data/generated/doors.json';
+import deployment from '../../data/generated/deployment.json';
+import world_table from '../../data/generated/world_table.json';
+import npm from '../../data/generated/npm.json';
+import worlds from '../../data/generated/worlds.json';
+import final from '../../data/generated/final.json';
 import crewRulesJson from '../../data/manual/crew-rules.json';
 import outcomesJson from '../../data/manual/outcomes.json';
 
@@ -69,12 +87,14 @@ export const rawData = {
   rumours, tags, contacts, tasks, glossary, catalog,
   difficulties, severity, states, actions, consequences, lasting_conditions, clashes, voices, drop_table, generic_xp,
   deed_tiers, word_audiences, injury_tables, bot_words, story_rows, story_events, task_tables, finds, league_points, bot_states,
+  gear_failure, grenade_scatter, grenade_distance, prompt_targets, melee_results, melee_dice, shot_results, shooting_helps, shooting_protects, reactions, force_field_saves, terrain_traits, doors, deployment, world_table, npm, worlds, final,
 };
 
 export type RawData = typeof rawData;
 type Tables = Record<string, Row[]>;
 /** The data with its keyed tables typed loosely, so new rows or keys from the book need no code change. */
-export type Data = Omit<RawData, 'deed_tiers' | 'injury_tables' | 'task_tables' | 'consequences' | 'clashes' | 'voices' | 'story_events'> & {
+export type Data = Omit<RawData, 'deed_tiers' | 'injury_tables' | 'task_tables' | 'consequences' | 'clashes' | 'voices' | 'story_events' | 'gear_failure'> & {
+  gear_failure: Tables;
   deed_tiers: Record<string, { tier: string; xp: number }>;
   injury_tables: Tables; task_tables: Tables; consequences: Tables; clashes: Tables; story_events: Tables;
   voices: Record<string, { intro: string; rows: Row[] }>;

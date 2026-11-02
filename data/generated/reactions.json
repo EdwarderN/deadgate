@@ -1,0 +1,22 @@
+[
+  {
+    "Reaction": "**Take it**",
+    "What it does": "Nothing. The reaction is kept for later",
+    "The price": "None"
+  },
+  {
+    "Reaction": "**Dive**",
+    "What it does": "Move up to 2 inches before the roll; this may reach cover",
+    "The price": "The reaction is used"
+  },
+  {
+    "Reaction": "**Duck**",
+    "What it does": "Go prone before the roll: the shooter has -1 die",
+    "The price": "The reaction is used. Standing up costs an action, and a prone fighter is easier to hit in melee"
+  },
+  {
+    "Reaction": "**Return fire**",
+    "What it does": "Needs a ranged weapon, range and line of sight. The shot becomes an **opposed** roll: shooter's Shoot against target's Shoot, every source counted, dice cancelling as usual. The winner by any margin hits the loser at that margin's severity",
+    "The price": "Both fighters can be hurt. A tie: each hits the other with a **glance**. Saves apply to whoever is hit"
+  }
+]

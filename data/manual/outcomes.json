@@ -1,5 +1,5 @@
 {
- "_about": "What each table row does, for the app to apply. The text shown is always the book's (data/generated). Keys are the book's own row labels, so a renamed row fails the tests. Effects: parts, xp, status, next (starts the next battle), tag, contact, rival, rumour, silly, item (gain: key or kinds/source/maxPrice, fit), loseItem, sellItem, buyItem, hire (an offer: discount or free), relicLead, sellerFound, noTasks, noTask, gift, healInjury, prosthetic, allLaidUpToSore, injury, injuryRoll (Light/Heavy list, or glitches for bots), reroll, dead, leave, title, finds, drop, d6, test, choice, recharge (Energy, or 'full'; who), taskPay (0, 0.5, 2 or 'failure'), noFinds, retest, swapAdvance, note. who: self, choose, all, patient, teacher, captain, lowestXp, evacuated, legend, bot, type:<Type>.",
+ "_about": "What each table row does, for the app to apply. The text shown is always the book's (data/generated). Keys are the book's own row labels, so a renamed row fails the tests. Effects: parts, xp, status, next (starts the next battle), tag, contact, rival, rumour, silly, item (gain: key or kinds/source/maxPrice, fit), loseItem, sellItem, buyItem, hire (an offer: discount or free), relicLead, sellerFound, noTasks, noTask, gift, healInjury, prosthetic, allLaidUpToSore, injury, injuryRoll (Light/Heavy list, or glitches for bots), reroll, dead, leave, title, finds, drop, d6, test, choice, recharge (Energy, or 'full'; who), taskPay (0, 0.5, 2 or 'failure'), noFinds, retest, swapAdvance, note. who: self, choose, all, patient, teacher, captain, lowestXp, evacuated, legend, bot, type:<Type>. prize / finalPrize: the battle's prize (9.5) and the Final's (14.13).",
  "source": "13.2, 14.5, 14.6, 14.7, 9.7, chapter 12",
  "storyEvents": {
   "Row 1: Held the field": {
@@ -2280,5 +2280,21 @@
     "note": "Roll twice more on 11 to 36 and place both."
    }
   ]
- }
+ },
+ "prize": [
+  {
+   "parts": 10
+  },
+  {
+   "finds": 1
+  }
+ ],
+ "finalPrize": [
+  {
+   "parts": 20
+  },
+  {
+   "finds": 2
+  }
+ ]
 }

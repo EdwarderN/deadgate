@@ -1,0 +1,30 @@
+[
+  {
+    "Protects the target (the shooter loses dice)": "Light cover (any part of the target hidden by a light-cover piece)",
+    "Dice": "-1"
+  },
+  {
+    "Protects the target (the shooter loses dice)": "Heavy cover (any part of the target hidden by a heavy-cover piece)",
+    "Dice": "-2"
+  },
+  {
+    "Protects the target (the shooter loses dice)": "Target moved at least half their Move this round",
+    "Dice": "-1"
+  },
+  {
+    "Protects the target (the shooter loses dice)": "Target prone or down",
+    "Dice": "-1"
+  },
+  {
+    "Protects the target (the shooter loses dice)": "Target on higher ground",
+    "Dice": "-1"
+  },
+  {
+    "Protects the target (the shooter loses dice)": "Second attack in one activation",
+    "Dice": "-1"
+  },
+  {
+    "Protects the target (the shooter loses dice)": "No line of sight, target Announced (replaces any cover)",
+    "Dice": "-2"
+  }
+]

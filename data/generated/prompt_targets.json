@@ -1,0 +1,47 @@
+[
+  {
+    "Target": "**Door, window, hatch, lift**",
+    "Number": "Routine (6)",
+    "Effects (choose one)": "**Open** (green): open and unlocked, and it stays open. **Lock** (red): shut and locked (section 5.10). **Unlock:** the token comes off and it is shut but unlocked, as it began. **Call** a lift to another level (instant)"
+  },
+  {
+    "Target": "**Charging station**",
+    "Number": "Routine (6)",
+    "Effects (choose one)": "**Disable** (red): it restores nothing. **Password** (green): only the hacker's crew can use it. **Reset:** the token comes off and it works for everyone"
+  },
+  {
+    "Target": "**Turret**",
+    "Number": "Tricky (8)",
+    "Effects (choose one)": "**Quiet** (red): it does not fire. **Claim** (green): it fires at the nearest enemy of the hacker's crew"
+  },
+  {
+    "Target": "**Civilian frame**",
+    "Number": "Tricky (8)",
+    "Effects (choose one)": "**Seize** (red): the wearer cannot Boost and has Move -1"
+  },
+  {
+    "Target": "**Weapon** (old stock or copy, held by a fighter in view; not a drop)",
+    "Number": "Tricky (8)",
+    "Effects (choose one)": "**Jam** (red): it cannot be used. **Drain** (instant): its holder's battery loses 1 Energy"
+  },
+  {
+    "Target": "**Rogue machine**",
+    "Number": "Hard (10)",
+    "Effects (choose one)": "**Calm** (red): it does nothing"
+  },
+  {
+    "Target": "**Military frame**",
+    "Number": "Hard (10)",
+    "Effects (choose one)": "**Seize** (red): as above, and the weapon mount cannot fire"
+  },
+  {
+    "Target": "**Relay beacon** (on the table)",
+    "Number": "Tricky (8)",
+    "Effects (choose one)": "**Quiet** (red): it relays nothing. **Claim** (green): it serves the hacker's crew instead (section 8.5)"
+  },
+  {
+    "Target": "**Bot**",
+    "Number": "Hard (10)",
+    "Effects (choose one)": "**Cut the link** (red): the bot is **Slack**, round after round, until the token comes off. **Hijack** (green): the bot is **Flustered** at once, and on their next activation (still chosen by their own player) the hacker's player makes all their choices. The token then comes off"
+  }
+]

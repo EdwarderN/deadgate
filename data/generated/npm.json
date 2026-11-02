@@ -1,0 +1,92 @@
+[
+  {
+    "Model": "**Earwig** (monster)",
+    "Move": "8",
+    "Fight": "2",
+    "Shoot": "none",
+    "Save": "1",
+    "Tough": "3",
+    "At the end of each round": "**Hunts the loudest.** Moves toward the nearest **Announced** fighter, or if none, the fighter who made a **ranged attack** most recently (if nobody has, the nearest fighter), and attacks if it reaches. If it starts in contact with a downed fighter, it drags them off instead"
+  },
+  {
+    "Model": "**Gnawer** (monster)",
+    "Move": "6, Wet terrain only",
+    "Fight": "2",
+    "Shoot": "none",
+    "Save": "1",
+    "Tough": "3",
+    "At the end of each round": "**Hunts from the water.** It stays on the table, in Wet terrain, until put down. Moves toward the nearest fighter who is in Wet terrain or within 2 inches of it, and attacks if it reaches. In Wet terrain it counts as in light cover; it can be shot and fought like a fighter. A fighter it puts down is dragged off (section 6.4)"
+  },
+  {
+    "Model": "**Rogue machine**",
+    "Move": "4",
+    "Fight": "1",
+    "Shoot": "1 (range 12)",
+    "Save": "2",
+    "Tough": "3",
+    "At the end of each round": "**On its old route.** Walks the route the scenario sets and attacks the nearest fighter in its way (melee in contact, otherwise a shot). Can be prompted: Calm, Hard (10)"
+  },
+  {
+    "Model": "**Turret**",
+    "Move": "none",
+    "Fight": "none",
+    "Shoot": "1 (range 18)",
+    "Save": "2",
+    "Tough": "2",
+    "At the end of each round": "**Fires at the nearest fighter,** friend or foe, in its line of sight. Can be prompted: Quiet or Claim, Tricky (8)"
+  },
+  {
+    "Model": "**Inspectorate escort**",
+    "Move": "4",
+    "Fight": "1",
+    "Shoot": "none",
+    "Save": "1",
+    "Tough": "2",
+    "At the end of each round": "**Keeps the line.** Walks 4 inches toward the table edge the scenario or event names, and leaves the table there, unless the scenario says otherwise. Attacks the nearest fighter in base contact with it or with the doubter it walks. A doubter moves with the escorts"
+  },
+  {
+    "Model": "**Fan crowd** (a template 4 inches across)",
+    "Move": "3",
+    "Fight": "none",
+    "Shoot": "none",
+    "Save": "none",
+    "Tough": "none",
+    "At the end of each round": "**Follows the star.** Moves toward the standing fighter with the most Experience (tie: the nearest). Fighters inside move through it as Difficult and cannot shoot out of it; it blocks sight like smoke"
+  },
+  {
+    "Model": "**Bystander** (an arrival, the doubter, a pilgrim, a dignitary)",
+    "Move": "4",
+    "Fight": "0",
+    "Shoot": "none",
+    "Save": "none",
+    "Tough": "2",
+    "At the end of each round": "**Dazed.** Unless led, moves 2 inches in the direction of a direction die. Led: moves with the leader, who has Move -1. The scenario says what it is worth"
+  },
+  {
+    "Model": "**Festival float** (a 4-by-8-inch piece)",
+    "Move": "3",
+    "Fight": "none",
+    "Shoot": "none",
+    "Save": "none",
+    "Tough": "none",
+    "At the end of each round": "**The parade.** Moves in a straight line toward the edge or deployment zone the scenario or event names. An event's float leaves the table at the edge; a scenario's float stops there. Anything in its way is pushed aside and knocked prone. It cannot be shot or fought"
+  },
+  {
+    "Model": "**Rolling fruit** (a 3-inch piece)",
+    "Move": "6",
+    "Fight": "none",
+    "Shoot": "none",
+    "Save": "none",
+    "Tough": "none",
+    "At the end of each round": "**Rolls.** Moves 6 inches straight toward the table edge the event names, and leaves there. A fighter in its path makes a Routine Grit test or takes a glance and is knocked prone"
+  },
+  {
+    "Model": "**Barge** (a piece about 6 by 3 inches)",
+    "Move": "3",
+    "Fight": "none",
+    "Shoot": "none",
+    "Save": "none",
+    "Tough": "none",
+    "At the end of each round": "**Drifts.** Moves toward the table edge the scenario names, and stops when it touches a table edge or a terrain piece. Pushes fighters in its way aside, prone. Fighters aboard move with it"
+  }
+]

@@ -17,6 +17,8 @@ export interface OwnedItem {
   /** parts paid in the campaign (creation prices are computed live) */
   paid?: number;
   note?: string;
+  /** uses spent of a single-use item (a pair of grenades has two, 7.6) */
+  used?: number;
 }
 
 export type Advance =
@@ -57,9 +59,18 @@ export interface Fighter {
   nextBattle?: string[];
   /** Energy in the battery now; batteries do not refill by themselves (14.3). Missing means full. */
   energy?: number;
+  /** an arrival's rumour (13.9): the one chosen, and those disproved */
+  rumour?: { name: string | null; disproved: string[]; done?: boolean };
+  /** traits outside the budget from madness and the like (Cracked, 8.4) */
+  marks?: string[];
+  /** the tier of the Word last failed (for "Doubled down", 13.7) */
+  lastFailedTier?: string;
+  /** the break in which the fighter was hired: no task that break (14.9) */
+  hiredBreak?: number;
 }
 
-export interface BattleWord { deed: string; audience: string; result?: 'fulfilled' | 'failed' }
+/** deed: a deed id (S1, B3...) or `rumour:<name>` for an arrival's rumour (13.9). taker: a wager found a taker (13.5). */
+export interface BattleWord { deed: string; audience: string; result?: 'fulfilled' | 'failed'; taker?: boolean }
 
 export interface BattleFighter {
   inBattle: boolean;
@@ -75,6 +86,8 @@ export interface BattleFighter {
   crushing?: number;
   word: BattleWord | null;
   notes: string;
+  /** single-use items used this battle, by item uid (grenades, 7.6) */
+  thrown?: Record<string, number>;
 }
 
 export interface Battle {
@@ -98,6 +111,19 @@ export interface Battle {
   research?: { field: number | null; lab: number | null; chosen: 'field' | 'lab' | null; done: boolean };
   /** faction payments made before deployment, by effect id */
   paid?: Record<string, boolean>;
+  /** the world, scenario and deployment rolled or chosen (9.1, 9.2, chapter 10) */
+  worldRoll?: number | null;
+  scenario?: string;
+  deploymentRoll?: number | null;
+  eventRoll?: number | null;
+  /** the season's Final (14.13) */
+  final?: boolean;
+  /** the crew called its evac (9.6) or broke (9.4) */
+  evacuated?: boolean;
+  broke?: boolean;
+  breakingTests?: Record<string, boolean>;
+  /** the round 2 pod (9.7): fell, and what came out if cracked during the battle */
+  pod?: { roll: number | null; drop: number | null; ours?: boolean };
 }
 
 export interface AfterBattle {
@@ -123,6 +149,10 @@ export interface AfterBattle {
   /** a type's put-down XP given to another fighter (Stunt double to an Action star) */
   redirects?: Record<string, string>;
   cancelled?: boolean;
+  /** contacts used this break: contact name -> what for */
+  contactUse?: Record<string, string>;
+  prizeExtra?: number | null;
+  podCarried?: boolean;
   // fields from earlier versions, kept so an unfinished break still opens
   xpApplied?: boolean;
   wordsApplied?: Record<string, boolean>;

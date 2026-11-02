@@ -1,0 +1,42 @@
+[
+  {
+    "d66": "11-15",
+    "World": "**Landfall**",
+    "Ground": "Wrecked ships and drop pods"
+  },
+  {
+    "d66": "16-24",
+    "World": "**Concord**",
+    "Ground": "Crumbling colony cities"
+  },
+  {
+    "d66": "25-33",
+    "World": "**Encore**",
+    "Ground": "Studio districts and backlots"
+  },
+  {
+    "d66": "34-42",
+    "World": "**Spillway**",
+    "Ground": "Drowned colony cities"
+  },
+  {
+    "d66": "43-46",
+    "World": "**Ballast**",
+    "Ground": "Industrial ruins and bunkers"
+  },
+  {
+    "d66": "51-54",
+    "World": "**Hush**",
+    "Ground": "Overgrown wilds"
+  },
+  {
+    "d66": "55-62",
+    "World": "**Vigil**",
+    "Ground": "Industrial ruins and the array's grounds"
+  },
+  {
+    "d66": "63-66",
+    "World": "**Plenty**",
+    "Ground": "Silos and growing halls"
+  }
+]

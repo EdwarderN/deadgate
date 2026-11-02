@@ -2,7 +2,7 @@
 // All names, numbers and tables come from the rules data.
 import { plain, type Rules } from '../data/rules';
 import type { Row } from '../data/schema';
-import { battery, captainOf, captainTraitNames, isBot, partsLeft, strength, underdog } from './crew';
+import { battery, captainOf, captainTraitNames, currentRatings, isBot, partsLeft, strength, underdog } from './crew';
 import { cellCovers, lookup } from './dice';
 import { uid, type AfterBattle, type Battle, type BattleFighter, type Crew, type Fighter } from './model';
 
@@ -45,9 +45,11 @@ export function newBattle(rules: Rules, crew: Crew): Battle {
 }
 
 /** How many Words the crew may swear (13.5): two, plus Big mouth and Showboats. */
-export function wordsAllowed(rules: Rules, crew: Crew): number {
+export function wordsAllowed(rules: Rules, crew: Crew, b?: Battle | null): number {
   const w = B(rules).wordsPerSide;
   if (rules.factionRules(crew.faction ?? '')?.noWords) return 0;
+  // The Final: more Words, and nothing adds to them (14.13).
+  if (b?.final) return rules.crew.final.words.value;
   let n = w.value;
   const cap = captainOf(crew);
   if (cap && captainTraitNames(cap).includes(w.extraFrom.captainTrait)) n++;
@@ -122,10 +124,24 @@ export function bandLower(rules: Rules, table: string): string | null {
 }
 
 // ---------- after the battle ----------
+export const RUMOUR = 'rumour:';
+/** A Word's tier and XP: a deed's, or an arrival's rumour (a Big vow worth its own XP, 13.9). */
 export function deedTier(rules: Rules, deedId: string): { tier: string; xp: number } | null {
+  if (deedId.startsWith(RUMOUR)) { const r = B(rules).rumourWord; return { tier: r.tier, xp: r.value }; }
   const d = rules.deeds.find((x) => x.id === deedId);
   if (!d) return null;
   return rules.data.deed_tiers[d.tier] ?? null;
+}
+export const wordName = (rules: Rules, deedId: string) => (deedId.startsWith(RUMOUR) ? `Rumour: ${deedId.slice(RUMOUR.length)}` : `${deedId} ${rules.deeds.find((d) => d.id === deedId)?.name ?? ''}`);
+/** Is this Word Big or Legendary (it makes a legend, 13.8, 14.5)? */
+export const makesLegend = (rules: Rules, deedId: string) => B(rules).legendTiers.value.includes(deedTier(rules, deedId)?.tier ?? '');
+
+/** A wager's stake (13.5): won when fulfilled, paid when failed. None without a taker, or for a crew nobody bets against (14.10). */
+export function wagerStake(rules: Rules, crew: Crew, w: BattleFighter['word']): number {
+  const s = B(rules).wagerStakes;
+  if (!w || w.audience !== s.audience || w.taker === false || crew.notes.tags.includes(s.noTakerTag) || !w.result) return 0;
+  const n = s.value[deedTier(rules, w.deed)?.tier ?? ''] ?? 0;
+  return w.result === 'fulfilled' ? n : -n;
 }
 
 export function wordXp(rules: Rules, w: BattleFighter['word']): number {
@@ -141,6 +157,7 @@ export function sillyTableFor(rules: Rules, deedId: string): string | null {
 }
 
 export function legendFor(rules: Rules, deedId: string) {
+  if (deedId.startsWith(RUMOUR)) return rules.legends.find((l) => l.from === `Rumour: ${deedId.slice(RUMOUR.length)}`) ?? null;
   const d = rules.deeds.find((x) => x.id === deedId);
   if (!d?.legend) return null;
   return rules.legends.find((l) => l.from.startsWith(d.id)) ?? null;
@@ -276,7 +293,8 @@ export function partsIn(text: string): number | null {
   return m ? +m[1] : null;
 }
 
-export const taskBlocked = (rules: Rules, f: Fighter) => rules.crew.afterBattle.taskBlockedStatuses.value.includes(f.status);
+export const taskBlocked = (rules: Rules, f: Fighter, crew?: Crew) =>
+  rules.crew.afterBattle.taskBlockedStatuses.value.includes(f.status) || (crew !== undefined && f.hiredBreak !== undefined && f.hiredBreak === crew.breakNo);
 
 // ---------- the break ----------
 export function startAfterBattle(rules: Rules, crew: Crew): Crew {
@@ -289,12 +307,21 @@ export function startAfterBattle(rules: Rules, crew: Crew): Crew {
     const energy = bf?.inBattle ? bf.energy : f.energy;
     return reset ? { ...f, status: fit, nextBattle: [], energy } : { ...f, energy };
   });
+  // Single-use items used this battle are used up (grenades, 7.6).
+  const su = rules.crew.gear.singleUse;
+  const thrown: Record<string, number> = {};
+  for (const bf of Object.values(crew.battle.fighters)) for (const [uid, n] of Object.entries(bf.thrown ?? {})) thrown[uid] = (thrown[uid] ?? 0) + n;
+  const items = crew.items.flatMap((o) => {
+    if (!thrown[o.uid]) return [o];
+    const used = (o.used ?? 0) + thrown[o.uid];
+    return used >= su.uses ? [] : [{ ...o, used }];
+  });
   const after: AfterBattle = {
     step: 'battle', battle: { ...crew.battle, phase: 'ended' }, extraXp: {}, injuries: {}, done: {},
     story: { row: '', roll: null, notes: '' }, tasks: {}, history: {},
   };
   // A new break: sellers must be found again (11.3).
-  return { ...crew, fighters, battle: null, after, sellers: {}, hireOffers: [], relicLead: null, breakNo: (crew.breakNo ?? 0) + 1 };
+  return { ...crew, fighters, items, battle: null, after, sellers: {}, hireOffers: [], relicLead: null, breakNo: (crew.breakNo ?? 0) + 1 };
 }
 
 export function finishAfterBattle(crew: Crew): Crew {
@@ -311,3 +338,32 @@ export function sellerState(crew: Crew, itemId: string): 'unknown' | 'found' | '
 }
 
 export { cellCovers, partsLeft };
+
+// ---------- breaking (9.4) ----------
+export interface BreakingStatus { needed: boolean; out: number; total: number; threshold: number; tester: Fighter | null; dice: number; notes: string[]; never: boolean }
+
+/** Must the crew test to break this round, who tests, and with how many dice (9.4, faction rules, captain traits)? */
+export function breakingStatus(rules: Rules, crew: Crew, b: Battle, effects: { kind: string; amount?: number; fraction?: number; captain?: string; title: string }[]): BreakingStatus {
+  const br = B(rules).breaking;
+  const took = crew.fighters.filter((f) => b.fighters[f.id]?.inBattle);
+  const out = took.filter((f) => { const p = positionDef(rules, b.fighters[f.id].position); return p?.down || !p?.onTable; }).length;
+  const fraction = effects.find((e) => e.kind === 'breakingThreshold')?.fraction ?? br.value;
+  const threshold = br.roundUp ? Math.ceil(took.length * fraction) : Math.floor(took.length * fraction);
+  const standing = (f: Fighter) => !!positionDef(rules, b.fighters[f.id].position)?.onTable && !positionDef(rules, b.fighters[f.id].position)?.down;
+  const cap = captainOf(crew);
+  const capStanding = !!cap && b.fighters[cap.id]?.inBattle && standing(cap);
+  const nerve = (f: Fighter) => currentRatings(rules, f)[br.rating] ?? 0;
+  let tester: Fighter | null = cap && capStanding && !isBot(rules, cap) ? cap : null;
+  if (!tester) tester = took.filter((f) => standing(f) && !isBot(rules, f)).sort((x, y) => nerve(y) - nerve(x))[0] ?? null;
+  const notes: string[] = [];
+  let dice = tester ? nerve(tester) : 0;
+  if (tester && tester.id === cap?.id) for (const [t, n] of Object.entries(br.captainTraits)) if (captainTraitNames(cap).includes(t)) { dice += n; notes.push(`${t} +${n}`); }
+  for (const e of effects) {
+    if (e.kind !== 'breakingDice') continue;
+    if (e.captain === 'standing' && !capStanding) continue;
+    if (e.captain === 'down' && capStanding) continue;
+    dice += e.amount ?? 0;
+    notes.push(`${e.title} ${(e.amount ?? 0) > 0 ? '+' : ''}${e.amount}`);
+  }
+  return { needed: took.length > 0 && out >= threshold, out, total: took.length, threshold, tester, dice, notes, never: !tester };
+}

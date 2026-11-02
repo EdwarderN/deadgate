@@ -1,0 +1,38 @@
+[
+  {
+    "label": "The crews",
+    "text": "The two crews with the most league points. Each takes its break first (section 14.1), so the Final is fought by crews who have healed and spent their parts."
+  },
+  {
+    "label": "The world",
+    "text": "The two players agree on one of the eight worlds. If they cannot agree, the player whose crew has more league points chooses. Use the world's page (chapter 10) for its always-on rule, pod rule and event table, and the first battle page's non-player models. Deploy on **battle lines** (section 9.1), whatever the table says. Ignore that page's terrain needs, set-up, battle rules, winning condition and prize, and replace anything it would put in the centre of the table with the stage."
+  },
+  {
+    "label": "The stage",
+    "text": "A round template 6 inches across marks the stage at the centre of the table."
+  },
+  {
+    "label": "Words",
+    "text": "Each player may give up to **three** Words, each from a different fighter. Big mouth and Showboats add none: the Final starts even. Everything else about Words is as usual (section 13.5). Words fulfilled in the Final pay XP, not league points."
+  },
+  {
+    "label": "The spotlight",
+    "text": "From round 2, at the start of each round, each player names one of their fighters who is not down. That fighter is **Announced** until the end of the round, and if they put down an enemy in that time they are **Hyped** at once. No fighter can be in the spotlight two rounds running."
+  },
+  {
+    "label": "No way out",
+    "text": "There is no evac in the Final (section 9.6). A side that breaks (section 9.4) loses the prize to the other."
+  },
+  {
+    "label": "The winning condition: the stage",
+    "text": "At the end of the battle, the crew with more standing fighters in contact with or inside the stage wins. A tie goes to the crew that holds the field (section 9.5). If still tied, the crews are joint champions and each takes 15 parts and one roll on the finds table."
+  },
+  {
+    "label": "The prize",
+    "text": "The crew that meets the winning condition is **champion of the season**: **20 parts and two rolls on the finds table** (section 14.7), and the title \"Champions\" written on its roll. It is not a tag and takes no tag slot. The other crew takes its share of the gate: **10 parts**."
+  },
+  {
+    "label": "The end",
+    "text": "The battle ends as usual (section 9.3). Injuries are rolled as usual (section 13.2). The Final scores no league points."
+  }
+]

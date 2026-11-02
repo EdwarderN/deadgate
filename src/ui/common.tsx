@@ -230,7 +230,8 @@ export function Hire({ crew, update }: { crew: Crew; update: Update }) {
   const price = hirePrice(rules, crew, draft);
   const gp = draft.gift ? giftPrice(rules, crew, draft) ?? 0 : 0;
   const rp = draft.rites ? ritesPrice(rules, crew, draft) ?? 0 : 0;
-  const offers = crew.phase === 'campaign' ? crew.hireOffers ?? [] : [];
+  const fixer = crew.phase === 'campaign' ? Object.entries(rules.crew.campaign.contactUses.value).find(([n, u]) => u.hireDiscount && crew.notes.contacts.some((c) => c.name === n && !c.used)) : undefined;
+  const offers = crew.phase === 'campaign' ? [...(crew.hireOffers ?? []), ...(fixer ? [{ id: `contact:${fixer[0]}`, discount: fixer[1].hireDiscount!, note: `the ${fixer[0]}, used once (14.8)`, past: undefined }] : [])] : [];
   const [offerId, setOfferId] = useState('');
   const offer = offers.find((o) => o.id === offerId);
   const hireCost = offer ? (offer.discount === null ? 0 : Math.max(0, price - offer.discount)) : price;
@@ -239,7 +240,12 @@ export function Hire({ crew, update }: { crew: Crew; update: Update }) {
   const campaign = crew.phase === 'campaign';
   const hire = () => {
     update((c) => {
-      let next: Crew = { ...c, hireOffers: (c.hireOffers ?? []).filter((o) => o.id !== offerId), fighters: [...c.fighters, { ...draft, past: offer?.past ?? draft.past, id: uid('f'), rookie: false, hirePaid: total }] };
+      let next: Crew = { ...c, hireOffers: (c.hireOffers ?? []).filter((o) => o.id !== offerId), fighters: [...c.fighters, { ...draft, past: offer?.past ?? draft.past, id: uid('f'), rookie: false, hirePaid: total, hiredBreak: c.after ? c.breakNo : undefined }] };
+      if (offerId.startsWith('contact:')) {
+        const n = offerId.slice(8);
+        const i = next.notes.contacts.findIndex((x) => x.name === n && !x.used);
+        next = { ...next, notes: { ...next.notes, contacts: next.notes.contacts.map((x, j) => (j === i ? { ...x, used: true } : x)) } };
+      }
       if (campaign) next = addLedger(next, -total, `Hired ${draft.name || recruitKey(rules, draft)}`);
       return next;
     });
@@ -363,7 +369,7 @@ export function ItemChip({ crew, item, update }: { crew: Crew; item: OwnedItem; 
   return (
     <div className={`chip ${item.kitRef ? 'kit' : ''}`}>
       <RuleLink rule={itemRule(rules, def)}>{def.name}</RuleLink>
-      <span className="muted small">{def.source}{def.hands ? ` · ${def.hands}H` : ''}{def.mount ? ' · mount' : ''}{item.kitRef ? ' · kit' : ''}</span>
+      <span className="muted small">{def.source}{def.hands ? ` · ${def.hands}H` : ''}{def.mount ? ' · mount' : ''}{item.kitRef ? ' · kit' : ''}{item.used ? ` · ${rules.crew.gear.singleUse.uses - item.used} left` : ''}</span>
       <SellerControl crew={crew} item={item} update={update} />
       <select className="chip-menu" value="" onChange={(e) => move(e.target.value)} aria-label={`Move ${def.name}`}>
         <option value="">Move…</option>

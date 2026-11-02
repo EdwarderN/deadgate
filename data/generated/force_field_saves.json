@@ -1,0 +1,14 @@
+[
+  {
+    "What hit the wearer": "Anything that is **not** a power weapon or a drop weapon (a copy gun, a bodged grenade, a tool)",
+    "What the field does": "**Cancels the hit.** No roll"
+  },
+  {
+    "What hit the wearer": "An **old-stock power weapon** (Powered)",
+    "What the field does": "A save with **2 dice**"
+  },
+  {
+    "What hit the wearer": "A **drop weapon** (Strange)",
+    "What the field does": "A save with **1 die**"
+  }
+]

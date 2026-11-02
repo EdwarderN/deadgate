@@ -41,6 +41,7 @@ function FighterCard({ crew, fighter: f }: { crew: Crew; fighter: Fighter }) {
   const sp = rules.species.find((s) => s.name === f.species);
   const typeTrait = rules.faction(crew.faction ?? '')?.types.find((t) => t.name === f.type);
   const speciesTraits = [sp ? `${sp.name}: ${strip(sp.trait).split('.')[0]}` : '', typeTrait ? `${typeTrait.name}: ${strip(typeTrait.trait).split('.')[0]}` : ''].filter(Boolean);
+  const marks = f.marks ?? [];
   const budget = [
     ...captainTraitNames(f),
     ...f.advances.filter((a) => a.kind === 'trait' && !a.retired).map((a) => (a as { name: string }).name),
@@ -84,7 +85,7 @@ function FighterCard({ crew, fighter: f }: { crew: Crew; fighter: Fighter }) {
         </div>
         <div className="fc-col3">
           <div className="fc-h">Species and type traits</div>
-          <div className="fc-line small">{speciesTraits.join('. ')}</div>
+          <div className="fc-line small">{[...speciesTraits, ...marks].join('. ')}</div>
           <div className="fc-h">Advances, Legends, captain traits <i>({traitBudgetUsed(f)}/{rules.crew.limits.traitBudget.value})</i></div>
           <div className="fc-grid2"><Lines items={budget} n={rules.crew.limits.traitBudget.value + 1} /></div>
           {ratingAdv > 0 && <div className="fc-line small">Rating advances: {ratingAdv}</div>}
@@ -95,7 +96,7 @@ function FighterCard({ crew, fighter: f }: { crew: Crew; fighter: Fighter }) {
       <div className="fc-foot">
         <div className="fc-line"><b>XP</b><span className="box sm">{f.xp}</span> {th.map((t) => <span key={t} className="thr">{t} <span className={`pip ${f.xp >= t ? 'fill' : ''}`} /></span>)} <b className="gap">Ended</b> {ended.map((e) => <span key={e} className="thr"><span className="pip" /> {e}</span>)}</div>
         <div className="fc-line"><b>Word</b><span className="ul">{f.word}</span><b>Silly trait</b><span className="ul">{silly}</span></div>
-        <div className="fc-line"><b>Titles</b><span className="ul">{titles.join(', ')}</span><b>Past</b><span className="ul">{f.past}</span></div>
+        <div className="fc-line"><b>Titles</b><span className="ul">{titles.join(', ')}</span><b>Past</b><span className="ul">{f.past}{f.rumour?.name && f.rumour.name !== f.past ? ` (rumour: ${f.rumour.name})` : ''}</span></div>
         <div className="fc-line"><b>History</b><span className="ul">{f.history.slice(-2).join(' / ')}</span></div>
       </div>
     </div>

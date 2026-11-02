@@ -97,6 +97,29 @@ export const generatedSchemas = {
   finds: rows('d6', 'Find'),
   league_points: rows('What', 'Points'),
   bot_states: rows('State', 'When', 'What it does'),
+  gear_failure: listsOf('d6', 'Result'),
+  grenade_scatter: rows('Direction die', 'The grenade lands'),
+  grenade_distance: rows("Thrower's Shoot"),
+  prompt_targets: rows('Target', 'Number', 'Effects (choose one)'),
+  melee_results: rows('Result', 'What happens'),
+  melee_dice: rows('Source', 'Who gets it'),
+  shot_results: rows('Shot total', 'Result'),
+  shooting_helps: rows('Helps the shooter', 'Dice'),
+  shooting_protects: rows('Protects the target (the shooter loses dice)', 'Dice'),
+  reactions: rows('Reaction', 'What it does', 'The price'),
+  force_field_saves: rows('What hit the wearer', 'What the field does'),
+  terrain_traits: rows('Trait', 'What it does'),
+  doors: rows('Condition', 'Token', 'What it does'),
+  deployment: rows('d6', 'Deployment', "Each side's zone"),
+  world_table: rows('d66', 'World', 'Ground'),
+  npm: rows('Model', 'Move', 'Fight', 'Shoot', 'Save', 'Tough', 'At the end of each round'),
+  worlds: z.array(z.object({
+    section: str, name: str, ground: str, alwaysOn: str, terrain: str,
+    events: rows('d6', 'Event'),
+    battles: z.array(z.object({ d6: str, name: str })).length(3),
+    scenarios: z.array(z.object({ name: str, title: str, lore: str, sections: z.array(z.object({ label: str, text: str })).min(4) })).length(3),
+  })).min(1),
+  final: z.array(z.object({ label: str, text: str })).min(1),
 };
 export type Effect = z.infer<typeof effectSchema>;
 export type TaskPay = z.infer<typeof taskPaySchema>;
@@ -120,8 +143,8 @@ export const effectSchema = z.object({
   rule: z.number().int().optional(),
   subfaction: str.optional(),
   type: str.optional(),
-  when: z.enum(['setup', 'roundStart', 'pod', 'putDown', 'voice', 'voiceGood', 'afterBattle', 'captive', 'break', 'legend']),
-  kind: z.enum(['reminder', 'xpEach', 'partsPer', 'partsIf', 'rating', 'nameEnemy', 'payment', 'research', 'sellDrop', 'cancelFighter', 'spinOffLegend', 'rollOwnTaskTable', 'captiveXp']),
+  when: z.enum(['setup', 'roundStart', 'pod', 'putDown', 'voice', 'voiceGood', 'afterBattle', 'captive', 'break', 'legend', 'breaking']),
+  kind: z.enum(['reminder', 'xpEach', 'partsPer', 'partsIf', 'rating', 'nameEnemy', 'payment', 'research', 'sellDrop', 'cancelFighter', 'spinOffLegend', 'rollOwnTaskTable', 'captiveXp', 'breakingDice', 'breakingThreshold']),
   rounds: z.array(z.number()).optional(),
   roll: z.enum(['d6', '2d6', 'd66']).optional(),
   amount: z.number().optional(),
@@ -136,6 +159,8 @@ export const effectSchema = z.object({
   state: str.optional(),
   xpBelow: z.number().optional(),
   prefix: str.optional(),
+  captain: z.enum(['standing', 'down']).optional(),
+  fraction: z.number().optional(),
 });
 
 export const taskPaySchema = z.object({
@@ -244,6 +269,8 @@ export const crewRulesSchema = z.object({
     }))),
     minHands: num,
     restrictedItems: sourced(z.array(z.object({ key: str, factions: z.array(str) }))),
+    singleUse: sourced(z.array(str)).extend({ uses: z.number() }),
+    grenadeDistance: sourced(z.record(z.number())).extend({ copyExtra: z.number(), blindExtra: z.number() }),
   }).passthrough(),
   experience: z.object({
     ladder: sourced(z.array(z.number())).extend({ gapAfter: z.object({ value: z.number(), growth: z.number() }) }),
@@ -271,7 +298,11 @@ export const crewRulesSchema = z.object({
     statuses: sourced(z.array(str)),
     fates: sourced(z.array(str)),
     relicLeadKind: sourced(str),
+    contactUses: sourced(z.record(z.object({ task: str.optional(), target: z.number().optional(), laidUpToSore: z.boolean().optional(), prostheticFraction: z.number().optional(), findsOnFailure: z.number().optional(), hireDiscount: z.number().optional(), airTaxFraction: z.number().optional() }))),
+    sillyEffects: sourced(z.record(z.object({ noAdvances: z.boolean().optional(), tierUp: z.boolean().optional() }))),
+    season: sourced(z.tuple([z.number(), z.number()])),
   }),
+  final: z.object({ words: num, spotlightFrom: num, title: sourced(str), deployment: sourced(str) }),
   sections: z.object({ value: z.record(str) }).passthrough(),
   dice: z.object({ netEdgeCap: num, badKeptTotal: num }),
   factionPayCap: num,
@@ -282,13 +313,19 @@ export const crewRulesSchema = z.object({
     conditionsToDown: num,
     cancellingStates: sourced(z.array(str)),
     endsOnOwnActivation: sourced(str),
-    positions: sourced(z.array(z.object({ name: str, onTable: z.boolean().optional(), cameHome: z.boolean().optional(), injury: z.enum(['gentle', 'harsh', 'heldField', 'harshTwice']).optional(), down: z.boolean().optional(), captured: z.boolean().optional() }))),
+    positions: sourced(z.array(z.object({ name: str, botOnly: z.boolean().optional(), corePulled: z.boolean().optional(), onTable: z.boolean().optional(), cameHome: z.boolean().optional(), injury: z.enum(['gentle', 'harsh', 'heldField', 'harshTwice']).optional(), down: z.boolean().optional(), captured: z.boolean().optional() }))),
     wordsPerSide: num.extend({ extraFrom: z.object({ captainTrait: str, tag: str }) }),
     putDownXpMax: num,
     boastXpBonus: num,
     boastAudience: sourced(str),
     legendTiers: sourced(z.array(str)),
     sillyTables: sourced(z.record(str)),
+    breaking: sourced(z.number()).extend({ roundUp: z.boolean(), rating: str, target: z.number(), captainTraits: z.record(z.number()) }),
+    worldEventRound: num,
+    tableSize: num.extend({ small: str, large: str }),
+    madness: sourced(str).extend({ frenzied: str, cracked: str, trait: str, title: str }),
+    rumourWord: num.extend({ tier: str, audience: str, silly: str, past: str }),
+    wagerStakes: sourced(z.record(z.number())).extend({ audience: str, noTakerTag: str }),
   }),
   afterBattle: z.object({
     injuryTables: sourced(z.object({ gentle: str, harsh: str })),
@@ -300,6 +337,8 @@ export const crewRulesSchema = z.object({
     taskBlockedStatuses: sourced(z.array(str)),
     taskTableDie: sourced(str).extend({ ownTask: str }),
     resetStatusesAtBreak: sourced(z.boolean()),
+    evacTag: sourced(str),
+    botCore: num,
     storyRowHints: sourced(z.record(z.enum(['heldField', 'notHeldField', 'ran', 'lostSomeone', 'captive', 'legend']))),
   }),
   factions: z.record(factionRulesSchema),
@@ -322,7 +361,7 @@ export interface Eff {
   item?: { key?: string; source?: 'copy' | 'old stock' | 'drop'; kinds?: string[]; maxPrice?: number; any?: boolean; label?: string; fit?: boolean };
   loseItem?: { who?: Who; kinds?: string[]; source?: string; count?: number; label?: string };
   sellItem?: { fraction: number; who?: Who; kinds?: string[]; source?: string };
-  buyItem?: { source?: string; fraction: number };
+  buyItem?: { source?: string; kinds?: string[]; fraction: number };
   hire?: { discount?: number; free?: boolean; past?: string; note?: string };
   relicLead?: { noRoll: boolean }; sellerFound?: boolean; noTasks?: boolean; noTask?: Who; gift?: Who; healInjury?: Who; prosthetic?: Who;
   allLaidUpToSore?: boolean; injury?: string; injuryRoll?: string; times?: number; reroll?: number; dead?: boolean; leave?: Who; title?: string;
@@ -340,7 +379,7 @@ export const effSchema: z.ZodType<Eff> = z.lazy(() => z.object({
   item: z.object({ key: str.optional(), source: z.enum(['copy', 'old stock', 'drop']).optional(), kinds: z.array(str).optional(), maxPrice: z.number().optional(), any: z.boolean().optional(), label: str.optional(), fit: z.boolean().optional() }).optional(),
   loseItem: z.object({ who: str.optional(), kinds: z.array(str).optional(), source: str.optional(), count: z.number().optional(), label: str.optional() }).optional(),
   sellItem: z.object({ fraction: z.number(), who: str.optional(), kinds: z.array(str).optional(), source: str.optional() }).optional(),
-  buyItem: z.object({ source: str.optional(), fraction: z.number() }).optional(),
+  buyItem: z.object({ source: str.optional(), kinds: z.array(str).optional(), fraction: z.number() }).optional(),
   hire: z.object({ discount: z.number().optional(), free: z.boolean().optional(), past: str.optional(), note: str.optional() }).optional(),
   relicLead: z.object({ noRoll: z.boolean() }).optional(), sellerFound: z.boolean().optional(), noTasks: z.boolean().optional(), noTask: str.optional(),
   gift: str.optional(), healInjury: str.optional(), prosthetic: str.optional(), allLaidUpToSore: z.boolean().optional(),
@@ -362,5 +401,7 @@ export const outcomesSchema = z.object({
   ownTasks: z.record(z.object({ success: effs, failure: effs, table: z.record(effs) })),
   finds: z.record(effs),
   dropTable: z.record(effs),
+  prize: effs,
+  finalPrize: effs,
 });
 export type Outcomes = z.infer<typeof outcomesSchema>;

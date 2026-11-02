@@ -3,9 +3,9 @@ import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { getRules, plain } from '../data/rules';
 import {
   addCondition, bandLower, canSwear, conditionLabel, conditionsFor, endActivation, isDown, newBattle, nextRound, positions, roundEnd,
-  shotSeverity, startAfterBattle, stateNames, toggleState, underdogFor, wordsAllowed,
+  RUMOUR, deedTier, shotSeverity, startAfterBattle, stateNames, toggleState, underdogFor, wordName, wordsAllowed,
 } from '../engine/battle';
-import { addLedger, canSpend, equipped, fighterStats, isBot, strength } from '../engine/crew';
+import { addLedger, canSpend, equipped, fighterStats, hasGift, isBot, strength } from '../engine/crew';
 import { activeEffects, rulesInForce, type ActiveEffect } from '../engine/faction';
 import { lookup, severityOfMargin } from '../engine/dice';
 import type { Battle, BattleFighter, Crew, Fighter } from '../engine/model';
@@ -14,6 +14,7 @@ import { Md, describeType, fighterLabel, type Update } from './common';
 import { PoolRoller, RollOrEnter } from './Dice';
 import { useAsk } from './confirm';
 import { RuleLink, itemRule, sectionRule } from './rule';
+import { BreakingCard, GearFailTool, GlossaryTool, Grenades, GrenadeTool, Madness, MoreTables, WorldPanel, WorldSetup, scenarioOf } from './BattleExtras';
 
 export function BattleView({ crew, update }: { crew: Crew; update: Update }) {
   const rules = getRules();
@@ -41,7 +42,7 @@ export function BattleView({ crew, update }: { crew: Crew; update: Update }) {
         <a className="btn small" href={`#/crew/${crew.id}`}>Crew</a>
       </div>
       {b.phase === 'setup' && <Setup crew={crew} b={b} setB={setB} setF={setF} update={update} />}
-      {b.phase === 'playing' && <Playing crew={crew} b={b} setB={setB} setF={setF} />}
+      {b.phase === 'playing' && <Playing crew={crew} b={b} setB={setB} setF={setF} update={update} />}
       {b.phase === 'ended' && <EndBattle crew={crew} b={b} setB={setB} update={update} />}
     </div>
   );
@@ -53,18 +54,26 @@ type SetF = (id: string, fn: (f: BattleFighter) => BattleFighter) => void;
 // ---------- setup ----------
 function Setup({ crew, b, setB, setF, update }: { crew: Crew; b: Battle; setB: SetB; setF: SetF; update: Update }) {
   const rules = getRules();
-  const allowed = wordsAllowed(rules, crew);
+  const allowed = wordsAllowed(rules, crew, b);
   const sworn = Object.values(b.fighters).filter((f) => f.inBattle && f.word).length;
   const ud = underdogFor(rules, crew, b);
   const audiences = rules.data.word_audiences.map((a) => plain(a.Audience));
   const tiers = Array.from(new Set(rules.deeds.map((d) => d.tier)));
+  const stakes = rules.crew.battle.wagerStakes;
+  const sillyTierUp = (f: Fighter) => !!(f.sillyTrait && rules.crew.campaign.sillyEffects.value[f.sillyTrait]?.tierUp && f.lastFailedTier);
+  /** "Doubled down": the next Word one tier higher than the failed one; the top tier stays (13.7). */
+  const allowedTiers = (f: Fighter) => {
+    if (!sillyTierUp(f)) return tiers;
+    const order = Object.keys(rules.data.deed_tiers);
+    const i = order.findIndex((k) => rules.data.deed_tiers[k].tier === f.lastFailedTier);
+    return tiers.filter((t) => order.indexOf(t) >= Math.min(i + 1, order.length - 1));
+  };
   return (
     <div className="stack">
       <div className="card stack-s">
-        <h3>The battle</h3>
+        <h3>The opponent</h3>
         <div className="row gap wrap">
           <label className="field grow"><span>Opponent</span><input value={b.opponent} onChange={(e) => setB((x) => ({ ...x, opponent: e.target.value }))} placeholder="Their crew's name" /></label>
-          <label className="field grow"><span>World</span><input value={b.world} onChange={(e) => setB((x) => ({ ...x, world: e.target.value }))} placeholder="Where" /></label>
         </div>
         <div className="row gap wrap">
           <label className="field"><span>Their fighters</span><input type="number" min={0} className="num" value={b.opponentFighters ?? ''} onChange={(e) => setB((x) => ({ ...x, opponentFighters: e.target.value === '' ? null : +e.target.value }))} /></label>
@@ -74,6 +83,7 @@ function Setup({ crew, b, setB, setF, update }: { crew: Crew; b: Battle; setB: S
           Your strength: {strength(crew)}. {b.opponentFighters !== null && (ud.underdog === 'us' ? <strong>You are the underdog: +{ud.xp} XP each after the battle (11.5).</strong> : ud.underdog === 'them' ? `They are the underdog: +${ud.xp} XP each for them.` : 'Nobody is the underdog.')}
         </p>
       </div>
+      <WorldSetup crew={crew} b={b} setB={setB} />
       <div className="card stack-s">
         <h3>Who takes part, and the Words <span className="muted small">({sworn}/{allowed} Words, 13.5)</span></h3>
         {allowed === 0 && <p className="muted small">{crew.faction} swears no Words.</p>}
@@ -90,13 +100,18 @@ function Setup({ crew, b, setB, setF, update }: { crew: Crew; b: Battle; setB: S
                   <select aria-label={`${fighterLabel(f)}'s Word`} value={bf.word?.deed ?? ''} disabled={!bf.word && sworn >= allowed}
                     onChange={(e) => setF(f.id, (x) => ({ ...x, word: e.target.value ? { deed: e.target.value, audience: x.word?.audience ?? audiences[0] } : null }))}>
                     <option value="">No Word</option>
-                    {tiers.map((t) => <optgroup key={t} label={t}>{rules.deeds.filter((d) => d.tier === t).map((d) => <option key={d.id} value={d.id}>{d.id} {d.name}</option>)}</optgroup>)}
+                    {f.rumour?.name && !f.rumour.done && <optgroup label="Their rumour (a Big vow, 13.9)"><option value={`${RUMOUR}${f.rumour.name}`}>{f.rumour.name}</option></optgroup>}
+                    {allowedTiers(f).map((t) => <optgroup key={t} label={t}>{rules.deeds.filter((d) => d.tier === t).map((d) => <option key={d.id} value={d.id}>{d.id} {d.name}</option>)}</optgroup>)}
                   </select>
-                  {bf.word && (
+                  {bf.word && !bf.word.deed.startsWith(RUMOUR) && (
                     <select aria-label="Audience" value={bf.word.audience} onChange={(e) => setF(f.id, (x) => ({ ...x, word: { ...x.word!, audience: e.target.value } }))}>
                       {audiences.map((a) => <option key={a}>{a}</option>)}
                     </select>
                   )}
+                  {bf.word?.audience === stakes.audience && (crew.notes.tags.includes(stakes.noTakerTag)
+                    ? <span className="small muted">{stakes.noTakerTag}: nobody takes the bet, so it is a vow (14.10).</span>
+                    : <label className="check small"><input type="checkbox" checked={bf.word.taker !== false} onChange={(e) => setF(f.id, (x) => ({ ...x, word: { ...x.word!, taker: e.target.checked } }))} /> Someone took the bet (stake {stakes.value[deedTier(rules, bf.word.deed)?.tier ?? ''] ?? 0} parts)</label>)}
+                  {bf.word && sillyTierUp(f) && <span className="small muted">{f.sillyTrait}: this Word must be a tier above the one they failed (13.7).</span>}
                   {bf.word && <DeedText id={bf.word.deed} />}
                 </div>
               )}
@@ -113,13 +128,17 @@ function Setup({ crew, b, setB, setF, update }: { crew: Crew; b: Battle; setB: S
 
 function DeedText({ id }: { id: string }) {
   const rules = getRules();
+  if (id.startsWith(RUMOUR)) {
+    const r = rules.data.rumours.find((x) => plain(x.Rumour).startsWith(id.slice(RUMOUR.length)));
+    return r ? <RuleLink rule={{ title: plain(r.Rumour).split('.')[0], section: rules.section('rumour'), lines: [['Deed', r.Deed], ['Legend', r.Legend]] }}>read</RuleLink> : null;
+  }
   const d = rules.deeds.find((x) => x.id === id);
   if (!d) return null;
   return <RuleLink rule={{ title: `${d.id} ${d.name}`, section: rules.section('deed'), lines: [[d.tier, d.text], ...(d.legend ? [['Legend', d.legend] as [string, string]] : [])] }}>read</RuleLink>;
 }
 
 // ---------- playing ----------
-function Playing({ crew, b, setB, setF }: { crew: Crew; b: Battle; setB: SetB; setF: SetF }) {
+function Playing({ crew, b, setB, setF, update }: { crew: Crew; b: Battle; setB: SetB; setF: SetF; update: Update }) {
   const ask = useAsk();
   const rules = getRules();
   const [tool, setTool] = useState<string | null>(null);
@@ -137,8 +156,10 @@ function Playing({ crew, b, setB, setF }: { crew: Crew; b: Battle; setB: SetB; s
           <strong className="round-num">Round {b.round}</strong>
           <span className="muted small">{fighters.filter((f) => b.fighters[f.id].activated).length}/{fighters.length} activated</span>
         </div>
-        {b.round === R.pod.value && <PodRoll crew={crew} />}
+        <BreakingCard crew={crew} b={b} setB={setB} />
+        {b.round === R.pod.value && <PodRoll crew={crew} b={b} setB={setB} />}
         <RoundStart crew={crew} b={b} />
+        <WorldPanel b={b} setB={setB} />
         <div className="row gap-s wrap">
           {end === 'continue' && <button className={`btn ${allDone ? 'primary' : ''}`} onClick={next}>End round {b.round}</button>}
           {end === 'roll' && (
@@ -153,7 +174,7 @@ function Playing({ crew, b, setB, setF }: { crew: Crew; b: Battle; setB: SetB; s
         </div>
       </div>
       <div className="battle-grid">
-        {fighters.map((f) => <BattleCard key={f.id} crew={crew} f={f} bf={b.fighters[f.id]} set={(fn) => setF(f.id, fn)} />)}
+        {fighters.map((f) => <BattleCard key={f.id} crew={crew} f={f} bf={b.fighters[f.id]} set={(fn) => setF(f.id, fn)} update={update} />)}
       </div>
       <ResearchTracker crew={crew} b={b} setB={setB} />
       <Tools crew={crew} tool={tool} setTool={setTool} />
@@ -162,11 +183,13 @@ function Playing({ crew, b, setB, setF }: { crew: Crew; b: Battle; setB: SetB; s
   );
 }
 
-function PodRoll({ crew }: { crew: Crew }) {
+function PodRoll({ crew, b, setB }: { crew: Crew; b: Battle; setB: SetB }) {
   const rules = getRules();
   const P = rules.crew.battle.pod;
-  const [roll, setRoll] = useState<number | null>(null);
-  const [drop, setDrop] = useState<number | null>(null);
+  const roll = b.pod?.roll ?? null;
+  const drop = b.pod?.drop ?? null;
+  const setRoll = (n: number) => setB((x) => ({ ...x, pod: { ...(x.pod ?? { drop: null }), roll: n } }));
+  const setDrop = (n: number) => setB((x) => ({ ...x, pod: { ...(x.pod ?? { roll: null }), drop: n } }));
   const row = drop !== null ? lookup(rules.data.drop_table, drop) : null;
   return (
     <div className="pod note">
@@ -178,13 +201,15 @@ function PodRoll({ crew }: { crew: Crew }) {
         <>
           <RollOrEnter die="d66" label="Crack it open (drop table)" value={drop} onResult={setDrop} />
           {row && <p><Md text={row['What came out']} /></p>}
+          {row && <label className="check small"><input type="checkbox" checked={!!b.pod?.ours} onChange={(e) => setB((x) => ({ ...x, pod: { ...x.pod!, ours: e.target.checked } }))} /> One of ours opened it</label>}
+          {scenarioOf(b)?.sections.filter((x) => /^Pods/.test(x.label)).map((x) => <p key={x.label} className="small muted"><Md text={x.text} /></p>)}
         </>
       )}
     </div>
   );
 }
 
-function BattleCard({ crew, f, bf, set }: { crew: Crew; f: Fighter; bf: BattleFighter; set: (fn: (b: BattleFighter) => BattleFighter) => void }) {
+function BattleCard({ crew, f, bf, set, update }: { crew: Crew; f: Fighter; bf: BattleFighter; set: (fn: (b: BattleFighter) => BattleFighter) => void; update: Update }) {
   const rules = getRules();
   const st = fighterStats(rules, crew, f);
   const down = isDown(rules, bf);
@@ -203,7 +228,7 @@ function BattleCard({ crew, f, bf, set }: { crew: Crew; f: Fighter; bf: BattleFi
           <div className="muted small">{describeType(f)} · Move {st.moveText} · Hands {st.hands} · Save {st.save ?? '–'}</div>
         </div>
         <select aria-label="Position" value={bf.position} onChange={(e) => set((x) => ({ ...x, position: e.target.value, states: positions(rules).find((p) => p.name === e.target.value)?.down ? [] : x.states }))}>
-          {positions(rules).map((p) => <option key={p.name}>{p.name}</option>)}
+          {positions(rules).filter((p) => !p.botOnly || isBot(rules, f)).map((p) => <option key={p.name}>{p.name}</option>)}
         </select>
       </header>
 
@@ -271,6 +296,8 @@ function BattleCard({ crew, f, bf, set }: { crew: Crew; f: Fighter; bf: BattleFi
       </div>
 
       {bf.putDowns > 0 && onPutDown.map((e) => <FactionNote key={e.effect.id} e={e} small />)}
+      <Grenades crew={crew} f={f} bf={bf} set={set} />
+      {hasGift(rules, crew, f) && !down && <Madness f={f} bf={bf} set={set} update={update} />}
       {isBot(rules, f) && (
         <div className="seg wrap">
           <span className="small strong">Bot <RuleLink rule={{ title: 'Bots and relays', section: '8.5', lines: rules.data.bot_states.map((x) => [plain(x.State), `${x['What it does']}. When: ${plain(x.When)}`] as [string, string]) }}>§</RuleLink></span>
@@ -281,7 +308,7 @@ function BattleCard({ crew, f, bf, set }: { crew: Crew; f: Fighter; bf: BattleFi
       )}
       {bf.word && (
         <div className="word small">
-          <strong>Word:</strong> {bf.word.deed} {rules.deeds.find((d) => d.id === bf.word!.deed)?.name} ({bf.word.audience}) <DeedText id={bf.word.deed} />
+          <strong>Word:</strong> {wordName(rules, bf.word.deed)} ({bf.word.audience}) <DeedText id={bf.word.deed} />
           <label className="check small"><input type="checkbox" checked={bf.word.result === 'fulfilled'} onChange={(e) => set((x) => ({ ...x, word: { ...x.word!, result: e.target.checked ? 'fulfilled' : undefined } }))} /> It is done</label>
         </div>
       )}
@@ -297,7 +324,7 @@ function BattleCard({ crew, f, bf, set }: { crew: Crew; f: Fighter; bf: BattleFi
 }
 
 // ---------- tools ----------
-const TOOLS = ['Dice', 'Hit', 'Clash', 'Ask the voice', 'Quick reference'];
+const TOOLS = ['Dice', 'Hit', 'Clash', 'Gear fails', 'Grenade', 'Ask the voice', 'Quick reference', 'Glossary'];
 
 function Tools({ crew, tool, setTool }: { crew: Crew; tool: string | null; setTool: (t: string | null) => void }) {
   return (
@@ -309,7 +336,10 @@ function Tools({ crew, tool, setTool }: { crew: Crew; tool: string | null; setTo
       {tool === 'Hit' && <HitTool />}
       {tool === 'Clash' && <ClashTool />}
       {tool === 'Ask the voice' && <VoiceTool crew={crew} />}
-      {tool === 'Quick reference' && <QuickRef />}
+      {tool === 'Gear fails' && <GearFailTool />}
+      {tool === 'Grenade' && <GrenadeTool />}
+      {tool === 'Quick reference' && <><QuickRef /><MoreTables /></>}
+      {tool === 'Glossary' && <GlossaryTool />}
       {!tool && <p className="muted small">Dice, the consequence tables, clashes and the voices, for when the table needs them.</p>}
     </div>
   );
@@ -427,6 +457,8 @@ function EndBattle({ crew, b, setB, update }: { crew: Crew; b: Battle; setB: Set
           </label>
         )}
         <label className="check"><input type="checkbox" checked={b.heldField} onChange={(e) => setB((x) => ({ ...x, heldField: e.target.checked }))} /> We held the field</label>
+        <label className="check"><input type="checkbox" checked={!!b.evacuated} disabled={!!b.final} onChange={(e) => setB((x) => ({ ...x, evacuated: e.target.checked, stoodGround: e.target.checked ? false : !x.broke, heldField: e.target.checked ? false : x.heldField }))} /> We called our evac{b.final ? ' (no evac in the Final)' : ` (the enemy holds the field, takes the prize, and we gain ${rules.crew.afterBattle.evacTag.value}, 9.6)`}</label>
+        <label className="check"><input type="checkbox" checked={!!b.broke} onChange={(e) => setB((x) => ({ ...x, broke: e.target.checked, stoodGround: e.target.checked ? false : !x.evacuated }))} /> We broke (9.4)</label>
         <label className="check"><input type="checkbox" checked={b.stoodGround} onChange={(e) => setB((x) => ({ ...x, stoodGround: e.target.checked }))} /> We stood our ground (did not evacuate or forfeit)</label>
       </div>
       <div className="card stack-s">
@@ -435,7 +467,7 @@ function EndBattle({ crew, b, setB, update }: { crew: Crew; b: Battle; setB: Set
           <div key={f.id} className="row gap-s wrap between">
             <span>{fighterLabel(f)}</span>
             <select aria-label={`${fighterLabel(f)}: how they ended`} value={b.fighters[f.id].position} onChange={(e) => setB((x) => ({ ...x, fighters: { ...x.fighters, [f.id]: { ...x.fighters[f.id], position: e.target.value } } }))}>
-              {positions(rules).map((p) => <option key={p.name}>{p.name}</option>)}
+              {positions(rules).filter((p) => !p.botOnly || isBot(rules, f)).map((p) => <option key={p.name}>{p.name}</option>)}
             </select>
           </div>
         ))}
