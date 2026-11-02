@@ -34,7 +34,7 @@ export function newBattle(rules: Rules, crew: Crew): Battle {
     const states = (f.nextBattle ?? []).filter((s) => stateNames(rules).includes(s));
     const pos = (f.nextBattle ?? []).find((s) => positions(rules).some((p) => p.name === s)) ?? first;
     fighters[f.id] = {
-      inBattle: f.status !== 'Laid up', energy: bat.now, conditions: [], states, position: pos,
+      inBattle: f.status !== 'Laid up' && !f.awaitingChassis, energy: bat.now, conditions: [], states, position: pos,
       activated: false, reactionUsed: false, dents: 0, putDowns: 0, word: null, notes: '',
     };
   }

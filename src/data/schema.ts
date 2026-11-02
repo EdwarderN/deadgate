@@ -159,6 +159,7 @@ export const effectSchema = z.object({
   state: str.optional(),
   xpBelow: z.number().optional(),
   prefix: str.optional(),
+  prefixAfter: str.optional(),
   captain: z.enum(['standing', 'down']).optional(),
   fraction: z.number().optional(),
 });
@@ -206,7 +207,8 @@ export const factionRulesSchema = z.object({
   wordKind: sourced(str).optional(),
   effects: z.array(effectSchema).optional(),
   taskPay: z.array(taskPaySchema).optional(),
-  typeRules: z.record(z.object({ injuryTable: z.enum(['gentle', 'harsh']).optional(), putDownXpTo: str.optional(), noTitle: z.boolean().optional(), source: str })).optional(),
+  typeRules: z.record(z.object({ injuryTable: z.enum(['gentle', 'harsh']).optional(), putDownXpTo: str.optional(), noTitle: z.boolean().optional(), builtIn: z.object({ kind: str, source: sourceSchema, maxPrice: z.number() }).optional(), note: str.optional(), source: str })).optional(),
+  typeLimits: sourced(z.record(z.number())).optional(),
 });
 
 const slotRule = z.object({
@@ -339,6 +341,8 @@ export const crewRulesSchema = z.object({
     resetStatusesAtBreak: sourced(z.boolean()),
     evacTag: sourced(str),
     botCore: num,
+    twistTest: sourced(str),
+    taskPayDoubleIsPrinted: sourced(z.boolean()),
     storyRowHints: sourced(z.record(z.enum(['heldField', 'notHeldField', 'ran', 'lostSomeone', 'captive', 'legend']))),
   }),
   factions: z.record(factionRulesSchema),

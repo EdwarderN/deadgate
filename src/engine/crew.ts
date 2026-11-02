@@ -223,6 +223,8 @@ export function fighterStats(rules: Rules, crew: Crew, f: Fighter): FighterStats
 export function slotOptions(rules: Rules, item: ItemDef): ItemSlot[] {
   const mw = rules.crew.gear.mountWeapons.value;
   if (item.mount) return ['mount'];
+  // An item that can replace a lost limb may be fitted in its place, taking no slot (13.2, 7.5).
+  if (item.slot !== 'fitted' && rules.crew.gear.prosthetics.value[item.key]) return ['fitted', ...slotOptions(rules, { ...item, key: '' })];
   switch (item.slot) {
     case 'hands': return item.kind === 'weapon' && mw.alsoTwoHanded && item.hands >= rules.crew.gear.handsPerSet.value ? ['set1', 'set2', 'mount'] : ['set1', 'set2'];
     case 'body': return ['body'];
@@ -365,12 +367,20 @@ export function setFaction(rules: Rules, crew: Crew, faction: string): Crew {
   return { ...crew, faction, subfaction: null, fighters, captainId, kitPicks: {}, items };
 }
 
+/** The weapons a type may have built in (the Prototype, 12.6), or null. */
+export function builtInOptions(rules: Rules, crew: Crew, type: string | null): ItemDef[] | null {
+  const b = type ? rules.factionRules(crew.faction ?? '')?.typeRules?.[type]?.builtIn : undefined;
+  if (!b) return null;
+  return rules.shopItems.filter((i) => i.kind === b.kind && i.source === b.source && (i.price ?? 0) <= b.maxPrice);
+}
+
 export function setFighterType(rules: Rules, crew: Crew, f: Fighter, type: string | null): Fighter {
   const fr = rules.factionRules(crew.faction ?? '');
   const species = type && fr?.typeSpecies?.[type] ? fr.typeSpecies[type] : isBot(rules, f) ? rules.crew.limits.playableSpecies.value[0] : f.species;
   const forbid = rules.crew.limits.botForbiddenRating.value;
   const baseRatings = isBot(rules, { species }) && f.baseRatings[forbid] ? { ...f.baseRatings, [forbid]: 0 } : f.baseRatings;
-  return { ...f, type, species, baseRatings };
+  const builtIn = builtInOptions(rules, crew, type)?.some((i) => i.id === f.builtIn) ? f.builtIn : null;
+  return { ...f, type, species, baseRatings, builtIn };
 }
 
 // ---------- campaign ----------

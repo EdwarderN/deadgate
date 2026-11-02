@@ -267,12 +267,13 @@ function BattleCard({ crew, f, bf, set, update }: { crew: Crew; f: Fighter; bf: 
         {down && <p className="small err-text">Down: face down, one action (crawl 1 inch). Can be carried, captured or rescued (5.8).</p>}
       </div>
 
-      {hands.length > 0 && (
+      {(hands.length > 0 || f.builtIn) && (
         <ul className="plain-list small weapons">
           {hands.map((o) => (
             <li key={o.uid}><RuleLink rule={itemRule(rules, o.def!)}>{o.def!.name}</RuleLink>
               <span className="muted"> {o.slot === 'mount' ? 'mount' : o.slot === 'set1' ? 'set 1' : 'set 2'}{o.def!.rules.Range ? ` · ${o.def!.rules.Range}` : ''}{o.def!.traits.length ? ` · ${o.def!.traits.join(', ')}` : ''}</span></li>
           ))}
+          {f.builtIn && rules.item(f.builtIn) && <li><RuleLink rule={itemRule(rules, rules.item(f.builtIn)!)}>{rules.item(f.builtIn)!.name}</RuleLink><span className="muted"> built in{rules.item(f.builtIn)!.rules.Range ? ` · ${rules.item(f.builtIn)!.rules.Range}` : ''}{rules.item(f.builtIn)!.traits.length ? ` · ${rules.item(f.builtIn)!.traits.join(', ')}` : ''}</span></li>}
         </ul>
       )}
 

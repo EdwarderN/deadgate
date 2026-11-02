@@ -67,6 +67,10 @@ export interface Fighter {
   lastFailedTier?: string;
   /** the break in which the fighter was hired: no task that break (14.9) */
   hiredBreak?: number;
+  /** a weapon built into the chassis (the Prototype, 12.6): free, no Hands, never removed */
+  builtIn?: string | null;
+  /** a destroyed bot whose core came home waits for a replacement chassis, bought in the Spend step (13.3) */
+  awaitingChassis?: boolean;
 }
 
 /** deed: a deed id (S1, B3...) or `rumour:<name>` for an arrival's rumour (13.9). taker: a wager found a taker (13.5). */

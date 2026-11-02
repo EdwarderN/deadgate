@@ -78,6 +78,7 @@ function FighterCard({ crew, fighter: f }: { crew: Crew; fighter: Fighter }) {
         <div className="fc-col2">
           <div className="fc-h">Gear</div>
           <div className="fc-line"><b>Hands</b><span className="ul">{names('set1').join(' + ')}</span><span className="ul">{names('set2').join(' + ')}</span></div>
+          {f.builtIn && <div className="fc-line"><b>Built in</b><span className="ul">{rules.item(f.builtIn)?.name} (c)</span></div>}
           <div className="fc-line"><b>Body</b><span className="ul">{names('body').join(', ')}</span></div>
           <div className="fc-line"><b>Frame</b><span className="ul">{[...names('frame'), ...names('mount').map((n) => `mount: ${n}`)].join(', ')}</span></div>
           <div className="fc-line"><b>Belt</b><Lines items={names('belt')} n={rules.crew.gear.beltSlots.value} /></div>

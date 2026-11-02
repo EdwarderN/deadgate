@@ -4,7 +4,7 @@
 import type { Rules } from '../data/rules';
 import type { Crew, Fighter } from './model';
 import {
-  advancesEarned, captainOf, captainTraitNames, creditFloor, currentRatings, equipped, fighterStats, giftPrice, hasGift, hasMilitaryFrame,
+  advancesEarned, builtInOptions, captainOf, captainTraitNames, creditFloor, currentRatings, equipped, fighterStats, giftPrice, hasGift, hasMilitaryFrame,
   hasRites, isBot, itemPrice, kitLines, kitPickOptions, partsLeft, riteFromAdvance, ritesAllowed, ritesKnown, ritesPrice, ruleActive,
   slotCapacity, slotLoad, traitBudgetUsed,
 } from './crew';
@@ -314,6 +314,30 @@ export const validators: Record<string, Validator> = {
       }
     }
     return out;
+  },
+
+  builtIn({ rules, crew }) {
+    const out: Message[] = [];
+    for (const f of crew.fighters) {
+      const opts = builtInOptions(rules, crew, f.type);
+      const src = f.type ? rules.factionRules(crew.faction ?? '')?.typeRules?.[f.type]?.source ?? '' : '';
+      if (opts && !opts.some((i) => i.id === f.builtIn)) out.push(msg('builtIn', 'error', 'rookies', src, `${named(crew, f)} is ${an(f.type!).toLowerCase()}: choose the copy weapon built into the chassis.`, f.id));
+      if (!opts && f.builtIn) out.push(msg('builtIn', 'error', 'rookies', '12.6', `${named(crew, f)} is not a chassis with a built-in weapon.`, f.id));
+    }
+    return out;
+  },
+
+  typeLimits({ rules, crew }) {
+    const tl = rules.factionRules(crew.faction ?? '')?.typeLimits;
+    if (!tl) return [];
+    return Object.entries(tl.value).flatMap(([t, max]) => {
+      const n = crew.fighters.filter((f) => f.type === t).length;
+      return n > max ? [msg('typeLimits', 'error', 'rookies', tl.source, `${crew.faction} has at most ${max} ${t}; this crew has ${n}.`)] : [];
+    });
+  },
+
+  chassis({ crew }) {
+    return crew.fighters.filter((f) => f.awaitingChassis).map((f) => msg('chassis', 'warning', 'campaign', '13.3', `${named(crew, f)}'s core waits for a new chassis: buy one in the Spend step.`, f.id));
   },
 
   typeRules({ rules, crew }) {

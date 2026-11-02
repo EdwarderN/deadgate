@@ -8,7 +8,7 @@ import {
 } from '../engine/battle';
 import { scenarioOf } from './BattleExtras';
 import {
-  activeEffects, canTakeTitle, factionAfterBattle, factionWordBonus, putDownXpTarget, researchEligible, taskPay, type ActiveEffect,
+  activeEffects, canTakeTitle, factionAfterBattle, factionWordBonus, putDownXpTarget, researchEligible, prefixTitle, taskPayWithTable, type ActiveEffect,
 } from '../engine/faction';
 import { advancesEarned, airTax, currentRatings, hirePrice, isBot, ratingNames } from '../engine/crew';
 import { lookup } from '../engine/dice';
@@ -16,7 +16,7 @@ import { applyChanges, describe, setItemNamer, splitTwist, type Change } from '.
 import { resolveEffects, type EffCtx, type EffState, type Node, type Resolved } from '../engine/effects';
 import { uid, type AfterBattle as After, type Crew, type Fighter } from '../engine/model';
 import { go } from '../App';
-import { Hire, Md, Recharge, Shop, Stash, fighterLabel, type Update } from './common';
+import { Chassis, Hire, Md, Recharge, Shop, Stash, fighterLabel, type Update } from './common';
 import { Experience } from './Campaign';
 import { PoolRoller, RollOrEnter } from './Dice';
 import { FactionNote } from './Battle';
@@ -157,7 +157,7 @@ function BattleStep(p: SP) {
         changes.push({ kind: 'legend', fid: f.id, name: l.name, title: canTakeTitle(rules, crew, f) ? l.title : null });
         const to = a.spinOff?.[f.id];
         const sp = activeEffects(rules, crew, 'legend').find((e) => e.effect.kind === 'spinOffLegend');
-        if (to && sp) changes.push({ kind: 'legend', fid: to, name: l.name, title: l.title ? `${sp.effect.prefix} ${l.title.replace(/^the /i, '')}` : null });
+        if (to && sp) changes.push({ kind: 'legend', fid: to, name: l.name, title: l.title ? prefixTitle(l.title, sp.effect.prefix ?? '', sp.effect.prefixAfter) : null });
       }
     }
     if (w.result === 'failed') {
@@ -614,9 +614,9 @@ function taskResolve(rules: ReturnType<typeof getRules>, crew: Crew, a: After, f
   out.base = resolveEffects(rules, crew, baseEffs, ctx, st, `taskbase:${f.id}:${def.name}:${useFailure}`);
   // Faction rules, captain traits and tags change the pay (12.5, 11.2, 14.10); the table can halve, double or cancel it.
   const baseParts = out.base.changes.filter((c) => c.kind === 'parts').reduce((s, c) => s + (c as { amount: number }).amount, 0);
-  const tp = taskPay(rules, crew, def.name, !!t.success && mult !== 'failure', baseParts || null);
-  let parts = tp.parts ?? 0;
-  if (typeof mult === 'number') parts = mult === 2 && !t.success ? parts : Math.floor(parts * mult);
+  // "Pays double" doubles the task's printed pay, before other rules add to it (12.3); other changes apply to the whole pay.
+  const tp = taskPayWithTable(rules, crew, def.name, !!t.success && mult !== 'failure', baseParts || null, typeof mult === 'number' ? mult : undefined);
+  const parts = tp.parts ?? 0;
   out.changes.push(...out.base.changes.filter((c) => c.kind !== 'parts'));
   if (parts) out.changes.push({ kind: 'parts', amount: parts, note: `${fighterLabel(f)}: ${def.name}` });
   if (tp.xp) out.changes.push({ kind: 'xp', fid: f.id, amount: tp.xp, note: def.name });
@@ -697,13 +697,16 @@ function TwistTest({ crew, rating, who, setWho, ok, setOk }: { crew: Crew; ratin
   const rules = getRules();
   const f = crew.fighters.find((x) => x.id === who);
   const r = f && rating ? currentRatings(rules, f)[rating] ?? 0 : 0;
-  const target = +(rules.data.difficulties[0]?.Target ?? 6);
+  const tt = rules.crew.afterBattle.twistTest;
+  const diff = rules.data.difficulties.find((d) => plain(d.Difficulty) === tt.value);
+  const target = +(diff?.Target ?? rules.data.difficulties[0]?.Target ?? 6);
+  const can = crew.fighters.filter((x) => !taskBlocked(rules, x, crew));
   return (
     <div className="stack-s twist">
       <div className="row gap-s wrap">
-        <span className="small">{rating ?? 'A'} test, Routine ({target}). Who tries?</span>
+        <span className="small">{rating ?? 'A'} test, {tt.value} ({target}), by a fighter who may take a task (it does not use their task, {tt.source}). Who tries?</span>
         <select aria-label="Who takes the test" value={who ?? ''} onChange={(e) => setWho(e.target.value || null)}>
-          <option value="">Choose</option>{crew.fighters.map((x) => <option key={x.id} value={x.id}>{fighterLabel(x)}{rating ? ` (${rating} ${currentRatings(rules, x)[rating] ?? 0})` : ''}</option>)}
+          <option value="">Choose</option>{can.map((x) => <option key={x.id} value={x.id}>{fighterLabel(x)}{rating ? ` (${rating} ${currentRatings(rules, x)[rating] ?? 0})` : ''}</option>)}
         </select>
       </div>
       {f && <PoolRoller key={f.id} initialExtra={r} target={target} onResult={(t) => setOk(t >= target)} />}
@@ -780,6 +783,7 @@ function SpendStep({ crew, update, confirm }: SP) {
     <div className="stack">
       <h2>Spend</h2>
       <p className="muted">Recharge, repair, buy, sell, hire and fit prosthetics (14.3, 11.3, 14.9). A new break: old stock needs a seller again.</p>
+      <Chassis crew={crew} update={update} />
       <Recharge crew={crew} update={update} />
       <Stash crew={crew} update={update} />
       <details className="card"><summary>The shop</summary><Shop crew={crew} update={update} /></details>
@@ -883,3 +887,4 @@ function RumourPicks({ crew, a, update }: { crew: Crew; a: After; update: Update
     </div>
   );
 }
+

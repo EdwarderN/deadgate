@@ -146,7 +146,8 @@ export function resolveEffects(rules: Rules, crew: Crew, effs: Eff[], ctx: EffCt
     if (e.item) {
       const opts = itemOptions(rules, e.item);
       const fit = e.item.fit ? people('self', p)[0] : undefined;
-      const slot = (d: ItemDef) => (d.slot === 'fitted' ? 'fitted' : d.slot === 'belt' ? 'belt' : d.slot === 'body' ? 'body' : d.slot === 'frame' ? 'frame' : 'set1');
+      const replaces = (d: ItemDef) => !!fit && fit.injuries.includes(rules.crew.gear.prosthetics.value[d.key] ?? '\u0000');
+      const slot = (d: ItemDef) => (d.slot === 'fitted' || replaces(d) ? 'fitted' : d.slot === 'belt' ? 'belt' : d.slot === 'body' ? 'body' : d.slot === 'frame' ? 'frame' : 'set1');
       if (opts.length === 1) auto({ kind: 'addItem', itemId: opts[0].id, fid: fit?.id ?? null, slot: slot(opts[0]) }, `${fit ? `${name(fit)} gets` : 'Into the stash:'} ${opts[0].name}${e.item.label ? ` (${e.item.label})` : ''}`);
       else {
         const v = String(st[p] ?? '');
@@ -207,7 +208,7 @@ export function resolveEffects(rules: Rules, crew: Crew, effs: Eff[], ctx: EffCt
       const opts = rules.items.filter((d) => d.source === 'copy' && f.injuries.includes(rules.crew.gear.prosthetics.value[d.key] ?? '\u0000'));
       if (!opts.length) { out.nodes.push({ kind: 'note', path: p, text: `${name(f)} needs no prosthetic.` }); continue; }
       const d = opts[0];
-      auto({ kind: 'addItem', itemId: d.id, fid: f.id, slot: d.slot === 'fitted' ? 'fitted' : 'belt' }, `${name(f)} wakes up with a ${d.name}`);
+      auto({ kind: 'addItem', itemId: d.id, fid: f.id, slot: 'fitted' }, `${name(f)} wakes up with a ${d.name}`);
     }
     if (e.recharge !== undefined) {
       const amount = e.recharge === 'full' ? null : e.recharge;

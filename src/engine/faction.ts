@@ -162,3 +162,17 @@ export const effectText = (s: string) => plain(s);
 
 /** A type may never take a title (Stunt double, 12.7). */
 export const canTakeTitle = (rules: Rules, crew: Crew, f: Pick<Fighter, 'type'>) => !typeRule(rules, crew, f)?.noTitle;
+
+/** A task's pay after a table row that cancels, halves or doubles it. "Pays double" doubles the printed pay only (12.3). */
+export function taskPayWithTable(rules: Rules, crew: Crew, task: string, success: boolean, printed: number | null, mult?: number): TaskPayResult {
+  const doublePrinted = mult === 2 && rules.crew.afterBattle.taskPayDoubleIsPrinted.value;
+  const tp = taskPay(rules, crew, task, success, doublePrinted && success && printed !== null ? printed * 2 : printed);
+  if (mult === undefined || doublePrinted || tp.parts === null) return tp;
+  return { ...tp, parts: Math.floor(tp.parts * mult) };
+}
+
+/** A title with a prefix, after any leading word such as "the": "the Young Hammer" (12.7). */
+export function prefixTitle(title: string, prefix: string, after?: string): string {
+  if (after && title.toLowerCase().startsWith(`${after.toLowerCase()} `)) return `${title.slice(0, after.length)} ${prefix} ${title.slice(after.length + 1)}`;
+  return `${prefix} ${title}`;
+}

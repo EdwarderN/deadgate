@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react';
 import { getRules, type ItemDef } from '../data/rules';
 import {
   addLedger, autoSlot, canSpend, equipped, fighterStats, giftPrice, hirePrice, isBot, itemPrice, needsSeller, newFighter, partsLeft, ratingNames,
-  battery, rechargeCost, recruitKey, ritesPrice, rookieSurcharge, sellValue, sellerTarget, setFighterType, setSellerResult, slotCapacity, slotLoad, slotOptions,
+  battery, builtInOptions, rechargeCost, recruitKey, ritesPrice, rookieSurcharge, sellValue, sellerTarget, setFighterType, setSellerResult, slotCapacity, slotLoad, slotOptions,
 } from '../engine/crew';
 import { uid, type Crew, type Fighter, type ItemSlot, type OwnedItem } from '../engine/model';
 import type { Message } from '../engine/validate';
@@ -62,6 +62,7 @@ export function FighterBasics({ crew, fighter, onChange, lockType }: { crew: Cre
   const ratingOn = ratingNames(rules).find((r) => fighter.baseRatings[r] === 1) ?? '';
   const surcharge = fighter.rookie ? rookieSurcharge(rules, crew, fighter) : 0;
   const fid = fighter.id;
+  const builtIns = builtInOptions(rules, crew, fighter.type);
 
   return (
     <div className="basics">
@@ -92,10 +93,21 @@ export function FighterBasics({ crew, fighter, onChange, lockType }: { crew: Cre
               {types.map((t) => {
                 const p = hirePrice(rules, crew, { species: fr.typeSpecies?.[t.name] ?? fighter.species, type: t.name });
                 const extra = fighter.rookie ? Math.max(0, p - rules.crew.creation.rookieBasePrice.value) : 0;
-                return <option key={t.name} value={t.name}>{t.label}{extra ? ` (+${extra} parts)` : ''}</option>;
+                const limit = fr.typeLimits?.value[t.name];
+                const full = limit !== undefined && crew.fighters.filter((x) => x.type === t.name && x.id !== fighter.id).length >= limit;
+                return <option key={t.name} value={t.name} disabled={full}>{t.label}{extra ? ` (+${extra} parts)` : ''}{full ? ` (at most ${limit})` : ''}</option>;
               })}
             </select>
           )}
+        </label>
+      )}
+      {builtIns && (
+        <label className="field">
+          <span>Built-in weapon <span className="muted">(free, no Hands, never removed)</span></span>
+          <select value={fighter.builtIn ?? ''} onChange={(e) => onChange({ ...fighter, builtIn: e.target.value || null })}>
+            <option value="">Choose a copy weapon…</option>
+            {builtIns.map((i) => <option key={i.id} value={i.id}>{i.name} ({i.price} parts)</option>)}
+          </select>
         </label>
       )}
       {typesDecideSpecies && fighter.type && <p className="muted small">Species: {fighter.species} <RuleLink rule={speciesRule(rules, fighter.species)}>rule</RuleLink></p>}
@@ -289,6 +301,7 @@ export function Equip({ crew, fighter, update, messages }: { crew: Crew; fighter
   return (
     <div className="equip">
       <StatLine crew={crew} fighter={fighter} />
+      {fighter.builtIn && rules.item(fighter.builtIn) && <p className="small">Built in: <RuleLink rule={itemRule(rules, rules.item(fighter.builtIn)!)}>{rules.item(fighter.builtIn)!.name}</RuleLink> <span className="muted">(no Hands, never removed)</span></p>}
       <div className="slots">
         {slots.map((s) => {
           const inSlot = items.filter((o) => o.slot === s);
@@ -463,6 +476,27 @@ export function Recharge({ crew, update }: { crew: Crew; update: Update }) {
           {energy > 0 && !ok && <p className="small err-text">Not enough parts.</p>}
         </>
       )}
+    </div>
+  );
+}
+
+/** A destroyed bot whose core came home: buy the replacement chassis at its hire price (13.3). */
+export function Chassis({ crew, update }: { crew: Crew; update: Update }) {
+  const rules = getRules();
+  const waiting = crew.fighters.filter((f) => f.awaitingChassis);
+  if (!waiting.length) return null;
+  return (
+    <div className="card stack-s">
+      <h3>Replacement chassis <span className="section-tag">§ 13.3</span></h3>
+      {waiting.map((f) => {
+        const price = hirePrice(rules, crew, f);
+        return (
+          <div key={f.id} className="row gap-s wrap between">
+            <span>{fighterLabel(f)}'s core ({f.xp} XP) waits for a new {f.type ?? 'chassis'}.</span>
+            <button className="btn small primary" disabled={!canSpend(rules, crew, price)} onClick={() => update((c) => addLedger({ ...c, fighters: c.fighters.map((x) => (x.id === f.id ? { ...x, awaitingChassis: false } : x)) }, -price, `New chassis for ${fighterLabel(f)}`))}>Buy it for {price} parts</button>
+          </div>
+        );
+      })}
     </div>
   );
 }

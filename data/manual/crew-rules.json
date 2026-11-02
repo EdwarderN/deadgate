@@ -294,7 +294,7 @@
         "old-stock leg": "Lost leg"
       },
       "source": "13.2",
-      "note": "a prosthetic can be fitted only in place of this injury"
+      "note": "a prosthetic can be fitted only in place of this injury. A robo-arm fitted for a lost arm takes no Belt slot; a spare one takes one (7.5, 13.2, designer's answer 9)"
     },
     "injuryEffects": {
       "value": {
@@ -871,6 +871,15 @@
         "Volunteer": {
           "injuryTable": "gentle",
           "source": "12.6"
+        },
+        "Prototype": {
+          "builtIn": {
+            "kind": "weapon",
+            "source": "copy",
+            "maxPrice": 8
+          },
+          "source": "12.6",
+          "note": "a free copy weapon worth up to 8 parts, chosen at hire; it takes no Hands and no set, and cannot be removed (designer's answer 1)"
         }
       }
     },
@@ -948,7 +957,8 @@
           "when": "legend",
           "kind": "spinOffLegend",
           "xpBelow": 5,
-          "prefix": "Young"
+          "prefix": "Young",
+          "prefixAfter": "the"
         },
         {
           "id": "cast-them",
@@ -962,6 +972,13 @@
           "noTitle": true,
           "source": "12.7"
         }
+      },
+      "typeLimits": {
+        "value": {
+          "Director": 1
+        },
+        "source": "12.7",
+        "note": "at most one Director (designer's answer 7)"
       }
     }
   },
@@ -1342,7 +1359,17 @@
     "botCore": {
       "value": 0.5,
       "source": "13.3",
-      "note": "left behind: all XP lost; destroyed with the core home: the replacement keeps this share, rounded down"
+      "note": "left behind: all XP lost; destroyed with the core home: the replacement chassis keeps this share, rounded down, and is bought at its hire price in the Spend step (designer's answer 27)"
+    },
+    "twistTest": {
+      "value": "Tricky",
+      "source": "14.5",
+      "note": "a Twist is a Tricky test by one fighter who may take a task; it does not use their task (designer's answer 22)"
+    },
+    "taskPayDoubleIsPrinted": {
+      "value": true,
+      "source": "12.3",
+      "note": "'pays double' doubles the task's printed pay; pay added by other rules is not doubled (designer's answer 24)"
     }
   },
   "factionPayCap": {
