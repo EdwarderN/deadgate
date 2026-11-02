@@ -216,6 +216,7 @@ DATA = {
     "lasting_conditions": lambda: find_table("06-hits.md", "| Condition | Bot name"),
     "clashes": lambda: tables_under_bold("06-hits.md", "| d66 | Result"),
     "voices": lambda: tables_under_heading("08-special.md", "| d6 | Result | Effect | Mark"),
+    "bot_states": lambda: find_table("08-special.md", "| State | When | What it does"),
     "drop_table": lambda: find_table("09-setup.md", "| d66 | What came out"),
     "generic_xp": lambda: find_table("13-after.md", "| Deed | XP"),
     "deed_tiers": deed_tiers,

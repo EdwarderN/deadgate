@@ -58,6 +58,7 @@ import story_events from '../../data/generated/story_events.json';
 import task_tables from '../../data/generated/task_tables.json';
 import finds from '../../data/generated/finds.json';
 import league_points from '../../data/generated/league_points.json';
+import bot_states from '../../data/generated/bot_states.json';
 import crewRulesJson from '../../data/manual/crew-rules.json';
 
 export const rawData = {
@@ -66,7 +67,7 @@ export const rawData = {
   xp_ladder, advances, injuries_light, injuries_heavy, prosthetics, glitches, recovery_words, silly_traits, deeds,
   rumours, tags, contacts, tasks, glossary, catalog,
   difficulties, severity, states, actions, consequences, lasting_conditions, clashes, voices, drop_table, generic_xp,
-  deed_tiers, word_audiences, injury_tables, bot_words, story_rows, story_events, task_tables, finds, league_points,
+  deed_tiers, word_audiences, injury_tables, bot_words, story_rows, story_events, task_tables, finds, league_points, bot_states,
 };
 
 export type RawData = typeof rawData;

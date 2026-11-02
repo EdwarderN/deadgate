@@ -10,6 +10,7 @@ import { crewToJson, download, fileName, shareLink } from '../store';
 import { go } from '../App';
 import { Equip, Hire, Messages, PartsCounter, Shop, Stash, describeType, fighterLabel, patchFighter, type Update } from './common';
 import { copyLink, useAsk } from './confirm';
+import { canTakeTitle } from '../engine/faction';
 import { RuleLink, advanceRule, captainRule, contactRule, giftRule, injuryRule, legendRule, ritesRule, sillyRule, speciesRule, tagRule, typeRule } from './rule';
 
 const TABS = ['Fighters', 'Shop and hire', 'Parts', 'Roster notes', 'Season', 'Underdogs'] as const;
@@ -96,7 +97,7 @@ function FighterPanel({ crew, fighter: f, update, open, toggle, messages }: { cr
           <div className="row gap wrap">
             <label className="field grow"><span>Name</span><input value={f.name} onChange={(e) => set({ name: e.target.value })} /></label>
             <label className="field"><span>Title shown</span>
-              <select value={f.title} onChange={(e) => set({ title: e.target.value })}>
+              <select value={f.title} disabled={!canTakeTitle(rules, crew, f) && !f.title} onChange={(e) => set({ title: e.target.value })}>
                 <option value="">None</option>
                 {availableTitles(f).map((t) => <option key={t}>{t}</option>)}
               </select>
@@ -232,12 +233,12 @@ export function Experience({ crew, fighter: f, update }: { crew: Crew; fighter: 
           {kind === 'trait' && pick && <p className="small grow"><RuleLink rule={advanceRule(rules, pick.split('|')[1])}>Read the rule</RuleLink></p>}
         </div>
       ) : <p className="muted small">No advance to take: the next comes at {th[earned]} XP.</p>}
-      <Legends fighter={f} set={set} />
+      <Legends crew={crew} fighter={f} set={set} />
     </section>
   );
 }
 
-function Legends({ fighter: f, set }: { fighter: Fighter; set: (p: Partial<Fighter>) => void }) {
+function Legends({ crew, fighter: f, set }: { crew: Crew; fighter: Fighter; set: (p: Partial<Fighter>) => void }) {
   const rules = getRules();
   const [pick, setPick] = useState('');
   const have = new Set(f.legends.map((l) => l.name));
@@ -258,7 +259,7 @@ function Legends({ fighter: f, set }: { fighter: Fighter; set: (p: Partial<Fight
           <option value="">A Legend earned…</option>
           {rules.legends.filter((l) => !have.has(l.name)).map((l) => <option key={l.name} value={l.name}>{l.name} ({l.from})</option>)}
         </select>
-        <button className="btn small" disabled={!pick} onClick={() => { const l = rules.legends.find((x) => x.name === pick)!; set({ legends: [...f.legends, { id: uid('g'), name: l.name, title: l.title }], title: f.title || l.title || '' }); setPick(''); }}>Add</button>
+        <button className="btn small" disabled={!pick} onClick={() => { const l = rules.legends.find((x) => x.name === pick)!; set({ legends: [...f.legends, { id: uid('g'), name: l.name, title: l.title }], title: canTakeTitle(rules, crew, f) ? f.title || l.title || '' : '' }); setPick(''); }}>Add</button>
       </div>
     </div>
   );

@@ -96,7 +96,10 @@ export const generatedSchemas = {
   task_tables: listsOf('2d6', 'Result'),
   finds: rows('d6', 'Find'),
   league_points: rows('What', 'Points'),
+  bot_states: rows('State', 'When', 'What it does'),
 };
+export type Effect = z.infer<typeof effectSchema>;
+export type TaskPay = z.infer<typeof taskPaySchema>;
 
 // ---------- crew-rules.json (hand-kept) ----------
 const sourced = <T extends z.ZodTypeAny>(value: T) => z.object({ value, source: str }).passthrough();
@@ -110,6 +113,42 @@ const kitEntry = z.object({
   assign: z.enum(['captain', 'otherRookie', 'eachRookie']).optional(),
   choice: str.optional(),
   pick: z.object({ kind: str, source: sourceSchema, maxPrice: z.number() }).optional(),
+});
+
+export const effectSchema = z.object({
+  id: str,
+  rule: z.number().int().optional(),
+  subfaction: str.optional(),
+  type: str.optional(),
+  when: z.enum(['setup', 'roundStart', 'pod', 'putDown', 'voice', 'voiceGood', 'afterBattle', 'captive', 'break', 'legend']),
+  kind: z.enum(['reminder', 'xpEach', 'partsPer', 'partsIf', 'rating', 'nameEnemy', 'payment', 'research', 'sellDrop', 'cancelFighter', 'spinOffLegend', 'rollOwnTaskTable', 'captiveXp']),
+  rounds: z.array(z.number()).optional(),
+  roll: z.enum(['d6', '2d6', 'd66']).optional(),
+  amount: z.number().optional(),
+  ask: str.optional(),
+  per: z.enum(['putDowns', 'crushingPutDowns', 'count']).optional(),
+  who: z.enum(['participants', 'standingShook', 'anyFighter', 'bots']).optional(),
+  condition: z.enum(['newWorld', 'notHeldField']).optional(),
+  factionPay: z.boolean().optional(),
+  high: z.object({ value: z.number(), xp: z.number().optional(), parts: z.number().optional() }).optional(),
+  low: z.object({ value: z.number(), xp: z.number().optional(), parts: z.number().optional() }).optional(),
+  eligibleTypes: z.array(str).optional(),
+  state: str.optional(),
+  xpBelow: z.number().optional(),
+  prefix: str.optional(),
+});
+
+export const taskPaySchema = z.object({
+  task: str,
+  rule: z.number().optional(),
+  subfaction: str.optional(),
+  captainTrait: str.optional(),
+  tag: str.optional(),
+  parts: z.number().optional(),
+  setParts: z.number().optional(),
+  xpSuccess: z.number().optional(),
+  xpFailure: z.number().optional(),
+  source: str.optional(),
 });
 
 const priceRule = z.object({
@@ -139,6 +178,10 @@ export const factionRulesSchema = z.object({
   typeSpecies: z.record(str).optional(),
   rookiesMayBeBots: sourced(z.boolean()).optional(),
   noWords: z.boolean().optional(),
+  wordKind: sourced(str).optional(),
+  effects: z.array(effectSchema).optional(),
+  taskPay: z.array(taskPaySchema).optional(),
+  typeRules: z.record(z.object({ injuryTable: z.enum(['gentle', 'harsh']).optional(), putDownXpTo: str.optional(), noTitle: z.boolean().optional(), source: str })).optional(),
 });
 
 const slotRule = z.object({
@@ -230,13 +273,15 @@ export const crewRulesSchema = z.object({
   }),
   sections: z.object({ value: z.record(str) }).passthrough(),
   dice: z.object({ netEdgeCap: num, badKeptTotal: num }),
+  factionPayCap: num,
+  taskPay: sourced(z.array(taskPaySchema)),
   battle: z.object({
     rounds: num.extend({ extraRoundOn: z.number(), max: z.number() }),
     pod: num.extend({ fallsOn: z.number() }),
     conditionsToDown: num,
     cancellingStates: sourced(z.array(str)),
     endsOnOwnActivation: sourced(str),
-    positions: sourced(z.array(z.object({ name: str, cameHome: z.boolean().optional(), injury: z.enum(['gentle', 'harsh', 'heldField', 'harshTwice']).optional(), down: z.boolean().optional(), captured: z.boolean().optional() }))),
+    positions: sourced(z.array(z.object({ name: str, onTable: z.boolean().optional(), cameHome: z.boolean().optional(), injury: z.enum(['gentle', 'harsh', 'heldField', 'harshTwice']).optional(), down: z.boolean().optional(), captured: z.boolean().optional() }))),
     wordsPerSide: num.extend({ extraFrom: z.object({ captainTrait: str, tag: str }) }),
     putDownXpMax: num,
     boastXpBonus: num,

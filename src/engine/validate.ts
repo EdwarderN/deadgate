@@ -316,6 +316,12 @@ export const validators: Record<string, Validator> = {
     return out;
   },
 
+  typeRules({ rules, crew }) {
+    const tr = rules.factionRules(crew.faction ?? '')?.typeRules ?? {};
+    return crew.fighters.filter((f) => f.type && tr[f.type]?.noTitle && f.title)
+      .map((f) => msg('typeRules', 'error', 'campaign', tr[f.type!].source, `${named(crew, f)} is ${an(f.type!).toLowerCase()}, who can never take a title.`, f.id));
+  },
+
   notes({ rules, crew }) {
     const out: Message[] = [];
     const L = rules.crew.limits;

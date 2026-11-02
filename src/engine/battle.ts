@@ -157,7 +157,9 @@ export function battleXp(rules: Rules, crew: Crew, b: Battle, fid: string): XpLi
   const out: XpLine[] = [];
   if (positionDef(rules, bf.position)?.cameHome) out.push({ label: gx.cameHome, xp: row(gx.cameHome) });
   const downs = Math.min(bf.putDowns, B(rules).putDownXpMax.value);
-  if (downs) out.push({ label: `${gx.putDown} x${downs}`, xp: downs * row(gx.putDown) });
+  const f = crew.fighters.find((x) => x.id === fid);
+  const givesAway = !!(f?.type && rules.factionRules(crew.faction ?? '')?.typeRules?.[f.type]?.putDownXpTo);
+  if (downs && !givesAway) out.push({ label: `${gx.putDown} x${downs}`, xp: downs * row(gx.putDown) });
   if (b.didJob === fid) out.push({ label: gx.didJob, xp: row(gx.didJob) });
   const wx = wordXp(rules, bf.word);
   if (wx) out.push({ label: `Word: ${bf.word!.deed}`, xp: wx });
@@ -172,11 +174,15 @@ export function underdogFor(rules: Rules, crew: Crew, b: Battle) {
 }
 
 /** Which injury table a fighter rolls, and how many times (13.2). */
-export function injuryTableFor(rules: Rules, b: Battle, fid: string): { table: string; times: number } | null {
+export function injuryTableFor(rules: Rules, b: Battle, fid: string, crew?: Crew): { table: string; times: number } | null {
   const bf = b.fighters[fid];
   const p = bf && positionDef(rules, bf.position);
   if (!bf?.inBattle || !p?.injury) return null;
   const t = rules.crew.afterBattle.injuryTables.value;
+  // A type may always roll one table (a Volunteer rolls the gentle one, 12.6).
+  const f = crew?.fighters.find((x) => x.id === fid);
+  const forced = f?.type && crew ? rules.factionRules(crew.faction ?? '')?.typeRules?.[f.type]?.injuryTable : undefined;
+  if (forced && (p.injury === 'harsh' || p.injury === 'heldField')) return { table: t[forced], times: 1 };
   switch (p.injury) {
     case 'gentle': return { table: t.gentle, times: 1 };
     case 'harsh': return { table: t.harsh, times: 1 };

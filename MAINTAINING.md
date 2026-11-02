@@ -46,6 +46,10 @@ This is for the game's owner. You don't need to be a programmer. When the rules 
 
 These read the book's own tables too: the consequence tables, clashes, states, conditions, the voices, the injury tables, story events, task tables, finds and league points. Change a row in the book, run step 2, and the app shows the new row. The few numbers that are not tables (five rounds then a d6, two conditions put a fighter down, Words per battle, which injury table each way of ending rolls) are in the `battle` and `afterBattle` parts of `crew-rules.json`, each with its section.
 
+## Faction rules
+
+Each faction in `crew-rules.json` has an `effects` list: the faction rules the app acts on (Fines, Box office, the mark, research tasks, and so on). Each names its rule number or subfaction, when it applies, and its number (`amount`). The rule's text always comes from the book. If a faction rule's number changes (say Fines become 3 parts), change `amount`. If a rule is removed, delete its effect; if a subfaction now replaces a different rule, the book's table already says so and the app follows it.
+
 ## Trying it on your computer
 
 `npm run dev` and open the address it prints. `npm run preview` shows the built version (the one that works offline).

@@ -42,6 +42,7 @@
     "lasting_conditions": 5,
     "clashes": 6,
     "voices": 5,
+    "bot_states": 2,
     "drop_table": 24,
     "generic_xp": 3,
     "deed_tiers": 3,

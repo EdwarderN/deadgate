@@ -1,11 +1,12 @@
 // The battle companion: a tracker for the table (chapters 5, 6, 9).
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { getRules, plain } from '../data/rules';
 import {
   addCondition, bandLower, canSwear, conditionLabel, conditionsFor, endActivation, isDown, newBattle, nextRound, positions, roundEnd,
   shotSeverity, startAfterBattle, stateNames, toggleState, underdogFor, wordsAllowed,
 } from '../engine/battle';
-import { equipped, fighterStats, strength } from '../engine/crew';
+import { addLedger, canSpend, equipped, fighterStats, isBot, strength } from '../engine/crew';
+import { activeEffects, rulesInForce, type ActiveEffect } from '../engine/faction';
 import { lookup, severityOfMargin } from '../engine/dice';
 import type { Battle, BattleFighter, Crew, Fighter } from '../engine/model';
 import { go } from '../App';
@@ -39,7 +40,7 @@ export function BattleView({ crew, update }: { crew: Crew; update: Update }) {
         </div>
         <a className="btn small" href={`#/crew/${crew.id}`}>Crew</a>
       </div>
-      {b.phase === 'setup' && <Setup crew={crew} b={b} setB={setB} setF={setF} />}
+      {b.phase === 'setup' && <Setup crew={crew} b={b} setB={setB} setF={setF} update={update} />}
       {b.phase === 'playing' && <Playing crew={crew} b={b} setB={setB} setF={setF} />}
       {b.phase === 'ended' && <EndBattle crew={crew} b={b} setB={setB} update={update} />}
     </div>
@@ -50,7 +51,7 @@ type SetB = (fn: (b: Battle) => Battle) => void;
 type SetF = (id: string, fn: (f: BattleFighter) => BattleFighter) => void;
 
 // ---------- setup ----------
-function Setup({ crew, b, setB, setF }: { crew: Crew; b: Battle; setB: SetB; setF: SetF }) {
+function Setup({ crew, b, setB, setF, update }: { crew: Crew; b: Battle; setB: SetB; setF: SetF; update: Update }) {
   const rules = getRules();
   const allowed = wordsAllowed(rules, crew);
   const sworn = Object.values(b.fighters).filter((f) => f.inBattle && f.word).length;
@@ -104,6 +105,7 @@ function Setup({ crew, b, setB, setF }: { crew: Crew; b: Battle; setB: SetB; set
           );
         })}
       </div>
+      <FactionSetup crew={crew} b={b} setB={setB} update={update} />
       <button className="btn primary" onClick={() => setB((x) => ({ ...x, phase: 'playing', round: 1, log: [...x.log, { round: 1, text: 'Battle started' }] }))}>Start the battle</button>
     </div>
   );
@@ -135,7 +137,8 @@ function Playing({ crew, b, setB, setF }: { crew: Crew; b: Battle; setB: SetB; s
           <strong className="round-num">Round {b.round}</strong>
           <span className="muted small">{fighters.filter((f) => b.fighters[f.id].activated).length}/{fighters.length} activated</span>
         </div>
-        {b.round === R.pod.value && <PodRoll />}
+        {b.round === R.pod.value && <PodRoll crew={crew} />}
+        <RoundStart crew={crew} b={b} />
         <div className="row gap-s wrap">
           {end === 'continue' && <button className={`btn ${allDone ? 'primary' : ''}`} onClick={next}>End round {b.round}</button>}
           {end === 'roll' && (
@@ -152,12 +155,14 @@ function Playing({ crew, b, setB, setF }: { crew: Crew; b: Battle; setB: SetB; s
       <div className="battle-grid">
         {fighters.map((f) => <BattleCard key={f.id} crew={crew} f={f} bf={b.fighters[f.id]} set={(fn) => setF(f.id, fn)} />)}
       </div>
+      <ResearchTracker crew={crew} b={b} setB={setB} />
       <Tools crew={crew} tool={tool} setTool={setTool} />
+      <RulesInForce crew={crew} />
     </div>
   );
 }
 
-function PodRoll() {
+function PodRoll({ crew }: { crew: Crew }) {
   const rules = getRules();
   const P = rules.crew.battle.pod;
   const [roll, setRoll] = useState<number | null>(null);
@@ -168,6 +173,7 @@ function PodRoll() {
       <span className="small">Start of round {P.value}: a d6, on {P.fallsOn}+ a pod falls ({P.source}).</span>
       <RollOrEnter die="d6" value={roll} onResult={setRoll} />
       {roll !== null && (roll >= P.fallsOn ? <strong>A pod falls! When someone cracks it open:</strong> : <span>No pod this battle.</span>)}
+      {roll !== null && roll >= P.fallsOn && activeEffects(rules, crew, 'pod').map((e) => <FactionNote key={e.effect.id} e={e} />)}
       {roll !== null && roll >= P.fallsOn && (
         <>
           <RollOrEnter die="d66" label="Crack it open (drop table)" value={drop} onResult={setDrop} />
@@ -187,6 +193,8 @@ function BattleCard({ crew, f, bf, set }: { crew: Crew; f: Fighter; bf: BattleFi
   const shield = items.some((o) => o.def?.kind === 'shield');
   const conds = conditionsFor(rules, f);
   const ending = rules.data.states;
+  const crushingCounts = activeEffects(rules, crew, 'afterBattle').some((e) => e.effect.per === 'crushingPutDowns');
+  const onPutDown = activeEffects(rules, crew, 'putDown');
   return (
     <article className={`card bcard ${down ? 'is-down' : ''} ${bf.activated ? 'is-done' : ''}`}>
       <header className="row between gap-s wrap">
@@ -254,8 +262,23 @@ function BattleCard({ crew, f, bf, set }: { crew: Crew; f: Fighter; bf: BattleFi
           <button className="btn small" aria-label="One fewer put down" onClick={() => set((x) => ({ ...x, putDowns: Math.max(0, x.putDowns - 1) }))}>−</button>{bf.putDowns}
           <button className="btn small" aria-label="One more put down" onClick={() => set((x) => ({ ...x, putDowns: x.putDowns + 1 }))}>+</button>
         </span>
+        {crushingCounts && (
+          <span className="row gap-s small">with a crushing hit
+            <button className="btn small" aria-label="One fewer crushing put down" onClick={() => set((x) => ({ ...x, crushing: Math.max(0, (x.crushing ?? 0) - 1) }))}>−</button>{bf.crushing ?? 0}
+            <button className="btn small" aria-label="One more crushing put down" onClick={() => set((x) => ({ ...x, crushing: Math.min(x.putDowns, (x.crushing ?? 0) + 1) }))}>+</button>
+          </span>
+        )}
       </div>
 
+      {bf.putDowns > 0 && onPutDown.map((e) => <FactionNote key={e.effect.id} e={e} small />)}
+      {isBot(rules, f) && (
+        <div className="seg wrap">
+          <span className="small strong">Bot <RuleLink rule={{ title: 'Bots and relays', section: '8.5', lines: rules.data.bot_states.map((x) => [plain(x.State), `${x['What it does']}. When: ${plain(x.When)}`] as [string, string]) }}>§</RuleLink></span>
+          {rules.data.bot_states.map((x) => plain(x.State)).map((s) => (
+            <button key={s} className={`seg-btn tight ${bf.states.includes(s) ? 'on' : ''}`} aria-pressed={bf.states.includes(s)} disabled={down} onClick={() => set((y) => ({ ...y, states: y.states.includes(s) ? y.states.filter((z) => z !== s) : [...y.states, s] }))}>{s}</button>
+          ))}
+        </div>
+      )}
       {bf.word && (
         <div className="word small">
           <strong>Word:</strong> {bf.word.deed} {rules.deeds.find((d) => d.id === bf.word!.deed)?.name} ({bf.word.audience}) <DeedText id={bf.word.deed} />
@@ -361,9 +384,11 @@ function VoiceTool({ crew }: { crew: Crew }) {
       <label className="field"><span>Voice{own ? '' : ' (choose: your faction prays to several)'}</span>
         <select value={voice} onChange={(e) => { setVoice(e.target.value); setN(null); }}>{voices.map((x) => <option key={x}>{x}</option>)}</select>
       </label>
+      {activeEffects(rules, crew, 'voice').map((e) => <FactionNote key={e.effect.id} e={e} small />)}
       <p className="small"><Md text={v.intro} /></p>
       <RollOrEnter die="d6" value={n} onResult={setN} />
       {row && <p className={`result mark-${plain(row.Mark).toLowerCase()}`}><strong>{plain(row.Mark)}:</strong> <Md text={row.Result} /> → <Md text={row.Effect} /></p>}
+      {row && /good/i.test(plain(row.Mark)) && activeEffects(rules, crew, 'voiceGood').map((e) => <FactionNote key={e.effect.id} e={e} small />)}
     </div>
   );
 }
@@ -421,5 +446,107 @@ function EndBattle({ crew, b, setB, update }: { crew: Crew; b: Battle; setB: Set
         <button className="btn primary" onClick={() => { update((c) => startAfterBattle(rules, c)); go(`/after/${crew.id}`); }}>After the battle →</button>
       </div>
     </div>
+  );
+}
+
+// ---------- faction rules on the table ----------
+export function FactionNote({ e, small, children }: { e: ActiveEffect; small?: boolean; children?: ReactNode }) {
+  return (
+    <div className={`faction-note ${small ? 'small' : ''}`}>
+      <strong>{e.title}</strong> <span className="section-tag">({e.section})</span> <Md text={e.text} />
+      {children}
+    </div>
+  );
+}
+
+function FactionSetup({ crew, b, setB, update }: { crew: Crew; b: Battle; setB: SetB; update: Update }) {
+  const rules = getRules();
+  const effects = activeEffects(rules, crew, 'setup');
+  if (!effects.length) return null;
+  return (
+    <div className="card stack-s">
+      <h3>Before deployment: {crew.faction}</h3>
+      {effects.map((e) => (
+        <FactionNote key={e.effect.id} e={e}>
+          {e.effect.kind === 'nameEnemy' && (
+            <input aria-label="The enemy fighter named" placeholder="Name the enemy fighter" value={b.mark ?? ''} onChange={(ev) => setB((x) => ({ ...x, mark: ev.target.value }))} />
+          )}
+          {e.effect.kind === 'payment' && (b.paid?.[e.effect.id]
+            ? <span className="badge ok">Paid {e.effect.amount} parts</span>
+            : <button className="btn small" disabled={!canSpend(rules, crew, e.effect.amount ?? 0) || crew.parts < (e.effect.amount ?? 0)} onClick={() => { update((c) => addLedger(c, -(e.effect.amount ?? 0), `${e.title}${b.opponent ? ` to ${b.opponent}` : ''}`)); setB((x) => ({ ...x, paid: { ...(x.paid ?? {}), [e.effect.id]: true } })); }}>Pay {e.effect.amount} parts</button>)}
+          {e.effect.kind === 'research' && <ResearchPick b={b} setB={setB} />}
+        </FactionNote>
+      ))}
+    </div>
+  );
+}
+
+function ResearchPick({ b, setB }: { b: Battle; setB: SetB }) {
+  const rules = getRules();
+  const r = b.research ?? { field: null, lab: null, chosen: null, done: false };
+  const set = (p: Partial<typeof r>) => setB((x) => ({ ...x, research: { ...r, ...p } }));
+  const lists: ['field' | 'lab', Record<string, string>[], string][] = [['field', rules.data.research_studies.field, 'Field study'], ['lab', rules.data.research_studies.lab, 'Lab study']];
+  return (
+    <div className="stack-s research">
+      {lists.map(([key, rows, col]) => {
+        const n = r[key];
+        const row = n !== null ? lookup(rows, n) : null;
+        return (
+          <div key={key} className="stack-s">
+            <span className="small strong">{col}</span>
+            <RollOrEnter die="d6" value={n} onResult={(v) => set({ [key]: v, chosen: r.chosen === key ? null : r.chosen } as Partial<typeof r>)} />
+            {row && (
+              <label className={`option ${r.chosen === key ? 'on' : ''}`}>
+                <input type="radio" name="research" checked={r.chosen === key} onChange={() => set({ chosen: key })} />
+                <span><Md text={row[col]} /></span>
+              </label>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function ResearchTracker({ crew, b, setB }: { crew: Crew; b: Battle; setB: SetB }) {
+  const rules = getRules();
+  const e = activeEffects(rules, crew, 'setup').find((x) => x.effect.kind === 'research');
+  const r = b.research;
+  if (!e || !r?.chosen) return null;
+  const rows: Record<string, string>[] = r.chosen === 'field' ? rules.data.research_studies.field : rules.data.research_studies.lab;
+  const col = r.chosen === 'field' ? 'Field study' : 'Lab study';
+  const row = lookup(rows, r[r.chosen] ?? 0);
+  return (
+    <div className="card faction-note">
+      <strong>{e.title}:</strong> <Md text={row?.[col] ?? ''} />
+      <label className="check"><input type="checkbox" checked={r.done} onChange={(ev) => setB((x) => ({ ...x, research: { ...r, done: ev.target.checked } }))} /> Completed (+{e.effect.amount} XP to one {e.effect.eligibleTypes?.join(', ') ?? 'fighter'} who took part, after the battle)</label>
+    </div>
+  );
+}
+
+function RoundStart({ crew, b }: { crew: Crew; b: Battle }) {
+  const rules = getRules();
+  const [roll, setRoll] = useState<Record<string, number | null>>({});
+  const es = activeEffects(rules, crew, 'roundStart').filter((e) => !e.effect.rounds || e.effect.rounds.includes(b.round));
+  return (
+    <>
+      {es.map((e) => (
+        <FactionNote key={e.effect.id} e={e} small>
+          {e.effect.roll && <RollOrEnter die={e.effect.roll} value={roll[`${e.effect.id}-${b.round}`] ?? null} onResult={(n) => setRoll((x) => ({ ...x, [`${e.effect.id}-${b.round}`]: n }))} />}
+        </FactionNote>
+      ))}
+    </>
+  );
+}
+
+function RulesInForce({ crew }: { crew: Crew }) {
+  const rules = getRules();
+  const list = rulesInForce(rules, crew);
+  if (!list.length) return null;
+  return (
+    <details className="card">
+      <summary>{crew.faction} rules in force ({crew.subfaction})</summary>
+      <ul className="plain-list stack-s small">{list.map((r) => <li key={r.title}><strong>{r.title}.</strong> <Md text={r.text} /></li>)}</ul>
+    </details>
   );
 }

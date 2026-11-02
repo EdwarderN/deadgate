@@ -9,6 +9,7 @@ import { uid, type Crew, type Fighter, type ItemSlot, type OwnedItem } from '../
 import type { Message } from '../engine/validate';
 import { Md } from './md';
 import { RollOrEnter } from './Dice';
+import { activeEffects } from '../engine/faction';
 import { RuleLink, itemRule, speciesRule, typeRule } from './rule';
 
 export type Update = (fn: (c: Crew) => Crew) => void;
@@ -299,6 +300,7 @@ export function StatLine({ crew, fighter }: { crew: Crew; fighter: Fighter }) {
 /** One owned item with a menu to move it: to a slot, another fighter, the stash, or sell it. */
 export function ItemChip({ crew, item, update }: { crew: Crew; item: OwnedItem; update: Update }) {
   const rules = getRules();
+  const [sellingDrop, setSellingDrop] = useState(false);
   const def = rules.item(item.itemId);
   if (!def) return <span className="chip err">Unknown item {item.itemId}</span>;
   const owner = crew.fighters.find((f) => f.id === item.fighterId);
@@ -306,8 +308,11 @@ export function ItemChip({ crew, item, update }: { crew: Crew; item: OwnedItem; 
   const campaign = crew.phase === 'campaign';
   const sv = sellValue(rules, crew, item);
   const fence = crew.notes.contacts.find((c) => c.name === rules.crew.campaign.fenceContact.value && !c.used);
+  // A faction rule may let the crew sell drops for a roll (Black Tape, 12.2).
+  const dropSale = def.source === 'drop' && campaign ? activeEffects(rules, crew, 'break').find((e) => e.effect.kind === 'sellDrop') : undefined;
 
   const move = (val: string) => {
+    if (val === 'sell-drop') { setSellingDrop(true); return; }
     update((c) => {
       if (val === 'stash') return { ...c, items: c.items.map((o) => (o.uid === item.uid ? { ...o, fighterId: null, slot: 'stash' } : o)) };
       if (val === 'remove') return { ...c, items: c.items.filter((o) => o.uid !== item.uid) };
@@ -345,8 +350,15 @@ export function ItemChip({ crew, item, update }: { crew: Crew; item: OwnedItem; 
         {!campaign && !item.kitRef && <option value="remove">Return it to the shop</option>}
         {campaign && sv !== null && <option value="sell">Sell for {sv} parts</option>}
         {campaign && sv !== null && fence && <option value="sell-fence">Sell through the Fence for {sellValue(rules, crew, item, true)}</option>}
+        {dropSale && <option value="sell-drop">Sell it: {dropSale.title} (a {dropSale.effect.roll} × {dropSale.effect.amount})</option>}
         {campaign && <option value="remove">Lose or discard it</option>}
       </select>
+      {sellingDrop && dropSale && (
+        <div className="stack-s grow">
+          <span className="small">{dropSale.title}: roll a {dropSale.effect.roll}, {dropSale.effect.amount} parts for each pip ({dropSale.section}).</span>
+          <RollOrEnter die={dropSale.effect.roll ?? 'd6'} onResult={(n) => update((c) => addLedger({ ...c, items: c.items.filter((o) => o.uid !== item.uid) }, n * (dropSale.effect.amount ?? 0), `Sold ${def.name} (${dropSale.title}, rolled ${n})`))} />
+        </div>
+      )}
     </div>
   );
 }
@@ -357,6 +369,23 @@ export function Stash({ crew, update }: { crew: Crew; update: Update }) {
     <div className="stash card">
       <h3>Stash <span className="muted small">(items not carried)</span></h3>
       {items.length === 0 ? <p className="muted small">Nothing in the stash.</p> : <div className="chips">{items.map((o) => <ItemChip key={o.uid} crew={crew} item={o} update={update} />)}</div>}
+      {crew.phase === 'campaign' && <AddFound update={update} />}
+    </div>
+  );
+}
+
+/** An item the crew found, won or took (finds, pods, story events, repossession): free, into the stash. */
+function AddFound({ update }: { update: Update }) {
+  const rules = getRules();
+  const [id, setId] = useState('');
+  const groups = Array.from(new Set(rules.items.map((i) => i.group)));
+  return (
+    <div className="row gap-s wrap add-found">
+      <select aria-label="An item found or taken" value={id} onChange={(e) => setId(e.target.value)}>
+        <option value="">Add an item found or taken…</option>
+        {groups.map((g) => <optgroup key={g} label={g}>{rules.items.filter((i) => i.group === g).map((i) => <option key={i.id} value={i.id}>{i.name} ({i.source})</option>)}</optgroup>)}
+      </select>
+      <button className="btn small" disabled={!id} onClick={() => { update((c) => ({ ...c, items: [...c.items, { uid: uid('i'), itemId: id, fighterId: null, slot: 'stash', paid: 0, note: 'found' }] })); setId(''); }}>Add free</button>
     </div>
   );
 }

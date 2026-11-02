@@ -1,0 +1,12 @@
+[
+  {
+    "State": "**Laggy**",
+    "When": "A bot out of its deployment zone and more than 12 inches from a friendly relay beacon",
+    "What it does": "No reaction, and -1 die on their attacks: the orders arrive late"
+  },
+  {
+    "State": "**Slack**",
+    "When": "A **Cut the link** prompt, or Jeminy's **\"I am a failure\"** result on the bot's own core (section 8.6)",
+    "What it does": "One action only, a Move toward the nearest enemy. They cannot attack, use anything or react"
+  }
+]

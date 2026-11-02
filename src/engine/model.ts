@@ -69,6 +69,8 @@ export interface BattleFighter {
   reactionUsed: boolean;
   dents: number;
   putDowns: number;
+  /** put-downs with a crushing hit (Box office, 12.7) */
+  crushing?: number;
   word: BattleWord | null;
   notes: string;
 }
@@ -89,6 +91,11 @@ export interface Battle {
   heldField: boolean;
   stoodGround: boolean;
   world: string;
+  /** the enemy named as the mark (12.5) */
+  mark?: string;
+  research?: { field: number | null; lab: number | null; chosen: 'field' | 'lab' | null; done: boolean };
+  /** faction payments made before deployment, by effect id */
+  paid?: Record<string, boolean>;
 }
 
 export interface AfterBattle {
@@ -103,6 +110,11 @@ export interface AfterBattle {
   taxPaid: boolean;
   history: Record<string, string>;
   seasonLogged: boolean;
+  faction?: { asks: Record<string, boolean | number>; stars: Record<string, number>; researchDone: boolean; researchWho: string | null; applied: boolean };
+  /** a type's put-down XP given to another fighter (Stunt double to an Action star) */
+  redirects?: Record<string, string>;
+  captiveXpDone?: boolean;
+  cancelled?: boolean;
 }
 
 export interface LedgerEntry { id: string; at: string; amount: number; note: string }

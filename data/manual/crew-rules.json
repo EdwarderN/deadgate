@@ -446,7 +446,47 @@
         "rites": 20,
         "bots": false
       },
-      "types": false
+      "types": false,
+      "wordKind": {
+        "value": "Wager",
+        "source": "12.1"
+      },
+      "effects": [
+        {
+          "id": "first-on-the-scene",
+          "rule": 2,
+          "when": "pod",
+          "kind": "reminder"
+        },
+        {
+          "id": "split-of-the-haul",
+          "rule": 4,
+          "when": "afterBattle",
+          "kind": "xpEach",
+          "who": "participants",
+          "amount": 1,
+          "ask": "Did the crew carry off a crate or drop item?"
+        },
+        {
+          "id": "claim-pending",
+          "subfaction": "Red Tape",
+          "when": "setup",
+          "kind": "reminder"
+        },
+        {
+          "id": "resale-value",
+          "subfaction": "Black Tape",
+          "when": "break",
+          "kind": "sellDrop",
+          "roll": "d6",
+          "amount": 5
+        },
+        {
+          "id": "work-them",
+          "when": "captive",
+          "kind": "rollOwnTaskTable"
+        }
+      ]
     },
     "The Inspectorate": {
       "startingKit": [
@@ -472,7 +512,53 @@
         "rites": 20,
         "bots": false
       },
-      "types": false
+      "types": false,
+      "wordKind": {
+        "value": "Boast",
+        "source": "12.1"
+      },
+      "effects": [
+        {
+          "id": "fines",
+          "rule": 2,
+          "when": "afterBattle",
+          "kind": "partsPer",
+          "per": "putDowns",
+          "amount": 2,
+          "factionPay": true
+        },
+        {
+          "id": "everything-is-taxed-prize",
+          "subfaction": "Weights and Measures",
+          "when": "afterBattle",
+          "kind": "partsIf",
+          "amount": 2,
+          "ask": "Did the enemy win a prize?",
+          "factionPay": true
+        },
+        {
+          "id": "everything-is-taxed-crates",
+          "subfaction": "Weights and Measures",
+          "when": "afterBattle",
+          "kind": "partsPer",
+          "per": "count",
+          "amount": 1,
+          "ask": "Crates or items carried off, by anyone",
+          "factionPay": true
+        },
+        {
+          "id": "mandatory-cheer",
+          "subfaction": "Department of Improvement",
+          "when": "roundStart",
+          "kind": "reminder"
+        },
+        {
+          "id": "condemned",
+          "subfaction": "Fire Marshals",
+          "when": "setup",
+          "kind": "reminder"
+        }
+      ]
     },
     "The Waiting": {
       "startingKit": [
@@ -511,7 +597,62 @@
       "ritesKnownByAnyPriest": {
         "value": 2,
         "rule": 2
-      }
+      },
+      "wordKind": {
+        "value": "Vow",
+        "source": "12.1"
+      },
+      "effects": [
+        {
+          "id": "pantheon",
+          "rule": 3,
+          "when": "voice",
+          "kind": "reminder"
+        },
+        {
+          "id": "omens",
+          "rule": 4,
+          "when": "pod",
+          "kind": "reminder"
+        },
+        {
+          "id": "thought-leadership",
+          "subfaction": "The Listeners",
+          "when": "voiceGood",
+          "kind": "reminder"
+        },
+        {
+          "id": "share-the-burden",
+          "subfaction": "The Visionaries",
+          "when": "afterBattle",
+          "kind": "xpEach",
+          "who": "standingShook",
+          "amount": 1,
+          "state": "Shook"
+        },
+        {
+          "id": "on-the-road-world",
+          "subfaction": "The Pilgrims",
+          "when": "setup",
+          "kind": "reminder"
+        },
+        {
+          "id": "on-the-road-xp",
+          "subfaction": "The Pilgrims",
+          "when": "afterBattle",
+          "kind": "xpEach",
+          "who": "participants",
+          "amount": 1,
+          "condition": "newWorld"
+        },
+        {
+          "id": "convert-them",
+          "when": "captive",
+          "kind": "captiveXp",
+          "amount": 1,
+          "who": "anyFighter"
+        }
+      ]
     },
     "Ledgerhands": {
       "startingKit": [
@@ -533,7 +674,70 @@
         "rites": 20,
         "bots": false
       },
-      "types": false
+      "types": false,
+      "wordKind": {
+        "value": "Wager",
+        "source": "12.1"
+      },
+      "taskPay": [
+        {
+          "rule": 1,
+          "task": "Work a job",
+          "parts": 3
+        },
+        {
+          "subfaction": "The Indentured",
+          "task": "Work a job",
+          "setParts": 0,
+          "xpSuccess": 2,
+          "xpFailure": 1
+        }
+      ],
+      "effects": [
+        {
+          "id": "the-mark",
+          "rule": 2,
+          "when": "setup",
+          "kind": "nameEnemy"
+        },
+        {
+          "id": "the-mark-bounty",
+          "rule": 2,
+          "when": "afterBattle",
+          "kind": "partsIf",
+          "amount": 5,
+          "ask": "Was the mark down when the battle ended?",
+          "factionPay": true
+        },
+        {
+          "id": "buyout",
+          "rule": 4,
+          "when": "setup",
+          "kind": "payment",
+          "amount": 5
+        },
+        {
+          "id": "repossession",
+          "subfaction": "Collections Department",
+          "when": "afterBattle",
+          "kind": "reminder"
+        },
+        {
+          "id": "rated",
+          "subfaction": "Per-Diem Companies",
+          "when": "afterBattle",
+          "kind": "rating",
+          "who": "participants",
+          "high": {
+            "value": 5,
+            "xp": 1
+          },
+          "low": {
+            "value": 1,
+            "parts": -2
+          }
+        }
+      ]
     },
     "The Control Group": {
       "startingKit": [
@@ -581,6 +785,44 @@
         "Lab-hand": "Bot",
         "Prototype": "Bot",
         "Volunteer": "Human"
+      },
+      "effects": [
+        {
+          "id": "research-tasks",
+          "rule": 2,
+          "when": "setup",
+          "kind": "research",
+          "amount": 2,
+          "eligibleTypes": [
+            "Observer",
+            "Lab-hand",
+            "Prototype",
+            "Volunteer"
+          ]
+        },
+        {
+          "id": "negative-review",
+          "subfaction": "The Dissenters",
+          "when": "roundStart",
+          "rounds": [
+            2,
+            4
+          ],
+          "kind": "reminder"
+        },
+        {
+          "id": "experiment-on-them",
+          "when": "captive",
+          "kind": "captiveXp",
+          "amount": 2,
+          "who": "bots"
+        }
+      ],
+      "typeRules": {
+        "Volunteer": {
+          "injuryTable": "gentle",
+          "source": "12.6"
+        }
       }
     },
     "Hollowood": {
@@ -616,7 +858,62 @@
         "rites": 20,
         "bots": false
       },
-      "types": true
+      "types": true,
+      "wordKind": {
+        "value": "Boast",
+        "source": "12.1"
+      },
+      "effects": [
+        {
+          "id": "box-office",
+          "rule": 4,
+          "when": "afterBattle",
+          "kind": "partsPer",
+          "per": "crushingPutDowns",
+          "amount": 2,
+          "factionPay": true
+        },
+        {
+          "id": "staged-drama",
+          "subfaction": "Reality Productions",
+          "when": "putDown",
+          "kind": "reminder"
+        },
+        {
+          "id": "cancelled",
+          "subfaction": "Streaming Platforms",
+          "when": "break",
+          "kind": "cancelFighter",
+          "condition": "notHeldField"
+        },
+        {
+          "id": "directors-call",
+          "subfaction": "Festival Auteurs",
+          "when": "roundStart",
+          "kind": "reminder",
+          "roll": "d6"
+        },
+        {
+          "id": "spin-off",
+          "subfaction": "Franchise Studios",
+          "when": "legend",
+          "kind": "spinOffLegend",
+          "xpBelow": 5,
+          "prefix": "Young"
+        },
+        {
+          "id": "cast-them",
+          "when": "captive",
+          "kind": "rollOwnTaskTable"
+        }
+      ],
+      "typeRules": {
+        "Stunt double": {
+          "putDownXpTo": "Action star",
+          "noTitle": true,
+          "source": "12.7"
+        }
+      }
     }
   },
   "campaign": {
@@ -741,11 +1038,13 @@
       "value": [
         {
           "name": "Standing",
-          "cameHome": true
+          "cameHome": true,
+          "onTable": true
         },
         {
           "name": "Prone",
-          "cameHome": true
+          "cameHome": true,
+          "onTable": true
         },
         {
           "name": "Down",
@@ -873,5 +1172,35 @@
       "source": "13.2",
       "note": "Sore and Laid up last one break; the app clears them when the next after-battle begins"
     }
-  }
+  },
+  "factionPayCap": {
+    "value": 5,
+    "source": "12.1",
+    "note": "parts a crew gains from faction, subfaction and type rules, per battle; effects marked factionPay count toward it"
+  },
+  "taskPay": {
+    "value": [
+      {
+        "task": "Work a job",
+        "captainTrait": "Paymaster",
+        "parts": 2,
+        "source": "11.2"
+      },
+      {
+        "task": "Work a job",
+        "tag": "Ran",
+        "parts": -2,
+        "source": "14.10"
+      },
+      {
+        "task": "Work a job",
+        "tag": "Reliable",
+        "parts": 2,
+        "source": "14.10"
+      }
+    ],
+    "source": "11.2, 14.10",
+    "note": "changes to a task's pay from captain traits and tags"
+  },
+  "_effectsNote": "factions[].effects: faction rules the app acts on. 'rule' (a numbered rule, off when the subfaction replaces it), 'subfaction' or 'type' says whose; 'when' says where it shows (setup, roundStart, pod, putDown, voice, voiceGood, afterBattle, captive, break, legend); 'kind' says what the app does. The rule text shown is the book's own, from data/generated/factions.json."
 }
