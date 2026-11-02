@@ -9,14 +9,14 @@ This is for the game's owner. You don't need to be a programmer. When the rules 
 
 ## When the rulebook changes
 
-1. **Copy the new rulebook in.** Replace the files in `rulebook/` with the new markdown chapters. Keep the same file names.
+1. **Have the new rulebook to hand.** The rulebook is not kept in this repository. You need the designer's folder of markdown chapters (`00-front.md`, `01-world.md` and so on) somewhere on your computer.
 2. **Read the rules into data.** In this folder, run:
 
    ```
-   npm run rules
+   npm run rules -- path/to/the/rulebook/folder
    ```
 
-   (This is the same as `python3 tools/extract_rules.py`.) It rewrites the files in `data/generated/`. Never edit those by hand.
+   (This is the same as `python3 tools/extract_rules.py path/to/the/rulebook/folder`. You can also copy the folder into this one as `rulebook/`; it is ignored by git, so it won't be added to the repository, and then `npm run rules` alone works.) It rewrites the files in `data/generated/`. Never edit those by hand.
 
    If it stops with an error like *"table '| Weapon | Copy | Old stock' not found"*, a table's header in the book was renamed. Either put the old header back in the book, or ask Claude Code to "fix the table header in the extractor".
 3. **Check nothing got lost.** Open `data/generated/_meta.json`. The line `"unlinkedShopItems": []` must be an empty list. If an item name appears there, the shop sells something the gear tables don't describe (often a spelling difference between chapter 7 and section 11.3). Make the two names match in the book and run step 2 again.
@@ -34,7 +34,7 @@ This is for the game's owner. You don't need to be a programmer. When the rules 
    ```
 
    Every rule the app enforces has a test that uses the real data, and every data file is checked against its expected shape. If something fails, the message says which file or rule. Ask Claude Code to look if you're unsure.
-6. **The version.** The rules version shown in the app comes from the rulebook's front page ("Version 0.3, ..." in `rulebook/00-front.md`), through `_meta.json`. Change it in the book and step 2 picks it up.
+6. **The version.** The rules version shown in the app comes from the rulebook's front page ("Version 0.3, ..." in the rulebook's `00-front.md`), through `_meta.json`. Change it in the book and step 2 picks it up.
 7. **Build and publish.**
 
    ```
@@ -57,7 +57,7 @@ Each faction in `crew-rules.json` has an `effects` list: the faction rules the a
 
 ## Questions the book doesn't answer
 
-When the app meets a rule the book doesn't settle, it's listed in `OPEN-QUESTIONS.md`, with what the app does for now. Answer them there (or in the book), and the builder can be changed to match.
+When the app meets a rule the book doesn't settle, ask the designer, and record the decision in `data/manual/crew-rules.json` or `outcomes.json` with the section it belongs to.
 
 ## Saved crews
 

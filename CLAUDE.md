@@ -1,24 +1,24 @@
 # CLAUDE.md: The Dead Gate crew builder
 
-Read `BRIEF.md` first: it says what to build and for whom. This file says how to build it so that rule changes stay cheap.
+This file says how to work on the crew builder so that rule changes stay cheap. The app is for tabletop players, often on a phone; most are not technical.
 
 ## The one rule: rules are data
 
 The game is in playtest, and its rules change often. **No rule text, price, number or name of a game thing may be hard-coded in components or logic.**
 
-- `rulebook/` is the source of truth: the rulebook's own markdown, copied in unchanged.
-- `tools/extract_rules.py` reads it and writes `data/generated/*.json`. Never edit those files by hand; rerun the script.
+- The rulebook (the designer's markdown chapters) is the source of truth. It is **not kept in this repository**: point the extractor at the designer's folder, or copy it in as `rulebook/`, which is git-ignored. Never commit it.
+- `tools/extract_rules.py [path/to/rulebook]` reads it and writes `data/generated/*.json`. Never edit those files by hand; rerun the script.
 - `data/manual/crew-rules.json` holds the rules the builder enforces that are not tables in the book (budgets, slot limits, faction kits and price rules). Each value names its rulebook section.
 - The app reads only `data/`. Logic is generic: a validator is a function of the data (for example "belt slots used <= gear.beltSlots.value"), never "if faction == 'Bodgers' and item == 'Crank charger'". Where a faction rule needs code, key it off `crew-rules.json` (for example `priceRules`), so adding or removing such a rule is a data change.
 
 ## When the rules change
 
-1. Replace `rulebook/` with the new rulebook markdown.
-2. Run `npm run rules` (= `python3 tools/extract_rules.py`). It stops with a clear error if a table it needs was renamed; fix the header prefix in the script.
+1. Get the new rulebook markdown from the designer (outside this repository).
+2. Run `npm run rules -- path/to/rulebook` (= `python3 tools/extract_rules.py path/to/rulebook`). It stops with a clear error if a table it needs was renamed; fix the header prefix in the script.
 3. Read `data/generated/_meta.json`: `unlinkedShopItems` lists shop entries the script could not join to a rules row. It should be empty.
 4. Update `data/manual/crew-rules.json` for any changed limit or faction rule, and `data/manual/outcomes.json` for any changed table row (story events, injuries, tasks, finds, drops).
 5. Run `npm test`. Add a test for any new rule (`tests/rules.test.ts`; data shape checks are in `tests/data.test.ts`).
-6. Bump the displayed rules version: it is the "Version" line of `rulebook/00-front.md`, carried through `_meta.json`.
+6. The displayed rules version is the "Version" line of the rulebook's `00-front.md`, carried through `_meta.json`.
 7. `npm run build` and publish `dist/`.
 
 Keep this list accurate if you change the workflow, and add a short `MAINTAINING.md` for the human owner (not a programmer) that walks through the same steps in plain words.
@@ -54,4 +54,4 @@ A static web app: TypeScript, Vite, React (or Svelte if you prefer), schema vali
 - Every validator has a test that uses the real data files.
 - A test loads every data file against its schema, so a rulebook change that breaks the data fails loudly.
 - Accessible: keyboard use, readable contrast, works at phone width.
-- Ask the owner before inventing any rule the data does not cover; list such questions in `OPEN-QUESTIONS.md` rather than guessing silently.
+- Ask the owner before inventing any rule the data does not cover, rather than guessing silently. Record each decision in `data/manual/` with its section (decisions from the designer are marked "designer's answer N").

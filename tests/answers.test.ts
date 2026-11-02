@@ -1,4 +1,4 @@
-// The designer's answers to the open questions (OPEN-QUESTIONS.md), as rules the app follows.
+// The designer's answers to rules questions (marked "designer's answer N" in data/manual), as rules the app follows.
 import { describe, expect, it } from 'vitest';
 import { crewOf, give, patchFighter, rules } from './helpers';
 import { builtInOptions, fighterStats, finishCreation, partsLeft, setFighterType, slotLoad, traitBudgetUsed } from '../src/engine/crew';

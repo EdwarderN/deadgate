@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Extract the game data the crew builder needs from the rulebook markdown.
 
-Run from the project root:   python3 tools/extract_rules.py
-Reads:   rulebook/*.md          (the rulebook source, copied in unchanged)
+Run from the project root:   python3 tools/extract_rules.py [path/to/rulebook]
+Reads:   the rulebook's markdown chapters (*.md), from the folder given, or
+         $RULEBOOK, or ./rulebook. The rulebook is not kept in this repository
+         (./rulebook is git-ignored): point the script at the designer's copy.
 Writes:  data/generated/*.json  (never edit these by hand: rerun this script)
 
 Every table is found by the first words of its header row, exactly as the
@@ -15,11 +17,13 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BOOK = os.path.join(ROOT, "rulebook")
+BOOK = os.path.abspath(sys.argv[1] if len(sys.argv) > 1 else os.environ.get("RULEBOOK", os.path.join(ROOT, "rulebook")))
 OUT = os.path.join(ROOT, "data", "generated")
 
 
 def read(name):
+    if not os.path.isdir(BOOK):
+        sys.exit(f"extract_rules: no rulebook folder at {BOOK}. Pass the folder: python3 tools/extract_rules.py path/to/rulebook")
     with open(os.path.join(BOOK, name), encoding="utf-8") as fh:
         return fh.read().splitlines()
 

@@ -2,3 +2,7 @@ node_modules
 dist
 *.log
 __pycache__
+
+# The rulebook is the designer's, kept outside this repository (see MAINTAINING.md)
+rulebook/
+reference/
