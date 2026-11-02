@@ -32,6 +32,8 @@ export function Campaign({ crew, update }: { crew: Crew; update: Update }) {
         <PartsCounter crew={crew} />
       </div>
       <div className="row gap-s wrap actions">
+        {crew.after ? <button className="btn small primary" onClick={() => go(`/after/${crew.id}`)}>Continue after the battle</button>
+          : <button className="btn small primary" onClick={() => go(`/battle/${crew.id}`)}>{crew.battle ? 'Back to the battle' : 'Battle companion'}</button>}
         <button className="btn small" onClick={() => go(`/print/${crew.id}`)}>Print cards and roster</button>
         <button className="btn small" onClick={() => download(fileName(crew), crewToJson(crew))}>Export file</button>
         {link && <button className="btn small" onClick={() => navigator.clipboard?.writeText(link).then(() => alert('Share link copied.'), () => prompt('Copy this link:', link))}>Copy share link</button>}
@@ -131,7 +133,7 @@ function availableTitles(f: Fighter): string[] {
   return Array.from(t);
 }
 
-function Experience({ crew, fighter: f, update }: { crew: Crew; fighter: Fighter; update: Update }) {
+export function Experience({ crew, fighter: f, update }: { crew: Crew; fighter: Fighter; update: Update }) {
   const rules = getRules();
   const e = rules.crew.experience;
   const set = (p: Partial<Fighter>) => patchFighter(update, f.id, (x) => ({ ...x, ...p }));

@@ -1,0 +1,14 @@
+[
+  {
+    "Deed": "**Came home.** Ended the battle on their feet or evacuated (a downed fighter who was evacuated counts; one left behind or captured does not)",
+    "XP": "1"
+  },
+  {
+    "Deed": "**Put one down.** Each enemy fighter or monster the fighter's attack put down (the attack that decided it), up to 2 a battle",
+    "XP": "1 each"
+  },
+  {
+    "Deed": "**Did the job.** Credited with the scenario's winning condition",
+    "XP": "1"
+  }
+]

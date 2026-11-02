@@ -9,14 +9,16 @@ import { RuleProvider } from './ui/rule';
 import { Builder } from './ui/Builder';
 import { Campaign } from './ui/Campaign';
 import { PrintView } from './ui/Print';
+import { BattleView } from './ui/Battle';
+import { AfterBattleView } from './ui/AfterBattle';
 
-type Route = { view: 'home' } | { view: 'crew'; id: string } | { view: 'print'; id: string };
+type Route = { view: 'home' } | { view: 'crew' | 'print' | 'battle' | 'after'; id: string };
 
 function parseRoute(): Route {
   const h = location.hash.replace(/^#\/?/, '');
   const [view, id] = h.split('/');
   if (view === 'crew' && id) return { view: 'crew', id };
-  if (view === 'print' && id) return { view: 'print', id };
+  if ((view === 'print' || view === 'battle' || view === 'after') && id) return { view, id };
   return { view: 'home' };
 }
 
@@ -63,6 +65,8 @@ export default function App() {
 
   let body;
   if (route.view === 'print' && crew) body = <PrintView crew={crew} />;
+  else if (route.view === 'battle' && crew) body = <BattleView crew={crew} update={update} />;
+  else if (route.view === 'after' && crew) body = <AfterBattleView crew={crew} update={update} />;
   else if (route.view === 'crew' && crew) body = crew.phase === 'creation' ? <Builder crew={crew} update={update} /> : <Campaign crew={crew} update={update} />;
   else body = <Home crews={crews} put={put} remove={remove} setNotice={setNotice} />;
 

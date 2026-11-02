@@ -696,5 +696,182 @@
       "gearSlots": "7.1"
     },
     "note": "where in the book each kind of rule lives, for the in-app rule text"
+  },
+  "dice": {
+    "netEdgeCap": {
+      "value": 4,
+      "source": "3.2"
+    },
+    "badKeptTotal": {
+      "value": 3,
+      "source": "3.5"
+    }
+  },
+  "battle": {
+    "rounds": {
+      "value": 5,
+      "extraRoundOn": 4,
+      "max": 7,
+      "source": "9.3",
+      "note": "at the end of round 5 and each later round, a d6: 4+ plays another round; never past round 7"
+    },
+    "pod": {
+      "value": 2,
+      "fallsOn": 5,
+      "source": "9.7",
+      "note": "at the start of round 2, a d6: 5+ a pod falls"
+    },
+    "conditionsToDown": {
+      "value": 2,
+      "source": "6.3, 6.4"
+    },
+    "cancellingStates": {
+      "value": [
+        "Hyped",
+        "Shook"
+      ],
+      "source": "5.9"
+    },
+    "endsOnOwnActivation": {
+      "value": "own next activation",
+      "source": "5.9",
+      "note": "states whose 'When it ends' says this are cleared when the fighter's activation ends"
+    },
+    "positions": {
+      "value": [
+        {
+          "name": "Standing",
+          "cameHome": true
+        },
+        {
+          "name": "Prone",
+          "cameHome": true
+        },
+        {
+          "name": "Down",
+          "injury": "heldField",
+          "down": true
+        },
+        {
+          "name": "Evacuated",
+          "cameHome": true
+        },
+        {
+          "name": "Down, evacuated",
+          "cameHome": true,
+          "injury": "gentle",
+          "down": true
+        },
+        {
+          "name": "Captured",
+          "injury": "gentle",
+          "down": true,
+          "captured": true
+        },
+        {
+          "name": "Dragged off",
+          "injury": "harshTwice",
+          "down": true
+        }
+      ],
+      "source": "5.8, 6.4, 9.6, 13.2, 13.4",
+      "note": "injury: which table a fighter who ended the battle so rolls; heldField means gentle if the crew held the field, else harsh"
+    },
+    "wordsPerSide": {
+      "value": 2,
+      "source": "13.5",
+      "extraFrom": {
+        "captainTrait": "Big mouth",
+        "tag": "Showboats"
+      }
+    },
+    "putDownXpMax": {
+      "value": 2,
+      "source": "13.4"
+    },
+    "boastXpBonus": {
+      "value": 1,
+      "source": "13.5"
+    },
+    "boastAudience": {
+      "value": "Boast",
+      "source": "13.5"
+    },
+    "legendTiers": {
+      "value": [
+        "Big",
+        "Legendary"
+      ],
+      "source": "13.5, 13.8"
+    },
+    "sillyTables": {
+      "value": {
+        "Small": "Mild",
+        "Big": "Sillier",
+        "Legendary": "Sillier"
+      },
+      "source": "13.7"
+    }
+  },
+  "afterBattle": {
+    "injuryTables": {
+      "value": {
+        "gentle": "The gentle table",
+        "harsh": "The harsh table"
+      },
+      "source": "13.2"
+    },
+    "deadResult": {
+      "value": "Dead",
+      "source": "13.2"
+    },
+    "botDeadFate": {
+      "value": "Destroyed",
+      "source": "13.3"
+    },
+    "takenFate": {
+      "value": "Taken",
+      "source": "14.4"
+    },
+    "genericXp": {
+      "value": {
+        "cameHome": "Came home",
+        "putDown": "Put one down",
+        "didJob": "Did the job"
+      },
+      "source": "13.4",
+      "note": "names of the generic XP rows"
+    },
+    "leaguePoints": {
+      "value": {
+        "The winning condition met": "winCond",
+        "Held the field": "heldField",
+        "Stood your ground": "stoodGround",
+        "A Small Word fulfilled": "word:Small",
+        "A Big Word fulfilled": "word:Big",
+        "A Legendary Word fulfilled": "word:Legendary",
+        "A Boast fulfilled": "boast"
+      },
+      "source": "14.12",
+      "note": "how each league points row is counted from the battle"
+    },
+    "taskBlockedStatuses": {
+      "value": [
+        "Sore",
+        "Laid up",
+        "Fitting a prosthetic"
+      ],
+      "source": "14.6"
+    },
+    "taskTableDie": {
+      "value": "2d6",
+      "ownTask": "d6",
+      "source": "14.6, chapter 12"
+    },
+    "resetStatusesAtBreak": {
+      "value": true,
+      "source": "13.2",
+      "note": "Sore and Laid up last one break; the app clears them when the next after-battle begins"
+    }
   }
 }

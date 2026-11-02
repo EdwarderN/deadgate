@@ -1,0 +1,20 @@
+[
+  {
+    "Difficulty": "**Routine**",
+    "Target": "6",
+    "Means": "Most people manage it",
+    "For example": "Clear a jam; fix a loose breather; tape a patch on armour; climb or jump; prompt a door, lift or charging station; use a relic; a know-how test of Weirdness 6; resist a boast's terror"
+  },
+  {
+    "Difficulty": "**Tricky**",
+    "Target": "8",
+    "Means": "Needs a bit of skill",
+    "For example": "Patch up with a crude kit; pull a bot's core; prompt a civilian frame, a weapon or a turret; a know-how test of Weirdness 8"
+  },
+  {
+    "Difficulty": "**Hard**",
+    "Target": "10",
+    "Means": "Few manage it",
+    "For example": "Prompt with a slate at Tech 0; prompt a military frame, a bot or a rogue machine; a know-how test of Weirdness 10"
+  }
+]

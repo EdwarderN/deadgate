@@ -1,0 +1,30 @@
+[
+  {
+    "Action": "**Move**",
+    "What it does": "Move up to the fighter's Move in inches (section 5.3)"
+  },
+  {
+    "Action": "**Attack**",
+    "What it does": "A melee attack on an enemy in base contact (Fight, opposed: section 5.4), or a ranged attack on an enemy in range and line of sight (Shoot, rolled alone: section 5.5). Throwing a grenade is an Attack (section 7.6)"
+  },
+  {
+    "Action": "**Aim**",
+    "What it does": "The fighter's next ranged attack this activation has +1 die"
+  },
+  {
+    "Action": "**Assist**",
+    "What it does": "An ally within 2 inches is **Hyped** (section 5.9)"
+  },
+  {
+    "Action": "**Use**",
+    "What it does": "Operate an item, door, lift or terminal; swap a held item; swap in a spare cell; use a charging station; pick up an item; clear a jam (Routine Tech); fix a loose breather (Routine Tech); prompt a machine (section 8.1); use a relic or the psionic gift; Patch up (section 7.6)"
+  },
+  {
+    "Action": "**Stand up**",
+    "What it does": "Get up from prone. A downed fighter cannot"
+  },
+  {
+    "Action": "**Pick up**",
+    "What it does": "Lift a downed ally, or try to lift a downed enemy (section 5.8)"
+  }
+]

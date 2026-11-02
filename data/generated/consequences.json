@@ -1,0 +1,80 @@
+{
+  "Glance (7)": [
+    {
+      "d6": "1",
+      "Result": "**Breather knocked loose** (natives, lasting). \"Hiss.\" Anyone else gets **Bad arm** (lasting)"
+    },
+    {
+      "d6": "2",
+      "Result": "**Bad arm** (lasting). \"A numb elbow, and a lot of swearing.\""
+    },
+    {
+      "d6": "3",
+      "Result": "**Limping** (lasting). \"An ankle that will remember this.\""
+    },
+    {
+      "d6": "4",
+      "Result": "**Winded** (lasting). \"The air leaves somewhere over the crates.\""
+    },
+    {
+      "d6": "5",
+      "Result": "**Knocked aside.** \"Nearly dropped it.\" Pushed 1 inch to one side (the attacker picks which), and **Shook**"
+    },
+    {
+      "d6": "6",
+      "Result": "**Staggered.** \"Back you go.\" Pushed 1 inch straight away from the attacker, and **Flustered**"
+    }
+  ],
+  "Solid (9)": [
+    {
+      "d6": "1",
+      "Result": "**Down hard.** \"And stay down.\" Each ally within 2 inches of them is **Shook**"
+    },
+    {
+      "d6": "2",
+      "Result": "**Down.** \"Lights out.\""
+    },
+    {
+      "d6": "3",
+      "Result": "**Ringing head** (lasting). \"A clip round the ear, and church bells.\""
+    },
+    {
+      "d6": "4",
+      "Result": "**Bad arm** (lasting). \"That arm is a rumour now.\""
+    },
+    {
+      "d6": "5",
+      "Result": "**Limping** (lasting). \"Something went pop.\""
+    },
+    {
+      "d6": "6",
+      "Result": "**Through the door.** \"Slam.\" Shoved 2 inches straight away from the attacker; they end prone and **Shook**. If that takes them through a door or window, it slams and locks behind them (red Hacked token). If a wall or another fighter stops them short, they are **Flustered** too"
+    }
+  ],
+  "Crushing (11)": [
+    {
+      "d6": "1",
+      "Result": "**Battery bursts.** \"Bang. Then smoke.\" Down, and if they had any Energy left, their battery bursts: a **glance** on every other fighter within 2 inches, friends included (their saves apply). The battery is empty"
+    },
+    {
+      "d6": "2",
+      "Result": "**Down, flying.** \"Airborne, briefly.\" Knocked 2 inches straight away from the attacker before they fall; each ally within 3 inches of where they land is **Flustered** and **Shook**"
+    },
+    {
+      "d6": "3",
+      "Result": "**Down.** \"The crowd roars.\" The attacker is **Hyped**"
+    },
+    {
+      "d6": "4",
+      "Result": "**Down.** \"Like a sack of parts.\""
+    },
+    {
+      "d6": "5",
+      "Result": "**Thrown.** \"Over the crates and into next week.\" Knocked 3 inches away from the attacker and prone, and the attacker picks one lasting condition for them (Winded, Limping, Bad arm or Ringing head). A second condition puts them down"
+    },
+    {
+      "d6": "6",
+      "Result": "**The tape holds.** \"Most of it, anyway.\" Their gear took the worst of it: they gain one lasting condition of their own player's choice (Winded, Limping, Bad arm or Ringing head). A second puts them down"
+    }
+  ]
+}

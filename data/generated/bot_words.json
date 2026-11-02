@@ -1,0 +1,30 @@
+[
+  {
+    "Organic result": "Walks it off",
+    "Bot result": "Reboots"
+  },
+  {
+    "Organic result": "Sore",
+    "Bot result": "Needs a tune-up (no task this break)"
+  },
+  {
+    "Organic result": "Laid up",
+    "Bot result": "Needs parts (misses the next battle)"
+  },
+  {
+    "Organic result": "Bad stitches",
+    "Bot result": "Bad solder (starts the next battle with one lasting condition)"
+  },
+  {
+    "Organic result": "Lasting injury",
+    "Bot result": "**Glitch** (the list below)"
+  },
+  {
+    "Organic result": "A souvenir",
+    "Bot result": "A spare arm bolted on"
+  },
+  {
+    "Organic result": "Dead",
+    "Bot result": "**Destroyed**"
+  }
+]

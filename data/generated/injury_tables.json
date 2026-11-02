@@ -1,0 +1,126 @@
+{
+  "The gentle table": [
+    {
+      "d66": "11-16",
+      "Result": "**Walks it off**"
+    },
+    {
+      "d66": "21",
+      "Result": "**A great scar.** Walks it off, and **+1 XP**: it tells well"
+    },
+    {
+      "d66": "22",
+      "Result": "**\"What a fantastic recovery!\"** A Chet Jippity med-terminal praised them back to health. Walks it off, and starts the next battle **Hyped**"
+    },
+    {
+      "d66": "23",
+      "Result": "**Drank from the Tumbler.** Waiting priests nursed them with a holy relic, which is probably the water. Walks it off, and the fighter believes: at the next battle they may swear one more Word, a vow, on top of the crew's Words"
+    },
+    {
+      "d66": "24-26, 31-32",
+      "Result": "**Sore**"
+    },
+    {
+      "d66": "33",
+      "Result": "**Second opinion.** Two med-terminals disagree. Roll twice more on this table (rerolling this result) and the player picks which one happened"
+    },
+    {
+      "d66": "34",
+      "Result": "**The bill.** The clinic wants 5 parts. Pay, and the fighter walks it off; refuse, and the clinic keeps them: **Laid up**"
+    },
+    {
+      "d66": "35",
+      "Result": "**Wrong patient.** The medic stitched someone else. The fighter is **Sore**, and so is one other fighter of the crew, of the player's choice, who was fine until the medic got to them"
+    },
+    {
+      "d66": "36, 41-43",
+      "Result": "**Laid up**"
+    },
+    {
+      "d66": "44",
+      "Result": "**Kept for study.** A Control Group bot sat by the cot all night, taking notes. **Laid up**, and the bunker pays **5 parts** for the data"
+    },
+    {
+      "d66": "45-46, 51",
+      "Result": "**Bad stitches**"
+    },
+    {
+      "d66": "52",
+      "Result": "**\"The leg is optional.\"** The med-assistant is certain. Let it, and the fighter takes **Lost leg** (heavy list) with a free peg-leg, fitted at once; refuse, and they are **Laid up** arguing"
+    },
+    {
+      "d66": "53-56, 61-64",
+      "Result": "**Lasting injury (light):** roll a d6 on the light list"
+    },
+    {
+      "d66": "65",
+      "Result": "**A souvenir.** The medic fitted a spare scrap robo-arm (copy): Hands +1, Unreliable. The fighter did not ask. Removing it costs parts"
+    },
+    {
+      "d66": "66",
+      "Result": "**Dead**"
+    }
+  ],
+  "The harsh table": [
+    {
+      "d66": "11-13",
+      "Result": "**Walks it off**"
+    },
+    {
+      "d66": "14",
+      "Result": "**Played dead.** They lay very still until everyone left. Walks it off, and starts the next battle **prone**: they are still playing dead"
+    },
+    {
+      "d66": "15-16, 21-22",
+      "Result": "**Sore**"
+    },
+    {
+      "d66": "23",
+      "Result": "**Fined.** The Inspectorate found them first and fined them for lying on public ground. Pay 3 parts, or they are held until someone does: **Laid up**"
+    },
+    {
+      "d66": "24",
+      "Result": "**Risen.** The Waiting found them and called it a miracle. **Sore**, and the crew gains the Waiting as a **contact** (section 14.8)"
+    },
+    {
+      "d66": "25",
+      "Result": "**The death scene.** A Hollowood crew filmed them lying there, and liked it. **Sore**, and **3 parts** for the rights"
+    },
+    {
+      "d66": "26, 31-33",
+      "Result": "**Laid up**"
+    },
+    {
+      "d66": "34",
+      "Result": "**Crawled home.** It took all night and it makes a good story. **Laid up**, and **+1 XP**"
+    },
+    {
+      "d66": "35",
+      "Result": "**Swept up.** A cleaning bot tidied the fighter into the scrap pile with everything else. **Laid up** (it took a day to find them), and a roll on the **finds** table (section 14.7): the pile had other things in it"
+    },
+    {
+      "d66": "36, 41",
+      "Result": "**Bad stitches**"
+    },
+    {
+      "d66": "42-43",
+      "Result": "**Stripped.** Scavengers got there first. The fighter loses one weapon, armour or frame of the player's choice, and is **Sore**"
+    },
+    {
+      "d66": "44",
+      "Result": "**Found by strangers.** **Sore**, and a stranger now wants something: the crew's next story event is about them"
+    },
+    {
+      "d66": "45",
+      "Result": "**A second-hand surgeon,** with a saw and opinions. Roll twice on the heavy list and choose one"
+    },
+    {
+      "d66": "46, 51-56, 61-63",
+      "Result": "**Lasting injury (heavy):** roll a d6 on the heavy list"
+    },
+    {
+      "d66": "64-66",
+      "Result": "**Dead**"
+    }
+  ]
+}

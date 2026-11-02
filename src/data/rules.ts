@@ -39,6 +39,25 @@ import contacts from '../../data/generated/contacts.json';
 import tasks from '../../data/generated/tasks.json';
 import glossary from '../../data/generated/glossary.json';
 import catalog from '../../data/generated/catalog.json';
+import difficulties from '../../data/generated/difficulties.json';
+import severity from '../../data/generated/severity.json';
+import states from '../../data/generated/states.json';
+import actions from '../../data/generated/actions.json';
+import consequences from '../../data/generated/consequences.json';
+import lasting_conditions from '../../data/generated/lasting_conditions.json';
+import clashes from '../../data/generated/clashes.json';
+import voices from '../../data/generated/voices.json';
+import drop_table from '../../data/generated/drop_table.json';
+import generic_xp from '../../data/generated/generic_xp.json';
+import deed_tiers from '../../data/generated/deed_tiers.json';
+import word_audiences from '../../data/generated/word_audiences.json';
+import injury_tables from '../../data/generated/injury_tables.json';
+import bot_words from '../../data/generated/bot_words.json';
+import story_rows from '../../data/generated/story_rows.json';
+import story_events from '../../data/generated/story_events.json';
+import task_tables from '../../data/generated/task_tables.json';
+import finds from '../../data/generated/finds.json';
+import league_points from '../../data/generated/league_points.json';
 import crewRulesJson from '../../data/manual/crew-rules.json';
 
 export const rawData = {
@@ -46,9 +65,18 @@ export const rawData = {
   medical_kits, drop_items, relics, psionic_powers, captain_traits, shop, recruits, factions, research_studies,
   xp_ladder, advances, injuries_light, injuries_heavy, prosthetics, glitches, recovery_words, silly_traits, deeds,
   rumours, tags, contacts, tasks, glossary, catalog,
+  difficulties, severity, states, actions, consequences, lasting_conditions, clashes, voices, drop_table, generic_xp,
+  deed_tiers, word_audiences, injury_tables, bot_words, story_rows, story_events, task_tables, finds, league_points,
 };
 
 export type RawData = typeof rawData;
+type Tables = Record<string, Row[]>;
+/** The data with its keyed tables typed loosely, so new rows or keys from the book need no code change. */
+export type Data = Omit<RawData, 'deed_tiers' | 'injury_tables' | 'task_tables' | 'consequences' | 'clashes' | 'voices' | 'story_events'> & {
+  deed_tiers: Record<string, { tier: string; xp: number }>;
+  injury_tables: Tables; task_tables: Tables; consequences: Tables; clashes: Tables; story_events: Tables;
+  voices: Record<string, { intro: string; rows: Row[] }>;
+};
 
 // ---------- small text helpers ----------
 /** Strip markdown bold. */
@@ -106,7 +134,7 @@ export interface ChassisDef { move: number; hands: number }
 export interface Rules {
   version: string;
   meta: z.infer<typeof generatedSchemas._meta>;
-  data: RawData;
+  data: Data;
   crew: CrewRules;
   factions: Faction[];
   faction(name: string): Faction | undefined;
@@ -281,7 +309,7 @@ export function buildRules(raw: RawData = rawData, crewJson: unknown = crewRules
   return {
     version: raw._meta.rulebookVersion,
     meta: raw._meta,
-    data: raw,
+    data: raw as unknown as Data,
     crew,
     factions: facs,
     faction: (n) => facs.find((f) => f.name === n),

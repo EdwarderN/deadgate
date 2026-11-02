@@ -101,4 +101,20 @@ describe('data files', () => {
   it('injuries, glitches and silly traits have titles', () => {
     for (const i of [...rules.injuries, ...rules.glitches, ...rules.silly]) expect(i.title, i.name).toBeTruthy();
   });
+  it('battle and after-battle names in crew-rules exist in the book', () => {
+    const lp = rules.crew.afterBattle.leaguePoints.value;
+    for (const r of rules.data.league_points) {
+      const label = r.What.replace(/\*\*(.+?)\*\*/g, '$1').replace(/:.*$/, '').replace(/\s*\(.*\)\s*$/, '').trim();
+      expect(lp[label], label).toBeTruthy();
+    }
+    for (const n of Object.values(rules.crew.afterBattle.genericXp.value)) expect(rules.data.generic_xp.some((r) => r.Deed.includes(n)), n).toBe(true);
+    for (const t of Object.values(rules.crew.afterBattle.injuryTables.value)) expect(rules.data.injury_tables[t], t).toBeTruthy();
+    for (const t of Object.values(rules.crew.battle.sillyTables.value)) expect(rules.silly.some((s) => s.table === t), t).toBe(true);
+    for (const s of rules.crew.battle.cancellingStates.value) expect(rules.data.states.some((x) => x.State.includes(s)), s).toBe(true);
+    expect(rules.data.word_audiences.some((a) => a.Audience.includes(rules.crew.battle.boastAudience.value))).toBe(true);
+    expect(rules.captainTraits.some((t) => t.name === rules.crew.battle.wordsPerSide.extraFrom.captainTrait)).toBe(true);
+    expect(rules.tags.some((t) => t.name === rules.crew.battle.wordsPerSide.extraFrom.tag)).toBe(true);
+    for (const st of rules.crew.afterBattle.taskBlockedStatuses.value) expect(rules.crew.campaign.statuses.value).toContain(st);
+    expect(Object.keys(rules.data.voices).length).toBeGreaterThan(0);
+  });
 });

@@ -3,11 +3,12 @@ import { useMemo, useState } from 'react';
 import { getRules, type ItemDef } from '../data/rules';
 import {
   addLedger, autoSlot, canSpend, equipped, fighterStats, giftPrice, hirePrice, isBot, itemPrice, needsSeller, newFighter, partsLeft, ratingNames,
-  recruitKey, ritesPrice, rookieSurcharge, sellValue, sellerTarget, setFighterType, slotCapacity, slotLoad, slotOptions,
+  recruitKey, ritesPrice, rookieSurcharge, sellValue, sellerTarget, setFighterType, setSellerResult, slotCapacity, slotLoad, slotOptions,
 } from '../engine/crew';
 import { uid, type Crew, type Fighter, type ItemSlot, type OwnedItem } from '../engine/model';
 import type { Message } from '../engine/validate';
 import { Md } from './md';
+import { RollOrEnter } from './Dice';
 import { RuleLink, itemRule, speciesRule, typeRule } from './rule';
 
 export type Update = (fn: (c: Crew) => Crew) => void;
@@ -139,19 +140,23 @@ export function Shop({ crew, update }: { crew: Crew; update: Update }) {
   const [q, setQ] = useState('');
   const groups = useMemo(() => ['All', ...Array.from(new Set(rules.shopItems.map((i) => i.group)))], [rules]);
   const restricted = rules.crew.gear.restrictedItems.value;
-  const list = rules.shopItems.filter((i) => (group === 'All' || i.group === group) && i.name.toLowerCase().includes(q.toLowerCase())
-    && !restricted.some((r) => r.key === i.key && !r.factions.includes(crew.faction ?? '')));
+  const visible = rules.shopItems.filter((i) => !restricted.some((r) => r.key === i.key && !r.factions.includes(crew.faction ?? '')));
+  // An old-stock item with no seller this break is off the list until the next break (11.3).
+  const noSeller = visible.filter((i) => needsSeller(rules, crew, i) && crew.sellers?.[i.id]?.found === false);
+  const list = visible.filter((i) => !noSeller.includes(i) && (group === 'All' || i.group === group) && i.name.toLowerCase().includes(q.toLowerCase()));
   const campaign = crew.phase === 'campaign';
+  const target = sellerTarget(rules, crew);
 
   const buy = (it: ItemDef) => {
     const price = itemPrice(rules, crew, it);
     update((c) => {
-      const o: OwnedItem = { uid: uid('i'), itemId: it.id, fighterId: null, slot: 'stash', seller: needsSeller(rules, c, it) ? 'needed' : undefined };
+      const o: OwnedItem = { uid: uid('i'), itemId: it.id, fighterId: null, slot: 'stash', seller: needsSeller(rules, c, it) ? 'found' : undefined, sellerRoll: c.sellers?.[it.id]?.roll };
       let next: Crew = { ...c, items: [...c.items, campaign ? { ...o, paid: price } : o] };
       if (campaign) next = addLedger(next, -price, `Bought ${it.name} (${it.source})`);
       return next;
     });
   };
+  const setSeller = (it: ItemDef, roll: number | null) => update((c) => setSellerResult(rules, c, it.id, roll));
 
   return (
     <div className="shop">
@@ -161,21 +166,34 @@ export function Shop({ crew, update }: { crew: Crew; update: Update }) {
           <select value={group} onChange={(e) => setGroup(e.target.value)}>{groups.map((g) => <option key={g}>{g}</option>)}</select>
         </label>
       </div>
-      <p className="muted small">Copies are always for sale. Old stock needs a seller: roll a d6, {sellerTarget(rules, crew).value}+ (11.3). Tap a name to read its rules.</p>
+      <p className="muted small">Copies are always for sale. Old stock needs a seller first: one d6 per item per break, {target.value}+{target.why ? ` (${target.why})` : ''} (11.3). Roll in the app, type your own roll, or tick "found". Tap a name to read its rules.</p>
       <ul className="shop-list">
         {list.map((it) => {
           const price = itemPrice(rules, crew, it);
           const ok = canSpend(rules, crew, price);
+          const needs = needsSeller(rules, crew, it);
+          const found = !needs || crew.sellers?.[it.id]?.found === true;
           return (
-            <li key={it.id} className="shop-row">
+            <li key={it.id} className={`shop-row ${found ? '' : 'needs-seller'}`}>
               <RuleLink rule={itemRule(rules, it)} className="shop-name">{it.name}</RuleLink>
-              <span className={`badge src-${it.source.replace(' ', '-')}`}>{it.source}{it.source === 'old stock' && !needsSeller(rules, crew, it) ? ', no roll' : ''}</span>
+              <span className={`badge src-${it.source.replace(' ', '-')}`}>{it.source}{it.source === 'old stock' && !needs ? ', no roll' : ''}{needs && found ? `, seller found${crew.sellers?.[it.id]?.roll ? ` (${crew.sellers[it.id].roll})` : ''}` : ''}</span>
               <span className="price">{price !== it.price && <s className="muted">{it.price}</s>} {price}</span>
-              <button className="btn small" onClick={() => buy(it)} disabled={!ok} aria-label={`Buy ${it.name} (${it.source}) for ${price} parts`}>Buy</button>
+              {found
+                ? <button className="btn small" onClick={() => buy(it)} disabled={!ok} aria-label={`Buy ${it.name} (${it.source}) for ${price} parts`}>Buy</button>
+                : <span />}
+              {!found && (
+                <div className="seller-find">
+                  <RollOrEnter die="d6" label={`Find a seller (${target.value}+)`} onResult={(n) => setSeller(it, n)} />
+                  <label className="check small"><input type="checkbox" onChange={() => setSeller(it, null)} /> Found (a lead, or no roll needed)</label>
+                </div>
+              )}
             </li>
           );
         })}
       </ul>
+      {noSeller.length > 0 && (
+        <p className="muted small">No seller this break: {noSeller.map((i) => i.name).join(', ')}. They're back on the list next break.</p>
+      )}
     </div>
   );
 }

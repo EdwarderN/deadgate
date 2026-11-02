@@ -42,6 +42,10 @@ This is for the game's owner. You don't need to be a programmer. When the rules 
 
    Copy the `dist/` folder to any static web host. Players get the new rules the next time they open the app online.
 
+## The battle companion and the after-battle steps
+
+These read the book's own tables too: the consequence tables, clashes, states, conditions, the voices, the injury tables, story events, task tables, finds and league points. Change a row in the book, run step 2, and the app shows the new row. The few numbers that are not tables (five rounds then a d6, two conditions put a fighter down, Words per battle, which injury table each way of ending rolls) are in the `battle` and `afterBattle` parts of `crew-rules.json`, each with its section.
+
 ## Trying it on your computer
 
 `npm run dev` and open the address it prints. `npm run preview` shows the built version (the one that works offline).

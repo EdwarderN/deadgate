@@ -1,0 +1,266 @@
+{
+  "Row 1: Held the field": [
+    {
+      "d6": "1",
+      "Event": "**The Department of Improvement** names the battle an improvement",
+      "Accept": "It goes in the annual report. Nothing",
+      "Pay": "5 parts: the crew gains **Reliable**",
+      "Twist": "Nerve: gain Reliable / the crew gains Showboats"
+    },
+    {
+      "d6": "2",
+      "Event": "**Hollowood wants the rights**",
+      "Accept": "Nothing",
+      "Pay": "None",
+      "Twist": "Nerve: 6 parts / the film makes you the villains: gain Butchers"
+    },
+    {
+      "d6": "3",
+      "Event": "**A crowd of bettors** owes the crew",
+      "Accept": "4 parts",
+      "Pay": "None",
+      "Twist": "Nerve: 8 parts / 0 parts and gain Oathbreakers (you threatened them)"
+    },
+    {
+      "d6": "4",
+      "Event": "**The loot is stamped.** The Inspectorate wants a fee",
+      "Accept": "Pay 4 parts or lose one copy item",
+      "Pay": "None",
+      "Twist": "Tech: forge a stamp, keep everything / pay 8"
+    },
+    {
+      "d6": "5",
+      "Event": "**A drifter saw it all** and wants to join",
+      "Accept": "One rookie may be hired for 5 parts less",
+      "Pay": "None",
+      "Twist": "Nerve: they are the real thing, hire them free / they were running from someone: hire them free, and write that someone as a **rival**"
+    },
+    {
+      "d6": "6",
+      "Event": "**Victory feast**",
+      "Accept": "Nothing",
+      "Pay": "5 parts: every fighter starts the next battle Hyped",
+      "Twist": "None"
+    }
+  ],
+  "Row 2: Did not hold the field": [
+    {
+      "d6": "1",
+      "Event": "**The debt collector calls** (Collections Department)",
+      "Accept": "Lose 4 parts",
+      "Pay": "None",
+      "Twist": "Fight: they leave / lose 8 parts"
+    },
+    {
+      "d6": "2",
+      "Event": "**Sympathy from a patron**",
+      "Accept": "3 parts of pity money",
+      "Pay": "None",
+      "Twist": "Nerve: \"we don't need it\", gain **Reliable** / you cried in front of them: 3 parts, and gain Ran"
+    },
+    {
+      "d6": "3",
+      "Event": "**Scavengers on the field** after you left",
+      "Accept": "Nothing",
+      "Pay": "5 parts: buy back one item lost this battle",
+      "Twist": "Grit: get one back free / one fighter is Sore"
+    },
+    {
+      "d6": "4",
+      "Event": "**A rookie loses heart**",
+      "Accept": "The newest fighter (lowest Experience) gets the silly trait \"Jittery\" (section 13.7)",
+      "Pay": "3 parts: a pep talk with drinks",
+      "Twist": "Nerve: they shrug it off / they leave the crew (their gear stays)"
+    },
+    {
+      "d6": "5",
+      "Event": "**The voice reviews the battle**",
+      "Accept": "It says you won. Nothing",
+      "Pay": "None",
+      "Twist": "Tech: it finds a real lesson, +1 XP to one fighter / it insists; one fighter starts the next battle Shook"
+    },
+    {
+      "d6": "6",
+      "Event": "**Named on the boards.** The winners' victory speech names your captain",
+      "Accept": "Nothing, but it stings",
+      "Pay": "3 parts: a reply on the boards; the crew gains **Showboats**",
+      "Twist": "Nerve: the captain answers in person, +1 XP / they get the silly trait \"Big talk\""
+    }
+  ],
+  "Row 3: Ran": [
+    {
+      "d6": "1",
+      "Event": "**Word gets round**",
+      "Accept": "The crew gains **Ran**",
+      "Pay": "6 parts: a quiet word with the rumour board",
+      "Twist": "Nerve: no tag / gain Ran and Oathbreakers"
+    },
+    {
+      "d6": "2",
+      "Event": "**The patron withholds pay** and keeps the deposit",
+      "Accept": "Lose 3 parts",
+      "Pay": "None",
+      "Twist": "Fight: they pay up after all, +5 parts / gain Ran"
+    },
+    {
+      "d6": "3",
+      "Event": "**Shame**",
+      "Accept": "One fighter that was evacuated gets the silly trait \"Spent your luck\"",
+      "Pay": "None",
+      "Twist": "Nerve: they are fine / the trait, and gain Ran"
+    },
+    {
+      "d6": "4",
+      "Event": "**Wise retreat.** A Control Group observer notes it",
+      "Accept": "Nothing",
+      "Pay": "None",
+      "Twist": "Tech: the paper cites you, gain Reliable / it calls you a control sample, gain Ran"
+    },
+    {
+      "d6": "5",
+      "Event": "**The evac pilot bills you**",
+      "Accept": "Pay 3 parts",
+      "Pay": "None",
+      "Twist": "Tech: the bill has an error in your favour, 0 / pay 6"
+    },
+    {
+      "d6": "6",
+      "Event": "**Someone else's pod.** An arrival from a pod nobody claimed wanders into your camp",
+      "Accept": "They join free (a rookie, Past \"Unwritten\")",
+      "Pay": "None",
+      "Twist": "Nerve: you tell them who they were, and they believe it: they join, and the player picks their rumour now / they don't believe you, and wander off"
+    }
+  ],
+  "Row 4: Lost someone": [
+    {
+      "d6": "1",
+      "Event": "**A funeral of tape**",
+      "Accept": "Every fighter takes no task this break",
+      "Pay": "5 parts: a quick one, tasks as normal",
+      "Twist": "None"
+    },
+    {
+      "d6": "2",
+      "Event": "**An oath at the grave**",
+      "Accept": "One fighter writes a Big Word on their card now, a vow for the next battle (section 13.5)",
+      "Pay": "None",
+      "Twist": "Nerve: the whole crew swears; every fighter starts the next battle Hyped / nobody can speak: the crew swears no Words next battle"
+    },
+    {
+      "d6": "3",
+      "Event": "**The wake**",
+      "Accept": "The crew drinks to them: lose 3 parts",
+      "Pay": "None",
+      "Twist": "Nerve: someone tells the story right, +1 XP to one fighter / it turns into a fight: one fighter is Sore"
+    },
+    {
+      "d6": "4",
+      "Event": "**Their gear is claimed** by a creditor",
+      "Accept": "Lose one item the lost fighter carried",
+      "Pay": "5 parts: keep it",
+      "Twist": "Fight: keep it / lose two"
+    },
+    {
+      "d6": "5",
+      "Event": "**A relative turns up** to fill the space",
+      "Accept": "Hire one rookie for 5 parts less, same species as the lost fighter",
+      "Pay": "None",
+      "Twist": "Nerve: they take the lost fighter's title with a prefix, and start the next battle Hyped / they want the lost fighter's gear: give them one item"
+    },
+    {
+      "d6": "6",
+      "Event": "**Revenge.** The crew that did it is written on the roster as a **rival**",
+      "Accept": "Noted",
+      "Pay": "None",
+      "Twist": "Nerve: one fighter swears it, and starts the next battle Hyped / they swear it too loudly: Announced"
+    }
+  ],
+  "Row 5: Took a captive or paid a ransom": [
+    {
+      "d6": "1",
+      "Event": "**The captive talked**",
+      "Accept": "It knew a cache: 4 parts",
+      "Pay": "None",
+      "Twist": "Nerve: 8 parts / it lied; nothing"
+    },
+    {
+      "d6": "2",
+      "Event": "**A threat from the captive's crew**",
+      "Accept": "Nothing",
+      "Pay": "None",
+      "Twist": "Nerve: you send one back, gain Showboats / gain Butchers"
+    },
+    {
+      "d6": "3",
+      "Event": "**The ransom was counterfeit** (if you received one)",
+      "Accept": "Lose 3 parts",
+      "Pay": "None",
+      "Twist": "Tech: the stamps are real / lose 6"
+    },
+    {
+      "d6": "4",
+      "Event": "**The paid-for fighter is grateful** (if you paid one)",
+      "Accept": "They start the next battle Hyped",
+      "Pay": "None",
+      "Twist": "Nerve: they swear to repay it, and start Hyped and Under warranty / they resent being bought: Flustered instead"
+    },
+    {
+      "d6": "5",
+      "Event": "**A reputation for business**",
+      "Accept": "The crew gains **Reliable**",
+      "Pay": "None",
+      "Twist": "Tech: you print a price list, Reliable and 3 parts / it has a typo: gain Butchers"
+    },
+    {
+      "d6": "6",
+      "Event": "**The Inspectorate wants paperwork**",
+      "Accept": "Pay 2 parts",
+      "Pay": "None",
+      "Twist": "Tech: the forms are in order / pay 5 and gain Butchers"
+    }
+  ],
+  "Row 6: Made a legend": [
+    {
+      "d6": "1",
+      "Event": "**The song is wrong.** It is about someone else",
+      "Accept": "Nothing",
+      "Pay": "None",
+      "Twist": "Nerve: it is about you, +1 XP / it is about the enemy"
+    },
+    {
+      "d6": "2",
+      "Event": "**Fans**",
+      "Accept": "The crew gains **Showboats**",
+      "Pay": "None",
+      "Twist": "Nerve: the legend signs everything, 2 parts / a fan follows them into the next fight: they start it Announced"
+    },
+    {
+      "d6": "3",
+      "Event": "**A patron wants the legend** for a job",
+      "Accept": "The legend takes it instead of their task: 5 parts",
+      "Pay": "None",
+      "Twist": "Fight: 10 parts / the legend is Sore"
+    },
+    {
+      "d6": "4",
+      "Event": "**The Annual Improvement Awards** nominate the fighter",
+      "Accept": "Nothing (they lose to a harvest figure)",
+      "Pay": "5 parts: a better seat",
+      "Twist": "Nerve: they win Fighter of the Year, +2 XP / they get the silly trait \"Big talk\""
+    },
+    {
+      "d6": "5",
+      "Event": "**Imitators**",
+      "Accept": "A rookie may be hired for 5 parts less; they insist on the same title with a prefix",
+      "Pay": "None",
+      "Twist": "Nerve: the legend trains them, hire them free / the imitator is better at it: the legend gets the silly trait \"Big talk\""
+    },
+    {
+      "d6": "6",
+      "Event": "**The legend grows**",
+      "Accept": "The fighter starts the next battle Hyped",
+      "Pay": "None",
+      "Twist": "Nerve: they tell it themselves, +1 XP / they oversell it: they write a Big Word on their card now for the next battle"
+    }
+  ]
+}

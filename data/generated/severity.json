@@ -1,0 +1,14 @@
+[
+  {
+    "Margin": "1 or 2",
+    "Severity": "**Glance**"
+  },
+  {
+    "Margin": "3 to 5",
+    "Severity": "**Solid**"
+  },
+  {
+    "Margin": "6 or more",
+    "Severity": "**Crushing**"
+  }
+]

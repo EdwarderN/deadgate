@@ -265,3 +265,47 @@ details summary { cursor: pointer; font-weight: 600; min-height: 36px; display: 
   .ro-grid { grid-template-columns: 1fr 1fr !important; }
   a { color: #000; text-decoration: none; }
 }
+
+/* ---------- dice ---------- */
+.roll-or-enter, .pool .row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; }
+.pool { display: grid; gap: 0.4rem; }
+.die-input { width: 4.2rem; text-align: center; }
+.die-result { display: inline-grid; place-items: center; min-width: 2.4rem; height: 2.4rem; padding: 0 0.4rem; border-radius: 8px; background: var(--ink); color: #fff; font-weight: 800; font-size: 1.15rem; }
+.pool-extra { font-weight: 700; font-size: 0.9rem; min-width: 8rem; text-align: center; }
+.pool-result { margin: 0; display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap; font-size: 1.1rem; }
+.err-text { color: var(--err); }
+.strong { font-weight: 700; }
+
+/* ---------- shop sellers ---------- */
+.shop-row.needs-seller { grid-template-columns: 1fr auto 2.8rem auto; }
+.seller-find { grid-column: 1 / -1; display: grid; gap: 0.3rem; padding: 0.3rem 0 0.2rem; }
+
+/* ---------- battle ---------- */
+.round-bar { position: sticky; top: 3.2rem; z-index: 9; display: grid; gap: 0.5rem; border: 2px solid var(--ink); }
+.round-num { font-size: 1.3rem; }
+.battle-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr)); gap: 0.75rem; }
+.bcard { display: grid; gap: 0.55rem; border-left: 6px solid var(--tape); }
+.bcard.is-done { border-left-color: var(--line); background: #faf9f4; }
+.bcard.is-down { border-left-color: var(--err); background: var(--err-bg); }
+.bcard header select { min-height: 38px; font-size: 0.9rem; }
+.pips { display: flex; gap: 0.3rem; }
+.epip { width: 2rem; height: 2rem; border: 2px solid var(--ink); border-radius: 6px; background: #fff; cursor: pointer; padding: 0; }
+.epip.on { background: var(--tape); }
+.seg-btn.tight { min-height: 36px; padding: 0.2rem 0.6rem; font-size: 0.85rem; font: inherit; font-weight: 600; }
+.seg-btn.ghost { border-style: dashed; color: var(--muted); }
+.seg-btn.cond.on { background: var(--err); border-color: var(--err); }
+.seg-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+button.seg-btn { font: inherit; font-weight: 600; font-size: 0.88rem; color: inherit; }
+button.seg-btn.on { color: #fff; }
+.weapons li { padding: 0.1rem 0; }
+.word { background: #fffbea; border: 1px dashed var(--tape); border-radius: 8px; padding: 0.4rem 0.6rem; }
+.small-input { min-height: 38px; font-size: 0.9rem; width: 100%; }
+.setup-row { border-bottom: 1px solid #eeebe2; padding: 0.4rem 0; display: grid; gap: 0.3rem; }
+.setup-row.out { opacity: 0.6; }
+.tools { display: grid; gap: 0.6rem; }
+.small-tabs { margin: -0.4rem -1rem 0.2rem; }
+.mark-good { border-left: 4px solid var(--ok); }
+.mark-bad { border-left: 4px solid var(--err); }
+.mark-mixed { border-left: 4px solid var(--tape); }
+.lasting { border: 1px dashed var(--line); border-radius: 8px; padding: 0.4rem; }
+.parts-form input.grow { min-width: 8rem; }

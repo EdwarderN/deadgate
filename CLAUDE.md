@@ -28,7 +28,10 @@ Keep this list accurate if you change the workflow, and add a short `MAINTAINING
 - `src/data/schema.ts`: Zod schemas for every file in `data/`. `src/data/rules.ts` loads, validates and derives lookups (items with slots, recruit prices, bot chassis, rites, advance lists, legends, the XP ladder).
 - `src/engine/crew.ts`: prices, price rules (`priceRules[].kind`: `copyDiscount`, `recruitPrice`, `chassisDiscount`, `noSellerRoll`), starting kit, slots, stats, campaign actions.
 - `src/engine/validate.ts`: every validator, each returning messages with a section number.
-- `src/ui/`: builder steps, campaign screen, printable cards (`Print.tsx`). `public/sw.js`: offline cache.
+- `src/engine/dice.ts`: dice pools (keep best/lowest two, net edge cap), d66, and table lookup by cells like "24-26, 31-32".
+- `src/engine/battle.ts`: the battle companion (conditions to down, states that cancel or end on activation, rounds, pods) and the after-battle steps (XP, Words, injury tables and what a result asks for, league points, tasks, the new break).
+- `src/ui/`: builder steps, campaign screen, printable cards (`Print.tsx`), battle companion (`Battle.tsx`), after-battle wizard (`AfterBattle.tsx`), roll-or-enter dice controls (`Dice.tsx`). `public/sw.js`: offline cache.
+- Battle and break rules in `crew-rules.json`: `dice`, `battle` (rounds, pod, positions and which injury table each rolls, Words, silly tables), `afterBattle` (table names, generic XP and league points mappings, task rules). Every name there is checked against the book by `tests/data.test.ts`.
 - Structured additions to `crew-rules.json` (all with sources): `gear.kindSlots` (where each item kind goes), frame and armour keys, `moveModifiers`, `saveDice`, `prosthetics`, `injuryEffects`, `restrictedItems`, faction `startingKit[].assign`/`pick`, `typeSpecies`, `typeGrants`, `campaign` (air tax, selling, statuses), `sections` (where each kind of rule lives, for the in-app rule text).
 
 ## Data notes
@@ -37,6 +40,7 @@ Keep this list accurate if you change the workflow, and add a short `MAINTAINING
 - Text fields keep the book's markdown bold (`**word**`); render it as bold, nothing more.
 - Faction data (`factions.json`): numbered rules, subfactions (`replaces` is the rule number they replace), types, voice, starting kit and specials lines, own task and its d6 table. Structured kits and price rules are in `crew-rules.json`.
 - Species, captain traits, advances (by list), injuries, glitches, silly traits, deeds, rumours, tags, contacts and the glossary are all generated.
+- For the battle and the break, also generated: difficulties, severity, states, actions, consequence tables, lasting conditions, clash tables, the five voices (with each voice's own rule), the drop table, generic XP, deed tiers and their XP, Word audiences, the gentle and harsh injury tables, bot words, story events, downtime task tables, finds and league points.
 
 ## Suggested stack
 

@@ -1,0 +1,32 @@
+[
+  {
+    "Condition": "**Winded**",
+    "Bot name": "Overheated",
+    "What it does": "The fighter **cannot use their reaction**",
+    "What it hampers": "Their reaction, for the rest of the battle"
+  },
+  {
+    "Condition": "**Breather loose**",
+    "Bot name": "(none)",
+    "What it does": "Natives only. Gasping: **-1 die on every roll** until fixed (Use, Routine Tech). A human or bot who would get this gets Bad arm instead",
+    "What it hampers": "Every roll, a little; cheap to fix"
+  },
+  {
+    "Condition": "**Limping**",
+    "Bot name": "Seized leg",
+    "What it does": "Move -1, and they cannot Dive",
+    "What it hampers": "How far they move (shorter, not stopped)"
+  },
+  {
+    "Condition": "**Bad arm**",
+    "Bot name": "Bad actuator",
+    "What it does": "-1 die on Fight rolls",
+    "What it hampers": "Fighting: melee attack and defence"
+  },
+  {
+    "Condition": "**Ringing head**",
+    "Bot name": "Static",
+    "What it does": "-1 die on Shoot rolls and on Tech and Nerve tests",
+    "What it hampers": "Aim and thinking"
+  }
+]

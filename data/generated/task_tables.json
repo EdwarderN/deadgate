@@ -1,0 +1,232 @@
+{
+  "Recover": [
+    {
+      "2d6": "2",
+      "Result": "**Bad advice, followed.** A med-terminal talked the nurse through it, step by confident step. The patient is **Laid up**, even if the test succeeded, and the nurse is very sorry"
+    },
+    {
+      "2d6": "3",
+      "Result": "**Caught it.** Whatever the patient had, the nurse has it now: the nurse is **Sore**"
+    },
+    {
+      "2d6": "4",
+      "Result": "**Billed by the bed.** The clinic charges by the hour, rounded up to the week: lose **3 parts**"
+    },
+    {
+      "2d6": "5",
+      "Result": "**Paste, three times a day.** The nurse insists, for the patient's own good. The patient starts the next battle **Shook**, and furious"
+    },
+    {
+      "2d6": "6",
+      "Result": "**\"You're healing SO well!\"** Chet Jippity says it every hour, and the patient believes it. The player may have them play the next battle even if they are still Laid up, with **Bad stitches** (section 13.2)"
+    },
+    {
+      "2d6": "7",
+      "Result": "**Gossip in the ward.** The next bed knows everyone: gain the contact **Informer**"
+    },
+    {
+      "2d6": "8",
+      "Result": "**Re-taped.** The nurse re-tapes the patient's armour while they sleep: the patient starts the next battle **Under warranty**"
+    },
+    {
+      "2d6": "9",
+      "Result": "**Visitors bring scrap,** and stay for the paste: **+3 parts**"
+    },
+    {
+      "2d6": "10",
+      "Result": "**Fitted while asleep.** If the patient needs a prosthetic, a copy one is fitted free, and they wake up with it"
+    },
+    {
+      "2d6": "11",
+      "Result": "**Ward rounds.** The nurse makes them for everyone: every **Laid up** fighter of the crew is only **Sore**"
+    },
+    {
+      "2d6": "12",
+      "Result": "**Right, for once.** The med-assistant is right: one **lasting injury** of the patient is gone (the title stays)"
+    }
+  ],
+  "Scavenge": [
+    {
+      "2d6": "2",
+      "Result": "**The wreck shifts.** The fighter is **Laid up**, and the find stays under it: no pay from the test"
+    },
+    {
+      "2d6": "3",
+      "Result": "**Someone else's claim.** A gang's marker on the wreck. Hand over **3 parts**, or keep everything and write the gang as a **rival**"
+    },
+    {
+      "2d6": "4",
+      "Result": "**Terms and conditions.** The wreck's voice wakes and reads them out, all of them. Agree, and lose **2 parts** in fees; refuse, and the voice locks the wreck: the task pays only its failure pay"
+    },
+    {
+      "2d6": "5",
+      "Result": "**A salvage permit.** An Inspectorate patrol checks. Pay **3 parts**, or forge one with a **Tricky (8)** Tech test: success, pay nothing; failure, pay **6**"
+    },
+    {
+      "2d6": "6",
+      "Result": "**A dead bot, still polite.** It thanks the fighter for visiting. Its core is gone; the casing sells for **+2 parts**"
+    },
+    {
+      "2d6": "7",
+      "Result": "**A flat cell,** not quite flat. Recharge one fighter's battery by 2, free, this break"
+    },
+    {
+      "2d6": "8",
+      "Result": "**A copy item** worth up to 5 parts, under a lot of tape"
+    },
+    {
+      "2d6": "9",
+      "Result": "**Samples.** The Control Group buys scrap nobody wants: **+4 parts**"
+    },
+    {
+      "2d6": "10",
+      "Result": "**Somebody's camp,** abandoned in a hurry: a copy item worth up to 8 parts, and a **rumour**"
+    },
+    {
+      "2d6": "11",
+      "Result": "**A live charging point.** Every battery in the crew refills free this break"
+    },
+    {
+      "2d6": "12",
+      "Result": "**A working power cell,** the rare kind: **+15 parts**, or keep it as a spare cell"
+    }
+  ],
+  "Work a job": [
+    {
+      "2d6": "2",
+      "Result": "**The job was a fight,** and the target was the fighter. They are **Laid up**, and nobody pays"
+    },
+    {
+      "2d6": "3",
+      "Result": "**The fine print.** Jeminy drafted the contract, and it had a clause. Pay back **4 parts** (never below 0), or refuse and write the patron as a **rival**"
+    },
+    {
+      "2d6": "4",
+      "Result": "**One star.** The Per-Diem platform rates the fighter's work, badly, and docks the pay: lose **2 parts**"
+    },
+    {
+      "2d6": "5",
+      "Result": "**A collection job.** The debtor was a friend. Squeeze them for **+3 parts** and gain **Butchers**, or let them off"
+    },
+    {
+      "2d6": "6",
+      "Result": "**Paid in vegetables,** very nutritious. Half the pay (rounded down) is vegetables, which are not parts, but the fighter starts the next battle **Hyped**"
+    },
+    {
+      "2d6": "7",
+      "Result": "**Overtime.** The job ran long, and the patron paid for it: **+3 parts**"
+    },
+    {
+      "2d6": "8",
+      "Result": "**A uniform.** The Inspectorate hires the fighter for a day and lets them keep the hat. They may take the title \"Deputy\", and the crew pays no Inspectorate fee or fine this break"
+    },
+    {
+      "2d6": "9",
+      "Result": "**Switched sides.** The patron's rival offers more. Take **+5 parts** and write the first patron as a **rival**, or stay loyal and gain **Reliable**"
+    },
+    {
+      "2d6": "10",
+      "Result": "**Paid in kit:** a copy weapon or armour worth up to 8 parts"
+    },
+    {
+      "2d6": "11",
+      "Result": "**More work.** The patron wants the crew again: one other fighter who has not taken their task yet may Work a job this break at **Routine (6)**"
+    },
+    {
+      "2d6": "12",
+      "Result": "**The patron dies,** rich and without heirs: **+15 parts**"
+    }
+  ],
+  "Hunt rumours": [
+    {
+      "2d6": "2",
+      "Result": "**Dead, says the board.** Gawk's rumour board says the fighter died, and the crew believed it. One of the fighter's items, the player's choice, was already sold: gain half its price in parts"
+    },
+    {
+      "2d6": "3",
+      "Result": "**Wrong bar.** Someone remembers an unpaid boast. Buy the room a round (**3 parts**), or gain **Oathbreakers**"
+    },
+    {
+      "2d6": "4",
+      "Result": "**\"The server is busy.\"** The fighter waited all break for Dipstick: no finds roll, even if the test succeeded"
+    },
+    {
+      "2d6": "5",
+      "Result": "**A confession.** A Waiting priest took the fighter's questions as one: lose **2 parts** in donations"
+    },
+    {
+      "2d6": "6",
+      "Result": "**A long story** about a pod, from a drifter. It was a film, but the crew likes it: gain a **rumour**"
+    },
+    {
+      "2d6": "7",
+      "Result": "**A drifter wants in.** One recruit may be hired this break for **5 parts less**"
+    },
+    {
+      "2d6": "8",
+      "Result": "**A useful name.** Gain one contact of the player's choice"
+    },
+    {
+      "2d6": "9",
+      "Result": "**Sold the rumour on:** **+3 parts**"
+    },
+    {
+      "2d6": "10",
+      "Result": "**A buried pod,** unlooted: roll on the **finds** table twice and keep one"
+    },
+    {
+      "2d6": "11",
+      "Result": "**A song about the fighter.** **+1 XP**, and the crew gains **Showboats**"
+    },
+    {
+      "2d6": "12",
+      "Result": "**The truth about something.** The player writes one true thing about the world on the roster (no rule; the story keeps it), and the fighter gains **+2 XP**"
+    }
+  ],
+  "Train": [
+    {
+      "2d6": "2",
+      "Result": "**A live round** in the practice gun. The trainee is **Laid up**"
+    },
+    {
+      "2d6": "3",
+      "Result": "**Pulled something.** The trainee is **Sore**"
+    },
+    {
+      "2d6": "4",
+      "Result": "**A sparring accident.** The teacher is **Sore**"
+    },
+    {
+      "2d6": "5",
+      "Result": "**A paid course.** It was a film about training: lose **3 parts**"
+    },
+    {
+      "2d6": "6",
+      "Result": "**Overconfident.** The trainee picks a Word for the next battle now (any tier) and writes it on their card"
+    },
+    {
+      "2d6": "7",
+      "Result": "**Drills to Chet Jippity,** who calls every rep \"incredible\". The trainee believes it, and starts the next battle **Hyped**"
+    },
+    {
+      "2d6": "8",
+      "Result": "**Practised falling.** The trainee starts the next battle **Under warranty**"
+    },
+    {
+      "2d6": "9",
+      "Result": "**A montage.** Hollowood filmed it: **+3 parts**, and the crew gains **Showboats**"
+    },
+    {
+      "2d6": "10",
+      "Result": "**Found their style.** The trainee may swap one advance for another they qualify for"
+    },
+    {
+      "2d6": "11",
+      "Result": "**An odd teacher.** The trainee may swap one advance for one from any list, even one they have no rating in"
+    },
+    {
+      "2d6": "12",
+      "Result": "**The teacher's secret.** The trainee may swap one advance for the teacher's best trick: any trait the teacher has (not a Legend or captain trait)"
+    }
+  ]
+}

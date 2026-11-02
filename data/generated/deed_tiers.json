@@ -1,0 +1,14 @@
+{
+  "Small deeds": {
+    "tier": "Small",
+    "xp": 2
+  },
+  "Big deeds": {
+    "tier": "Big",
+    "xp": 5
+  },
+  "Legendary deeds": {
+    "tier": "Legendary",
+    "xp": 8
+  }
+}

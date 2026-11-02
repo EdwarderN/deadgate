@@ -1,0 +1,26 @@
+[
+  {
+    "Row": "1",
+    "Choose it when the crew...": "**Held the field**"
+  },
+  {
+    "Row": "2",
+    "Choose it when the crew...": "**Did not hold the field**"
+  },
+  {
+    "Row": "3",
+    "Choose it when the crew...": "**Ran:** evacuated, or forfeited the prize"
+  },
+  {
+    "Row": "4",
+    "Choose it when the crew...": "**Lost someone:** a fighter died or was Taken"
+  },
+  {
+    "Row": "5",
+    "Choose it when the crew...": "**Took a captive,** or paid a ransom"
+  },
+  {
+    "Row": "6",
+    "Choose it when the crew...": "**Made a legend:** fulfilled a Big or Legendary Word, or earned a Legend"
+  }
+]

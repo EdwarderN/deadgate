@@ -53,6 +53,56 @@ export interface Fighter {
   rookie: boolean;
   hirePaid?: number;
   notes: string;
+  /** states or positions to put on the model when the next battle begins ("starts the next battle Hyped") */
+  nextBattle?: string[];
+}
+
+export interface BattleWord { deed: string; audience: string; result?: 'fulfilled' | 'failed' }
+
+export interface BattleFighter {
+  inBattle: boolean;
+  energy: number;
+  conditions: string[];
+  states: string[];
+  position: string;
+  activated: boolean;
+  reactionUsed: boolean;
+  dents: number;
+  putDowns: number;
+  word: BattleWord | null;
+  notes: string;
+}
+
+export interface Battle {
+  id: string;
+  started: string;
+  opponent: string;
+  opponentFighters: number | null;
+  opponentXp: number | null;
+  round: number;
+  phase: 'setup' | 'playing' | 'ended';
+  fighters: Record<string, BattleFighter>;
+  log: { round: number; text: string }[];
+  winCond: boolean;
+  /** fighter credited with the winning condition */
+  didJob: string | null;
+  heldField: boolean;
+  stoodGround: boolean;
+  world: string;
+}
+
+export interface AfterBattle {
+  step: number;
+  battle: Battle;
+  xpApplied: boolean;
+  wordsApplied: Record<string, boolean>;
+  extraXp: Record<string, number>;
+  injuries: Record<string, { rolls: number[]; done: boolean; notes: string }>;
+  story: { row: string; roll: number | null; notes: string };
+  tasks: Record<string, { task: string; success: boolean | null; testTotal: number | null; tableRoll: number | null; paid: boolean }>;
+  taxPaid: boolean;
+  history: Record<string, string>;
+  seasonLogged: boolean;
 }
 
 export interface LedgerEntry { id: string; at: string; amount: number; note: string }
@@ -87,6 +137,11 @@ export interface Crew {
   };
   created: string;
   updated: string;
+  /** old-stock sellers found or not this break (11.3): one roll per item per break */
+  sellers?: Record<string, { found: boolean; roll?: number }>;
+  breakNo?: number;
+  battle?: Battle | null;
+  after?: AfterBattle | null;
 }
 
 let counter = 0;

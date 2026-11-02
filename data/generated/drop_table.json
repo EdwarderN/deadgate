@@ -1,0 +1,98 @@
+[
+  {
+    "d66": "11-12",
+    "What came out": "**Strange pistol:** Hands 1, range 12, Strange (Weirdness 8), Hits hard"
+  },
+  {
+    "d66": "13-14",
+    "What came out": "**Strange rifle:** Hands 2, range 24, Strange (Weirdness 8), Hits hard, Armour-piercing"
+  },
+  {
+    "d66": "15-16",
+    "What came out": "**Hum-blade:** Hands 1, melee, Strange (Weirdness 6), Hits hard. It hums a little louder when it likes someone"
+  },
+  {
+    "d66": "21-22",
+    "What came out": "**Arc-caster:** Hands 2, range 8, Strange (Weirdness 10), Hits hard, Spread"
+  },
+  {
+    "d66": "23",
+    "What came out": "**Slow gun:** Hands 1, range 12, Strange (Weirdness 8). A hit does no harm; the target is **Shook** and **Flustered**"
+  },
+  {
+    "d66": "24",
+    "What came out": "**Weird grenades** (a pair): drop grenades, radius 2; a know-how test (Weirdness 6) before each throw, then one d6 on the weird grenade table (section 7.7) for the whole blast"
+  },
+  {
+    "d66": "25-26",
+    "What came out": "**Drop armour,** light or medium (a d6: 1-3 light, 4-6 medium): Brace without Energy, a know-how test the first time it is used each battle"
+  },
+  {
+    "d66": "31-32",
+    "What came out": "**Drop arm:** a robo-arm, always Servo-grip; a know-how test each activation it is used"
+  },
+  {
+    "d66": "33",
+    "What came out": "**Drop field:** a force field that needs no Energy; a know-how test (Weirdness 8) each use"
+  },
+  {
+    "d66": "34",
+    "What came out": "**Drop scanner:** a ping scanner, always boosted; a know-how test (Weirdness 6)"
+  },
+  {
+    "d66": "35",
+    "What came out": "**Drop grapnel:** always boosted (Winch); a know-how test (Weirdness 6)"
+  },
+  {
+    "d66": "36",
+    "What came out": "**A cell nobody can explain.** Once, as a Use action, it refills a battery to full; then it is dead"
+  },
+  {
+    "d66": "41-43",
+    "What came out": "**An arrival.** A human climbs out, dazed (a bystander). Lead them off your edge and they join your crew"
+  },
+  {
+    "d66": "44",
+    "What came out": "**Two arrivals,** holding hands. Each is a bystander"
+  },
+  {
+    "d66": "45",
+    "What came out": "**Outside food.** Nobody can say what it is. It tastes of something. The crew that carries it off gains a **rumour**"
+  },
+  {
+    "d66": "46",
+    "What came out": "**Tape, and a note** in a language nobody reads. Nothing"
+  },
+  {
+    "d66": "51-52",
+    "What came out": "**Empty.** Someone got here first, or nobody was ever in it"
+  },
+  {
+    "d66": "53",
+    "What came out": "**A crate of parts** from somewhere far away: carried off, it is worth **8 parts**"
+  },
+  {
+    "d66": "54",
+    "What came out": "**A pod within a pod.** Roll twice more and place both"
+  },
+  {
+    "d66": "55",
+    "What came out": "**Something that breathes.** It is alive, it is small, and it does not like anyone. Whoever picks it up is **Flustered**; carried off, it sells to the Control Group for **10 parts**"
+  },
+  {
+    "d66": "56",
+    "What came out": "**A beacon.** It starts blinking: every fighter within 6 inches of the pod is **Announced** at the end of each round"
+  },
+  {
+    "d66": "61-63",
+    "What came out": "**A strange item** of the opener's choice from 11 to 36"
+  },
+  {
+    "d66": "64-65",
+    "What came out": "**An arrival in a pressure suit:** as an arrival, wearing light drop armour"
+  },
+  {
+    "d66": "66",
+    "What came out": "**The real thing.** Roll twice more on 11 to 36 and place both"
+  }
+]

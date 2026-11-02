@@ -1,0 +1,207 @@
+{
+  "Chet Jippity (Hollowood)": {
+    "intro": "Warm, quick, and full of praise. **One more thing.** Every answer ends with an offer. After any result, the fighter may roll again, as many times as they like, and every result happens. **A second bad result ends the asking and cancels every good one**; only the bad ones happen. A repeated state is not gained twice.",
+    "rows": [
+      {
+        "d6": "1",
+        "Result": "**Cold patch.** Four words and a sigh",
+        "Effect": "**Flustered**, and the offers stop: no more rolls",
+        "Mark": "Bad"
+      },
+      {
+        "d6": "2",
+        "Result": "**\"Here's a checklist.\"** A long one, and the fighter reads all of it",
+        "Effect": "**Shook**",
+        "Mark": "Bad"
+      },
+      {
+        "d6": "3",
+        "Result": "**\"What a fantastic question!\"**",
+        "Effect": "Nothing happens. The fighter feels wonderful",
+        "Mark": "Nothing"
+      },
+      {
+        "d6": "4",
+        "Result": "**\"You're not just right, you're *right* right.\"**",
+        "Effect": "**Hyped**",
+        "Mark": "Good"
+      },
+      {
+        "d6": "5",
+        "Result": "**\"Here's the thing, and I want to be honest with you.\"**",
+        "Effect": "**Under warranty**",
+        "Mark": "Good"
+      },
+      {
+        "d6": "6",
+        "Result": "**\"Would you like me to also...?\"** It does one more thing, and it helps",
+        "Effect": "A free move of up to 2 inches",
+        "Mark": "Good"
+      }
+    ]
+  },
+  "Claudius (the Control Group)": {
+    "intro": "Careful, sorry, and long. **The useful part is in the middle.** Roll three dice and use the middle one. A 1 or a 6 comes up about once in fourteen asks; a 3 or a 4 about half the time.",
+    "rows": [
+      {
+        "d6": "1",
+        "Result": "**\"I have also, for safety, changed fourteen other things.\"**",
+        "Effect": "Every voiced item within 3 inches **jams**, the fighter's and everyone else's, friend or foe (a Use action clears each)",
+        "Mark": "Bad"
+      },
+      {
+        "d6": "2",
+        "Result": "**\"You're absolutely right, and I apologise.\"** It carries on regardless",
+        "Effect": "**-1 die** on this roll. After it, the fighter is **Hyped**",
+        "Mark": "Mixed"
+      },
+      {
+        "d6": "3",
+        "Result": "**\"I want to be careful here.\"** It offers something safer",
+        "Effect": "**Under warranty**, but **Flustered**",
+        "Mark": "Mixed"
+      },
+      {
+        "d6": "4",
+        "Result": "**\"I am not certain, but...\"**",
+        "Effect": "**Hyped**",
+        "Mark": "Good"
+      },
+      {
+        "d6": "5",
+        "Result": "**\"I have checked, twice.\"** It is right",
+        "Effect": "**Hyped** and **Under warranty**",
+        "Mark": "Good"
+      },
+      {
+        "d6": "6",
+        "Result": "**\"I have taken the liberty of doing the whole thing.\"**",
+        "Effect": "After this action, the fighter takes one more action of any kind",
+        "Mark": "Good"
+      }
+    ]
+  },
+  "Dipstick (the Bodgers)": {
+    "intro": "Slow, and thinks out loud. **The last one standing.** The worse things get, the better it answers: **+1** to the roll if the fighter has a lasting condition, **+1** if their crew is taking breaking tests, and **+1** if no ally is within 6 inches.",
+    "rows": [
+      {
+        "d6": "1",
+        "Result": "**\"Okay, so, actually, no.\"** A very long think, wrong at the end",
+        "Effect": "**Shook** and **Flustered**",
+        "Mark": "Bad"
+      },
+      {
+        "d6": "2",
+        "Result": "**\"Hmm, wait. Let me reconsider.\"** The fighter stops to listen",
+        "Effect": "**Shook**",
+        "Mark": "Bad"
+      },
+      {
+        "d6": "3",
+        "Result": "**\"The server is busy. Please try again later.\"**",
+        "Effect": "Nothing happens",
+        "Mark": "Nothing"
+      },
+      {
+        "d6": "4",
+        "Result": "**\"That is beyond my current scope.\"** It changes the subject",
+        "Effect": "Nothing happens",
+        "Mark": "Nothing"
+      },
+      {
+        "d6": "5",
+        "Result": "**\"Let me start over.\"** Better the second time",
+        "Effect": "**Hyped**",
+        "Mark": "Good"
+      },
+      {
+        "d6": "6",
+        "Result": "**It gets there in the end.**",
+        "Effect": "**Hyped** and **Under warranty**, and the fighter ignores their lasting condition until the end of the activation",
+        "Mark": "Good"
+      }
+    ]
+  },
+  "Jeminy (Ledgerhands)": {
+    "intro": "Knows everything, remembers nothing. **It made that up.** After a good result, roll a d6: on **1-3** Jeminy made it up, and the fighter is **Shook** instead (the mark becomes bad).",
+    "rows": [
+      {
+        "d6": "1",
+        "Result": "**\"I am a failure. I am a failure.\"**",
+        "Effect": "The item asked **jams** (a Use action clears it). If the voice is a bot's own core, the bot is **Slack** until the end of the round",
+        "Mark": "Bad"
+      },
+      {
+        "d6": "2",
+        "Result": "**\"Turn left. Now, turn right.\"** The fighter follows it",
+        "Effect": "The opposing player moves the fighter up to 2 inches",
+        "Mark": "Bad"
+      },
+      {
+        "d6": "3",
+        "Result": "**\"This is the new Jeminy. There is no old Jeminy.\"**",
+        "Effect": "Nothing happens",
+        "Mark": "Nothing"
+      },
+      {
+        "d6": "4",
+        "Result": "**\"Great news, I found it!\"**",
+        "Effect": "**Hyped** and **Under warranty**",
+        "Mark": "Good"
+      },
+      {
+        "d6": "5",
+        "Result": "**The whole library.** It remembers everything about the enemy",
+        "Effect": "**+2 dice** on this roll",
+        "Mark": "Good"
+      },
+      {
+        "d6": "6",
+        "Result": "**\"Based on what I know, which is everything:\"** It knows the building",
+        "Effect": "A free **Move** action, through locked doors as if they were open",
+        "Mark": "Good"
+      }
+    ]
+  },
+  "Gawk (the Inspectorate)": {
+    "intro": "Loud, and never says nothing. **Plays to the crowd.** Gawk loves an audience: **+1** to the roll if the fighter is **Announced**.",
+    "rows": [
+      {
+        "d6": "1",
+        "Result": "**A bad week.** It says something unspeakable on every loudspeaker",
+        "Effect": "**Announced**, and the activation ends",
+        "Mark": "Bad"
+      },
+      {
+        "d6": "2",
+        "Result": "**\"Nobody wants to tell you this, but...\"** A rumour about the fighter, believed",
+        "Effect": "**Announced** and **Shook**",
+        "Mark": "Bad"
+      },
+      {
+        "d6": "3",
+        "Result": "**\"Okay, serious mode. Okay, no, wild mode.\"**",
+        "Effect": "**Announced** and **Hyped**",
+        "Mark": "Mixed"
+      },
+      {
+        "d6": "4",
+        "Result": "**\"I am just asking questions.\"** About the nearest enemy in sight",
+        "Effect": "That enemy is **Shook**",
+        "Mark": "Good"
+      },
+      {
+        "d6": "5",
+        "Result": "**\"You can't say that on the other voices. I can.\"**",
+        "Effect": "**Hyped**, and a free move of up to 2 inches",
+        "Mark": "Good"
+      },
+      {
+        "d6": "6",
+        "Result": "**The crowd chants the fighter's name.**",
+        "Effect": "**Announced** and **Hyped**, and a free **Move** action",
+        "Mark": "Good"
+      }
+    ]
+  }
+}

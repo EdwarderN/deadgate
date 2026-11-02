@@ -1,0 +1,27 @@
+[
+  {
+    "State": "**Hyped**",
+    "What it does": "+1 die, which the fighter spends on an attack, test or save of their choice",
+    "When it ends": "When they spend it"
+  },
+  {
+    "State": "**Shook**",
+    "What it does": "-1 die on the fighter's next attack, test or save",
+    "When it ends": "When they make that roll"
+  },
+  {
+    "State": "**Flustered**",
+    "What it does": "The fighter cannot use their reaction",
+    "When it ends": "At the end of the fighter's own next activation"
+  },
+  {
+    "State": "**Under warranty**",
+    "What it does": "+1 save die on the fighter's next save, and they roll a save even with no armour (a basic save, 0 dice)",
+    "When it ends": "When they make that save"
+  },
+  {
+    "State": "**Announced**",
+    "What it does": "Everyone knows where the fighter is. They can be **shot without line of sight** (through one wall, never through a Solid piece or two walls), and **prompted and targeted by psionic powers** without line of sight, if in range",
+    "When it ends": "At the end of the fighter's own next activation"
+  }
+]

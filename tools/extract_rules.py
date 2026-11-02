@@ -65,6 +65,38 @@ def tables_under_bold(file, prefix):
     return out
 
 
+def tables_under_heading(file, prefix):
+    """All tables starting with prefix, each keyed by the nearest ### heading above it,
+    with the first paragraph under that heading (a voice's own rule, say)."""
+    lines = read(file)
+    out = {}
+    for i, l in enumerate(lines):
+        if l.startswith(prefix):
+            k = i - 1
+            while k >= 0 and not lines[k].startswith("### "):
+                k -= 1
+            if k < 0:
+                continue
+            label = lines[k][4:].strip()
+            intro = next((x.strip() for x in lines[k + 1:i] if x.strip() and not x.startswith("|")), "")
+            out[label] = {"intro": intro, "rows": table_at(lines, i)[1]}
+    if not out:
+        sys.exit(f"extract_rules: no table '{prefix}' under a ### heading in {file}.")
+    return out
+
+
+def deed_tiers():
+    """'**Small deeds** (2 XP; no Legend)' -> {'Small deeds': {'tier': 'Small', 'xp': 2}}"""
+    out = {}
+    for l in read("13-after.md"):
+        m = re.match(r"\*\*((\w+) deeds)\*\* \((\d+) XP", l)
+        if m:
+            out[m.group(1)] = {"tier": m.group(2), "xp": int(m.group(3))}
+    if not out:
+        sys.exit("extract_rules: no '**Small deeds** (2 XP' lines in 13-after.md.")
+    return out
+
+
 def plain(md):
     return re.sub(r"\*\*(.+?)\*\*", r"\1", md).strip()
 
@@ -175,6 +207,26 @@ DATA = {
     "contacts": lambda: find_table("14-break.md", "| Contact | Use them to"),
     "tasks": lambda: find_table("14-break.md", "| Task | Test"),
     "glossary": lambda: find_table("18-glossary.md", "| Term | Meaning"),
+    # ---- the battle companion and the after-battle steps ----
+    "difficulties": lambda: find_table("03-dice.md", "| Difficulty | Target"),
+    "severity": lambda: find_table("03-dice.md", "| Margin | Severity"),
+    "states": lambda: find_table("05-battle.md", "| State | What it does"),
+    "actions": lambda: find_table("05-battle.md", "| Action | What it does"),
+    "consequences": lambda: tables_under_bold("06-hits.md", "| d6 | Result"),
+    "lasting_conditions": lambda: find_table("06-hits.md", "| Condition | Bot name"),
+    "clashes": lambda: tables_under_bold("06-hits.md", "| d66 | Result"),
+    "voices": lambda: tables_under_heading("08-special.md", "| d6 | Result | Effect | Mark"),
+    "drop_table": lambda: find_table("09-setup.md", "| d66 | What came out"),
+    "generic_xp": lambda: find_table("13-after.md", "| Deed | XP"),
+    "deed_tiers": deed_tiers,
+    "word_audiences": lambda: find_table("13-after.md", "| Audience | What it is"),
+    "injury_tables": lambda: tables_under_bold("13-after.md", "| d66 | Result"),
+    "bot_words": lambda: find_table("13-after.md", "| Organic result | Bot result"),
+    "story_rows": lambda: find_table("14-break.md", "| Row | Choose it when"),
+    "story_events": lambda: tables_under_bold("14-break.md", "| d6 | Event | Accept"),
+    "task_tables": lambda: tables_under_bold("14-break.md", "| 2d6 | Result"),
+    "finds": lambda: find_table("14-break.md", "| d6 | Find"),
+    "league_points": lambda: find_table("14-break.md", "| What | Points"),
 }
 
 

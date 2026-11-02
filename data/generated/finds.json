@@ -1,0 +1,26 @@
+[
+  {
+    "d6": "1",
+    "Find": "A cache of tape and bolts: **4 parts**"
+  },
+  {
+    "d6": "2",
+    "Find": "A copy weapon or armour worth up to 8 parts"
+  },
+  {
+    "d6": "3",
+    "Find": "A full **spare cell** (old stock)"
+  },
+  {
+    "d6": "4",
+    "Find": "A **relic lead:** one relic may be bought this break at half price, with no roll for a seller"
+  },
+  {
+    "d6": "5",
+    "Find": "A **pair of grenades** (old stock) of the player's choice"
+  },
+  {
+    "d6": "6",
+    "Find": "An old-stock weapon or frame worth up to 40 parts, or an **advanced med-unit** (section 7.6). It has a voice, and it has opinions"
+  }
+]

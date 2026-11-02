@@ -1,0 +1,20 @@
+[
+  {
+    "Audience": "**Vow**",
+    "What it is": "Sworn to the fighter's own crew",
+    "Fulfilled": "The tier's XP, and a Legend for Big or Legendary",
+    "Failed": "A silly trait (section 13.7)"
+  },
+  {
+    "Audience": "**Boast**",
+    "What it is": "Shouted across the table at the enemy",
+    "Fulfilled": "The tier's XP **+1**, and a Legend for Big or Legendary. **Terrifying:** the first enemy who loses a melee exchange to the boaster this battle makes a Routine (6) Nerve test or is **Flustered**",
+    "Failed": "A silly trait. An enemy who **puts the boaster down** before the deed is done earns **+2 XP** (the bounty)"
+  },
+  {
+    "Audience": "**Wager**",
+    "What it is": "Backed by a stake: the opponent, or anyone watching, takes the other side",
+    "Fulfilled": "The tier's XP and a Legend for Big or Legendary, and the bettor pays the stake",
+    "Failed": "A silly trait, and the swearer's crew pays the stake"
+  }
+]

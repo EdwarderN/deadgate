@@ -1,0 +1,158 @@
+{
+  "Row 1: Tangled": [
+    {
+      "d66": "11",
+      "Result": "**Locked up.** Neither fighter can move or attack anyone else until the end of the round. They can still attack each other"
+    },
+    {
+      "d66": "12",
+      "Result": "**Shoved apart.** Each is pushed 1 inch straight away from the other. The active fighter must spend an action to close the gap if they want to keep fighting"
+    },
+    {
+      "d66": "13",
+      "Result": "**Swap.** The fighters spin round each other and trade places"
+    },
+    {
+      "d66": "14",
+      "Result": "**Out of breath.** Both fighters are **Shook**"
+    },
+    {
+      "d66": "15",
+      "Result": "**Nose to nose.** Both fighters are **Flustered**"
+    },
+    {
+      "d66": "16",
+      "Result": "**Pile-on.** Each fighter's nearest ally within 3 inches may step up to 2 inches toward them, into base contact if it reaches"
+    }
+  ],
+  "Row 2: Scramble": [
+    {
+      "d66": "21",
+      "Result": "**Both go down.** Both fighters are prone where they stand"
+    },
+    {
+      "d66": "22",
+      "Result": "**Rolling fight.** Each player rolls a d6; the higher roll wins the scramble and takes Press (a tie changes nothing)"
+    },
+    {
+      "d66": "23",
+      "Result": "**The sloppy one.** The fighter with the lower Fight trips and falls prone (a tie: both fall prone)"
+    },
+    {
+      "d66": "24",
+      "Result": "**Elbows and knees.** Each fighter gains Winded"
+    },
+    {
+      "d66": "25",
+      "Result": "**Respect for experience.** The fighter with more Experience takes Press"
+    },
+    {
+      "d66": "26",
+      "Result": "**Dance.** Each player may move their fighter up to 2 inches while staying in base contact. They may end in different cover"
+    }
+  ],
+  "Row 3: Gear": [
+    {
+      "d66": "31",
+      "Result": "**Sparks.** Each fighter's battery loses 1 Energy as the weapons arc"
+    },
+    {
+      "d66": "32",
+      "Result": "**Grit in the works.** Each fighter's weapon jams (a copy) or loses 1 Energy from its holder's battery (old stock). A drop shrugs it off"
+    },
+    {
+      "d66": "33",
+      "Result": "**Jammed together.** Every Unreliable item either fighter holds jams. Old-stock items lose 1 Energy instead"
+    },
+    {
+      "d66": "34",
+      "Result": "**Plates snag.** The armour catches and twists: each fighter wearing armour is **Shook**"
+    },
+    {
+      "d66": "35",
+      "Result": "**Static discharge.** Each fighter's battery gains 1 Energy, up to its size"
+    },
+    {
+      "d66": "36",
+      "Result": "**Wrenched aside.** Each fighter spends 1 Energy or is **Shook** (their player's choice)"
+    }
+  ],
+  "Row 4: The room": [
+    {
+      "d66": "41",
+      "Result": "**Dust-up.** Dust and steam fill a cloud 2 inches across around the pair until the end of the next round, like a small smoke grenade: nobody inside can see out, or be seen"
+    },
+    {
+      "d66": "42",
+      "Result": "**Bad footing.** Both fighters make a Routine Grit test; each who fails falls prone"
+    },
+    {
+      "d66": "43",
+      "Result": "**Something falls.** The nearest other fighter within 4 inches, friend or foe, is knocked prone unless they spend their reaction to Dive. With nobody there, both fighters are **Shook** (the dust)"
+    },
+    {
+      "d66": "44",
+      "Result": "**Spotted.** Both fighters are **Announced** until the end of the round"
+    },
+    {
+      "d66": "45",
+      "Result": "**Noise.** Starting with the attacker's player, each player may move one other fighter of their own up to 2 inches"
+    },
+    {
+      "d66": "46",
+      "Result": "**Barked orders.** The nearest other fighter of each side within 6 inches of the pair, if any, is **Hyped**"
+    }
+  ],
+  "Row 5: Spectacle": [
+    {
+      "d66": "51",
+      "Result": "**Trash talk.** Each player shouts one line for their fighter and rolls a d6. The higher roller's fighter is **Hyped** (a tie: neither)"
+    },
+    {
+      "d66": "52",
+      "Result": "**Underdog's break.** The fighter whose side has fewer fighters standing is **Hyped** (a tie: neither)"
+    },
+    {
+      "d66": "53",
+      "Result": "**Everyone stops to watch.** Every other fighter within 3 inches is **Flustered**"
+    },
+    {
+      "d66": "54",
+      "Result": "**The crowd has favourites.** The fighter with more Experience is **Hyped**"
+    },
+    {
+      "d66": "55",
+      "Result": "**Wrong announcement.** The crowd cheers for the wrong fighter: the one with **less** Experience is **Hyped**"
+    },
+    {
+      "d66": "56",
+      "Result": "**The crowd goes wild.** Both fighters are **Hyped**"
+    }
+  ],
+  "Row 6: The odd ones": [
+    {
+      "d66": "61",
+      "Result": "**Mutual respect.** Both fighters step 2 inches away from each other, ending out of contact"
+    },
+    {
+      "d66": "62",
+      "Result": "**Defender's edge.** The fighter who was attacked wins by a hair: they may take Press, as if they had won by 1"
+    },
+    {
+      "d66": "63",
+      "Result": "**Double fumble.** Each fighter rolls on the Glance table (it is a hit; saves apply)"
+    },
+    {
+      "d66": "64",
+      "Result": "**The big one.** Each fighter rolls on the Solid table (it is a hit; saves apply)"
+    },
+    {
+      "d66": "65",
+      "Result": "**One falls for it.** Each player rolls a d6. The lower roller's fighter rolls on the Glance table (a tie: neither)"
+    },
+    {
+      "d66": "66",
+      "Result": "**Again!** The two fighters fight another exchange at once, rolled from scratch (a second clash in the repeat is read as 62)"
+    }
+  ]
+}

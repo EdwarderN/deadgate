@@ -54,6 +54,12 @@ export function sellerTarget(rules: Rules, crew: Crew): { value: number; source:
   return { value: s.value, source: s.source };
 }
 
+/** Record a seller roll for an old-stock item this break: a d6 against the target, or null for "found" (11.3). */
+export function setSellerResult(rules: Rules, crew: Crew, itemId: string, roll: number | null): Crew {
+  const found = roll === null || roll >= sellerTarget(rules, crew).value;
+  return { ...crew, sellers: { ...(crew.sellers ?? {}), [itemId]: roll === null ? { found } : { found, roll } } };
+}
+
 /** The recruit key for a fighter: its type if the recruit table prices that type (bot chassis, volunteers), else its species. */
 export function recruitKey(rules: Rules, f: Pick<Fighter, 'species' | 'type'>): string {
   return f.type && rules.recruitPrices[f.type] !== undefined ? f.type : f.species;
