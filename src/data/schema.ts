@@ -331,6 +331,7 @@ export interface Eff {
   test?: { rating: string; target: number }; success?: Eff[]; failure?: Eff[];
   choice?: { label: string; effects: Eff[] }[];
   taskPay?: number | 'failure'; noFinds?: boolean; retest?: boolean; swapAdvance?: string; note?: string;
+  recharge?: number | 'full';
 }
 export const effSchema: z.ZodType<Eff> = z.lazy(() => z.object({
   parts: z.number().optional(), ifDebt: z.number().optional(),
@@ -349,6 +350,7 @@ export const effSchema: z.ZodType<Eff> = z.lazy(() => z.object({
   test: z.object({ rating: str, target: z.number() }).optional(), success: z.array(effSchema).optional(), failure: z.array(effSchema).optional(),
   choice: z.array(z.object({ label: str, effects: z.array(effSchema) })).optional(),
   taskPay: z.union([z.number(), z.literal('failure')]).optional(), noFinds: z.boolean().optional(), retest: z.boolean().optional(), swapAdvance: str.optional(), note: str.optional(),
+  recharge: z.union([z.number(), z.literal('full')]).optional(),
 }).strict());
 const effs = z.array(effSchema);
 export const outcomesSchema = z.object({

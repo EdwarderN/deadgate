@@ -55,6 +55,8 @@ export interface Fighter {
   notes: string;
   /** states or positions to put on the model when the next battle begins ("starts the next battle Hyped") */
   nextBattle?: string[];
+  /** Energy in the battery now; batteries do not refill by themselves (14.3). Missing means full. */
+  energy?: number;
 }
 
 export interface BattleWord { deed: string; audience: string; result?: 'fulfilled' | 'failed' }

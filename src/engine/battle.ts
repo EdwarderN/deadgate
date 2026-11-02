@@ -2,7 +2,7 @@
 // All names, numbers and tables come from the rules data.
 import { plain, type Rules } from '../data/rules';
 import type { Row } from '../data/schema';
-import { captainOf, captainTraitNames, fighterStats, isBot, partsLeft, strength, underdog } from './crew';
+import { battery, captainOf, captainTraitNames, isBot, partsLeft, strength, underdog } from './crew';
 import { cellCovers, lookup } from './dice';
 import { uid, type AfterBattle, type Battle, type BattleFighter, type Crew, type Fighter } from './model';
 
@@ -30,11 +30,11 @@ export function newBattle(rules: Rules, crew: Crew): Battle {
   const first = positions(rules)[0].name;
   const fighters: Record<string, BattleFighter> = {};
   for (const f of crew.fighters) {
-    const st = fighterStats(rules, crew, f);
+    const bat = battery(rules, crew, f);
     const states = (f.nextBattle ?? []).filter((s) => stateNames(rules).includes(s));
     const pos = (f.nextBattle ?? []).find((s) => positions(rules).some((p) => p.name === s)) ?? first;
     fighters[f.id] = {
-      inBattle: f.status !== 'Laid up', energy: st.energy, conditions: [], states, position: pos,
+      inBattle: f.status !== 'Laid up', energy: bat.now, conditions: [], states, position: pos,
       activated: false, reactionUsed: false, dents: 0, putDowns: 0, word: null, notes: '',
     };
   }
@@ -282,7 +282,13 @@ export const taskBlocked = (rules: Rules, f: Fighter) => rules.crew.afterBattle.
 export function startAfterBattle(rules: Rules, crew: Crew): Crew {
   if (!crew.battle) return crew;
   const fit = rules.crew.campaign.statuses.value[0];
-  const fighters = rules.crew.afterBattle.resetStatusesAtBreak.value ? crew.fighters.map((f) => ({ ...f, status: fit, nextBattle: [] })) : crew.fighters;
+  const reset = rules.crew.afterBattle.resetStatusesAtBreak.value;
+  // What is left in each battery stays there: batteries do not refill by themselves (14.3).
+  const fighters = crew.fighters.map((f) => {
+    const bf = crew.battle!.fighters[f.id];
+    const energy = bf?.inBattle ? bf.energy : f.energy;
+    return reset ? { ...f, status: fit, nextBattle: [], energy } : { ...f, energy };
+  });
   const after: AfterBattle = {
     step: 'battle', battle: { ...crew.battle, phase: 'ended' }, extraXp: {}, injuries: {}, done: {},
     story: { row: '', roll: null, notes: '' }, tasks: {}, history: {},

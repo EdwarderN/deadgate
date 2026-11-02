@@ -1,5 +1,5 @@
 {
- "_about": "What each table row does, for the app to apply. The text shown is always the book's (data/generated). Keys are the book's own row labels, so a renamed row fails the tests. Effects: parts, xp, status, next (starts the next battle), tag, contact, rival, rumour, silly, item (gain: key or kinds/source/maxPrice, fit), loseItem, sellItem, buyItem, hire (an offer: discount or free), relicLead, sellerFound, noTasks, noTask, gift, healInjury, prosthetic, allLaidUpToSore, injury, injuryRoll (Light/Heavy list, or glitches for bots), reroll, dead, leave, title, finds, drop, d6, test, choice, taskPay (0, 0.5, 2 or 'failure'), noFinds, retest, swapAdvance, note. who: self, choose, all, patient, teacher, captain, lowestXp, evacuated, legend, bot, type:<Type>.",
+ "_about": "What each table row does, for the app to apply. The text shown is always the book's (data/generated). Keys are the book's own row labels, so a renamed row fails the tests. Effects: parts, xp, status, next (starts the next battle), tag, contact, rival, rumour, silly, item (gain: key or kinds/source/maxPrice, fit), loseItem, sellItem, buyItem, hire (an offer: discount or free), relicLead, sellerFound, noTasks, noTask, gift, healInjury, prosthetic, allLaidUpToSore, injury, injuryRoll (Light/Heavy list, or glitches for bots), reroll, dead, leave, title, finds, drop, d6, test, choice, recharge (Energy, or 'full'; who), taskPay (0, 0.5, 2 or 'failure'), noFinds, retest, swapAdvance, note. who: self, choose, all, patient, teacher, captain, lowestXp, evacuated, legend, bot, type:<Type>.",
  "source": "13.2, 14.5, 14.6, 14.7, 9.7, chapter 12",
  "storyEvents": {
   "Row 1: Held the field": {
@@ -1294,7 +1294,8 @@
    ],
    "7": [
     {
-     "note": "Recharge one fighter's battery by 2, free, this break."
+     "recharge": 2,
+     "who": "choose"
     }
    ],
    "8": [
@@ -1323,7 +1324,8 @@
    ],
    "11": [
     {
-     "note": "Every battery in the crew refills free this break."
+     "recharge": "full",
+     "who": "all"
     }
    ],
    "12": [

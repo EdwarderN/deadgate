@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react';
 import { getRules, type ItemDef } from '../data/rules';
 import {
   addLedger, autoSlot, canSpend, equipped, fighterStats, giftPrice, hirePrice, isBot, itemPrice, needsSeller, newFighter, partsLeft, ratingNames,
-  recruitKey, ritesPrice, rookieSurcharge, sellValue, sellerTarget, setFighterType, setSellerResult, slotCapacity, slotLoad, slotOptions,
+  battery, rechargeCost, recruitKey, ritesPrice, rookieSurcharge, sellValue, sellerTarget, setFighterType, setSellerResult, slotCapacity, slotLoad, slotOptions,
 } from '../engine/crew';
 import { uid, type Crew, type Fighter, type ItemSlot, type OwnedItem } from '../engine/model';
 import type { Message } from '../engine/validate';
@@ -416,3 +416,47 @@ function AddFound({ update }: { update: Update }) {
 export const fighterLabel = (f: Fighter) => f.name || 'Unnamed fighter';
 export const describeType = (f: Fighter) => [f.species, f.type].filter(Boolean).join(', ');
 export { Md };
+
+/** Recharge batteries: each Energy restored costs parts, up to the cell's size (14.3). */
+export function Recharge({ crew, update }: { crew: Crew; update: Update }) {
+  const rules = getRules();
+  const [add, setAdd] = useState<Record<string, number>>({});
+  const per = rules.crew.campaign.rechargePerEnergy;
+  const rows = crew.fighters.map((f) => ({ f, ...battery(rules, crew, f) }));
+  const missing = rows.reduce((s, r) => s + (r.max - r.now), 0);
+  const want = (r: (typeof rows)[number]) => Math.min(add[r.f.id] ?? 0, r.max - r.now);
+  const energy = rows.reduce((s, r) => s + want(r), 0);
+  const cost = rechargeCost(rules, energy);
+  const ok = energy > 0 && canSpend(rules, crew, cost);
+  const pay = () => {
+    update((c) => addLedger({ ...c, fighters: c.fighters.map((f) => { const r = rows.find((x) => x.f.id === f.id)!; return want(r) ? { ...f, energy: r.now + want(r) } : f; }) }, -cost, `Recharged ${energy} Energy`));
+    setAdd({});
+  };
+  return (
+    <div className="card stack-s recharge">
+      <h3>Recharge batteries <span className="section-tag">§ {per.source}</span></h3>
+      <p className="small muted">Batteries do not refill by themselves: {per.value} part per Energy, up to the cell's size.{missing === 0 ? ' Every battery is full.' : ''}</p>
+      {missing > 0 && (
+        <>
+          <ul className="plain-list stack-s">{rows.map((r) => (
+            <li key={r.f.id} className="row gap-s wrap between">
+              <span>{fighterLabel(r.f)}</span>
+              <span className="row gap-s">
+                <span className="pips" aria-label={`Energy ${r.now} of ${r.max}`}>{Array.from({ length: r.max }, (_, i) => <span key={i} className={`epip static ${i < r.now ? 'on' : i < r.now + want(r) ? 'add' : ''}`} />)}</span>
+                {r.now < r.max && <>
+                  <button className="btn small" aria-label={`Less Energy for ${fighterLabel(r.f)}`} onClick={() => setAdd({ ...add, [r.f.id]: Math.max(0, want(r) - 1) })}>−</button>
+                  <button className="btn small" aria-label={`More Energy for ${fighterLabel(r.f)}`} onClick={() => setAdd({ ...add, [r.f.id]: Math.min(r.max - r.now, want(r) + 1) })}>+</button>
+                </>}
+              </span>
+            </li>
+          ))}</ul>
+          <div className="row gap-s wrap">
+            <button className="btn small" onClick={() => setAdd(Object.fromEntries(rows.map((r) => [r.f.id, r.max - r.now])))}>Fill every battery ({rechargeCost(rules, missing)} parts)</button>
+            <button className="btn small primary" disabled={!ok} onClick={pay}>Recharge {energy} Energy for {cost} parts</button>
+          </div>
+          {energy > 0 && !ok && <p className="small err-text">Not enough parts.</p>}
+        </>
+      )}
+    </div>
+  );
+}

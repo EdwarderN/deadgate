@@ -1,7 +1,7 @@
 // Changes to a crew from the after-battle steps, and applying them.
 // What a table row does is data (data/manual/outcomes.json), resolved in effects.ts.
 import { plain, type Rules } from '../data/rules';
-import { addLedger, isBot } from './crew';
+import { addLedger, battery, isBot } from './crew';
 import { uid, type Crew, type Fighter, type ItemSlot } from './model';
 
 export type Change =
@@ -26,6 +26,7 @@ export type Change =
   | { kind: 'healInjury'; fid: string; value: string }
   | { kind: 'laidUpToSore' }
   | { kind: 'title'; fid: string; value: string }
+  | { kind: 'recharge'; fid: string | null; amount: number | null; note: string }
   | { kind: 'note'; text: string };
 
 /** The two halves of a story event's twist: "Nerve: success / failure". */
@@ -64,6 +65,7 @@ export function describe(crew: Crew, c: Change): string {
     case 'healInjury': return `${who(c.fid)}: ${c.value} healed`;
     case 'laidUpToSore': return 'Every Laid up fighter is only Sore';
     case 'title': return `${who(c.fid)} takes the title "${c.value}"`;
+    case 'recharge': return `${c.fid ? who(c.fid) : 'Every fighter'}: battery ${c.amount === null ? 'refilled' : `+${c.amount} Energy`}${c.note ? ` (${c.note})` : ''}`;
     case 'note': return `Remember: ${c.text}`;
   }
 }
@@ -71,6 +73,7 @@ export function describe(crew: Crew, c: Change): string {
 /** Apply changes in order. Returns the crew and a line for each change, for the recap. */
 export function applyChanges(rules: Rules, crew: Crew, changes: Change[]): { crew: Crew; lines: string[] } {
   let c = crew;
+  const batteryMax = (f: Fighter) => battery(rules, c, f).max;
   const lines: string[] = [];
   const fx = (fid: string, fn: (f: Fighter) => Fighter) => { c = { ...c, fighters: c.fighters.map((f) => (f.id === fid ? fn(f) : f)) }; };
   for (const ch of changes) {
@@ -118,6 +121,15 @@ export function applyChanges(rules: Rules, crew: Crew, changes: Change[]): { cre
         break;
       }
       case 'title': fx(ch.fid, (f) => ({ ...f, titles: Array.from(new Set([...f.titles, ch.value])), title: f.title || ch.value })); break;
+      case 'recharge': {
+        const fill = (f: Fighter) => {
+          const max = batteryMax(f);
+          const now = Math.min(max, f.energy ?? max);
+          return { ...f, energy: ch.amount === null ? max : Math.min(max, now + ch.amount) };
+        };
+        c = { ...c, fighters: c.fighters.map((f) => (ch.fid === null || f.id === ch.fid ? fill(f) : f)) };
+        break;
+      }
       case 'note': break;
     }
   }

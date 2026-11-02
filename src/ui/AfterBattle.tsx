@@ -15,7 +15,7 @@ import { applyChanges, describe, setItemNamer, splitTwist, type Change } from '.
 import { resolveEffects, type EffCtx, type EffState, type Node, type Resolved } from '../engine/effects';
 import { uid, type AfterBattle as After, type Crew, type Fighter } from '../engine/model';
 import { go } from '../App';
-import { Hire, Md, Shop, Stash, fighterLabel, type Update } from './common';
+import { Hire, Md, Recharge, Shop, Stash, fighterLabel, type Update } from './common';
 import { Experience } from './Campaign';
 import { PoolRoller, RollOrEnter } from './Dice';
 import { FactionNote } from './Battle';
@@ -696,6 +696,7 @@ function SpendStep({ crew, update, confirm }: SP) {
     <div className="stack">
       <h2>Spend</h2>
       <p className="muted">Recharge, repair, buy, sell, hire and fit prosthetics (14.3, 11.3, 14.9). A new break: old stock needs a seller again.</p>
+      <Recharge crew={crew} update={update} />
       <Stash crew={crew} update={update} />
       <details className="card"><summary>The shop</summary><Shop crew={crew} update={update} /></details>
       <details className="card"><summary>Hire a recruit</summary><Hire crew={crew} update={update} /></details>

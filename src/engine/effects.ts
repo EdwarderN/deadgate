@@ -208,6 +208,11 @@ export function resolveEffects(rules: Rules, crew: Crew, effs: Eff[], ctx: EffCt
       const d = opts[0];
       auto({ kind: 'addItem', itemId: d.id, fid: f.id, slot: d.slot === 'fitted' ? 'fitted' : 'belt' }, `${name(f)} wakes up with a ${d.name}`);
     }
+    if (e.recharge !== undefined) {
+      const amount = e.recharge === 'full' ? null : e.recharge;
+      if ((e.who ?? 'all') === 'all') auto({ kind: 'recharge', fid: null, amount, note: ctx.note }, `Every battery ${amount === null ? 'refills' : `gains ${amount} Energy`}, free`);
+      else for (const f of people(e.who!, p)) auto({ kind: 'recharge', fid: f.id, amount, note: ctx.note }, `${name(f)}'s battery ${amount === null ? 'refills' : `gains ${amount} Energy`}, free`);
+    }
     if (e.allLaidUpToSore) auto({ kind: 'laidUpToSore' }, 'Every Laid up fighter is only Sore');
     if (e.injury) for (const f of people(e.who ?? 'self', p)) auto({ kind: 'injury', fid: f.id, value: e.injury, title: rules.injuries.find((x) => x.name === e.injury)?.title ?? null }, `${name(f)}: ${e.injury}`);
     if (e.injuryRoll) for (const f of people('self', p)) merge(injuryRoll(rules, f, e.injuryRoll, e.times ?? 1, st, p, ctx));

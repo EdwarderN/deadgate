@@ -433,3 +433,13 @@ export function traitBudgetUsed(f: Fighter): number {
 export function underTheirName(f: Fighter): string {
   return f.title ? `${f.name} "${f.title}"` : f.name;
 }
+
+// ---------- batteries (14.3) ----------
+/** A fighter's battery now, and its size (4, or 6 in a military frame). */
+export function battery(rules: Rules, crew: Crew, f: Fighter): { now: number; max: number } {
+  const max = fighterStats(rules, crew, f).energy;
+  return { now: Math.min(max, Math.max(0, f.energy ?? max)), max };
+}
+export function rechargeCost(rules: Rules, energy: number): number {
+  return energy * rules.crew.campaign.rechargePerEnergy.value;
+}

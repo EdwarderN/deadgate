@@ -26,7 +26,7 @@ Keep this list accurate if you change the workflow, and add a short `MAINTAINING
 ## Code map
 
 - `src/data/schema.ts`: Zod schemas for every file in `data/`. `src/data/rules.ts` loads, validates and derives lookups (items with slots, recruit prices, bot chassis, rites, advance lists, legends, the XP ladder).
-- `src/engine/crew.ts`: prices, price rules (`priceRules[].kind`: `copyDiscount`, `recruitPrice`, `chassisDiscount`, `noSellerRoll`), starting kit, slots, stats, campaign actions.
+- `src/engine/crew.ts`: batteries (`battery`, `rechargeCost`: Energy carries over between battles, 14.3), prices, price rules (`priceRules[].kind`: `copyDiscount`, `recruitPrice`, `chassisDiscount`, `noSellerRoll`), starting kit, slots, stats, campaign actions.
 - `src/engine/validate.ts`: every validator, each returning messages with a section number.
 - `src/engine/dice.ts`: dice pools (keep best/lowest two, net edge cap), d66, and table lookup by cells like "24-26, 31-32".
 - `src/engine/battle.ts`: the battle companion (conditions to down, states that cancel or end on activation, rounds, pods) and the after-battle steps (XP, Words, injury tables and what a result asks for, league points, tasks, the new break).

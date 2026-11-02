@@ -8,7 +8,7 @@ import { uid, type Advance, type Crew, type Fighter } from '../engine/model';
 import { validate, type Message } from '../engine/validate';
 import { crewToJson, download, fileName, shareLink } from '../store';
 import { go } from '../App';
-import { Equip, Hire, Messages, PartsCounter, Shop, Stash, describeType, fighterLabel, patchFighter, type Update } from './common';
+import { Equip, Hire, Recharge, Messages, PartsCounter, Shop, Stash, describeType, fighterLabel, patchFighter, type Update } from './common';
 import { copyLink, useAsk } from './confirm';
 import { canTakeTitle } from '../engine/faction';
 import { RuleLink, advanceRule, captainRule, contactRule, giftRule, injuryRule, legendRule, ritesRule, sillyRule, speciesRule, tagRule, typeRule } from './rule';
@@ -46,7 +46,7 @@ export function Campaign({ crew, update }: { crew: Crew; update: Update }) {
       </nav>
       <div role="tabpanel">
         {tab === 'Fighters' && <FightersTab crew={crew} update={update} messages={messages} />}
-        {tab === 'Shop and hire' && <div className="stack"><Stash crew={crew} update={update} /><Shop crew={crew} update={update} /><Hire crew={crew} update={update} /></div>}
+        {tab === 'Shop and hire' && <div className="stack"><Recharge crew={crew} update={update} /><Stash crew={crew} update={update} /><Shop crew={crew} update={update} /><Hire crew={crew} update={update} /></div>}
         {tab === 'Parts' && <PartsTab crew={crew} update={update} />}
         {tab === 'Roster notes' && <NotesTab crew={crew} update={update} messages={messages.filter((m) => m.step === 'notes')} />}
         {tab === 'Season' && <SeasonTab crew={crew} update={update} />}
@@ -364,7 +364,7 @@ function PartsTab({ crew, update }: { crew: Crew; update: Update }) {
         <h3>Air tax <span className="section-tag">§ {t.source}</span></h3>
         <p>{t.value} parts for each fighter on the roster; {t.exempt.join(', ')} fighters don't pay. This break: <strong>{tax.amount} parts</strong> for {tax.payers.length} fighters.</p>
         <button className="btn" onClick={() => update((c) => addLedger(c, -tax.amount, `Air tax (${tax.payers.length} fighters)`))}>Pay {tax.amount} parts</button>
-        <p className="muted small">A fighter whose tax goes unpaid misses their task this break. Recharging costs {rules.crew.campaign.rechargePerEnergy.value} part per Energy.</p>
+        <p className="muted small">A fighter whose tax goes unpaid misses their task this break.</p>
       </div>
       <form className="card stack-s" onSubmit={(e) => { e.preventDefault(); const n = parseInt(amount, 10); if (!isNaN(n) && n !== 0) { update((c) => addLedger(c, n, note || (n > 0 ? 'Parts gained' : 'Parts spent'))); setAmount(''); setNote(''); } }}>
         <h3>Gain or spend parts</h3>
