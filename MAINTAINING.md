@@ -9,39 +9,27 @@ This is for the game's owner. You don't need to be a programmer. When the rules 
 
 ## When the rulebook changes
 
-1. **Have the new rulebook to hand.** The rulebook is not kept in this repository. You need the designer's folder of markdown chapters (`00-front.md`, `01-world.md` and so on) somewhere on your computer.
-2. **Read the rules into data.** In this folder, run:
+The rulebook is not kept in this repository. Keep the designer's folder of chapters (`00-front.md`, `01-world.md` and so on) anywhere on your computer, or simply send it to Claude Code and ask it to "update the app to the new rulebook".
+
+To do it yourself, in this folder:
+
+1. **Install once:** Python 3 and Node.js (version 20 or later), then `npm install`.
+2. **Run the update:**
 
    ```
-   npm run rules -- path/to/the/rulebook/folder
+   npm run update-rules -- path/to/the/rulebook/folder
    ```
 
-   (This is the same as `python3 tools/extract_rules.py path/to/the/rulebook/folder`. You can also copy the folder into this one as `rulebook/`; it is ignored by git, so it won't be added to the repository, and then `npm run rules` alone works.) It rewrites the files in `data/generated/`. Never edit those by hand.
+   It reads the new rulebook into the app's data, then prints a **report**: every table row that was added, removed or changed, with the old and new text, and a list of what to check by hand. Then it runs the tests.
 
-   If it stops with an error like *"table '| Weapon | Copy | Old stock' not found"*, a table's header in the book was renamed. Either put the old header back in the book, or ask Claude Code to "fix the table header in the extractor".
-3. **Check nothing got lost.** Open `data/generated/_meta.json`. The line `"unlinkedShopItems": []` must be an empty list. If an item name appears there, the shop sells something the gear tables don't describe (often a spelling difference between chapter 7 and section 11.3). Make the two names match in the book and run step 2 again.
-4. **Update the hand-kept rules.** Open `data/manual/crew-rules.json`. It holds the limits and faction rules the builder enforces that are not tables in the book: starting parts, the nine-fighter limit, slot sizes, starting kits, faction price rules and so on. Every value says which section it comes from (`"source"`). If the new rulebook changes one of these, change the number or name here.
-
-   Examples:
-   - Starting parts go from 60 to 70: change `creation.startingParts.value` to `70`.
-   - The Bodgers' discount becomes 2 parts: change `amount` in the Bodgers' `priceRules` to `2`.
-   - A faction's starting kit changes: edit its `startingKit` list (item name, `copy` or `old stock`, and how many).
-   And if a **table row** changed (a story event, an injury result, a task table, finds, the drop table), update its entry in `data/manual/outcomes.json`. Each row lists what it does, for example `{"parts": -5}, {"tag": "Reliable"}` for "5 parts: the crew gains Reliable". The tests tell you if a row is missing or a name is wrong.
-5. **Run the tests.**
-
-   ```
-   npm test
-   ```
-
-   Every rule the app enforces has a test that uses the real data, and every data file is checked against its expected shape. If something fails, the message says which file or rule. Ask Claude Code to look if you're unsure.
-6. **The version.** The rules version shown in the app comes from the rulebook's front page ("Version 0.3, ..." in the rulebook's `00-front.md`), through `_meta.json`. Change it in the book and step 2 picks it up.
-7. **Build and publish.**
-
-   ```
-   npm run build
-   ```
-
-   Copy the `dist/` folder to any static web host. Players get the new rules the next time they open the app online.
+   If it stops with *"table '…' not found"*, a table's header in the book was renamed. Put the old header back in the book, or ask Claude Code to "fix the table header in the extractor". The app's data is left as it was.
+3. **Check what the report lists:**
+   - **Table rows** (story events, injuries, tasks, finds, drops): each has an entry in `data/manual/outcomes.json` saying what it does, for example `{"parts": -5}, {"tag": "Reliable"}` for "5 parts: the crew gains Reliable". Make each listed entry match the new text.
+   - **Limits, faction rules, kits and prices in the text** live in `data/manual/crew-rules.json`, each with its section. Change the number or name there.
+   - **Renamed injuries, traits or items:** players' saved crews keep the old name. The app shows a warning on those crews, and the player picks the new one on the card.
+4. **Run the tests** (`npm test`) until they pass. They fail if a table row has no entry, if a number in an entry no longer matches the book (say a story event now pays 5 parts and its entry still says 4), or if a name in the hand-kept files no longer exists in the book. The message names the file and the row.
+5. **The version** shown in the app comes from the "Version" line in the rulebook's `00-front.md`. The report warns if it didn't change.
+6. **Build and publish:** `npm run build`, then copy `dist/` to the web host.
 
 ## The battle companion and the after-battle steps
 

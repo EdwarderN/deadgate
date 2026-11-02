@@ -83,3 +83,48 @@ describe('every name in outcomes.json exists', () => {
     }
   });
 });
+
+describe('outcomes.json agrees with the numbers in the book', () => {
+  // Every parts and XP amount an entry records must appear in the row's own text,
+  // so a changed number in a new rulebook fails here until its entry is updated.
+  const numbers = (effs: Eff[]) => {
+    const out: number[] = [];
+    walk(effs, (e) => {
+      if (e.parts !== undefined && e.parts !== 0) out.push(Math.abs(e.parts));
+      if (e.ifDebt !== undefined) out.push(Math.abs(e.ifDebt));
+      if (e.xp !== undefined) out.push(e.xp);
+    });
+    return out;
+  };
+  const check = (where: string, text: string, effs: Eff[] | undefined) => {
+    const t = plain(text);
+    for (const n of numbers(effs ?? [])) expect(new RegExp(`(^|[^\\d])${n}([^\\d]|$)`).test(t), `${where}: ${n} is not in "${t.slice(0, 90)}"`).toBe(true);
+  };
+  it('story events', () => {
+    for (const [k, rows] of Object.entries(rules.data.story_events)) for (const r of rows) {
+      const e = O.storyEvents[k][r.d6];
+      check(`${k} ${r.d6} Accept`, r.Accept, e.accept);
+      if (e.pay) check(`${k} ${r.d6} Pay`, r.Pay, e.pay);
+      if (e.twist) {
+        const [s, f = ''] = plain(r.Twist).replace(/^\w+:\s*/, '').split(' / ');
+        check(`${k} ${r.d6} Twist success`, s, e.twist.success);
+        check(`${k} ${r.d6} Twist failure`, f, e.twist.failure);
+      }
+    }
+  });
+  it('injury tables, task tables, faction tasks, finds and the drop table', () => {
+    for (const [k, rows] of Object.entries(rules.data.injury_tables)) for (const r of rows) check(`${k} ${r.d66}`, r.Result, O.injuryTables[k][r.d66]);
+    for (const [k, rows] of Object.entries(rules.data.task_tables)) for (const r of rows) check(`${k} ${r['2d6']}`, r.Result, O.taskTables[k][r['2d6']]);
+    for (const f of rules.factions) {
+      for (const r of f.ownTaskTable) check(`${f.name} ${r.d6}`, r.Result, O.ownTasks[f.name].table[r.d6]);
+      check(`${f.name} own task`, f.ownTask, O.ownTasks[f.name].success);
+    }
+    for (const t of rules.data.tasks) {
+      const name = plain(t.Task);
+      check(`${name} success`, t.Success, O.taskBase[name].success);
+      check(`${name} failure`, t.Failure ?? '', O.taskBase[name].failure);
+    }
+    for (const r of rules.data.finds) check(`finds ${r.d6}`, r.Find, O.finds[r.d6]);
+    for (const r of rules.data.drop_table) check(`drop ${r.d66}`, r['What came out'], O.dropTable[r.d66]);
+  });
+});

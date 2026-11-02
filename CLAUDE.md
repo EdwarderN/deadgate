@@ -11,17 +11,21 @@ The game is in playtest, and its rules change often. **No rule text, price, numb
 - `data/manual/crew-rules.json` holds the rules the builder enforces that are not tables in the book (budgets, slot limits, faction kits and price rules). Each value names its rulebook section.
 - The app reads only `data/`. Logic is generic: a validator is a function of the data (for example "belt slots used <= gear.beltSlots.value"), never "if faction == 'Bodgers' and item == 'Crank charger'". Where a faction rule needs code, key it off `crew-rules.json` (for example `priceRules`), so adding or removing such a rule is a data change.
 
-## When the rules change
+## When the rules change (the owner sends a new rulebook)
 
-1. Get the new rulebook markdown from the designer (outside this repository).
-2. Run `npm run rules -- path/to/rulebook` (= `python3 tools/extract_rules.py path/to/rulebook`). It stops with a clear error if a table it needs was renamed; fix the header prefix in the script.
-3. Read `data/generated/_meta.json`: `unlinkedShopItems` lists shop entries the script could not join to a rules row. It should be empty.
-4. Update `data/manual/crew-rules.json` for any changed limit or faction rule, and `data/manual/outcomes.json` for any changed table row (story events, injuries, tasks, finds, drops).
-5. Run `npm test`. Add a test for any new rule (`tests/rules.test.ts`; data shape checks are in `tests/data.test.ts`).
-6. The displayed rules version is the "Version" line of the rulebook's `00-front.md`, carried through `_meta.json`.
-7. `npm run build` and publish `dist/`.
+The rulebook is never committed. Keep the new copy outside the repository (a scratch folder), then:
 
-Keep this list accurate if you change the workflow, and add a short `MAINTAINING.md` for the human owner (not a programmer) that walks through the same steps in plain words.
+1. `npm run update-rules -- path/to/rulebook`. It re-reads the book into `data/generated/`, prints a report of every row added, removed or changed (old -> new), lists the hand-kept entries to check, and runs the tests. If a table it needs was renamed, it stops and leaves the data as it was: fix the header prefix in `tools/extract_rules.py`.
+2. Work through the report:
+   - `unlinkedShopItems` must be empty (a shop line with no rules row: usually a spelling difference between chapter 7 and 11.3).
+   - Each listed `outcomes.json` row: make its entry do what the new text says.
+   - Faction, kit, price and limit changes: update `data/manual/crew-rules.json` (each value names its section). Read the changed chapters for rules that are not tables.
+   - Renamed names that saved crews may hold: nothing to do in code; the app warns on those crews (`staleNames`). Mention it to the owner.
+3. `npm test` until green. The tests fail if a book row has no entry in `outcomes.json`, if a number in an entry no longer matches the row's text, or if a name in `data/manual` no longer exists in the book. Add a test for any new rule.
+4. The displayed rules version is the "Version" line of the rulebook's `00-front.md` (the report warns if it did not change).
+5. `npm run build`, publish, and tell the owner what changed and any decisions that need the designer.
+
+Keep this list accurate if you change the workflow, and keep `MAINTAINING.md` (for the owner, not a programmer) saying the same in plain words.
 
 ## Code map
 

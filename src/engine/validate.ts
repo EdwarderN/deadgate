@@ -340,6 +340,26 @@ export const validators: Record<string, Validator> = {
     return crew.fighters.filter((f) => f.awaitingChassis).map((f) => msg('chassis', 'warning', 'campaign', '13.3', `${named(crew, f)}'s core waits for a new chassis: buy one in the Spend step.`, f.id));
   },
 
+  /** Names saved on a crew that a newer rulebook no longer has (a rename or a removal). */
+  staleNames({ rules, crew }) {
+    const out: Message[] = [];
+    const gone = (what: string, name: string, fid?: string) => out.push(msg('staleNames', 'warning', 'campaign', '', `${what} "${name}" is not in the rules (version ${rules.version}): it was renamed or removed. Change it on the card.`, fid));
+    const injuries = new Set([...rules.injuries, ...rules.glitches].map((i) => i.name));
+    const silly = new Set(rules.silly.map((x) => x.name));
+    const captain = new Set(rules.captainTraits.map((x) => x.name));
+    const legends = new Set(rules.legends.map((x) => x.name));
+    for (const f of crew.fighters) {
+      for (const i of f.injuries) if (!injuries.has(i)) gone(`${named(crew, f)}'s injury`, i, f.id);
+      if (f.sillyTrait && !silly.has(f.sillyTrait)) gone(`${named(crew, f)}'s silly trait`, f.sillyTrait, f.id);
+      for (const t of f.captainTraits) if (!captain.has(t.name)) gone(`${named(crew, f)}'s captain trait`, t.name, f.id);
+      for (const l of f.legends) if (!legends.has(l.name)) gone(`${named(crew, f)}'s Legend`, l.name, f.id);
+    }
+    for (const o of crew.items) if (!rules.item(o.itemId)) gone('An item', o.itemId.split('|')[0], o.fighterId ?? undefined);
+    const tags = new Set(rules.tags.map((x) => x.name));
+    for (const t of crew.notes.tags) if (!tags.has(t)) gone('The tag', t);
+    return out;
+  },
+
   typeRules({ rules, crew }) {
     const tr = rules.factionRules(crew.faction ?? '')?.typeRules ?? {};
     return crew.fighters.filter((f) => f.type && tr[f.type]?.noTitle && f.title)

@@ -7,7 +7,7 @@ npm install
 npm run dev       # try it locally
 npm test          # every rule the app enforces, against the real data
 npm run build     # static site in dist/, for any static host
-npm run rules -- path/to/rulebook   # re-read the rulebook into data/generated/
+npm run update-rules -- path/to/rulebook   # a new rulebook: re-read it, report what changed, run the tests
 ```
 
 - `src/`: the app (TypeScript, React, Vite). `tests/`: Vitest tests.

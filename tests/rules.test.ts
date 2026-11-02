@@ -393,3 +393,13 @@ describe('campaign (13.4, 4.4, 13.2, 14.3, 11.5)', () => {
     expect(newCrew(rules).fighters.length).toBe(rules.crew.creation.startingRookies.value);
   });
 });
+
+describe('a crew saved under older rules', () => {
+  it('warns about names the rules no longer have', () => {
+    const c = patchFighter(crewOf(Object.keys(rules.crew.factions)[0]), 0, { injuries: ['Something renamed'], sillyTrait: 'Gone trait' });
+    const w = validators.staleNames({ rules, crew: { ...c, notes: { ...c.notes, tags: ['Old tag'] }, items: [...c.items, { uid: 'z', itemId: 'old gun|copy', fighterId: null, slot: 'stash' }] } });
+    expect(w.length).toBe(4);
+    expect(w.every((m) => m.level === 'warning')).toBe(true);
+    expect(validators.staleNames({ rules, crew: crewOf(Object.keys(rules.crew.factions)[0]) })).toEqual([]);
+  });
+});

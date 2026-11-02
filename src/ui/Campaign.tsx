@@ -34,6 +34,10 @@ export function Campaign({ crew, update }: { crew: Crew; update: Update }) {
         </div>
         <PartsCounter crew={crew} />
       </div>
+      {crew.rulesVersion !== rules.version && (
+        <p className="note small">This crew was last checked against rules version {crew.rulesVersion}; the app now has version {rules.version}. Anything the new rules no longer allow is listed below and on the cards.{' '}
+          <button className="link" onClick={() => update((c) => ({ ...c, rulesVersion: rules.version }))}>Mark as checked</button></p>
+      )}
       <div className="row gap-s wrap actions">
         {crew.after ? <button className="btn small primary" onClick={() => go(`/after/${crew.id}`)}>Continue after the battle</button>
           : <button className="btn small primary" onClick={() => go(`/battle/${crew.id}`)}>{crew.battle ? 'Back to the battle' : 'Battle companion'}</button>}

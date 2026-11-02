@@ -8,7 +8,8 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "test": "vitest run",
-    "rules": "python3 tools/extract_rules.py"
+    "rules": "python3 tools/extract_rules.py",
+    "update-rules": "python3 tools/update_rules.py"
   },
   "dependencies": {
     "lz-string": "^1.5.0",
