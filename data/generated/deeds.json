@@ -1,0 +1,120 @@
+{
+  "Small deeds": [
+    {
+      "#": "S1",
+      "Deed": "**Hold your own.** Win a melee exchange as the defender against a fighter with a higher Fight"
+    },
+    {
+      "#": "S2",
+      "Deed": "**Bring them home.** Carry a downed ally to the evac point, or off the table"
+    },
+    {
+      "#": "S3",
+      "Deed": "**Dead eye.** Put down an enemy with a shot from beyond short range"
+    },
+    {
+      "#": "S4",
+      "Deed": "**Tape and prayer.** Patch up two different allies in one battle"
+    },
+    {
+      "#": "S5",
+      "Deed": "**Open sesame.** Prompt two different machines successfully in one battle"
+    },
+    {
+      "#": "S6",
+      "Deed": "**Last to leave.** Be the last of your crew on the table, standing, when the battle ends"
+    },
+    {
+      "#": "S7",
+      "Deed": "**Rude gesture.** Assist an ally while in base contact with an enemy"
+    },
+    {
+      "#": "S8",
+      "Deed": "**Pocket it.** Pick up an item while in base contact with an enemy, and end the same activation out of contact with every enemy"
+    }
+  ],
+  "Big deeds": [
+    {
+      "#": "B1",
+      "Deed": "**The hammer falls.** Win a melee exchange by 6 or more",
+      "Legend": "**Heavy hands** (\"the Hammer\"): your Press may push the loser 2 inches and knock them prone"
+    },
+    {
+      "#": "B2",
+      "Deed": "**Two for one.** Put down two enemies in a single activation",
+      "Legend": "**Double tap** (\"Two-Shot\"): your second attack in an activation takes no -1 die (you still lose the reaction)"
+    },
+    {
+      "#": "B3",
+      "Deed": "**Tin-opener.** Put down an enemy in a military frame",
+      "Legend": "**Tin-opener** (same title): armour saves against your hits need 1 more"
+    },
+    {
+      "#": "B4",
+      "Deed": "**Talk to the wall.** Prompt a Hard (10) target successfully and be standing at the end",
+      "Legend": "**Old words** (\"the Whisperer\"): +1 die on prompts against turrets and rogue machines"
+    },
+    {
+      "#": "B5",
+      "Deed": "**Cheek.** End a round in base contact with the enemy captain, with no lasting condition",
+      "Legend": "**Unscathed** (same title): when you take a solid consequence, you may spend your reaction to read it as a glance"
+    },
+    {
+      "#": "B6",
+      "Deed": "**Three for three.** Ask the voice three times in one battle and end it on your feet",
+      "Legend": "**Hears voices** (\"the Listener\"): when an ally within 6 inches Asks the voice and gets a good result, you gain the same result too"
+    },
+    {
+      "#": "B7",
+      "Deed": "**Bag the captain.** Capture the enemy captain",
+      "Legend": "**Ransom note** (\"the Sack\"): for a captive you took, your crew may name a price up to double the usual (at most 60 parts)"
+    },
+    {
+      "#": "B8",
+      "Deed": "**The getaway.** Leave by evac carrying a downed ally, with an enemy within 3 inches of you as you go",
+      "Legend": "**Getaway** (\"the Driver\"): an evac you call does not scatter"
+    }
+  ],
+  "Legendary deeds": [
+    {
+      "#": "L1",
+      "Deed": "**Twelve.** Put down an enemy with a shot whose total was exactly 12",
+      "Legend": "**Dead centre** (\"Dead-Centre\"): your crushing shots (11 or more) cannot be saved"
+    },
+    {
+      "#": "L2",
+      "Deed": "**The giant on the ground.** Win a melee exchange by 6 or more against the enemy fighter with the most Experience",
+      "Legend": "**Giant-killer** (same title): +1 die in melee against any fighter with more Experience than you"
+    },
+    {
+      "#": "L3",
+      "Deed": "**The grenade at the monster.** Hit a monster with a thrown grenade from beyond 3 inches, as the only one of your crew within 6 inches of it",
+      "Legend": "**Mad bomber** (\"the Bomber\"): your grenades scatter 2 inches less (never below 0)"
+    },
+    {
+      "#": "L4",
+      "Deed": "**Won't stay down.** Be stood back up after going down, and put down an enemy before the battle ends",
+      "Legend": "**Won't stay down** (\"the Cockroach\"): when you go down, roll a d6; on 5 or 6 you are only prone and **Flustered** instead"
+    },
+    {
+      "#": "L5",
+      "Deed": "**The last of the line.** Be the last fighter of your crew on your feet, and put down an enemy after the rest have gone down",
+      "Legend": "**Last stand** (\"the Last\"): each time you would go down, first take one free action (an attack or a Move)"
+    },
+    {
+      "#": "L6",
+      "Deed": "**One against five.** Win a melee exchange while three or more enemies are in base contact with you",
+      "Legend": "**The wall** (\"the Wall\"): enemies gain no outnumbering dice against you"
+    },
+    {
+      "#": "L7",
+      "Deed": "**The pod is mine.** Crack open a pod while an enemy is in base contact with you",
+      "Legend": "**Sky's favourite** (\"the Favourite\"): when you crack a pod, roll twice on the drop table and choose"
+    },
+    {
+      "#": "L8",
+      "Deed": "**The prayer answered.** Ask the voice, get a 6, and put down an enemy with the roll you asked it for",
+      "Legend": "**Chosen** (\"the Chosen\"): when you Ask the voice, a 5 counts as a 6"
+    }
+  ]
+}

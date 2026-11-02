@@ -1,0 +1,66 @@
+{
+  "Mild": [
+    {
+      "d6": "1",
+      "Trait (nickname)": "**Big talk** (\"Mouth\")",
+      "Rule": "After they put an enemy down, their next action is a speech about it. It does nothing"
+    },
+    {
+      "d6": "2",
+      "Trait (nickname)": "**Pretty** (\"Pretty\")",
+      "Rule": "They will not Duck or go prone on purpose: they'd get dirty"
+    },
+    {
+      "d6": "3",
+      "Trait (nickname)": "**Jittery** (\"Twitch\")",
+      "Rule": "Their hands shake: they cannot Aim while an enemy is within 6 inches"
+    },
+    {
+      "d6": "4",
+      "Trait (nickname)": "**Superstitious** (\"Knock-Wood\")",
+      "Rule": "They will not Ask the voice"
+    },
+    {
+      "d6": "5",
+      "Trait (nickname)": "**Spent your luck** (\"Dud\")",
+      "Rule": "When they Ask the voice and get a good result, they are also **Announced**: they can't help telling everyone"
+    },
+    {
+      "d6": "6",
+      "Trait (nickname)": "**Front row** (\"Front\")",
+      "Rule": "They must deploy as close to the enemy as their deployment zone allows"
+    }
+  ],
+  "Sillier": [
+    {
+      "d6": "1",
+      "Trait (nickname)": "**Public fool** (\"the Punchline\")",
+      "Rule": "An enemy who puts them down gains **+1 XP**: everyone wants the story"
+    },
+    {
+      "d6": "2",
+      "Trait (nickname)": "**Wrong voice** (\"Dipstick\")",
+      "Rule": "When they Ask the voice, subtract 1 from the roll (a 1 stays a 1)"
+    },
+    {
+      "d6": "3",
+      "Trait (nickname)": "**Hexed** (\"Hoodoo\")",
+      "Rule": "An enemy who wins a melee exchange against them is **Hyped**"
+    },
+    {
+      "d6": "4",
+      "Trait (nickname)": "**Liability** (\"Fuse\")",
+      "Rule": "When they go down, the opposing player moves one of their allies within 3 inches up to 2 inches"
+    },
+    {
+      "d6": "5",
+      "Trait (nickname)": "**Doubled down** (\"Windbag\")",
+      "Rule": "Their next Word must be one tier higher than the one they failed (a Legendary one stays Legendary)"
+    },
+    {
+      "d6": "6",
+      "Trait (nickname)": "**Laughed at** (\"Cracked Record\")",
+      "Rule": "They take no advance until they fulfil a Word. XP still counts, so a redeemed fighter catches up at once"
+    }
+  ]
+}

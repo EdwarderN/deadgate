@@ -1,0 +1,50 @@
+[
+  {
+    "Captain trait": "**Shouts orders**",
+    "Rule": "As an action, the captain gives an order: one ally within 6 inches may move up to 3 inches at once"
+  },
+  {
+    "Captain trait": "**Rally cry**",
+    "Rule": "As a Use action, every ally within 6 inches loses their **Shook** and **Flustered** tokens"
+  },
+  {
+    "Captain trait": "**Leads from the front**",
+    "Rule": "When the captain puts an enemy down, every ally within 3 inches of them is **Hyped**"
+  },
+  {
+    "Captain trait": "**Steady crew**",
+    "Rule": "The captain's breaking test has +1 die, and allies within 3 inches of the captain cannot be **Flustered**"
+  },
+  {
+    "Captain trait": "**Delegates**",
+    "Rule": "When the captain is attacked, they may spend their reaction to swap places with an ally within 2 inches, who becomes the target instead. Leadership is knowing who to send"
+  },
+  {
+    "Captain trait": "**Nobody left behind**",
+    "Rule": "One downed ally within 3 inches of the captain when the battle ends rolls the **gentle** injury table, even if the crew left them behind (the captain went back for them)"
+  },
+  {
+    "Captain trait": "**Tactician**",
+    "Rule": "After both sides deploy, the captain's player may move up to two of their fighters, staying in the deployment zone"
+  },
+  {
+    "Captain trait": "**Big mouth**",
+    "Rule": "The crew may swear one more Word each battle; it must be the captain's, and a Boast. It stacks with the Showboats tag (section 14.10)"
+  },
+  {
+    "Captain trait": "**Haggler**",
+    "Rule": "Old-stock items are found on a **3+** instead of a 4+"
+  },
+  {
+    "Captain trait": "**Well connected**",
+    "Rule": "After each battle, if the crew has fewer than three contacts, it gains one **contact** (section 14.8) of the player's choice"
+  },
+  {
+    "Captain trait": "**Paymaster**",
+    "Rule": "Work a job pays **+2 parts** for every fighter of the crew who takes it"
+  },
+  {
+    "Captain trait": "**Drill sergeant**",
+    "Rule": "When the captain teaches Train (section 14.6), a success gives the trainee **+1 XP** more"
+  }
+]

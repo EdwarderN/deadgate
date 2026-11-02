@@ -1,0 +1,32 @@
+[
+  {
+    "d6": "1",
+    "Injury (title)": "**Jumpy** (\"Flinch\")",
+    "What it does": "When shot at, they must react if they can (Dive, Duck or Return fire). They can never Take it"
+  },
+  {
+    "d6": "2",
+    "Injury (title)": "**Bad back** (\"the Back\")",
+    "What it does": "They cannot carry a downed fighter alone; with a second carrier they can"
+  },
+  {
+    "d6": "3",
+    "Injury (title)": "**Deaf** (\"the Deaf\")",
+    "What it does": "Hears no machine voices: cannot Ask the voice, is unaffected by voice effects, good or bad, and cannot be Assisted"
+  },
+  {
+    "d6": "4",
+    "Injury (title)": "**Whistler** (\"Whistle\")",
+    "What it does": "A broken tooth whistles: when they Duck, they are also **Announced**"
+  },
+  {
+    "d6": "5",
+    "Injury (title)": "**Tape rash** (\"the Itch\")",
+    "What it does": "They cannot bear tape: Patch up and field patching on them are Hard"
+  },
+  {
+    "d6": "6",
+    "Injury (title)": "**Scarred** (\"the Scarred\")",
+    "What it does": "When they win an exchange by 3 or more, the loser is **Flustered**"
+  }
+]

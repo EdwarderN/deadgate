@@ -1,0 +1,27 @@
+[
+  {
+    "Tag": "**Ran**",
+    "Gained when": "The crew evacuated or forfeited the prize, or by story events",
+    "What it does": "Work a job pays **2 less** while the crew has it"
+  },
+  {
+    "Tag": "**Reliable**",
+    "Gained when": "From tasks and story events",
+    "What it does": "Work a job pays **2 more** while the crew has it. A crew cannot have both Ran and Reliable: the newer replaces the older"
+  },
+  {
+    "Tag": "**Butchers**",
+    "Gained when": "Two captives' fates carried out in one break, or story events",
+    "What it does": "**Feared.** Ransoms this crew asks may be up to **5 parts** higher than usual: people pay to get their own back alive"
+  },
+  {
+    "Tag": "**Showboats**",
+    "Gained when": "A fulfilled Boast, or story events",
+    "What it does": "The crew may swear one more Word each battle, which must be a Boast. It stacks with the Big mouth captain trait"
+  },
+  {
+    "Tag": "**Oathbreakers**",
+    "Gained when": "Two failed Words in one battle, or story events",
+    "What it does": "A wager offered by this crew finds no taker"
+  }
+]

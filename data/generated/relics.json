@@ -1,0 +1,110 @@
+[
+  {
+    "Relic (rite)": "**Hum-stone** (Quiet)",
+    "Slot": "Hands 1",
+    "Basic": "Every other fighter within 3 inches is **Flustered**",
+    "Boosted (1 Energy)": "And each is also **Shook**"
+  },
+  {
+    "Relic (rite)": "**Mute remote** (Quiet)",
+    "Slot": "Hands 1",
+    "Basic": "Choose two fighters in base contact with each other, in view within 8 inches: each is moved **2 inches straight away** from the other. Resolve the one closest to the user first; each fighter's own player moves them (a move like this gives no parting blow)",
+    "Boosted (1 Energy)": "The user's player decides which of the two moves and in which direction, up to 2 inches each"
+  },
+  {
+    "Relic (rite)": "**Shush sign** (Quiet)",
+    "Slot": "Belt 1",
+    "Basic": "One **Announced** fighter in view within 8 inches stops being Announced",
+    "Boosted (1 Energy)": "Every Announced fighter within 4 inches of them too, friend or foe"
+  },
+  {
+    "Relic (rite)": "**Halo** (Light)",
+    "Slot": "Hands 1",
+    "Basic": "A fighter in view within 6 inches is **Shook** (dazzled)",
+    "Boosted (1 Energy)": "That fighter and every fighter within 2 inches of them"
+  },
+  {
+    "Relic (rite)": "**Disco ball** (Light)",
+    "Slot": "Belt 1",
+    "Basic": "Every enemy within 3 inches is **Announced**",
+    "Boosted (1 Energy)": "Within 5 inches"
+  },
+  {
+    "Relic (rite)": "**Laser pointer** (Light)",
+    "Slot": "Hands 1",
+    "Basic": "One enemy in view within 12 inches is **Announced**",
+    "Boosted (1 Energy)": "And **Shook**"
+  },
+  {
+    "Relic (rite)": "**Warranty plate** (Ward)",
+    "Slot": "Belt 1",
+    "Basic": "A fighter within 3 inches is **Under warranty**",
+    "Boosted (1 Energy)": "And each ally within 2 inches of them too"
+  },
+  {
+    "Relic (rite)": "**Seatbelt** (Ward)",
+    "Slot": "Belt 1",
+    "Basic": "A fighter within 3 inches has **Brace** on their next save: a passed save also stops Press and any knock",
+    "Boosted (1 Energy)": "The fighter and each ally within 2 inches of them"
+  },
+  {
+    "Relic (rite)": "**Anti-static wristband** (Ward)",
+    "Slot": "Belt 1",
+    "Basic": "Take a **Hacked** token off one item or bot within 3 inches, with no test",
+    "Boosted (1 Energy)": "Every Hacked token within 3 inches"
+  },
+  {
+    "Relic (rite)": "**Death Pointer of Destruction** (Wrath)",
+    "Slot": "Hands 1",
+    "Basic": "**Powered**, range 12, Hits hard: a ranged Attack rolled with Tech",
+    "Boosted (1 Energy)": "Pushed: +1 die on the attack"
+  },
+  {
+    "Relic (rite)": "**Letter opener** (Wrath)",
+    "Slot": "Hands 1",
+    "Basic": "**Powered**, melee, Armour-piercing: a melee Attack rolled with Tech",
+    "Boosted (1 Energy)": "Pushed: +1 die on the attack"
+  },
+  {
+    "Relic (rite)": "**Fire extinguisher** (Wrath)",
+    "Slot": "Hands 2",
+    "Basic": "**Powered**, range 6, Spread, Stun: a ranged Attack rolled with Tech",
+    "Boosted (1 Energy)": "Pushed: +1 die on the attack"
+  },
+  {
+    "Relic (rite)": "**Service bell** (Calling)",
+    "Slot": "Belt 1",
+    "Basic": "Each ally within 6 inches may step 2 inches free",
+    "Boosted (1 Energy)": "4 inches, and each may also stand up free"
+  },
+  {
+    "Relic (rite)": "**Megaphone** (Calling)",
+    "Slot": "Hands 1",
+    "Basic": "One ally in view within 8 inches is **Hyped**",
+    "Boosted (1 Energy)": "And each ally within 2 inches of them"
+  },
+  {
+    "Relic (rite)": "**Whistle** (Calling)",
+    "Slot": "Belt 1",
+    "Basic": "One ally in view within 8 inches stops being **Shook** and **Flustered**",
+    "Boosted (1 Energy)": "Every ally within 3 inches of the user"
+  },
+  {
+    "Relic (rite)": "**Tumbler** (Mending)",
+    "Slot": "Hands 1",
+    "Basic": "Clear one lasting condition from an ally in base contact",
+    "Boosted (1 Energy)": "Clear two"
+  },
+  {
+    "Relic (rite)": "**Heating pad** (Mending)",
+    "Slot": "Belt 1",
+    "Basic": "An ally in base contact regains **1 Energy**",
+    "Boosted (1 Energy)": "**2 Energy**"
+  },
+  {
+    "Relic (rite)": "**Wool blanket** (Mending)",
+    "Slot": "Belt 1",
+    "Basic": "One lasting condition on an ally in base contact has **no effect** until the end of the battle (it still counts toward going down)",
+    "Boosted (1 Energy)": "And the ally loses every **Shook**, **Flustered** and **Announced** token (their Hyped and Under warranty stay)"
+  }
+]

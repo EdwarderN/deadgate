@@ -1,0 +1,17 @@
+[
+  {
+    "Source": "**Old stock**",
+    "Basic": "Hands +1",
+    "Boosted (1 Energy, once per activation)": "**Servo-grip:** +1 die on one Fight or Tech roll made with an item held in the arm"
+  },
+  {
+    "Source": "**Copy**",
+    "Basic": "Hands +1. **Unreliable:** a kept total of 3 or less on a roll with an item in the arm locks it, and neither arm nor item works until a Use action clears it (Routine Tech)",
+    "Boosted (1 Energy, once per activation)": "None"
+  },
+  {
+    "Source": "**Drop**",
+    "Basic": "Always Servo-grip without Energy, after a know-how test (Weirdness 6) each activation it is used",
+    "Boosted (1 Energy, once per activation)": "(always boosted)"
+  }
+]

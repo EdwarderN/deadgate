@@ -1,0 +1,32 @@
+[
+  {
+    "d6": "1",
+    "Glitch (title)": "**Cleaning subroutine** (\"Tidy\")",
+    "What it does": "If it starts an activation within 3 inches of a dropped item, its first action is to pick it up"
+  },
+  {
+    "d6": "2",
+    "Glitch (title)": "**Polite mode** (\"Sir\")",
+    "What it does": "It cannot attack an enemy who is prone"
+  },
+  {
+    "d6": "3",
+    "Glitch (title)": "**Narrator** (\"Loudmouth\")",
+    "What it does": "It describes everything it does: each time it attacks, it is **Announced**"
+  },
+  {
+    "d6": "4",
+    "Glitch (title)": "**Stuck routine** (\"Loop\")",
+    "What it does": "Its first action each battle must be a Move toward the nearest enemy"
+  },
+  {
+    "d6": "5",
+    "Glitch (title)": "**Wrong firmware** (\"Patch\")",
+    "What it does": "Its Fight and Shoot ratings swap"
+  },
+  {
+    "d6": "6",
+    "Glitch (title)": "**Security routine** (\"Doorman\")",
+    "What it does": "Every door it moves through locks behind it (red Hacked token)"
+  }
+]

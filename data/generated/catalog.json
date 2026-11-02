@@ -1,0 +1,1026 @@
+[
+  {
+    "name": "Tool-blade",
+    "group": "Weapons",
+    "source": "copy",
+    "price": 3,
+    "note": null,
+    "key": "tool-blade",
+    "kind": "weapon",
+    "rules": {
+      "Weapon": "Tool-blade (a wrench, a cutter, tape-wrapped steel)",
+      "Source": "Copy",
+      "Hands": "1",
+      "Range": "Melee",
+      "Traits": "Handy"
+    }
+  },
+  {
+    "name": "Knife",
+    "group": "Weapons",
+    "source": "copy",
+    "price": 3,
+    "note": null,
+    "key": "knife",
+    "kind": "weapon",
+    "rules": {
+      "Weapon": "Knife",
+      "Source": "Copy",
+      "Hands": "1",
+      "Range": "Melee",
+      "Traits": "Quick, Thrown"
+    }
+  },
+  {
+    "name": "Hatchet",
+    "group": "Weapons",
+    "source": "copy",
+    "price": 4,
+    "note": null,
+    "key": "hatchet",
+    "kind": "weapon",
+    "rules": {
+      "Weapon": "Hatchet",
+      "Source": "Copy",
+      "Hands": "1",
+      "Range": "Melee",
+      "Traits": "Sunder"
+    }
+  },
+  {
+    "name": "Maul",
+    "group": "Weapons",
+    "source": "copy",
+    "price": 6,
+    "note": null,
+    "key": "maul",
+    "kind": "weapon",
+    "rules": {
+      "Weapon": "Maul",
+      "Source": "Copy",
+      "Hands": "2",
+      "Range": "Melee",
+      "Traits": "Knockdown"
+    }
+  },
+  {
+    "name": "Long hook",
+    "group": "Weapons",
+    "source": "copy",
+    "price": 5,
+    "note": null,
+    "key": "long hook",
+    "kind": "weapon",
+    "rules": {
+      "Weapon": "Long hook (a pole with an edge)",
+      "Source": "Copy",
+      "Hands": "2",
+      "Range": "Melee",
+      "Traits": "Reach"
+    }
+  },
+  {
+    "name": "Snare pole",
+    "group": "Weapons",
+    "source": "copy",
+    "price": 7,
+    "note": null,
+    "key": "snare pole",
+    "kind": "weapon",
+    "rules": {
+      "Weapon": "Snare pole",
+      "Source": "Copy",
+      "Hands": "2",
+      "Range": "Melee",
+      "Traits": "Reach, Snare"
+    }
+  },
+  {
+    "name": "Scrap pistol",
+    "group": "Weapons",
+    "source": "copy",
+    "price": 5,
+    "note": null,
+    "key": "scrap pistol",
+    "kind": "weapon",
+    "rules": {
+      "Weapon": "Scrap pistol",
+      "Source": "Copy",
+      "Hands": "1",
+      "Range": "12",
+      "Traits": "Weak, Unreliable, Point-blank"
+    }
+  },
+  {
+    "name": "Energy pistol",
+    "group": "Weapons",
+    "source": "old stock",
+    "price": 12,
+    "note": null,
+    "key": "energy pistol",
+    "kind": "weapon",
+    "rules": {
+      "Weapon": "Energy pistol",
+      "Source": "Old stock",
+      "Hands": "1",
+      "Range": "12",
+      "Traits": "Powered, Point-blank"
+    }
+  },
+  {
+    "name": "Scrap rifle",
+    "group": "Weapons",
+    "source": "copy",
+    "price": 8,
+    "note": null,
+    "key": "scrap rifle",
+    "kind": "weapon",
+    "rules": {
+      "Weapon": "Scrap rifle",
+      "Source": "Copy",
+      "Hands": "2",
+      "Range": "24",
+      "Traits": "Weak, Unreliable"
+    }
+  },
+  {
+    "name": "Energy rifle",
+    "group": "Weapons",
+    "source": "old stock",
+    "price": 28,
+    "note": null,
+    "key": "energy rifle",
+    "kind": "weapon",
+    "rules": {
+      "Weapon": "Energy rifle",
+      "Source": "Old stock",
+      "Hands": "2",
+      "Range": "24",
+      "Traits": "Powered, Armour-piercing"
+    }
+  },
+  {
+    "name": "Scrap shotgun",
+    "group": "Weapons",
+    "source": "copy",
+    "price": 8,
+    "note": null,
+    "key": "scrap shotgun",
+    "kind": "weapon",
+    "rules": {
+      "Weapon": "Scrap shotgun",
+      "Source": "Copy",
+      "Hands": "2",
+      "Range": "8",
+      "Traits": "Weak, Unreliable, Spread"
+    }
+  },
+  {
+    "name": "Scatter gun",
+    "group": "Weapons",
+    "source": "old stock",
+    "price": 25,
+    "note": null,
+    "key": "scatter gun",
+    "kind": "weapon",
+    "rules": {
+      "Weapon": "Scatter gun",
+      "Source": "Old stock",
+      "Hands": "2",
+      "Range": "8",
+      "Traits": "Powered, Hits hard, Spread"
+    }
+  },
+  {
+    "name": "Shock baton",
+    "group": "Weapons",
+    "source": "old stock",
+    "price": 14,
+    "note": null,
+    "key": "shock baton",
+    "kind": "weapon",
+    "rules": {
+      "Weapon": "Shock baton",
+      "Source": "Old stock",
+      "Hands": "1",
+      "Range": "Melee",
+      "Traits": "Powered, Stun"
+    }
+  },
+  {
+    "name": "Vibro-knife",
+    "group": "Weapons",
+    "source": "old stock",
+    "price": 18,
+    "note": null,
+    "key": "vibro-knife",
+    "kind": "weapon",
+    "rules": {
+      "Weapon": "Vibro-knife",
+      "Source": "Old stock",
+      "Hands": "1",
+      "Range": "Melee",
+      "Traits": "Powered, Armour-piercing"
+    }
+  },
+  {
+    "name": "Power blade",
+    "group": "Weapons",
+    "source": "old stock",
+    "price": 22,
+    "note": null,
+    "key": "power blade",
+    "kind": "weapon",
+    "rules": {
+      "Weapon": "Power blade",
+      "Source": "Old stock",
+      "Hands": "1",
+      "Range": "Melee",
+      "Traits": "Powered, Hits hard"
+    }
+  },
+  {
+    "name": "Power axe",
+    "group": "Weapons",
+    "source": "old stock",
+    "price": 30,
+    "note": null,
+    "key": "power axe",
+    "kind": "weapon",
+    "rules": {
+      "Weapon": "Power axe",
+      "Source": "Old stock",
+      "Hands": "2",
+      "Range": "Melee",
+      "Traits": "Powered, Hits hard, Sunder, Knockdown"
+    }
+  },
+  {
+    "name": "Energy cannon",
+    "group": "Weapons",
+    "source": "old stock",
+    "price": 45,
+    "note": "needs a military frame",
+    "key": "energy cannon",
+    "kind": "weapon",
+    "rules": {
+      "Weapon": "Energy cannon",
+      "Source": "Old stock",
+      "Hands": "Mount",
+      "Range": "24",
+      "Traits": "Powered (2 Energy an attack), Heavy, Hits hard"
+    }
+  },
+  {
+    "name": "Light armour",
+    "group": "Armour, shields and fields",
+    "source": "copy",
+    "price": 6,
+    "note": null,
+    "key": "light armour",
+    "kind": "armour",
+    "rules": {
+      "Armour": "**Light** (a coat, padding, plates over clothes)",
+      "Save dice": "0 (a basic save)",
+      "Other rule": "Can be worn with a civilian frame"
+    }
+  },
+  {
+    "name": "Light armour",
+    "group": "Armour, shields and fields",
+    "source": "old stock",
+    "price": 15,
+    "note": null,
+    "key": "light armour",
+    "kind": "armour",
+    "rules": {
+      "Armour": "**Light** (a coat, padding, plates over clothes)",
+      "Save dice": "0 (a basic save)",
+      "Other rule": "Can be worn with a civilian frame"
+    }
+  },
+  {
+    "name": "Medium armour",
+    "group": "Armour, shields and fields",
+    "source": "copy",
+    "price": 14,
+    "note": null,
+    "key": "medium armour",
+    "kind": "armour",
+    "rules": {
+      "Armour": "**Medium** (scrap plate)",
+      "Save dice": "1",
+      "Other rule": "Can be worn with a civilian frame"
+    }
+  },
+  {
+    "name": "Medium armour",
+    "group": "Armour, shields and fields",
+    "source": "old stock",
+    "price": 25,
+    "note": null,
+    "key": "medium armour",
+    "kind": "armour",
+    "rules": {
+      "Armour": "**Medium** (scrap plate)",
+      "Save dice": "1",
+      "Other rule": "Can be worn with a civilian frame"
+    }
+  },
+  {
+    "name": "Heavy armour",
+    "group": "Armour, shields and fields",
+    "source": "copy",
+    "price": 20,
+    "note": null,
+    "key": "heavy armour",
+    "kind": "armour",
+    "rules": {
+      "Armour": "**Heavy** (plate and shell)",
+      "Save dice": "2",
+      "Other rule": "Move -1. Cannot be worn with a frame"
+    }
+  },
+  {
+    "name": "Heavy armour",
+    "group": "Armour, shields and fields",
+    "source": "old stock",
+    "price": 30,
+    "note": null,
+    "key": "heavy armour",
+    "kind": "armour",
+    "rules": {
+      "Armour": "**Heavy** (plate and shell)",
+      "Save dice": "2",
+      "Other rule": "Move -1. Cannot be worn with a frame"
+    }
+  },
+  {
+    "name": "Physical shield",
+    "group": "Armour, shields and fields",
+    "source": "copy",
+    "price": 6,
+    "note": null,
+    "key": "physical shield",
+    "kind": "shield",
+    "rules": {
+      "rule": "Hands 1, Block reaction, 2 dents (section 7.4)"
+    }
+  },
+  {
+    "name": "Force field",
+    "group": "Armour, shields and fields",
+    "source": "old stock",
+    "price": 30,
+    "note": null,
+    "key": "force field",
+    "kind": "force field",
+    "rules": {
+      "rule": "Belt 1, no Hands, shots and blasts only, 1 Energy a use (section 7.4)"
+    }
+  },
+  {
+    "name": "Civilian frame",
+    "group": "Frames and body items",
+    "source": "old stock",
+    "price": 25,
+    "note": null,
+    "key": "civilian frame",
+    "kind": "frame",
+    "rules": {
+      "Frame": "**Civilian** (Frame slot; worn with light or medium armour, not heavy; gives no save of its own)",
+      "Basic (no Energy)": "+1 die on Grit tests to haul and jump. **Hauler:** carries a downed ally alone at Move 1 less",
+      "Boosted (1 Energy)": "**Boost:** one Move action leaps a gap or obstacle up to 3 inches, or climbs without a test"
+    }
+  },
+  {
+    "name": "Military frame",
+    "group": "Frames and body items",
+    "source": "old stock",
+    "price": 60,
+    "note": null,
+    "key": "military frame",
+    "kind": "frame",
+    "rules": {
+      "Frame": "**Military** (fills Frame and Body; a 2-dice save; a **weapon mount**; a **6-Energy cell**)",
+      "Basic (no Energy)": "Works as heavy armour: the frame's 2-dice save, and **Move -1**. No Boost, no Hauler. The mount still carries its weapon",
+      "Boosted (1 Energy)": "No Move penalty this activation, and the Boost above"
+    }
+  },
+  {
+    "name": "Robo-arm",
+    "group": "Frames and body items",
+    "source": "copy",
+    "price": 10,
+    "note": null,
+    "key": "robo-arm",
+    "kind": "robo-arm",
+    "rules": {
+      "**Old stock**": {
+        "Source": "**Old stock**",
+        "Basic": "Hands +1",
+        "Boosted (1 Energy, once per activation)": "**Servo-grip:** +1 die on one Fight or Tech roll made with an item held in the arm"
+      },
+      "**Copy**": {
+        "Source": "**Copy**",
+        "Basic": "Hands +1. **Unreliable:** a kept total of 3 or less on a roll with an item in the arm locks it, and neither arm nor item works until a Use action clears it (Routine Tech)",
+        "Boosted (1 Energy, once per activation)": "None"
+      },
+      "**Drop**": {
+        "Source": "**Drop**",
+        "Basic": "Always Servo-grip without Energy, after a know-how test (Weirdness 6) each activation it is used",
+        "Boosted (1 Energy, once per activation)": "(always boosted)"
+      }
+    }
+  },
+  {
+    "name": "Robo-arm",
+    "group": "Frames and body items",
+    "source": "old stock",
+    "price": 25,
+    "note": null,
+    "key": "robo-arm",
+    "kind": "robo-arm",
+    "rules": {
+      "**Old stock**": {
+        "Source": "**Old stock**",
+        "Basic": "Hands +1",
+        "Boosted (1 Energy, once per activation)": "**Servo-grip:** +1 die on one Fight or Tech roll made with an item held in the arm"
+      },
+      "**Copy**": {
+        "Source": "**Copy**",
+        "Basic": "Hands +1. **Unreliable:** a kept total of 3 or less on a roll with an item in the arm locks it, and neither arm nor item works until a Use action clears it (Routine Tech)",
+        "Boosted (1 Energy, once per activation)": "None"
+      },
+      "**Drop**": {
+        "Source": "**Drop**",
+        "Basic": "Always Servo-grip without Energy, after a know-how test (Weirdness 6) each activation it is used",
+        "Boosted (1 Energy, once per activation)": "(always boosted)"
+      }
+    }
+  },
+  {
+    "name": "Peg-leg",
+    "group": "Frames and body items",
+    "source": "copy",
+    "price": 8,
+    "note": null,
+    "key": "peg-leg",
+    "kind": "prosthetic",
+    "rules": {
+      "Injury": "Lost leg",
+      "Replacement": "**Peg-leg** (copy)",
+      "Effect": "Move -1 instead of halved. **-1 die on Grit tests to climb or jump.** If the fighter spends both actions of an activation on Move, they make a **Routine (6) Grit test** before the second Move; on a failure they still make it, but end it **prone**. Still planted"
+    }
+  },
+  {
+    "name": "Old-stock leg",
+    "group": "Frames and body items",
+    "source": "old stock",
+    "price": 35,
+    "note": null,
+    "key": "old-stock leg",
+    "kind": "prosthetic",
+    "rules": {
+      "Injury": "Lost leg",
+      "Replacement": "**Old-stock leg**",
+      "Effect": "The Move penalty goes. **+1 die on Grit tests to climb or jump.** Still planted"
+    }
+  },
+  {
+    "name": "Frag grenades",
+    "group": "Belt devices and medicine",
+    "source": "copy",
+    "price": 6,
+    "note": "a pair",
+    "key": "frag grenades",
+    "kind": "grenade",
+    "rules": {
+      "Grenade": "**Frag**",
+      "Basic": "Radius **2**: a **solid** hit within 1 inch of where it lands, a **glance** in the rest",
+      "Boosted (1 Energy to prime)": "Radius **3**: solid within 1.5 inches, glance in the rest"
+    }
+  },
+  {
+    "name": "Frag grenades",
+    "group": "Belt devices and medicine",
+    "source": "old stock",
+    "price": 15,
+    "note": "a pair",
+    "key": "frag grenades",
+    "kind": "grenade",
+    "rules": {
+      "Grenade": "**Frag**",
+      "Basic": "Radius **2**: a **solid** hit within 1 inch of where it lands, a **glance** in the rest",
+      "Boosted (1 Energy to prime)": "Radius **3**: solid within 1.5 inches, glance in the rest"
+    }
+  },
+  {
+    "name": "Flash grenades",
+    "group": "Belt devices and medicine",
+    "source": "copy",
+    "price": 5,
+    "note": "a pair",
+    "key": "flash grenades",
+    "kind": "grenade",
+    "rules": {
+      "Grenade": "**Flash**",
+      "Basic": "Radius **2**: each fighter in it is **Shook**",
+      "Boosted (1 Energy to prime)": "Radius **3**: each fighter in it is **Shook** and **Flustered**"
+    }
+  },
+  {
+    "name": "Flash grenades",
+    "group": "Belt devices and medicine",
+    "source": "old stock",
+    "price": 12,
+    "note": "a pair",
+    "key": "flash grenades",
+    "kind": "grenade",
+    "rules": {
+      "Grenade": "**Flash**",
+      "Basic": "Radius **2**: each fighter in it is **Shook**",
+      "Boosted (1 Energy to prime)": "Radius **3**: each fighter in it is **Shook** and **Flustered**"
+    }
+  },
+  {
+    "name": "Smoke grenades",
+    "group": "Belt devices and medicine",
+    "source": "copy",
+    "price": 4,
+    "note": "a pair",
+    "key": "smoke grenades",
+    "kind": "grenade",
+    "rules": {
+      "Grenade": "**Smoke**",
+      "Basic": "Radius **2**, until the end of the next round",
+      "Boosted (1 Energy to prime)": "Radius **3**, until the end of the round after next"
+    }
+  },
+  {
+    "name": "Smoke grenades",
+    "group": "Belt devices and medicine",
+    "source": "old stock",
+    "price": 10,
+    "note": "a pair",
+    "key": "smoke grenades",
+    "kind": "grenade",
+    "rules": {
+      "Grenade": "**Smoke**",
+      "Basic": "Radius **2**, until the end of the next round",
+      "Boosted (1 Energy to prime)": "Radius **3**, until the end of the round after next"
+    }
+  },
+  {
+    "name": "Grapnel and line",
+    "group": "Belt devices and medicine",
+    "source": "copy",
+    "price": 4,
+    "note": null,
+    "key": "grapnel and line",
+    "kind": "device",
+    "rules": {
+      "Device": "**Grapnel and line**",
+      "Basic": "Use: fix the line to a ledge or wall up to 6 inches above or across. The user climbs it **without a Grit test**, and the line stays for allies",
+      "Boosted (1 Energy)": "**Winch:** haul the user or an ally up 6 inches in one action with no test, or drag a downed ally 3 inches toward the user"
+    }
+  },
+  {
+    "name": "Grapnel and line",
+    "group": "Belt devices and medicine",
+    "source": "old stock",
+    "price": 12,
+    "note": null,
+    "key": "grapnel and line",
+    "kind": "device",
+    "rules": {
+      "Device": "**Grapnel and line**",
+      "Basic": "Use: fix the line to a ledge or wall up to 6 inches above or across. The user climbs it **without a Grit test**, and the line stays for allies",
+      "Boosted (1 Energy)": "**Winch:** haul the user or an ally up 6 inches in one action with no test, or drag a downed ally 3 inches toward the user"
+    }
+  },
+  {
+    "name": "Ping scanner",
+    "group": "Belt devices and medicine",
+    "source": "copy",
+    "price": 6,
+    "note": null,
+    "key": "ping scanner",
+    "kind": "device",
+    "rules": {
+      "Device": "**Ping scanner**",
+      "Basic": "Use: choose a point within 8 inches. Enemies within **2 inches** of it are **Announced**",
+      "Boosted (1 Energy)": "Radius **3 inches**"
+    }
+  },
+  {
+    "name": "Ping scanner",
+    "group": "Belt devices and medicine",
+    "source": "old stock",
+    "price": 15,
+    "note": null,
+    "key": "ping scanner",
+    "kind": "device",
+    "rules": {
+      "Device": "**Ping scanner**",
+      "Basic": "Use: choose a point within 8 inches. Enemies within **2 inches** of it are **Announced**",
+      "Boosted (1 Energy)": "Radius **3 inches**"
+    }
+  },
+  {
+    "name": "Maintenance slate",
+    "group": "Belt devices and medicine",
+    "source": "copy",
+    "price": 10,
+    "note": null,
+    "key": "maintenance slate",
+    "kind": "device",
+    "rules": {
+      "Device": "**Maintenance slate**",
+      "Basic": "Holds the old words: lets a fighter with Tech 0 prompt at all, as a Hard test (section 8.1)",
+      "Boosted (1 Energy)": "**+1 die on the prompt.** Slates are never drops"
+    }
+  },
+  {
+    "name": "Maintenance slate",
+    "group": "Belt devices and medicine",
+    "source": "old stock",
+    "price": 20,
+    "note": null,
+    "key": "maintenance slate",
+    "kind": "device",
+    "rules": {
+      "Device": "**Maintenance slate**",
+      "Basic": "Holds the old words: lets a fighter with Tech 0 prompt at all, as a Hard test (section 8.1)",
+      "Boosted (1 Energy)": "**+1 die on the prompt.** Slates are never drops"
+    }
+  },
+  {
+    "name": "Crank charger",
+    "group": "Belt devices and medicine",
+    "source": "copy",
+    "price": 6,
+    "note": null,
+    "key": "crank charger",
+    "kind": "device",
+    "rules": {
+      "Device": "**Crank charger** (copy only)",
+      "Basic": "Use and a Routine Tech test: restore 1 Energy to the user's battery. Reusable. A kept total of 3 or less jams it",
+      "Boosted (1 Energy)": "None"
+    }
+  },
+  {
+    "name": "Repair kit",
+    "group": "Belt devices and medicine",
+    "source": "copy",
+    "price": 4,
+    "note": null,
+    "key": "repair kit",
+    "kind": "device",
+    "rules": {
+      "Device": "**Repair kit**",
+      "Basic": "Use: clear a jam, or fit an armour patch, without a test",
+      "Boosted (1 Energy)": "Also take a **Hacked** token off the user's gear or an ally's in contact"
+    }
+  },
+  {
+    "name": "Repair kit",
+    "group": "Belt devices and medicine",
+    "source": "old stock",
+    "price": 12,
+    "note": null,
+    "key": "repair kit",
+    "kind": "device",
+    "rules": {
+      "Device": "**Repair kit**",
+      "Basic": "Use: clear a jam, or fit an armour patch, without a test",
+      "Boosted (1 Energy)": "Also take a **Hacked** token off the user's gear or an ally's in contact"
+    }
+  },
+  {
+    "name": "Spare cell",
+    "group": "Belt devices and medicine",
+    "source": "old stock",
+    "price": 8,
+    "note": null,
+    "key": "spare cell",
+    "kind": "device",
+    "rules": {
+      "Device": "**Spare cell** (old stock only)",
+      "Basic": "Use: the battery gains **2 Energy**, up to its size. The spare is used up",
+      "Boosted (1 Energy)": "None"
+    }
+  },
+  {
+    "name": "Crude kit",
+    "group": "Belt devices and medicine",
+    "source": "copy",
+    "price": 4,
+    "note": null,
+    "key": "crude kit",
+    "kind": "medical kit",
+    "rules": {
+      "Tier": "**Crude (8)**",
+      "Kit": "**Crude kit** (copy, Belt 1)",
+      "Effect": "Patch up at **Tricky (8)**. Unreliable: a kept total of 3 or less is a botch, and the patient gains Winded"
+    }
+  },
+  {
+    "name": "Patchwork med-unit",
+    "group": "Belt devices and medicine",
+    "source": "old stock",
+    "price": 20,
+    "note": null,
+    "key": "patchwork med-unit",
+    "kind": "medical kit",
+    "rules": {
+      "Tier": "**Patchwork (6)**",
+      "Kit": "**Patchwork med-unit** (old stock, Belt 1, Unreliable)",
+      "Effect": "Patch up at **Routine (6)**. A kept total of 3 or less jams it. Boosted: clears two conditions with one action"
+    }
+  },
+  {
+    "name": "Relay beacon",
+    "group": "Belt devices and medicine",
+    "source": "old stock",
+    "price": 6,
+    "note": "Control Group only",
+    "key": "relay beacon",
+    "kind": "device",
+    "rules": {
+      "Device": "**Relay beacon** (old stock; Control Group)",
+      "Basic": "Use: set it down within 6 inches of the user (it is thrown). Bots within 12 inches of it are not Laggy (section 8.5)",
+      "Boosted (1 Energy)": "None"
+    }
+  },
+  {
+    "name": "Hum-stone",
+    "group": "Relics",
+    "source": "old stock",
+    "price": 25,
+    "note": "relic",
+    "key": "hum-stone",
+    "kind": "relic",
+    "rules": {
+      "Relic (rite)": "**Hum-stone** (Quiet)",
+      "Slot": "Hands 1",
+      "Basic": "Every other fighter within 3 inches is **Flustered**",
+      "Boosted (1 Energy)": "And each is also **Shook**"
+    }
+  },
+  {
+    "name": "Halo",
+    "group": "Relics",
+    "source": "old stock",
+    "price": 20,
+    "note": "relic",
+    "key": "halo",
+    "kind": "relic",
+    "rules": {
+      "Relic (rite)": "**Halo** (Light)",
+      "Slot": "Hands 1",
+      "Basic": "A fighter in view within 6 inches is **Shook** (dazzled)",
+      "Boosted (1 Energy)": "That fighter and every fighter within 2 inches of them"
+    }
+  },
+  {
+    "name": "Warranty plate",
+    "group": "Relics",
+    "source": "old stock",
+    "price": 20,
+    "note": "relic",
+    "key": "warranty plate",
+    "kind": "relic",
+    "rules": {
+      "Relic (rite)": "**Warranty plate** (Ward)",
+      "Slot": "Belt 1",
+      "Basic": "A fighter within 3 inches is **Under warranty**",
+      "Boosted (1 Energy)": "And each ally within 2 inches of them too"
+    }
+  },
+  {
+    "name": "Death Pointer of Destruction",
+    "group": "Relics",
+    "source": "old stock",
+    "price": 35,
+    "note": "relic",
+    "key": "death pointer of destruction",
+    "kind": "relic",
+    "rules": {
+      "Relic (rite)": "**Death Pointer of Destruction** (Wrath)",
+      "Slot": "Hands 1",
+      "Basic": "**Powered**, range 12, Hits hard: a ranged Attack rolled with Tech",
+      "Boosted (1 Energy)": "Pushed: +1 die on the attack"
+    }
+  },
+  {
+    "name": "Service bell",
+    "group": "Relics",
+    "source": "old stock",
+    "price": 20,
+    "note": "relic",
+    "key": "service bell",
+    "kind": "relic",
+    "rules": {
+      "Relic (rite)": "**Service bell** (Calling)",
+      "Slot": "Belt 1",
+      "Basic": "Each ally within 6 inches may step 2 inches free",
+      "Boosted (1 Energy)": "4 inches, and each may also stand up free"
+    }
+  },
+  {
+    "name": "Tumbler",
+    "group": "Relics",
+    "source": "old stock",
+    "price": 25,
+    "note": "relic",
+    "key": "tumbler",
+    "kind": "relic",
+    "rules": {
+      "Relic (rite)": "**Tumbler** (Mending)",
+      "Slot": "Hands 1",
+      "Basic": "Clear one lasting condition from an ally in base contact",
+      "Boosted (1 Energy)": "Clear two"
+    }
+  },
+  {
+    "name": "Mute remote",
+    "group": "Relics",
+    "source": "old stock",
+    "price": 25,
+    "note": "relic",
+    "key": "mute remote",
+    "kind": "relic",
+    "rules": {
+      "Relic (rite)": "**Mute remote** (Quiet)",
+      "Slot": "Hands 1",
+      "Basic": "Choose two fighters in base contact with each other, in view within 8 inches: each is moved **2 inches straight away** from the other. Resolve the one closest to the user first; each fighter's own player moves them (a move like this gives no parting blow)",
+      "Boosted (1 Energy)": "The user's player decides which of the two moves and in which direction, up to 2 inches each"
+    }
+  },
+  {
+    "name": "Shush sign",
+    "group": "Relics",
+    "source": "old stock",
+    "price": 15,
+    "note": "relic",
+    "key": "shush sign",
+    "kind": "relic",
+    "rules": {
+      "Relic (rite)": "**Shush sign** (Quiet)",
+      "Slot": "Belt 1",
+      "Basic": "One **Announced** fighter in view within 8 inches stops being Announced",
+      "Boosted (1 Energy)": "Every Announced fighter within 4 inches of them too, friend or foe"
+    }
+  },
+  {
+    "name": "Disco ball",
+    "group": "Relics",
+    "source": "old stock",
+    "price": 20,
+    "note": "relic",
+    "key": "disco ball",
+    "kind": "relic",
+    "rules": {
+      "Relic (rite)": "**Disco ball** (Light)",
+      "Slot": "Belt 1",
+      "Basic": "Every enemy within 3 inches is **Announced**",
+      "Boosted (1 Energy)": "Within 5 inches"
+    }
+  },
+  {
+    "name": "Laser pointer",
+    "group": "Relics",
+    "source": "old stock",
+    "price": 25,
+    "note": "relic",
+    "key": "laser pointer",
+    "kind": "relic",
+    "rules": {
+      "Relic (rite)": "**Laser pointer** (Light)",
+      "Slot": "Hands 1",
+      "Basic": "One enemy in view within 12 inches is **Announced**",
+      "Boosted (1 Energy)": "And **Shook**"
+    }
+  },
+  {
+    "name": "Seatbelt",
+    "group": "Relics",
+    "source": "old stock",
+    "price": 20,
+    "note": "relic",
+    "key": "seatbelt",
+    "kind": "relic",
+    "rules": {
+      "Relic (rite)": "**Seatbelt** (Ward)",
+      "Slot": "Belt 1",
+      "Basic": "A fighter within 3 inches has **Brace** on their next save: a passed save also stops Press and any knock",
+      "Boosted (1 Energy)": "The fighter and each ally within 2 inches of them"
+    }
+  },
+  {
+    "name": "Anti-static wristband",
+    "group": "Relics",
+    "source": "old stock",
+    "price": 15,
+    "note": "relic",
+    "key": "anti-static wristband",
+    "kind": "relic",
+    "rules": {
+      "Relic (rite)": "**Anti-static wristband** (Ward)",
+      "Slot": "Belt 1",
+      "Basic": "Take a **Hacked** token off one item or bot within 3 inches, with no test",
+      "Boosted (1 Energy)": "Every Hacked token within 3 inches"
+    }
+  },
+  {
+    "name": "Letter opener",
+    "group": "Relics",
+    "source": "old stock",
+    "price": 20,
+    "note": "relic",
+    "key": "letter opener",
+    "kind": "relic",
+    "rules": {
+      "Relic (rite)": "**Letter opener** (Wrath)",
+      "Slot": "Hands 1",
+      "Basic": "**Powered**, melee, Armour-piercing: a melee Attack rolled with Tech",
+      "Boosted (1 Energy)": "Pushed: +1 die on the attack"
+    }
+  },
+  {
+    "name": "Fire extinguisher",
+    "group": "Relics",
+    "source": "old stock",
+    "price": 30,
+    "note": "relic",
+    "key": "fire extinguisher",
+    "kind": "relic",
+    "rules": {
+      "Relic (rite)": "**Fire extinguisher** (Wrath)",
+      "Slot": "Hands 2",
+      "Basic": "**Powered**, range 6, Spread, Stun: a ranged Attack rolled with Tech",
+      "Boosted (1 Energy)": "Pushed: +1 die on the attack"
+    }
+  },
+  {
+    "name": "Megaphone",
+    "group": "Relics",
+    "source": "old stock",
+    "price": 15,
+    "note": "relic",
+    "key": "megaphone",
+    "kind": "relic",
+    "rules": {
+      "Relic (rite)": "**Megaphone** (Calling)",
+      "Slot": "Hands 1",
+      "Basic": "One ally in view within 8 inches is **Hyped**",
+      "Boosted (1 Energy)": "And each ally within 2 inches of them"
+    }
+  },
+  {
+    "name": "Whistle",
+    "group": "Relics",
+    "source": "old stock",
+    "price": 15,
+    "note": "relic",
+    "key": "whistle",
+    "kind": "relic",
+    "rules": {
+      "Relic (rite)": "**Whistle** (Calling)",
+      "Slot": "Belt 1",
+      "Basic": "One ally in view within 8 inches stops being **Shook** and **Flustered**",
+      "Boosted (1 Energy)": "Every ally within 3 inches of the user"
+    }
+  },
+  {
+    "name": "Heating pad",
+    "group": "Relics",
+    "source": "old stock",
+    "price": 20,
+    "note": "relic",
+    "key": "heating pad",
+    "kind": "relic",
+    "rules": {
+      "Relic (rite)": "**Heating pad** (Mending)",
+      "Slot": "Belt 1",
+      "Basic": "An ally in base contact regains **1 Energy**",
+      "Boosted (1 Energy)": "**2 Energy**"
+    }
+  },
+  {
+    "name": "Wool blanket",
+    "group": "Relics",
+    "source": "old stock",
+    "price": 20,
+    "note": "relic",
+    "key": "wool blanket",
+    "kind": "relic",
+    "rules": {
+      "Relic (rite)": "**Wool blanket** (Mending)",
+      "Slot": "Belt 1",
+      "Basic": "One lasting condition on an ally in base contact has **no effect** until the end of the battle (it still counts toward going down)",
+      "Boosted (1 Energy)": "And the ally loses every **Shook**, **Flustered** and **Announced** token (their Hyped and Under warranty stay)"
+    }
+  }
+]

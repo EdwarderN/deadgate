@@ -1,0 +1,27 @@
+[
+  {
+    "Slot": "**Hands**",
+    "What goes in it": "Weapons, shields, tools. Each item needs the Hands it lists",
+    "Size": "Two **sets** of up to 2 Hands each, for every fighter (below)"
+  },
+  {
+    "Slot": "**Body**",
+    "What goes in it": "One armour",
+    "Size": "1"
+  },
+  {
+    "Slot": "**Frame**",
+    "What goes in it": "One exoskeleton. A military frame fills both Frame and Body",
+    "Size": "1"
+  },
+  {
+    "Slot": "**Belt**",
+    "What goes in it": "Spare cells, tools, medical kits, force fields, grenades (two to a slot), small items",
+    "Size": "3"
+  },
+  {
+    "Slot": "**Power**",
+    "What goes in it": "The fighter's one cell, which powers everything they carry",
+    "Size": "4 Energy; 6 in a military frame"
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "Species": "**Human**",
+    "Move": "5",
+    "Signature trait": "**The voices' own.** The voices were built to serve humans: when a human Asks the voice (section 8.6) and rolls a 1, they roll again once and keep the second result. Humans breathe the recycled air and wear no breather"
+  },
+  {
+    "Species": "**Fourhands**",
+    "Move": "6",
+    "Signature trait": "**Four hands.** Hands 4: both of their two sets are in use at once (two rifles, or a rifle, a shield and a grenade, say; section 7.1)"
+  },
+  {
+    "Species": "**Hullback**",
+    "Move": "4",
+    "Signature trait": "**Thick hide.** The consequence tables treat a Hullback as one severity band lower (section 6.1)"
+  },
+  {
+    "Species": "**Longshanks**",
+    "Move": "5",
+    "Signature trait": "**Tall.** Their shots ignore the target's light cover, but light cover never protects them from shots. Heavy cover works for everyone"
+  },
+  {
+    "Species": "**Brinie**",
+    "Move": "4 on land, 6 in water",
+    "Signature trait": "**Waterborne.** Move 6 in Wet terrain. **Tail:** when a Brinie wins a melee exchange, their Press may knock the loser prone"
+  },
+  {
+    "Species": "**Bot**",
+    "Move": "By chassis",
+    "Signature trait": "**Obeys their operator; never needs a breather** (section 4.5)"
+  }
+]

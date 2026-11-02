@@ -1,0 +1,30 @@
+[
+  {
+    "recruit": "Human, Longshanks, Brinie",
+    "price": "15"
+  },
+  {
+    "recruit": "Fourhands",
+    "price": "20"
+  },
+  {
+    "recruit": "Hullback",
+    "price": "25"
+  },
+  {
+    "recruit": "Bot chassis (Control Group only): Observer / Lab-hand / Prototype",
+    "price": "15 / 20 / 15"
+  },
+  {
+    "recruit": "Volunteer (Control Group only)",
+    "price": "15 (10 under the control sample, section 12.6)"
+  },
+  {
+    "recruit": "The gift, on a Longshanks or Brinie",
+    "price": "+30 (the Waiting pay half)"
+  },
+  {
+    "recruit": "Rites, on a rookie",
+    "price": "+20 (the Waiting pay half)"
+  }
+]

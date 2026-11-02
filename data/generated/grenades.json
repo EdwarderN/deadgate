@@ -1,0 +1,17 @@
+[
+  {
+    "Grenade": "**Frag**",
+    "Basic": "Radius **2**: a **solid** hit within 1 inch of where it lands, a **glance** in the rest",
+    "Boosted (1 Energy to prime)": "Radius **3**: solid within 1.5 inches, glance in the rest"
+  },
+  {
+    "Grenade": "**Flash**",
+    "Basic": "Radius **2**: each fighter in it is **Shook**",
+    "Boosted (1 Energy to prime)": "Radius **3**: each fighter in it is **Shook** and **Flustered**"
+  },
+  {
+    "Grenade": "**Smoke**",
+    "Basic": "Radius **2**, until the end of the next round",
+    "Boosted (1 Energy to prime)": "Radius **3**, until the end of the round after next"
+  }
+]

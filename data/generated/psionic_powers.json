@@ -1,0 +1,52 @@
+[
+  {
+    "Power": "**Sense**",
+    "Number": "Routine (6)",
+    "Effect": "Choose a point in view within 12 inches: every enemy within **2 inches** of it is **Announced**"
+  },
+  {
+    "Power": "**Steady**",
+    "Number": "Routine (6)",
+    "Effect": "An ally in view within 12 inches is **Hyped**"
+  },
+  {
+    "Power": "**Push**",
+    "Number": "Tricky (8)",
+    "Effect": "A fighter in view within 12 inches is pushed up to 3 inches straight away from the psion, and knocked prone if they end against scenery or another fighter"
+  },
+  {
+    "Power": "**Dread**",
+    "Number": "Tricky (8)",
+    "Effect": "An enemy in view within 12 inches is **Shook** and **Flustered**"
+  },
+  {
+    "Power": "**Ward**",
+    "Number": "Tricky (8)",
+    "Effect": "An ally in view within 12 inches is **Under warranty**"
+  },
+  {
+    "Power": "**Lengthen** (Longshanks only)",
+    "Number": "Tricky (8)",
+    "Effect": "An ally in view within 12 inches: their melee weapon gains **Reach** until the end of their next activation"
+  },
+  {
+    "Power": "**Undertow** (Brinie only)",
+    "Number": "Tricky (8)",
+    "Effect": "A fighter in view within 12 inches is pulled up to 3 inches straight toward the psion, and knocked prone if they end against scenery or another fighter"
+  },
+  {
+    "Power": "**Haze**",
+    "Number": "Hard (10)",
+    "Effect": "A haze of radius 2 inches at a point in view within 12 inches, until the end of the round: fighters inside count as in light cover against shots"
+  },
+  {
+    "Power": "**Skyline** (Longshanks only)",
+    "Number": "Hard (10)",
+    "Effect": "Until the end of the round, the psion and every ally within 2 inches of them count as **higher ground** against every enemy (+1 die in melee and on shots)"
+  },
+  {
+    "Power": "**Breach** (Brinie only)",
+    "Number": "Hard (10)",
+    "Effect": "Choose a wall within 6 inches of the psion: until the end of the round it does not block movement or sight (never a Solid piece)"
+  }
+]

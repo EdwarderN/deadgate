@@ -1,0 +1,17 @@
+[
+  {
+    "Armour": "**Light** (a coat, padding, plates over clothes)",
+    "Save dice": "0 (a basic save)",
+    "Other rule": "Can be worn with a civilian frame"
+  },
+  {
+    "Armour": "**Medium** (scrap plate)",
+    "Save dice": "1",
+    "Other rule": "Can be worn with a civilian frame"
+  },
+  {
+    "Armour": "**Heavy** (plate and shell)",
+    "Save dice": "2",
+    "Other rule": "Move -1. Cannot be worn with a frame"
+  }
+]

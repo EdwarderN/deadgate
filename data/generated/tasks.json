@@ -1,0 +1,32 @@
+[
+  {
+    "Task": "**Recover**",
+    "Test": "Tech, Tricky (8)",
+    "Success": "The fighter nurses one **Laid up** ally: they play the next battle (they are only Sore). A crew with nobody Laid up cannot take this task",
+    "Failure": "Nothing"
+  },
+  {
+    "Task": "**Scavenge**",
+    "Test": "Tech, Routine (6)",
+    "Success": "**6 parts**",
+    "Failure": "2 parts"
+  },
+  {
+    "Task": "**Work a job**",
+    "Test": "Fight or Shoot, Tricky (8)",
+    "Success": "**10 parts**",
+    "Failure": "Nothing"
+  },
+  {
+    "Task": "**Hunt rumours**",
+    "Test": "Nerve, Tricky (8)",
+    "Success": "A roll on the **finds** table (section 14.7), as well as the table below",
+    "Failure": "Nothing"
+  },
+  {
+    "Task": "**Train**",
+    "Test": "A rating of 1 or more, Routine (6), with a **teacher**",
+    "Success": "**+1 XP**",
+    "Failure": "Nothing"
+  }
+]

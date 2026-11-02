@@ -1,0 +1,32 @@
+[
+  {
+    "Rumour": "**The Sky-Sent.** \"They fell from the sky; the sky protects them\"",
+    "Deed": "End two rounds of one battle in the open (no cover) and not be downed",
+    "Legend": "**Sky-sent** (\"the Sky-Sent\"): when you take a crushing consequence, you may spend your reaction to read it as solid"
+  },
+  {
+    "Rumour": "**The Jinx.** \"Anyone near them dies\"",
+    "Deed": "Be on your feet at the end of a battle in which two allies within 3 inches of you went down",
+    "Legend": "**Bad omen** (\"the Jinx\"): enemies in contact with you cannot Assist each other"
+  },
+  {
+    "Rumour": "**The Seer.** \"They know what comes next\"",
+    "Deed": "Before a roll of your own, call its exact total, and hit it",
+    "Legend": "**Foresight** (\"the Seer\"): before you Ask the voice, call \"good\" or \"bad\"; if you are right, you are also **Hyped**"
+  },
+  {
+    "Rumour": "**The Gate-Captain.** \"The one who nearly reached the gate\"",
+    "Deed": "Reach the enemy's table edge",
+    "Legend": "**Pathfinder** (\"Gate-Captain\"): you ignore difficult terrain"
+  },
+  {
+    "Rumour": "**The Debtor.** \"They owe the Ledgerhands everything\"",
+    "Deed": "Come home carrying an item you did not start the battle with",
+    "Legend": "**Light fingers** (\"the Debtor\"): picking up an item costs you no action"
+  },
+  {
+    "Rumour": "**The Star.** \"I know that face from the pictures\"",
+    "Deed": "Win a melee exchange with three or more other fighters, friend or foe, within 6 inches",
+    "Legend": "**Crowd-pleaser** (\"the Star\"): when you win an exchange, one ally within 6 inches is **Hyped**"
+  }
+]

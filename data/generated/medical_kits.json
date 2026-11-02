@@ -1,0 +1,17 @@
+[
+  {
+    "Tier": "**Crude (8)**",
+    "Kit": "**Crude kit** (copy, Belt 1)",
+    "Effect": "Patch up at **Tricky (8)**. Unreliable: a kept total of 3 or less is a botch, and the patient gains Winded"
+  },
+  {
+    "Tier": "**Patchwork (6)**",
+    "Kit": "**Patchwork med-unit** (old stock, Belt 1, Unreliable)",
+    "Effect": "Patch up at **Routine (6)**. A kept total of 3 or less jams it. Boosted: clears two conditions with one action"
+  },
+  {
+    "Tier": "**Advanced (6)**",
+    "Kit": "**Advanced med-unit** (old stock, never sold, found only on the finds table, section 14.7; never Unreliable)",
+    "Effect": "Patch up at Routine. Boosted: also stands a **downed** ally in contact back up, **with one lasting condition** of their owner's choice"
+  }
+]

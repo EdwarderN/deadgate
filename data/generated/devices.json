@@ -1,0 +1,37 @@
+[
+  {
+    "Device": "**Grapnel and line**",
+    "Basic": "Use: fix the line to a ledge or wall up to 6 inches above or across. The user climbs it **without a Grit test**, and the line stays for allies",
+    "Boosted (1 Energy)": "**Winch:** haul the user or an ally up 6 inches in one action with no test, or drag a downed ally 3 inches toward the user"
+  },
+  {
+    "Device": "**Ping scanner**",
+    "Basic": "Use: choose a point within 8 inches. Enemies within **2 inches** of it are **Announced**",
+    "Boosted (1 Energy)": "Radius **3 inches**"
+  },
+  {
+    "Device": "**Maintenance slate**",
+    "Basic": "Holds the old words: lets a fighter with Tech 0 prompt at all, as a Hard test (section 8.1)",
+    "Boosted (1 Energy)": "**+1 die on the prompt.** Slates are never drops"
+  },
+  {
+    "Device": "**Crank charger** (copy only)",
+    "Basic": "Use and a Routine Tech test: restore 1 Energy to the user's battery. Reusable. A kept total of 3 or less jams it",
+    "Boosted (1 Energy)": "None"
+  },
+  {
+    "Device": "**Repair kit**",
+    "Basic": "Use: clear a jam, or fit an armour patch, without a test",
+    "Boosted (1 Energy)": "Also take a **Hacked** token off the user's gear or an ally's in contact"
+  },
+  {
+    "Device": "**Spare cell** (old stock only)",
+    "Basic": "Use: the battery gains **2 Energy**, up to its size. The spare is used up",
+    "Boosted (1 Energy)": "None"
+  },
+  {
+    "Device": "**Relay beacon** (old stock; Control Group)",
+    "Basic": "Use: set it down within 6 inches of the user (it is thrown). Bots within 12 inches of it are not Laggy (section 8.5)",
+    "Boosted (1 Energy)": "None"
+  }
+]

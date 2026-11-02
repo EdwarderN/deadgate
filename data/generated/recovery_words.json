@@ -1,0 +1,18 @@
+[
+  {
+    "Recovery word": "**Walks it off**",
+    "Effect": "Nothing. A line for the History"
+  },
+  {
+    "Recovery word": "**Sore**",
+    "Effect": "No downtime task this break, but they play the next battle"
+  },
+  {
+    "Recovery word": "**Laid up**",
+    "Effect": "Misses the next battle and this break's task"
+  },
+  {
+    "Recovery word": "**Bad stitches**",
+    "Effect": "As Sore, and they begin the next battle with one lasting condition of the player's choice (the crude medicine has opened up)"
+  }
+]

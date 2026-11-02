@@ -1,0 +1,14 @@
+[
+  {
+    "Source": "**Old stock**",
+    "Armour rule": "The save above. **Boosted (1 Energy, when hit): Brace.** A passed save also stops Press, and any knock to the ground, from that hit"
+  },
+  {
+    "Source": "**Copy**",
+    "Armour rule": "The save above, basic only. **Unreliable:** a kept total of 3 or less on the save jams the armour, which gives no save until a Use action clears it (Routine Tech). A total of exactly 2 is a bodge"
+  },
+  {
+    "Source": "**Drop**",
+    "Armour rule": "The save and Brace without Energy, after a know-how test (Weirdness 6) the first time it is used in a battle: a success means it works all battle, a failure rolls the weird table"
+  }
+]

@@ -1,0 +1,521 @@
+[
+  {
+    "section": "12.2",
+    "name": "The Bodgers",
+    "rules": [
+      {
+        "n": 1,
+        "name": "Tape fixes everything",
+        "text": "A Bodger clears a jam or fixes a loose breather without a test (it is still a Use action)."
+      },
+      {
+        "n": 2,
+        "name": "First on the scene",
+        "text": "When a pod lands (the round 2 pod or a scenario's own), every Bodger may at once move up to **half their Move** toward it."
+      },
+      {
+        "n": 3,
+        "name": "The scrap market",
+        "text": "Bodgers buy copy items for 1 part less (never below 1)."
+      },
+      {
+        "n": 4,
+        "name": "The split of the haul",
+        "text": "After a battle in which the crew carried off a crate or drop item, every Bodger who took part gains **+1 XP**."
+      }
+    ],
+    "subfactions": [
+      {
+        "name": "Red Tape",
+        "replaces": 2,
+        "rule": "**Claim pending.** Before deployment, file a claim on one scenario item, crate or terrain piece: an enemy who picks it up or uses it is **Announced** (the paperwork follows them)"
+      },
+      {
+        "name": "Silver Tape",
+        "replaces": 3,
+        "rule": "**Showroom condition.** The crew's copy items jam only on a kept total of exactly 2 (a bodge). A Silver Tape fighter who clears a jam in view of an enemy is **Hyped**: the audience loves a restoration"
+      },
+      {
+        "name": "Black Tape",
+        "replaces": 4,
+        "rule": "**Resale value.** Black Tape can sell a drop item, which nobody else can sell. Roll a d6 when it is sold: it fetches **5 parts for each pip** (5 to 30). What it is worth depends on who else wants it"
+      }
+    ],
+    "types": [],
+    "ownTaskTable": [
+      {
+        "d6": "1",
+        "Result": "**Sold the wrong crate.** One copy weapon of the crew's choice is gone; the crew gains half its price"
+      },
+      {
+        "d6": "2",
+        "Result": "**Red Tape inspection.** Pay **2 parts** for a trading permit, or the fighter starts the next battle **Announced** (they are on a list now)"
+      },
+      {
+        "d6": "3",
+        "Result": "**A crate of mystery bolts.** Roll a d6: 1 to 3, it is bolts (**+1 part**); 4 to 6, a copy item worth up to 5 parts"
+      },
+      {
+        "d6": "4",
+        "Result": "**A buyer for anything.** Sell one more item at full price"
+      },
+      {
+        "d6": "5",
+        "Result": "**A pod-chaser's tip.** The fighter gets to a pod first, behind the market, and cracks it: roll on the drop table (section 9.7). An arrival from it joins the crew as usual"
+      },
+      {
+        "d6": "6",
+        "Result": "**A collector's crate,** contents unknown: roll on the finds table (section 14.7)"
+      }
+    ],
+    "voice": "**Voice: Dipstick** (section 8.6).",
+    "startingKit": "**Starting kit:** a repair kit, a pair of smoke grenades, a crank charger and a grapnel and line, all copies.",
+    "specials": "**Specials:** the gift and Rites at the normal price (30 and 20). No bots.",
+    "captiveFate": "**Captive fate: Work them.** The captive works the stall for a break: the Bodgers roll once on the flea market table below (no test), on top of half the price.",
+    "ownTask": "**Own task: Work the flea market** (Nerve, Routine 6). Success: sell one item at **full price**, or buy one copy item at **half price**."
+  },
+  {
+    "section": "12.3",
+    "name": "The Inspectorate",
+    "rules": [
+      {
+        "n": 1,
+        "name": "The uniform",
+        "text": "An enemy who moves into base contact with an Inspectorate fighter makes a **Routine (6) Nerve test**; on a failure they are **Shook**. Bots and fighters with no Nerve ignore it. **Once any Inspectorate fighter goes down,** the uniform stops working for the rest of the battle: everyone has seen they bleed."
+      },
+      {
+        "n": 2,
+        "name": "Fines",
+        "text": "After each battle, the crew gains **2 parts** for each enemy fighter it put down."
+      },
+      {
+        "n": 3,
+        "name": "A strong boss",
+        "text": "While the captain is standing, the crew's breaking test has +1 die; while the captain is down, -1 die."
+      },
+      {
+        "n": 4,
+        "name": "Paperwork",
+        "text": "Inspectorate fighters may prompt stamp booths, doors and charging stations at Routine (6) even with Tech 0 (they have the forms)."
+      }
+    ],
+    "subfactions": [
+      {
+        "name": "Weights and Measures",
+        "replaces": 2,
+        "rule": "**Everything is taxed.** After a battle against them, the enemy pays the crew **2 parts** from any prize it won, and the crew gains **1 part** for each crate or item carried off by anyone"
+      },
+      {
+        "name": "Department of Improvement",
+        "replaces": 3,
+        "rule": "**Mandatory cheer.** At the start of each round, one of your fighters in contact with an enemy is **Hyped** and that enemy is **Shook** (an annual review that is held in front of everyone)"
+      },
+      {
+        "name": "Fire Marshals",
+        "replaces": 4,
+        "rule": "**Condemned.** Before deployment, mark one terrain piece as condemned: it is **Dangerous** for the whole battle (they set it on fire, for safety)"
+      }
+    ],
+    "types": [],
+    "ownTaskTable": [
+      {
+        "d6": "1",
+        "Result": "**Fined a Ledgerhand.** They paid in an IOU: the task pays nothing, and the crew writes that Ledgerhands crew as a **rival**"
+      },
+      {
+        "d6": "2",
+        "Result": "**Fined your own clerk.** Lose **2 parts**, and the crew gains **Reliable** (to the people who pay it)"
+      },
+      {
+        "d6": "3",
+        "Result": "**Stamped the wrong door.** Everybody knows who did it. The fighter starts the next battle **Announced** and **Hyped**"
+      },
+      {
+        "d6": "4",
+        "Result": "**A fee on breathing.** If the test succeeded, the task pays **double**"
+      },
+      {
+        "d6": "5",
+        "Result": "**A district holiday** in the crew's honour. The crew gains **Showboats**"
+      },
+      {
+        "d6": "6",
+        "Result": "**Confiscated goods.** One old-stock item the crew wants is available this break without the 4+ roll"
+      }
+    ],
+    "voice": "**Voice: Gawk** (section 8.6).",
+    "startingKit": "**Starting kit:** uniforms: the captain and one other rookie start in light armour (copy), and the crew has a pair of flash grenades (copy).",
+    "specials": "**Specials:** the gift and Rites at the normal price (30 and 20). No bots.",
+    "captiveFate": "**Captive fate: Fined anyway.** Refusing does not get the owner out of the fee: on top of the half price, the owner's crew pays the Inspectorate **another half of the asked price**, as much as it has.",
+    "ownTask": "**Own task: Collect fees** (Fight, Tricky 8). Success: **8 parts**."
+  },
+  {
+    "section": "12.4",
+    "name": "The Waiting",
+    "rules": [
+      {
+        "n": 1,
+        "name": "Still waiting",
+        "text": "The crew's breaking test is made with +1 die. They have waited two hundred years; they can wait out a bad round."
+      },
+      {
+        "n": 2,
+        "name": "Relics are holy",
+        "text": "A priest of the Waiting knows **two rites** of their choice, not one (section 8.3)."
+      },
+      {
+        "n": 3,
+        "name": "The pantheon",
+        "text": "The Waiting pray to all five voices: each time a fighter Asks the voice, they choose which god's table to roll (section 8.6). Each fighter of the Waiting may Ask the voice **twice per activation** (each time before a roll), praying to a **different god** each time."
+      },
+      {
+        "n": 4,
+        "name": "Omens",
+        "text": "When a pod lands, every fighter of the Waiting with line of sight to where it lands is **Hyped**: the sky has spoken."
+      }
+    ],
+    "subfactions": [
+      {
+        "name": "The Listeners",
+        "replaces": 1,
+        "rule": "**Thought leadership.** When a fighter of the Waiting gets a **good** Ask the voice result, one ally within 3 inches is also **Hyped**"
+      },
+      {
+        "name": "The Visionaries",
+        "replaces": 1,
+        "rule": "**Share the burden down the chain.** A Visionary psion's drain tokens may also go on allies within 12 inches of **an ally who already holds a Shook token**, not only near the psion. Each ally who ends the battle **standing and Shook** gains **+1 XP**"
+      },
+      {
+        "name": "The Pilgrims",
+        "replaces": 4,
+        "rule": "**On the road.** When the Pilgrims fight, roll the world twice and the Pilgrims' player chooses. A battle on a world they have not fought on this season gives each Pilgrim who took part **+1 XP**"
+      }
+    ],
+    "types": [
+      {
+        "name": "Priest",
+        "label": "Priest",
+        "trait": "Has **Rites** (free), with two rites known (rule 2)"
+      },
+      {
+        "name": "Acolyte",
+        "label": "Acolyte",
+        "trait": "Carries relics for a priest: a priest within 6 inches may use a relic the Acolyte holds as if they held it"
+      },
+      {
+        "name": "Zealot",
+        "label": "Zealot",
+        "trait": "Fear does not stick: **ignores** the Inspectorate's uniform, a boast's terror test and the Hum-stone"
+      },
+      {
+        "name": "Seer",
+        "label": "Seer",
+        "trait": "Has **the gift** (free). A Longshanks or a Brinie only. At most two gifted fighters in the crew"
+      }
+    ],
+    "ownTaskTable": [
+      {
+        "d6": "1",
+        "Result": "**A crisis of faith.** The fighter is **Sore**, and thinks about it"
+      },
+      {
+        "d6": "2",
+        "Result": "**A Visionary's seminar.** Pay **3 parts**, or the fighter starts the next battle **Shook** (they did not grow)"
+      },
+      {
+        "d6": "3",
+        "Result": "**The gate did not wake.** It will, tomorrow. The fighter starts the next battle **Hyped**"
+      },
+      {
+        "d6": "4",
+        "Result": "**A relic lead.** One relic may be bought this break at half price, with no roll for a seller"
+      },
+      {
+        "d6": "5",
+        "Result": "**A Seer is born.** A Longshanks or Brinie of the crew without the gift may take it now, free (if the crew has fewer than two gifted fighters)"
+      },
+      {
+        "d6": "6",
+        "Result": "**The gate hums.** Nobody else heard it. The fighter gains **+2 XP**, and the crew gains a **rumour**"
+      }
+    ],
+    "voice": "**Voice: the pantheon,** all five (rule 3, section 8.6).",
+    "startingKit": "**Starting kit:** one relic of the player's choice worth up to 20 parts. A priest can use it only if they know its rite.",
+    "specials": "**Specials:** the gift and Rites at **half price** (15 and 10; Priests and Seers have them free as types). No bots.",
+    "captiveFate": "**Captive fate: Convert them.** The captive vanishes into the faith; they do not join the crew. The fighter who captured them gains **+1 XP**, and the crew gains a **rumour**, on top of half the price.",
+    "ownTask": "**Own task: Keep the vigil** (Nerve, Routine 6). Success: **+1 XP**, or one relic may be bought this break at half price."
+  },
+  {
+    "section": "12.5",
+    "name": "Ledgerhands",
+    "rules": [
+      {
+        "n": 1,
+        "name": "Paid by the job",
+        "text": "Work a job pays Ledgerhands **+3 parts**."
+      },
+      {
+        "n": 2,
+        "name": "The mark",
+        "text": "Before deployment, name one enemy fighter as the **mark**. If they are down when the battle ends, the crew gains **5 parts** (the bounty on the contract)."
+      },
+      {
+        "n": 3,
+        "name": "Hired on credit",
+        "text": "At creation and in any Spend step, the crew may buy and hire with parts it does not have, down to **-20**. While its parts are below 0 it buys and hires nothing more, and every part it gains pays the debt first."
+      },
+      {
+        "n": 4,
+        "name": "Buyout",
+        "text": "Before deployment, if the crew has the parts, it may pay the opposing player **5 parts**: one enemy fighter of its choice does not activate in round 1 (they took a better offer). The opponent cannot refuse the money."
+      }
+    ],
+    "subfactions": [
+      {
+        "name": "The Indentured",
+        "replaces": 1,
+        "rule": "**Exposure.** Work a job pays the Indentured **nothing**, but every Indentured fighter who works it gains **+1 XP**, or **+2 XP** on a success. It is an investment"
+      },
+      {
+        "name": "Collections Department",
+        "replaces": 4,
+        "rule": "**Repossession.** As a Use action in base contact with a downed enemy, take one item they carry. The crew keeps it after the battle"
+      },
+      {
+        "name": "Per-Diem Companies",
+        "replaces": 4,
+        "rule": "**Rated.** After each battle, the opposing player rates each Per-Diem fighter who took part from one to five stars. Five stars: **+1 XP**. One star: the crew pays the platform's fee, **2 parts**"
+      }
+    ],
+    "types": [],
+    "ownTaskTable": [
+      {
+        "d6": "1",
+        "Result": "**The debtor was a Ledgerhand,** collecting from you: lose **3 parts**"
+      },
+      {
+        "d6": "2",
+        "Result": "**Paid in vegetables.** Very nutritious. The task pays nothing, but the fighter starts the next battle **Hyped**"
+      },
+      {
+        "d6": "3",
+        "Result": "**Jeminy finds a clause.** If the crew's parts are below 0, they rise by **5**; otherwise the crew gains **2 parts**"
+      },
+      {
+        "d6": "4",
+        "Result": "**The debtor joins up** to work it off: one recruit may be hired this break for **5 parts less**"
+      },
+      {
+        "d6": "5",
+        "Result": "**Repossessed:** a copy weapon or armour worth up to 8 parts"
+      },
+      {
+        "d6": "6",
+        "Result": "**The debtor was rich:** **+10 parts**"
+      }
+    ],
+    "voice": "**Voice: Jeminy** (section 8.6).",
+    "startingKit": "**Starting kit:** a gun for everyone: each of the four rookies starts with a scrap pistol (copy). Under rule 3, the crew may also start up to **20 parts** in debt to buy more gear.",
+    "specials": "**Specials:** the gift and Rites at the normal price (30 and 20). No bots.",
+    "captiveFate": "**Captive fate: Pay now.** The owner of a fighter the Ledgerhands capture **cannot refuse** the ransom: it pays the asked price at once, even if that takes its parts below 0. A crew below 0 this way follows rule 3 above until the debt is paid: it buys and hires nothing, and every part it gains pays the debt first. The captive comes home.",
+    "ownTask": "**Own task: Chase a debtor** (Grit, Tricky 8). Success: **8 parts**."
+  },
+  {
+    "section": "12.6",
+    "name": "The Control Group",
+    "rules": [
+      {
+        "n": 1,
+        "name": "Remote operation",
+        "text": "The operators are safe in the bunker. The crew's breaking tests start only once **three quarters** or more of its fighters (rounded up) are down, captured or gone, instead of half."
+      },
+      {
+        "n": 2,
+        "name": "Research tasks",
+        "text": "Before deployment, roll a d6 on each list below and choose one of the two studies. If the crew completes it, one bot or volunteer who took part gains **+2 XP**."
+      },
+      {
+        "n": 3,
+        "name": "The control sample",
+        "text": "Volunteers are cheap: **10 parts** each instead of 15."
+      },
+      {
+        "n": 4,
+        "name": "Peer review",
+        "text": "The first time each round that a Control Group fighter attacks an enemy another Control Group fighter has already attacked this round, hit or miss, the attacker has **+1 die** (the finding is replicated)."
+      }
+    ],
+    "subfactions": [
+      {
+        "name": "Replication Wing",
+        "replaces": 3,
+        "rule": "**Cheap copies.** Bot chassis cost **5 parts less**, but every chassis is **Unreliable**: a kept total of 3 or less on a roll they make jams them. A jammed chassis has **one action** in their activation until cleared, by their own Use action or a friend's in contact"
+      },
+      {
+        "name": "Observation Wing",
+        "replaces": 4,
+        "rule": "**Sweeping conclusions.** A Laggy bot of this crew may, instead of moving, watch: every enemy within 6 inches of them is **Announced**"
+      },
+      {
+        "name": "The Dissenters",
+        "replaces": 4,
+        "rule": "**Negative review.** At the start of **rounds 2 and 4**, one enemy within 12 inches of any Dissenter fighter is **Shook**: \"this is not novel\""
+      }
+    ],
+    "types": [
+      {
+        "name": "Observer",
+        "label": "Observer (bot chassis)",
+        "trait": "Move 5, Hands 2. Their shots ignore light cover"
+      },
+      {
+        "name": "Lab-hand",
+        "label": "Lab-hand (bot chassis)",
+        "trait": "Move 4, Hands 4. Carries a downed fighter or a crate alone at full Move"
+      },
+      {
+        "name": "Prototype",
+        "label": "Prototype (bot chassis)",
+        "trait": "Move 6, Hands 2, **always Laggy** (a beacon and the deployment zone do not help it). One copy weapon is built in: it cannot be taken or prompted off"
+      },
+      {
+        "name": "Volunteer",
+        "label": "Volunteer (a human)",
+        "trait": "Signed the waiver: if they end the battle down and left behind, they roll the **gentle** table anyway (the Control Group collects its subjects)"
+      }
+    ],
+    "ownTaskTable": [
+      {
+        "d6": "1",
+        "Result": "**The experiment escaped.** It is on Ballast now. Lose **3 parts** in containment"
+      },
+      {
+        "d6": "2",
+        "Result": "**A volunteer read the form.** One volunteer of the crew is **Sore**, and furious"
+      },
+      {
+        "d6": "3",
+        "Result": "**Inconclusive.** Further research is needed: the fighter makes the task's test once more at once (no second table roll)"
+      },
+      {
+        "d6": "4",
+        "Result": "**Published,** and cited by the Replication Wing many times. The crew gains **Reliable**"
+      },
+      {
+        "d6": "5",
+        "Result": "**A core remembers something it should not.** One bot of the crew gains **+2 XP**"
+      },
+      {
+        "d6": "6",
+        "Result": "**Paradigm shift.** **+6 parts**, and the whole bunker applauds, drily: the crew gains **Showboats**"
+      }
+    ],
+    "voice": "**Voice: Claudius** (section 8.6).",
+    "startingKit": "**Starting kit:** any of the four free rookies may be a bot chassis instead (any of the three; a Lab-hand pays its 5 parts over a rookie, section 11.1), and the crew has two relay beacons and a spare cell (old stock).",
+    "specials": "**Specials:** bots (Observer 15, Lab-hand 20, Prototype 15 parts); volunteers 10 (15 for the Replication Wing, which gives up rule 3); relay beacons 6. Rites at the normal price (20). **No psions:** every volunteer is human.",
+    "noWords": "**No Words.** The Control Group swears no Words. Its fighters earn experience from research tasks instead.",
+    "captiveFate": "**Captive fate: Experiment on them.** The captive vanishes into the bunker. One bot of the crew gains **+2 XP** from the findings, on top of half the price.",
+    "ownTask": "**Own task: Run an experiment** (Tech, Tricky 8). Success: one bot gains **+2 XP**. Volunteers may run it too; nobody tells them what it was."
+  },
+  {
+    "section": "12.7",
+    "name": "Hollowood",
+    "rules": [
+      {
+        "n": 1,
+        "name": "The stunt double",
+        "text": "When a hit lands on a Hollowood fighter who **already has a lasting condition**, and their save has failed, a **Stunt double** of the crew within 3 inches may spend their reaction **before the consequence is rolled**: the hit goes to the double at the same severity, who rolls their own save and the consequence. The star takes no effect, and takes the credit."
+      },
+      {
+        "n": 2,
+        "name": "Superfans",
+        "text": "An enemy who attacks an **Action star**, in melee or with a shot, first makes a **Routine (6) Nerve test**, at most once a round each. On a failure, in melee they are **Flustered**; with a shot they are **Shook**, so that shot is rolled at -1 die (they wanted an autograph). Bots and fighters with no Nerve ignore it."
+      },
+      {
+        "n": 3,
+        "name": "Props department",
+        "text": "Hollowood find old-stock weapons without the 4+ seller roll: the studio has a warehouse."
+      },
+      {
+        "n": 4,
+        "name": "Box office",
+        "text": "After each battle, the crew gains **2 parts** for each enemy it put down **with a crushing hit** (the clip sells)."
+      }
+    ],
+    "subfactions": [
+      {
+        "name": "Reality Productions",
+        "replaces": 2,
+        "rule": "**Staged drama.** When a Reality fighter puts an enemy down, they are **Announced** and **Hyped**: the camera finds them, and they play to it"
+      },
+      {
+        "name": "Streaming Platforms",
+        "replaces": 3,
+        "rule": "**Cancelled.** After a battle in which the crew did not hold the field, it may cancel one fighter: remove them from the roster and gain their hire price in parts"
+      },
+      {
+        "name": "Festival Auteurs",
+        "replaces": 4,
+        "rule": "**The director's call.** At the start of each round, while the Director is standing, they name one ally within 6 inches and the player rolls a d6 for the word: **1-2 \"Move!\"**, **3-4 \"Attack!\"**, **5-6 \"Hold!\"** (no Move action). If the ally obeys in their next activation they are **Hyped**; if not, **Flustered**. An \"Attack!\" for an ally with no enemy they could attack is rolled again. The crew never evacuates: a director does not leave a set"
+      },
+      {
+        "name": "Franchise Studios",
+        "replaces": 4,
+        "rule": "**Spin-off.** When a Franchise fighter earns a Legend, one rookie of the crew (Experience under 5) gains the same Legend too, with the title prefixed **\"Young\"**"
+      }
+    ],
+    "types": [
+      {
+        "name": "Action star",
+        "label": "Action star",
+        "trait": "+1 die on attacks while **Announced** (they play to the camera)"
+      },
+      {
+        "name": "Expert",
+        "label": "Expert",
+        "trait": "**\"I played one.\"** Once per activation, before an attack or test of their own, the Expert says what they once played: that roll is made as if the rating were **2**. On a kept total of **9 or less** it fails anyway (a test fails, an attack does nothing), and the Expert is **Shook** and **Flustered**: the scene was cut"
+      },
+      {
+        "name": "Stunt double",
+        "label": "Stunt double",
+        "trait": "Takes the hit for a star (rule 1), with **+1 save die** on it, even with no armour: they know how to fall. **Uncredited:** when a Stunt double puts an enemy down, the XP goes to the nearest Action star instead, and a Stunt double can never take a title"
+      },
+      {
+        "name": "Director",
+        "label": "Director",
+        "trait": "The crew's captain by default. As a Use action, shouts \"Cut!\": every ally within 6 inches loses **Announced**, and one of them loses a Shook token"
+      }
+    ],
+    "ownTaskTable": [
+      {
+        "d6": "1",
+        "Result": "**A stunt went wrong.** The stunt double was not on set. The fighter is **Sore**"
+      },
+      {
+        "d6": "2",
+        "Result": "**Recast.** The part went to someone taller. The fighter starts the next battle **Flustered**"
+      },
+      {
+        "d6": "3",
+        "Result": "**Straight to slop.** Nobody watched it, and Chet Jippity says it is their best work yet. The fighter starts the next battle **Hyped**"
+      },
+      {
+        "d6": "4",
+        "Result": "**A fan base.** The crew gains **Showboats**"
+      },
+      {
+        "d6": "5",
+        "Result": "**Merchandise:** **+2 parts**, and the crew gains a **rumour**"
+      },
+      {
+        "d6": "6",
+        "Result": "**Picture of the Year** at the Annual Improvement Awards (it beat a harvest figure): **+3 XP**"
+      }
+    ],
+    "voice": "**Voice: Chet Jippity** (section 8.6).",
+    "startingKit": "**Starting kit:** real props: one old-stock weapon worth up to 18 parts. The four rookies are a **Director** (the captain), an **Action star**, an **Expert** and a **Stunt double**.",
+    "specials": "**Specials:** the gift and Rites at the normal price (30 and 20). No bots.",
+    "captiveFate": "**Captive fate: Cast them.** The captive works as an extra in the background of the picture: the crew rolls once on the Shoot a picture table below (no test), on top of half the price.",
+    "ownTask": "**Own task: Shoot a picture** (Nerve, Tricky 8). Success: **8 parts**."
+  }
+]

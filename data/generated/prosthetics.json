@@ -1,0 +1,17 @@
+[
+  {
+    "Injury": "Lost arm",
+    "Replacement": "**Robo-arm** (section 7.5)",
+    "Effect": "Hands back to normal. A copy arm is Unreliable; an old-stock arm has Servo-grip"
+  },
+  {
+    "Injury": "Lost leg",
+    "Replacement": "**Peg-leg** (copy)",
+    "Effect": "Move -1 instead of halved. **-1 die on Grit tests to climb or jump.** If the fighter spends both actions of an activation on Move, they make a **Routine (6) Grit test** before the second Move; on a failure they still make it, but end it **prone**. Still planted"
+  },
+  {
+    "Injury": "Lost leg",
+    "Replacement": "**Old-stock leg**",
+    "Effect": "The Move penalty goes. **+1 die on Grit tests to climb or jump.** Still planted"
+  }
+]

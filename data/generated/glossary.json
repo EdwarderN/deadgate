@@ -1,0 +1,492 @@
+[
+  {
+    "Term": "**Ace**",
+    "Meaning": "The once-in-a-career rating advance that takes a rating of 2 to 3",
+    "See": "13.4"
+  },
+  {
+    "Term": "**Activation**",
+    "Meaning": "One fighter's turn: two actions",
+    "See": "5.1"
+  },
+  {
+    "Term": "**Advance**",
+    "Meaning": "A trait or a rating advance, taken at an XP threshold",
+    "See": "13.4"
+  },
+  {
+    "Term": "**Air tax**",
+    "Meaning": "2 parts per uninjured fighter, every break",
+    "See": "14.3"
+  },
+  {
+    "Term": "**Amissus**",
+    "Meaning": "The sealed star system where the game is set",
+    "See": "1.10"
+  },
+  {
+    "Term": "**Announced**",
+    "Meaning": "A state: the fighter can be shot, prompted and targeted without line of sight",
+    "See": "5.9"
+  },
+  {
+    "Term": "**Arrival**",
+    "Meaning": "A human from a pod with no memory of their life before; joins with the Past \"Unwritten\"",
+    "See": "13.9"
+  },
+  {
+    "Term": "**Ask the voice**",
+    "Meaning": "A free d6 gamble on the crew's voice's table before a roll, once an activation",
+    "See": "8.6"
+  },
+  {
+    "Term": "**Assist**",
+    "Meaning": "An action: an ally within 2 inches is Hyped",
+    "See": "5.2"
+  },
+  {
+    "Term": "**Boast**",
+    "Meaning": "A Word shouted at the enemy: +1 XP, a terror test, a bounty on the boaster",
+    "See": "13.5"
+  },
+  {
+    "Term": "**Bodge**",
+    "Meaning": "A kept total of exactly 2 on an Unreliable item: it jams and the bodge table is rolled",
+    "See": "7.2"
+  },
+  {
+    "Term": "**Boosted**",
+    "Meaning": "The better effect of old-stock gear, for 1 Energy; drops are always boosted",
+    "See": "7.2"
+  },
+  {
+    "Term": "**Break**",
+    "Meaning": "Everything between two battles",
+    "See": "14.1"
+  },
+  {
+    "Term": "**Breaking**",
+    "Meaning": "A side at half strength tests each round, and leaves the battle on a failure",
+    "See": "9.4"
+  },
+  {
+    "Term": "**Bystander**",
+    "Meaning": "A non-player model to be led off the table",
+    "See": "9.8"
+  },
+  {
+    "Term": "**Captain**",
+    "Meaning": "The crew's leader, with captain traits; makes the breaking test",
+    "See": "11.2"
+  },
+  {
+    "Term": "**Captive**",
+    "Meaning": "A downed enemy picked up and carried off; ransomed or meets their fate",
+    "See": "14.4"
+  },
+  {
+    "Term": "**Clash**",
+    "Meaning": "A tie in a melee roll: roll on the d66 clash table",
+    "See": "6.5"
+  },
+  {
+    "Term": "**Contact**",
+    "Meaning": "A roster note used once between battles",
+    "See": "14.8"
+  },
+  {
+    "Term": "**Copy**",
+    "Meaning": "Cheap local gear. Copy guns are Weak and Unreliable; other copies are Unreliable when they roll",
+    "See": "7.2"
+  },
+  {
+    "Term": "**Crushing**",
+    "Meaning": "The worst severity: a margin of 6 or more, or a shot of 11 or more",
+    "See": "3.4"
+  },
+  {
+    "Term": "**Deed**",
+    "Meaning": "What a Word promises: Small, Big or Legendary",
+    "See": "13.6"
+  },
+  {
+    "Term": "**Deep water**",
+    "Meaning": "A terrain trait: a Routine Grit test to enter and each activation; a failure sweeps the fighter d6 inches downstream, prone. Brinies need no test",
+    "See": "5.10"
+  },
+  {
+    "Term": "**Deployment zone**",
+    "Meaning": "The area the deployment table gives a side: where its bots reach the operators, where its evac marker goes, and where scenarios send things home",
+    "See": "9.1"
+  },
+  {
+    "Term": "**Difficulty**",
+    "Meaning": "One of three test targets: Routine 6, Tricky 8, Hard 10",
+    "See": "3.3"
+  },
+  {
+    "Term": "**Doors and windows**",
+    "Meaning": "Shut but unlocked unless hacked: fighters pass through, sight does not. Red Hacked token: locked. Green: open",
+    "See": "5.10"
+  },
+  {
+    "Term": "**Down**",
+    "Meaning": "Out of the fight for this battle; the model lies on their face",
+    "See": "6.4"
+  },
+  {
+    "Term": "**Drop**",
+    "Meaning": "Tech that fell in a pod. Strange, voiceless and never for sale",
+    "See": "7.2"
+  },
+  {
+    "Term": "**Energy**",
+    "Meaning": "A fighter's one battery: 4, or 6 in a military frame",
+    "See": "5.7"
+  },
+  {
+    "Term": "**Evac**",
+    "Meaning": "The only way to leave a battle early; a scattering marker, and everyone within 6 inches leaves at the end of the next round",
+    "See": "9.6"
+  },
+  {
+    "Term": "**Experience**",
+    "Meaning": "Total XP earned. It is never spent",
+    "See": "13.4"
+  },
+  {
+    "Term": "**Final**",
+    "Meaning": "The extra battle between the two crews with the most league points",
+    "See": "14.13"
+  },
+  {
+    "Term": "**Finds**",
+    "Meaning": "The d6 table of things a prize or a rumour turns up",
+    "See": "14.7"
+  },
+  {
+    "Term": "**Flustered**",
+    "Meaning": "A state: no reaction until the end of the fighter's next activation",
+    "See": "5.9"
+  },
+  {
+    "Term": "**Force field**",
+    "Meaning": "Old-stock Belt kit that cancels or saves against shots and blasts, for 1 Energy",
+    "See": "5.7"
+  },
+  {
+    "Term": "**Frenzied**",
+    "Meaning": "A mode from madness: the fighter goes for the closest enemy every activation (shoots it with a ranged weapon, closes to melee without)",
+    "See": "8.4"
+  },
+  {
+    "Term": "**Gentle table**",
+    "Meaning": "The kinder injury table, for the evacuated, the captured and the side holding the field",
+    "See": "13.2"
+  },
+  {
+    "Term": "**Gift**",
+    "Meaning": "The psionic powers of some Longshanks and Brinies",
+    "See": "8.4"
+  },
+  {
+    "Term": "**Glance**",
+    "Meaning": "The lightest severity: a margin of 1-2, or a shot of 7-8",
+    "See": "3.4"
+  },
+  {
+    "Term": "**Glitch**",
+    "Meaning": "A bot's lasting injury: something old in its core wakes up",
+    "See": "13.3"
+  },
+  {
+    "Term": "**Hacked token**",
+    "Meaning": "A two-sided marker on a prompted machine; the effect lasts while it is there",
+    "See": "8.1"
+  },
+  {
+    "Term": "**Hands**",
+    "Meaning": "How many Hands' worth of items a fighter can have in use",
+    "See": "7.1"
+  },
+  {
+    "Term": "**Harsh table**",
+    "Meaning": "The worse injury table, for fighters left behind",
+    "See": "13.2"
+  },
+  {
+    "Term": "**Higher ground**",
+    "Meaning": "A fighter whose base stands at least 1 inch above the enemy's: +1 die in melee and on shots, and -1 die for shooters against them",
+    "See": "5.10"
+  },
+  {
+    "Term": "**Holds the field**",
+    "Meaning": "Has more fighters standing at the end, or the enemy evacuated",
+    "See": "9.5"
+  },
+  {
+    "Term": "**Hyped**",
+    "Meaning": "A state: +1 die, spent on an attack, test or save",
+    "See": "5.9"
+  },
+  {
+    "Term": "**Kept total**",
+    "Meaning": "The two dice that count after keeping the best or lowest two",
+    "See": "3.5"
+  },
+  {
+    "Term": "**Know-how test**",
+    "Meaning": "The Tech test every use of a Strange item needs",
+    "See": "7.2"
+  },
+  {
+    "Term": "**Laggy**",
+    "Meaning": "A bot out of its deployment zone and more than 12 inches from a relay beacon: no reaction, -1 die on attacks",
+    "See": "8.5"
+  },
+  {
+    "Term": "**Laid up**",
+    "Meaning": "Misses the next battle and this break's task",
+    "See": "13.2"
+  },
+  {
+    "Term": "**Lasting condition**",
+    "Meaning": "Winded, Breather loose, Limping, Bad arm, Ringing head. Two put a fighter down",
+    "See": "6.3"
+  },
+  {
+    "Term": "**League points**",
+    "Meaning": "Points a battle scores for the winning condition, the field and Words fulfilled",
+    "See": "14.12"
+  },
+  {
+    "Term": "**Legend**",
+    "Meaning": "A trait and title from a Big or Legendary Word, or a rumour",
+    "See": "13.8"
+  },
+  {
+    "Term": "**Mark**",
+    "Meaning": "Each voice result is marked bad, mixed, nothing or good; other rules read the mark",
+    "See": "8.6"
+  },
+  {
+    "Term": "**Net dice**",
+    "Meaning": "The extra dice left after both sides' extras cancel",
+    "See": "3.2"
+  },
+  {
+    "Term": "**Old stock**",
+    "Meaning": "Rare, working gear from before the gate died",
+    "See": "7.2"
+  },
+  {
+    "Term": "**Parts**",
+    "Meaning": "The currency",
+    "See": "14.2"
+  },
+  {
+    "Term": "**Pod**",
+    "Meaning": "A drop falling from the sky; it may land in any battle",
+    "See": "9.7"
+  },
+  {
+    "Term": "**Point-blank**",
+    "Meaning": "A pistol trait: shoot an enemy in base contact, with -1 die",
+    "See": "7.3"
+  },
+  {
+    "Term": "**Press**",
+    "Meaning": "A free push, step or break-away for the winner of a melee exchange",
+    "See": "5.4"
+  },
+  {
+    "Term": "**Prize**",
+    "Meaning": "10 parts and a finds roll, for meeting the winning condition",
+    "See": "9.5"
+  },
+  {
+    "Term": "**Prompt**",
+    "Meaning": "Talking a machine into overriding itself: a hack or a rite",
+    "See": "8.1"
+  },
+  {
+    "Term": "**Prone**",
+    "Meaning": "Lying on their back; standing up costs an action",
+    "See": "5.3"
+  },
+  {
+    "Term": "**Prosthetic**",
+    "Meaning": "A robo-arm, peg-leg or old-stock leg that replaces what an injury took",
+    "See": "13.2"
+  },
+  {
+    "Term": "**Rating**",
+    "Meaning": "Fight, Shoot, Grit, Nerve, Tech: extra dice on their rolls",
+    "See": "4.2"
+  },
+  {
+    "Term": "**Reaction**",
+    "Meaning": "One a round, chosen before the dice: Dive, Duck, Return fire and others",
+    "See": "5.6"
+  },
+  {
+    "Term": "**Relic**",
+    "Meaning": "An ordinary old-world object worked as a miracle",
+    "See": "8.3"
+  },
+  {
+    "Term": "**Rite**",
+    "Meaning": "One of six kinds of relic (Quiet, Light, Ward, Wrath, Calling, Mending); a priest knows one at the start and learns more as advances",
+    "See": "8.3"
+  },
+  {
+    "Term": "**Rites**",
+    "Meaning": "The trait that makes a fighter a priest: they Recite prompts (asking a voice first), they know one rite and can use its relics",
+    "See": "8.1"
+  },
+  {
+    "Term": "**Rival**",
+    "Meaning": "A crew, gang or patron written on the roster; events and tasks refer to it",
+    "See": "14.8"
+  },
+  {
+    "Term": "**Rumour**",
+    "Meaning": "The past the world writes for an arrival; also a roster note about a crew",
+    "See": "13.9"
+  },
+  {
+    "Term": "**Save**",
+    "Meaning": "2d6 plus save dice against 7, 9 or 11, before the consequence",
+    "See": "5.7"
+  },
+  {
+    "Term": "**Scenario item**",
+    "Meaning": "A crate, sample, relic marker or other thing a scenario puts on the table to be carried or used",
+    "See": "9.1"
+  },
+  {
+    "Term": "**Severity**",
+    "Meaning": "How bad a hit is: glance, solid or crushing",
+    "See": "3.4"
+  },
+  {
+    "Term": "**Shook**",
+    "Meaning": "A state: -1 die on the next attack, test or save",
+    "See": "5.9"
+  },
+  {
+    "Term": "**Silly trait**",
+    "Meaning": "The mocking trait left by a failed Word",
+    "See": "13.7"
+  },
+  {
+    "Term": "**Slack**",
+    "Meaning": "A bot cut off by a Cut the link prompt (or Jeminy's \"I am a failure\" on its own core): one action, a Move toward the nearest enemy",
+    "See": "8.5"
+  },
+  {
+    "Term": "**Solid**",
+    "Meaning": "The middle severity: a margin of 3-5, or a shot of 9-10. Also a terrain trait that blocks everything",
+    "See": "3.4"
+  },
+  {
+    "Term": "**Sore**",
+    "Meaning": "No task this break, but plays the next battle",
+    "See": "13.2"
+  },
+  {
+    "Term": "**Spotlight**",
+    "Meaning": "In the Final: a fighter named each round is Announced, and Hyped if they put down an enemy",
+    "See": "14.13"
+  },
+  {
+    "Term": "**Stage**",
+    "Meaning": "The 6-inch circle at the centre of the table in the Final",
+    "See": "14.13"
+  },
+  {
+    "Term": "**State**",
+    "Meaning": "A short-lived marker that never puts anyone down: Hyped, Shook, Flustered, Under warranty, Announced",
+    "See": "5.9"
+  },
+  {
+    "Term": "**Story event**",
+    "Meaning": "One per crew each break: a row chosen to fit the battle, a d6, then Accept, Pay or Twist",
+    "See": "14.5"
+  },
+  {
+    "Term": "**Strange**",
+    "Meaning": "A drop's trait: a know-how test on every use",
+    "See": "7.2"
+  },
+  {
+    "Term": "**Tag**",
+    "Meaning": "A crew's reputation: Ran, Reliable, Butchers, Showboats, Oathbreakers",
+    "See": "14.10"
+  },
+  {
+    "Term": "**Task**",
+    "Meaning": "What a fighter does during the break: a test, then 2d6 on the task's table (a d6 for a faction's own task)",
+    "See": "14.6"
+  },
+  {
+    "Term": "**Teacher**",
+    "Meaning": "The ally who teaches a Train task, with a higher rating, and takes no task",
+    "See": "14.6"
+  },
+  {
+    "Term": "**Terrain trait**",
+    "Meaning": "A property of a terrain piece: cover, Solid, Difficult, Dangerous, Wet, Deep water, Powered",
+    "See": "5.10"
+  },
+  {
+    "Term": "**Trait budget**",
+    "Meaning": "At most five trait lines from advances, Legends and captain traits",
+    "See": "4.4"
+  },
+  {
+    "Term": "**Type**",
+    "Meaning": "A fighter's job in the crew, with a free trait (the Waiting, the Control Group and Hollowood only)",
+    "See": "4.4"
+  },
+  {
+    "Term": "**Under warranty**",
+    "Meaning": "A state: +1 save die on the next save, even with no armour",
+    "See": "5.9"
+  },
+  {
+    "Term": "**Underdog**",
+    "Meaning": "The weaker crew; its fighters gain extra XP",
+    "See": "11.5"
+  },
+  {
+    "Term": "**Unreliable**",
+    "Meaning": "Copy gear that jams on a kept total of 3 or less",
+    "See": "7.2"
+  },
+  {
+    "Term": "**Vow**",
+    "Meaning": "A Word sworn to the fighter's own crew",
+    "See": "13.5"
+  },
+  {
+    "Term": "**Wager**",
+    "Meaning": "A Word with a stake of parts against a bettor",
+    "See": "13.5"
+  },
+  {
+    "Term": "**Weak**",
+    "Meaning": "Copy guns: the margin or shot total counts as 1 less",
+    "See": "7.3"
+  },
+  {
+    "Term": "**Winning condition**",
+    "Meaning": "What a scenario asks for. Meeting it earns the prize: 10 parts and a finds roll",
+    "See": "9.5"
+  },
+  {
+    "Term": "**Word**",
+    "Meaning": "A public promise to do a deed this battle",
+    "See": "13.5"
+  }
+]

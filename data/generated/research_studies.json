@@ -1,0 +1,54 @@
+{
+  "field": [
+    {
+      "d6": "1",
+      "Field study": "**Observe.** At the end of a round, a bot with no lasting condition is within 3 inches of two enemies"
+    },
+    {
+      "d6": "2",
+      "Field study": "**Stress test.** A bot with a lasting condition puts down an enemy"
+    },
+    {
+      "d6": "3",
+      "Field study": "**Sample collection.** A fighter of the crew captures a downed enemy"
+    },
+    {
+      "d6": "4",
+      "Field study": "**Social study.** A volunteer is Announced and Hyped at the same time"
+    },
+    {
+      "d6": "5",
+      "Field study": "**Control.** A bot spends a whole activation doing nothing (both actions on Use, with nothing to use) while an enemy is within 6 inches of it"
+    },
+    {
+      "d6": "6",
+      "Field study": "**Replication.** A Control Group fighter puts down an enemy with an attack that had the Peer review die (rule 4)"
+    }
+  ],
+  "lab": [
+    {
+      "d6": "1",
+      "Lab study": "**Placebo.** A volunteer gets a good Ask the voice result and passes the roll they asked it for"
+    },
+    {
+      "d6": "2",
+      "Lab study": "**Exposure.** A volunteer ends the battle standing with exactly one lasting condition"
+    },
+    {
+      "d6": "3",
+      "Lab study": "**Peer pressure.** At the end of a round, two Control Group fighters are in base contact with the same enemy"
+    },
+    {
+      "d6": "4",
+      "Lab study": "**Long-term study.** Before deployment, name one enemy fighter: at the end of the battle, a bot is within 6 inches of them"
+    },
+    {
+      "d6": "5",
+      "Lab study": "**Double blind.** At the end of the battle, a bot and a volunteer stand in base contact with each other, neither with a lasting condition"
+    },
+    {
+      "d6": "6",
+      "Lab study": "**Negative result.** A bot's shot misses an enemy who is Announced"
+    }
+  ]
+}

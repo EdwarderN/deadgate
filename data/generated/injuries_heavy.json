@@ -1,0 +1,32 @@
+[
+  {
+    "d6": "1",
+    "Injury (title)": "**One eye** (\"the Squint\")",
+    "What it does": "Aim gives them nothing, but their shots ignore the \"target moved\" penalty: they never had depth to lose"
+  },
+  {
+    "d6": "2",
+    "Injury (title)": "**Lost leg** (\"Peg-Leg\")",
+    "What it does": "Move **halved** (rounded up), and Press cannot push them (they are planted). The med-assistant said the leg was optional"
+  },
+  {
+    "d6": "3",
+    "Injury (title)": "**Lost arm** (\"the Hook\")",
+    "What it does": "Hands -1 until a robo-arm takes its place"
+  },
+  {
+    "d6": "4",
+    "Injury (title)": "**Burned** (\"the Unburnt\")",
+    "What it does": "Blasts and fire are read one band lower against them"
+  },
+  {
+    "d6": "5",
+    "Injury (title)": "**Shell-shock** (\"the Rattled\")",
+    "What it does": "When an ally within 3 inches goes down, they hit the dirt: **prone**"
+  },
+  {
+    "d6": "6",
+    "Injury (title)": "**Plate in the head** (\"Tin-Head\")",
+    "What it does": "The plate picks up voices. They may Ask the voice of any voiced item within 3 inches, an enemy's included; an enemy's item answers with that crew's voice"
+  }
+]

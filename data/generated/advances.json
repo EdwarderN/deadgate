@@ -1,0 +1,206 @@
+{
+  "Common": [
+    {
+      "Advance": "**Sure-footed**",
+      "Rule": "Standing up costs you no action"
+    },
+    {
+      "Advance": "**Nerves of tape**",
+      "Rule": "When you would be made Shook or Flustered, you may spend your reaction to ignore it"
+    },
+    {
+      "Advance": "**Rat run**",
+      "Rule": "Locked doors and windows do not stop your movement: you know the cat flap. They still block sight"
+    },
+    {
+      "Advance": "**Hard to find**",
+      "Rule": "While you are downed, enemies cannot capture you: nobody can find you. You know where to hide"
+    },
+    {
+      "Advance": "**Loud voice**",
+      "Rule": "Your Assist reaches an ally within 6 inches, through walls, and every time you Assist you are **Announced**"
+    },
+    {
+      "Advance": "**Quick hands**",
+      "Rule": "Swapping what is in your hands costs you no action"
+    },
+    {
+      "Advance": "**Play dead**",
+      "Rule": "While you are prone, a shooter loses one more die against you (2 in all)"
+    },
+    {
+      "Advance": "**Back-seat driver**",
+      "Rule": "When an ally within 3 inches Asks the voice, after the roll you may shout over it: nothing happens, whatever the result, and you are **Flustered**"
+    }
+  ],
+  "Fight": [
+    {
+      "Advance": "**Parry**",
+      "Rule": "You can Parry and Riposte (section 7.4). Needs a melee weapon"
+    },
+    {
+      "Advance": "**Know where it hurts**",
+      "Rule": "Your glance on an enemy who already has a lasting condition is read as a solid"
+    },
+    {
+      "Advance": "**Hold the door**",
+      "Rule": "The outnumbering dice enemies gain against you are reduced by 1"
+    },
+    {
+      "Advance": "**Dirty trick**",
+      "Rule": "After you win a melee exchange you may, instead of Press, make the loser **Flustered**"
+    },
+    {
+      "Advance": "**Pin**",
+      "Rule": "After you win a melee exchange you may, instead of Press, knock the loser prone"
+    },
+    {
+      "Advance": "**Bodyguard**",
+      "Rule": "When an ally in base contact with you is attacked in melee, you may spend your reaction to be attacked instead"
+    },
+    {
+      "Advance": "**Fireman's carry**",
+      "Rule": "You capture a downed enemy without the opposed roll if no other enemy is within 3 inches of you"
+    },
+    {
+      "Advance": "**Sticky**",
+      "Rule": "An enemy who moves out of base contact with you is **Flustered** (you may still take a parting blow)"
+    }
+  ],
+  "Shoot": [
+    {
+      "Advance": "**Steady hands**",
+      "Rule": "Your Aim also ignores the target's light cover"
+    },
+    {
+      "Advance": "**Near miss**",
+      "Rule": "A shot of yours that totals exactly 6 still makes the target **Flustered**"
+    },
+    {
+      "Advance": "**Hot potato**",
+      "Rule": "When an enemy grenade lands within 2 inches of you, you may spend your reaction to throw it back before it goes off: it scatters again, from you, toward a point of your choice within 8 inches"
+    },
+    {
+      "Advance": "**Quick draw**",
+      "Rule": "You may Return fire while **Flustered**"
+    },
+    {
+      "Advance": "**Suppressing fire**",
+      "Rule": "An Attack action with a gun, with no roll: an enemy in range and line of sight is **Flustered**. It counts as an attack for the second-attack rule and spends Energy as a shot would"
+    },
+    {
+      "Advance": "**Trick shot**",
+      "Rule": "Your shots ignore the \"target moved\" penalty"
+    },
+    {
+      "Advance": "**Clear it fast**",
+      "Rule": "Clearing a jam on your own gear needs no test (it is still a Use action)"
+    },
+    {
+      "Advance": "**Overwatch**",
+      "Rule": "If you have not moved this round, you may spend your reaction to shoot an enemy who ends a Move action in your range and line of sight, at -1 die"
+    }
+  ],
+  "Grit": [
+    {
+      "Advance": "**Shoulder it**",
+      "Rule": "You carry a downed ally alone at full Move"
+    },
+    {
+      "Advance": "**Stubborn**",
+      "Rule": "When a glance would give you a lasting condition, you may spend your reaction to ignore it"
+    },
+    {
+      "Advance": "**Sure grip**",
+      "Rule": "You climb or jump up to 2 inches without a Grit test"
+    },
+    {
+      "Advance": "**Second wind**",
+      "Rule": "A Use action and a Routine (6) Grit test clear Winded from yourself"
+    },
+    {
+      "Advance": "**Thick-skinned**",
+      "Rule": "You pass Cold and Dangerous terrain tests without rolling"
+    },
+    {
+      "Advance": "**Tough as old boots**",
+      "Rule": "One Winded does not count toward going down for you (a second Winded does)"
+    },
+    {
+      "Advance": "**Slippery**",
+      "Rule": "When you spend both actions on Move, nobody may take a parting blow on you"
+    }
+  ],
+  "Nerve": [
+    {
+      "Advance": "**Rally**",
+      "Rule": "A Use action and a Routine (6) Nerve test: an ally in contact clears Winded or Flustered"
+    },
+    {
+      "Advance": "**Steady mind**",
+      "Rule": "If you have the gift, you may spend your reaction to ignore a madness result"
+    },
+    {
+      "Advance": "**Terrifying**",
+      "Rule": "The Nerve test your boast forces is Tricky (8) instead of Routine"
+    },
+    {
+      "Advance": "**Hold the line**",
+      "Rule": "An ally within 3 inches may use your Nerve instead of their own on a Nerve test"
+    },
+    {
+      "Advance": "**Unflappable**",
+      "Rule": "Enemy fighters' effects cannot make you **Flustered**"
+    },
+    {
+      "Advance": "**Steady under fire**",
+      "Rule": "When you choose Take it against a shot and are still standing after it, you are **Hyped**"
+    },
+    {
+      "Advance": "**Inspiring**",
+      "Rule": "When you pass a Nerve test, one ally within 3 inches is **Hyped**"
+    },
+    {
+      "Advance": "**Far reach**",
+      "Rule": "If you have the gift, your powers reach through one wall, as if the target were Announced"
+    }
+  ],
+  "Tech": [
+    {
+      "Advance": "**Rites**",
+      "Rule": "You may Recite (asking a voice first, section 8.1), you know one rite of your choice, and you can use its relics (section 8.3)"
+    },
+    {
+      "Advance": "**Rite of Quiet, Light, Ward, Wrath, Calling or Mending** (needs Rites)",
+      "Rule": "You know that rite as well, and can use its relics (section 8.3). Take it once for each rite"
+    },
+    {
+      "Advance": "**Medic's hands**",
+      "Rule": "You can Patch up without a kit, at Tricky (8)"
+    },
+    {
+      "Advance": "**Know the weirdness**",
+      "Rule": "When your know-how test fails, roll twice on the weird table and choose"
+    },
+    {
+      "Advance": "**Counter-hack**",
+      "Rule": "When your Counter-prompt makes a prompt fail, the machine takes the prompter literally: they roll on their crew's voice table, and only a bad result happens"
+    },
+    {
+      "Advance": "**Old friend**",
+      "Rule": "You may Ask the voice after your roll instead of before, once you have seen the dice. Its result still applies to that roll"
+    },
+    {
+      "Advance": "**Jury-rig**",
+      "Rule": "Your field patching also clears one jam on the patched fighter's gear"
+    },
+    {
+      "Advance": "**Battery whisperer**",
+      "Rule": "A Use action in base contact with an ally: move up to 2 Energy from your battery to theirs, or from theirs to yours"
+    },
+    {
+      "Advance": "**Backdoor**",
+      "Rule": "You may prompt a machine out of sight if an ally is in base contact with it, holding up the slate"
+    }
+  ]
+}

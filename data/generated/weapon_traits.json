@@ -1,0 +1,70 @@
+[
+  {
+    "Trait": "**Weak**",
+    "Effect": "The melee margin or shot total counts as 1 less (never below a glance). A Weak shot is crushing only on 12"
+  },
+  {
+    "Trait": "**Unreliable**",
+    "Effect": "A kept total of 3 or less on a roll with it jams the item (section 7.2)"
+  },
+  {
+    "Trait": "**Powered**",
+    "Effect": "Spends 1 Energy per attack; may be pushed for 1 more Energy (+1 die)"
+  },
+  {
+    "Trait": "**Strange**",
+    "Effect": "A know-how test of the listed Weirdness on every use"
+  },
+  {
+    "Trait": "**Hits hard**",
+    "Effect": "The severity is read one band higher"
+  },
+  {
+    "Trait": "**Armour-piercing**",
+    "Effect": "The target gets no armour save (force fields still work)"
+  },
+  {
+    "Trait": "**Heavy**",
+    "Effect": "Cannot move and shoot in the same activation. Too big to hold: only a military frame's weapon mount can carry it"
+  },
+  {
+    "Trait": "**Reach**",
+    "Effect": "Melee attacks from up to 2 inches away instead of base contact"
+  },
+  {
+    "Trait": "**Spread**",
+    "Effect": "A blast of shot: light cover costs the shooter no die. Heavy cover counts as usual"
+  },
+  {
+    "Trait": "**Stun**",
+    "Effect": "A target who is hit (after their save) is also **Flustered**"
+  },
+  {
+    "Trait": "**Point-blank**",
+    "Effect": "The wielder may shoot an enemy in base contact with them, and only that enemy, with -1 die. Without it, a fighter in base contact cannot shoot"
+  },
+  {
+    "Trait": "**Quick**",
+    "Effect": "+1 die when this weapon defends in melee"
+  },
+  {
+    "Trait": "**Sunder**",
+    "Effect": "A hit on a shield costs it 1 more dent (a glance costs 1, a solid hit 2)"
+  },
+  {
+    "Trait": "**Knockdown**",
+    "Effect": "On a win by 3 or more, Press may knock the loser prone"
+  },
+  {
+    "Trait": "**Snare**",
+    "Effect": "A fighter this weapon hits cannot Move out of base contact with the wielder until the end of their next activation"
+  },
+  {
+    "Trait": "**Thrown**",
+    "Effect": "May be thrown up to 6 inches as a shot (rolled with Shoot, and Weak). The weapon lands where it hit and needs a Use action to pick up"
+  },
+  {
+    "Trait": "**Handy**",
+    "Effect": "Doubles as a tool: the holder clears a jam without a test, as with a repair kit (still a Use action)"
+  }
+]

@@ -1,0 +1,700 @@
+{
+  "_about": "Hand-kept rules the crew builder enforces. Every value names its rulebook section. When a rule changes, change it here (and in the rulebook). Text and tables come from data/generated/ instead; never copy them here.",
+  "creation": {
+    "startingParts": {
+      "value": 60,
+      "source": "11.1"
+    },
+    "startingRookies": {
+      "value": 4,
+      "source": "11.1",
+      "note": "Rookies are free, but a species or chassis that costs more than 15 to hire pays the difference from the 60 parts."
+    },
+    "rookieBasePrice": {
+      "value": 15,
+      "source": "11.1"
+    },
+    "rookieRatings": {
+      "value": "exactly one rating at 1, the others 0",
+      "source": "4.2, 11.1"
+    },
+    "captainTraitsAtStart": {
+      "value": 1,
+      "source": "11.2"
+    },
+    "oldStockAvailability": {
+      "value": "a d6 per item per break; 4+ available (3+ with the Haggler captain trait)",
+      "source": "11.3"
+    },
+    "dropsForSale": {
+      "value": false,
+      "source": "11.3"
+    },
+    "sellPrice": {
+      "value": "half the price, rounded down (full with a Fence contact)",
+      "source": "14.8"
+    },
+    "oldStockSeller": {
+      "value": 4,
+      "source": "11.3",
+      "modifiers": [
+        {
+          "captainTrait": "Haggler",
+          "value": 3,
+          "source": "11.2"
+        }
+      ],
+      "note": "the d6 score that finds a seller for an old-stock item"
+    }
+  },
+  "limits": {
+    "maxFighters": {
+      "value": 9,
+      "source": "11.1",
+      "note": "bots included"
+    },
+    "maxGifted": {
+      "value": 2,
+      "source": "4.3, 11.4"
+    },
+    "giftSpecies": {
+      "value": [
+        "Longshanks",
+        "Brinie"
+      ],
+      "source": "4.3"
+    },
+    "botsOnlyFor": {
+      "value": "The Control Group",
+      "source": "4.5"
+    },
+    "ratingRange": {
+      "value": [
+        0,
+        3
+      ],
+      "source": "4.2",
+      "note": "3 only through the Ace"
+    },
+    "traitBudget": {
+      "value": 5,
+      "source": "4.4, 13.4",
+      "note": "advances, Legends and captain traits; species, type, injury and silly traits never count"
+    },
+    "maxLastingInjuries": {
+      "value": 3,
+      "source": "13.2"
+    },
+    "oneSillyTrait": {
+      "value": true,
+      "source": "13.7"
+    },
+    "botForbiddenRating": {
+      "value": "Nerve",
+      "source": "4.5, 12.6",
+      "note": "a bot never has or raises Nerve"
+    },
+    "ratingNames": {
+      "value": [
+        "Fight",
+        "Shoot",
+        "Grit",
+        "Nerve",
+        "Tech"
+      ],
+      "source": "4.2"
+    },
+    "playableSpecies": {
+      "value": [
+        "Human",
+        "Fourhands",
+        "Hullback",
+        "Longshanks",
+        "Brinie"
+      ],
+      "source": "11.1",
+      "note": "bots come from chassis types (12.6)"
+    },
+    "botSpecies": {
+      "value": "Bot",
+      "source": "4.3"
+    },
+    "maxTags": {
+      "value": 3,
+      "source": "14.10"
+    },
+    "maxContacts": {
+      "value": 3,
+      "source": "14.8"
+    },
+    "maxCrewRumours": {
+      "value": 1,
+      "source": "14.8"
+    }
+  },
+  "gear": {
+    "handsSets": {
+      "value": 2,
+      "source": "7.1",
+      "note": "every fighter carries at most two sets, each up to 2 Hands"
+    },
+    "handsPerSet": {
+      "value": 2,
+      "source": "7.1"
+    },
+    "handsInUse": {
+      "value": {
+        "default": 2,
+        "Fourhands": 4,
+        "roboArmBonus": 1
+      },
+      "source": "4.3, 7.1"
+    },
+    "bodySlots": {
+      "value": 1,
+      "source": "7.1"
+    },
+    "frameSlots": {
+      "value": 1,
+      "source": "7.1"
+    },
+    "beltSlots": {
+      "value": 3,
+      "source": "7.1"
+    },
+    "grenadesPerBeltSlot": {
+      "value": 2,
+      "source": "7.1, 7.6"
+    },
+    "roboArmUsesBeltSlot": {
+      "value": true,
+      "source": "7.5"
+    },
+    "forceFieldUsesBeltSlot": {
+      "value": true,
+      "source": "7.4"
+    },
+    "militaryFrameFillsBody": {
+      "value": true,
+      "source": "7.1, 7.5"
+    },
+    "heavyArmourWithFrame": {
+      "value": false,
+      "source": "7.4"
+    },
+    "civilianFrameArmour": {
+      "value": [
+        "Light",
+        "Medium"
+      ],
+      "source": "7.5"
+    },
+    "heavyWeaponsNeedMilitaryMount": {
+      "value": true,
+      "source": "7.3, 7.5",
+      "note": "the Energy cannon"
+    },
+    "battery": {
+      "value": {
+        "default": 4,
+        "militaryFrame": 6
+      },
+      "source": "5.7"
+    },
+    "kindSlots": {
+      "value": {
+        "weapon": {
+          "slot": "hands",
+          "handsFrom": "Hands"
+        },
+        "shield": {
+          "slot": "hands",
+          "hands": 1
+        },
+        "armour": {
+          "slot": "body"
+        },
+        "frame": {
+          "slot": "frame"
+        },
+        "force field": {
+          "slot": "belt",
+          "belt": 1
+        },
+        "robo-arm": {
+          "slot": "belt",
+          "belt": 1,
+          "handsBonus": 1
+        },
+        "grenade": {
+          "slot": "belt",
+          "belt": 1
+        },
+        "device": {
+          "slot": "belt",
+          "belt": 1
+        },
+        "medical kit": {
+          "slot": "belt",
+          "belt": 1
+        },
+        "relic": {
+          "slotFrom": "Slot"
+        },
+        "prosthetic": {
+          "slot": "fitted"
+        },
+        "drop": {
+          "slotFrom": "Slot"
+        }
+      },
+      "source": "7.1, 7.4, 7.5, 7.6, 8.3, 13.2",
+      "note": "where each kind of item goes. handsFrom/slotFrom name the rules column that says so"
+    },
+    "frameKeys": {
+      "value": {
+        "military": "military frame",
+        "civilian": "civilian frame"
+      },
+      "source": "7.5"
+    },
+    "heavyArmourKey": {
+      "value": "heavy armour",
+      "source": "7.4"
+    },
+    "mountWeapons": {
+      "value": {
+        "hands": "Mount",
+        "alsoTwoHanded": true
+      },
+      "source": "7.5",
+      "note": "a military frame's mount carries one two-handed weapon or one heavy (Mount) weapon"
+    },
+    "moveModifiers": {
+      "value": {
+        "heavy armour": -1,
+        "military frame": -1
+      },
+      "source": "7.4, 7.5",
+      "note": "basic effect, before Energy"
+    },
+    "saveDice": {
+      "value": {
+        "light armour": 0,
+        "medium armour": 1,
+        "heavy armour": 2,
+        "military frame": 2
+      },
+      "source": "7.4, 7.5"
+    },
+    "prosthetics": {
+      "value": {
+        "robo-arm": "Lost arm",
+        "peg-leg": "Lost leg",
+        "old-stock leg": "Lost leg"
+      },
+      "source": "13.2",
+      "note": "a prosthetic can be fitted only in place of this injury"
+    },
+    "injuryEffects": {
+      "value": {
+        "Lost arm": {
+          "hands": -1
+        },
+        "Lost leg": {
+          "moveHalved": true,
+          "fixedBy": {
+            "peg-leg": {
+              "move": -1
+            },
+            "old-stock leg": {
+              "move": 0
+            }
+          }
+        }
+      },
+      "source": "13.2"
+    },
+    "minHands": {
+      "value": 1,
+      "source": "13.2"
+    },
+    "restrictedItems": {
+      "value": [
+        {
+          "key": "relay beacon",
+          "factions": [
+            "The Control Group"
+          ]
+        }
+      ],
+      "source": "7.6, 11.3"
+    }
+  },
+  "experience": {
+    "ladder": {
+      "value": [
+        5,
+        10,
+        16,
+        23,
+        31
+      ],
+      "then": "+9, then +10, and so on",
+      "source": "13.4",
+      "gapAfter": {
+        "value": 9,
+        "growth": 1,
+        "note": "after the listed thresholds the gap is 9, then 10, and so on"
+      }
+    },
+    "traitListNeedsRating": {
+      "value": 1,
+      "source": "13.4",
+      "note": "Common list for anyone; a rating's list needs that rating at 1 or more"
+    },
+    "noTwoRatingAdvancesInARow": {
+      "value": true,
+      "source": "13.4"
+    },
+    "aceFromAdvance": {
+      "value": 3,
+      "source": "13.4",
+      "note": "once a career, a 2 becomes 3"
+    },
+    "botsNeverRaiseNerve": {
+      "value": true,
+      "source": "4.5"
+    },
+    "aceFromAdvanceNumber": {
+      "value": 3,
+      "source": "13.4",
+      "note": "the Ace can be taken from the third advance on"
+    },
+    "aceTo": {
+      "value": 3,
+      "source": "13.4"
+    },
+    "ratingAdvanceMax": {
+      "value": 2,
+      "source": "13.4",
+      "note": "a rating advance goes 0 to 1 or 1 to 2"
+    },
+    "commonList": {
+      "value": "Common",
+      "source": "13.4"
+    },
+    "captainListAsAdvance": {
+      "value": true,
+      "source": "11.2, 13.4"
+    },
+    "ritesAdvance": {
+      "value": "Rites",
+      "source": "8.3, 11.4, 13.4",
+      "note": "the Tech advance that gives Rites; rite advances name it in their (needs ...)"
+    }
+  },
+  "underdogs": {
+    "strength": {
+      "value": "total Experience + 10 per fighter on the roster",
+      "source": "11.5"
+    },
+    "threshold": {
+      "value": [
+        20,
+        50
+      ],
+      "xp": [
+        1,
+        2
+      ],
+      "source": "11.5"
+    }
+  },
+  "factions": {
+    "The Bodgers": {
+      "startingKit": [
+        {
+          "item": "Repair kit",
+          "source": "copy"
+        },
+        {
+          "item": "Smoke grenades",
+          "source": "copy"
+        },
+        {
+          "item": "Crank charger",
+          "source": "copy"
+        },
+        {
+          "item": "Grapnel and line",
+          "source": "copy"
+        }
+      ],
+      "priceRules": [
+        {
+          "rule": 3,
+          "kind": "copyDiscount",
+          "amount": 1,
+          "min": 1,
+          "effect": "copy items cost 1 part less, never below 1",
+          "replacedBySubfaction": "Silver Tape"
+        }
+      ],
+      "specials": {
+        "gift": 30,
+        "rites": 20,
+        "bots": false
+      },
+      "types": false
+    },
+    "The Inspectorate": {
+      "startingKit": [
+        {
+          "item": "Light armour",
+          "source": "copy",
+          "who": "the captain",
+          "assign": "captain"
+        },
+        {
+          "item": "Light armour",
+          "source": "copy",
+          "who": "one other rookie",
+          "assign": "otherRookie"
+        },
+        {
+          "item": "Flash grenades",
+          "source": "copy"
+        }
+      ],
+      "specials": {
+        "gift": 30,
+        "rites": 20,
+        "bots": false
+      },
+      "types": false
+    },
+    "The Waiting": {
+      "startingKit": [
+        {
+          "choice": "one relic worth up to 20 parts",
+          "pick": {
+            "kind": "relic",
+            "source": "old stock",
+            "maxPrice": 20
+          }
+        }
+      ],
+      "specials": {
+        "gift": 15,
+        "rites": 10,
+        "bots": false
+      },
+      "types": true,
+      "typeGrants": {
+        "Priest": {
+          "rites": true,
+          "ritesKnown": 2
+        },
+        "Seer": {
+          "gift": true,
+          "speciesOnly": [
+            "Longshanks",
+            "Brinie"
+          ]
+        },
+        "Acolyte": {
+          "carriesRelics": true,
+          "note": "a priest within 6 inches may use a relic the Acolyte holds (12.4)"
+        }
+      },
+      "ritesKnownByAnyPriest": {
+        "value": 2,
+        "rule": 2
+      }
+    },
+    "Ledgerhands": {
+      "startingKit": [
+        {
+          "item": "Scrap pistol",
+          "source": "copy",
+          "who": "each of the four rookies",
+          "assign": "eachRookie",
+          "count": 4
+        }
+      ],
+      "credit": {
+        "value": -20,
+        "rule": 3,
+        "note": "may buy and hire down to -20 parts; below 0 it buys and hires nothing more"
+      },
+      "specials": {
+        "gift": 30,
+        "rites": 20,
+        "bots": false
+      },
+      "types": false
+    },
+    "The Control Group": {
+      "startingKit": [
+        {
+          "item": "Relay beacon",
+          "source": "old stock",
+          "count": 2
+        },
+        {
+          "item": "Spare cell",
+          "source": "old stock"
+        }
+      ],
+      "specials": {
+        "gift": null,
+        "rites": 20,
+        "bots": true,
+        "volunteer": 15
+      },
+      "types": true,
+      "noWords": true,
+      "priceRules": [
+        {
+          "rule": 3,
+          "kind": "recruitPrice",
+          "recruit": "Volunteer",
+          "price": 10,
+          "effect": "volunteers cost 10 instead of 15",
+          "replacedBySubfaction": "Replication Wing"
+        },
+        {
+          "subfaction": "Replication Wing",
+          "kind": "chassisDiscount",
+          "amount": 5,
+          "effect": "bot chassis cost 5 parts less"
+        }
+      ],
+      "rookiesMayBeBots": {
+        "value": true,
+        "source": "12.6",
+        "note": "any of the four rookies may be a bot chassis instead (a Lab-hand pays 5 over a rookie)"
+      },
+      "typeSpecies": {
+        "Observer": "Bot",
+        "Lab-hand": "Bot",
+        "Prototype": "Bot",
+        "Volunteer": "Human"
+      }
+    },
+    "Hollowood": {
+      "startingKit": [
+        {
+          "choice": "one old-stock weapon worth up to 18 parts",
+          "pick": {
+            "kind": "weapon",
+            "source": "old stock",
+            "maxPrice": 18
+          }
+        }
+      ],
+      "fixedRookies": [
+        "Director",
+        "Action star",
+        "Expert",
+        "Stunt double"
+      ],
+      "captainType": "Director",
+      "priceRules": [
+        {
+          "rule": 3,
+          "kind": "noSellerRoll",
+          "itemKind": "weapon",
+          "source": "old stock",
+          "effect": "old-stock weapons need no seller roll",
+          "replacedBySubfaction": "Streaming Platforms"
+        }
+      ],
+      "specials": {
+        "gift": 30,
+        "rites": 20,
+        "bots": false
+      },
+      "types": true
+    }
+  },
+  "campaign": {
+    "airTax": {
+      "value": 2,
+      "source": "14.3",
+      "exempt": [
+        "Sore",
+        "Laid up",
+        "Fitting a prosthetic"
+      ]
+    },
+    "rechargePerEnergy": {
+      "value": 1,
+      "source": "14.3"
+    },
+    "removeTag": {
+      "value": 10,
+      "source": "14.10"
+    },
+    "sellFraction": {
+      "value": 0.5,
+      "round": "down",
+      "source": "14.8"
+    },
+    "fenceContact": {
+      "value": "Fence",
+      "source": "14.8",
+      "note": "sells one item at full price"
+    },
+    "statuses": {
+      "value": [
+        "Fit",
+        "Sore",
+        "Laid up",
+        "Fitting a prosthetic"
+      ],
+      "source": "13.2, 14.3"
+    },
+    "fates": {
+      "value": [
+        "Dead",
+        "Taken",
+        "Destroyed"
+      ],
+      "source": "13.2, 13.3"
+    }
+  },
+  "sections": {
+    "value": {
+      "weapon": "7.3",
+      "armour": "7.4",
+      "shield": "7.4",
+      "force field": "7.4",
+      "frame": "7.5",
+      "robo-arm": "7.5",
+      "grenade": "7.6",
+      "device": "7.6",
+      "medical kit": "7.6",
+      "drop": "7.6",
+      "relic": "8.3",
+      "prosthetic": "13.2",
+      "species": "4.3",
+      "captain": "11.2",
+      "advance": "13.4",
+      "gift": "8.4",
+      "rites": "8.3",
+      "injury": "13.2",
+      "glitch": "13.3",
+      "silly": "13.7",
+      "deed": "13.6",
+      "rumour": "13.9",
+      "tag": "14.10",
+      "contact": "14.8",
+      "weaponTrait": "7.3",
+      "recruit": "11.3",
+      "gearSlots": "7.1"
+    },
+    "note": "where in the book each kind of rule lives, for the in-app rule text"
+  }
+}

@@ -1,0 +1,37 @@
+[
+  {
+    "Drop item": "**Drop armour** (light or medium)",
+    "Slot": "Body",
+    "What it does": "The armour's save, and Brace without Energy. Know-how test (Weirdness 6) the first time it is used each battle"
+  },
+  {
+    "Drop item": "**Drop arm**",
+    "Slot": "Belt 1",
+    "What it does": "Hands +1, always Servo-grip. Know-how test (Weirdness 6) each activation it is used"
+  },
+  {
+    "Drop item": "**Drop field**",
+    "Slot": "Belt 1",
+    "What it does": "A force field that needs no Energy: when a shot or blast hits, the wearer may use it after a know-how test (Weirdness 8)"
+  },
+  {
+    "Drop item": "**Drop scanner**",
+    "Slot": "Belt 1",
+    "What it does": "A ping scanner, always boosted. Know-how test (Weirdness 6)"
+  },
+  {
+    "Drop item": "**Drop grapnel**",
+    "Slot": "Belt 1",
+    "What it does": "A grapnel, always boosted (Winch). Know-how test (Weirdness 6)"
+  },
+  {
+    "Drop item": "**Weird grenades** (a pair)",
+    "Slot": "Belt 1",
+    "What it does": "Drop grenades, radius 2, always boosted. Know-how test (Weirdness 6) before each throw. Instead of a damage effect, roll once on the weird grenade table (section 7.7): every fighter in the blast gets the result, the thrower too"
+  },
+  {
+    "Drop item": "**A cell nobody can explain**",
+    "Slot": "Belt 1",
+    "What it does": "Once, as a Use action, it refills its carrier's battery to full. Then it is dead for the rest of the battle"
+  }
+]

@@ -1,0 +1,156 @@
+[
+  {
+    "Weapon": "Tool-blade (a wrench, a cutter, tape-wrapped steel)",
+    "Source": "Copy",
+    "Hands": "1",
+    "Range": "Melee",
+    "Traits": "Handy"
+  },
+  {
+    "Weapon": "Knife",
+    "Source": "Copy",
+    "Hands": "1",
+    "Range": "Melee",
+    "Traits": "Quick, Thrown"
+  },
+  {
+    "Weapon": "Hatchet",
+    "Source": "Copy",
+    "Hands": "1",
+    "Range": "Melee",
+    "Traits": "Sunder"
+  },
+  {
+    "Weapon": "Maul",
+    "Source": "Copy",
+    "Hands": "2",
+    "Range": "Melee",
+    "Traits": "Knockdown"
+  },
+  {
+    "Weapon": "Long hook (a pole with an edge)",
+    "Source": "Copy",
+    "Hands": "2",
+    "Range": "Melee",
+    "Traits": "Reach"
+  },
+  {
+    "Weapon": "Snare pole",
+    "Source": "Copy",
+    "Hands": "2",
+    "Range": "Melee",
+    "Traits": "Reach, Snare"
+  },
+  {
+    "Weapon": "Scrap pistol",
+    "Source": "Copy",
+    "Hands": "1",
+    "Range": "12",
+    "Traits": "Weak, Unreliable, Point-blank"
+  },
+  {
+    "Weapon": "Scrap rifle",
+    "Source": "Copy",
+    "Hands": "2",
+    "Range": "24",
+    "Traits": "Weak, Unreliable"
+  },
+  {
+    "Weapon": "Scrap shotgun",
+    "Source": "Copy",
+    "Hands": "2",
+    "Range": "8",
+    "Traits": "Weak, Unreliable, Spread"
+  },
+  {
+    "Weapon": "Energy pistol",
+    "Source": "Old stock",
+    "Hands": "1",
+    "Range": "12",
+    "Traits": "Powered, Point-blank"
+  },
+  {
+    "Weapon": "Energy rifle",
+    "Source": "Old stock",
+    "Hands": "2",
+    "Range": "24",
+    "Traits": "Powered, Armour-piercing"
+  },
+  {
+    "Weapon": "Scatter gun",
+    "Source": "Old stock",
+    "Hands": "2",
+    "Range": "8",
+    "Traits": "Powered, Hits hard, Spread"
+  },
+  {
+    "Weapon": "Shock baton",
+    "Source": "Old stock",
+    "Hands": "1",
+    "Range": "Melee",
+    "Traits": "Powered, Stun"
+  },
+  {
+    "Weapon": "Vibro-knife",
+    "Source": "Old stock",
+    "Hands": "1",
+    "Range": "Melee",
+    "Traits": "Powered, Armour-piercing"
+  },
+  {
+    "Weapon": "Power blade",
+    "Source": "Old stock",
+    "Hands": "1",
+    "Range": "Melee",
+    "Traits": "Powered, Hits hard"
+  },
+  {
+    "Weapon": "Power axe",
+    "Source": "Old stock",
+    "Hands": "2",
+    "Range": "Melee",
+    "Traits": "Powered, Hits hard, Sunder, Knockdown"
+  },
+  {
+    "Weapon": "Energy cannon",
+    "Source": "Old stock",
+    "Hands": "Mount",
+    "Range": "24",
+    "Traits": "Powered (2 Energy an attack), Heavy, Hits hard"
+  },
+  {
+    "Weapon": "Strange pistol",
+    "Source": "Drop",
+    "Hands": "1",
+    "Range": "12",
+    "Traits": "Strange (Weirdness 8), Hits hard, Point-blank"
+  },
+  {
+    "Weapon": "Strange rifle",
+    "Source": "Drop",
+    "Hands": "2",
+    "Range": "24",
+    "Traits": "Strange (Weirdness 8), Hits hard, Armour-piercing"
+  },
+  {
+    "Weapon": "Hum-blade",
+    "Source": "Drop",
+    "Hands": "1",
+    "Range": "Melee",
+    "Traits": "Strange (Weirdness 6), Hits hard"
+  },
+  {
+    "Weapon": "Arc-caster",
+    "Source": "Drop",
+    "Hands": "2",
+    "Range": "8",
+    "Traits": "Strange (Weirdness 10), Hits hard, Spread"
+  },
+  {
+    "Weapon": "Slow gun",
+    "Source": "Drop",
+    "Hands": "1",
+    "Range": "12",
+    "Traits": "Strange (Weirdness 8). A hit does no harm: the target is **Shook** and **Flustered** instead"
+  }
+]
