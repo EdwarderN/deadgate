@@ -10,6 +10,7 @@ import { Builder } from './ui/Builder';
 import { Campaign } from './ui/Campaign';
 import { PrintView } from './ui/Print';
 import { BattleView } from './ui/Battle';
+import { ConfirmProvider, useAsk } from './ui/confirm';
 import { AfterBattleView } from './ui/AfterBattle';
 
 type Route = { view: 'home' } | { view: 'crew' | 'print' | 'battle' | 'after'; id: string };
@@ -61,7 +62,16 @@ export default function App() {
   const remove = (id: string) => setCrews((cs) => { const next = cs.filter((c) => c.id !== id); saveCrews(next); return next; });
 
   const crew = route.view !== 'home' ? crews.find((c) => c.id === route.id) : undefined;
-  const update = useCallback((fn: (c: Crew) => Crew) => { if (crew) put(fn(crew)); }, [crew, put]);
+  // Each change applies to the latest saved crew, so several changes from one tap all stick.
+  const crewId = crew?.id;
+  const update = useCallback((fn: (c: Crew) => Crew) => {
+    if (!crewId) return;
+    setCrews((cs) => {
+      const next = cs.map((x) => (x.id === crewId ? { ...fn(x), updated: new Date().toISOString() } : x));
+      saveCrews(next);
+      return next;
+    });
+  }, [crewId]);
 
   let body;
   if (route.view === 'print' && crew) body = <PrintView crew={crew} />;
@@ -71,7 +81,7 @@ export default function App() {
   else body = <Home crews={crews} put={put} remove={remove} setNotice={setNotice} />;
 
   return (
-    <RuleProvider>
+    <RuleProvider><ConfirmProvider>
       <div className={`app view-${route.view}`}>
         <header className="topbar no-print">
           <a href="#/" className="brand" aria-label="All crews">
@@ -86,11 +96,12 @@ export default function App() {
         )}
         <main>{route.view !== 'home' && !crew ? <p className="empty">That crew isn't on this device. <a href="#/">Back to your crews</a></p> : body}</main>
       </div>
-    </RuleProvider>
+    </ConfirmProvider></RuleProvider>
   );
 }
 
 function Home({ crews, put, remove, setNotice }: { crews: Crew[]; put: (c: Crew) => void; remove: (id: string) => void; setNotice: (s: string) => void }) {
+  const ask = useAsk();
   const rules = getRules();
   const status = useMemo(() => Object.fromEntries(crews.map((c) => [c.id, validate(rules, c).filter((m) => m.level === 'error').length])), [crews, rules]);
 
@@ -137,7 +148,7 @@ function Home({ crews, put, remove, setNotice }: { crews: Crew[]; put: (c: Crew)
               <div className="row gap-s wrap">
                 <button className="btn small" onClick={() => download(fileName(c), crewToJson(c))}>Export</button>
                 <button className="btn small" onClick={() => { put({ ...c, id: uid('c'), name: `${c.name || 'Crew'} (copy)` }); }}>Copy</button>
-                <button className="btn small danger" onClick={() => { if (confirm(`Delete "${c.name || 'Unnamed crew'}" from this device? This cannot be undone.`)) remove(c.id); }}>Delete</button>
+                <button className="btn small danger" onClick={async () => { if (await ask(`Delete "${c.name || 'Unnamed crew'}" from this device? This cannot be undone.`)) remove(c.id); }}>Delete</button>
               </div>
             </li>
           ))}

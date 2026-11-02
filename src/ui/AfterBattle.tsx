@@ -12,6 +12,7 @@ import { go } from '../App';
 import { Hire, Md, Shop, Stash, fighterLabel, patchFighter, type Update } from './common';
 import { Experience } from './Campaign';
 import { PoolRoller, RollOrEnter } from './Dice';
+import { useAsk } from './confirm';
 import { RuleLink, injuryRule, legendRule, sillyRule, tagRule } from './rule';
 
 const STEPS = ['Words', 'Experience', 'Injuries', 'Captives', 'Advances', 'Air tax', 'Story event', 'Tasks', 'Spend', 'Wrap up'];
@@ -184,6 +185,7 @@ function InjuriesStep({ crew, a, setA, update }: P) {
 }
 
 function InjuryCard({ f, a, setA, update }: { crew: Crew; f: Fighter; a: After; setA: P['setA']; update: Update }) {
+  const ask = useAsk();
   const rules = getRules();
   const t = injuryTableFor(rules, a.battle, f.id)!;
   const st = a.injuries[f.id] ?? { rolls: [], done: false, notes: '' };
@@ -219,7 +221,7 @@ function InjuryCard({ f, a, setA, update }: { crew: Crew; f: Fighter; a: After; 
           {actions.map((x) => x.kind === 'status' ? (
             <button key={`s${x.value}`} className="btn small" onClick={() => patchFighter(update, f.id, (y) => ({ ...y, status: x.value }))}>Set {x.value}{f.status === x.value ? ' ✓' : ''}</button>
           ) : x.kind === 'dead' ? (
-            <button key="dead" className="btn small danger" onClick={() => { if (confirm(`${fighterLabel(f)} is ${bot ? fates.botDeadFate.value.toLowerCase() : 'dead'}. Put them on the crew's roll?`)) { toRoll(bot ? fates.botDeadFate.value : fates.deadResult.value); set({ done: true }); } }}>
+            <button key="dead" className="btn small danger" onClick={async () => { if (await ask(`${fighterLabel(f)} is ${bot ? fates.botDeadFate.value.toLowerCase() : 'dead'}. Put them on the crew's roll?`)) { toRoll(bot ? fates.botDeadFate.value : fates.deadResult.value); set({ done: true }); } }}>
               {bot ? fates.botDeadFate.value : fates.deadResult.value}: to the roll</button>
           ) : (
             <LastingInjury key={`l${x.value}`} f={f} list={x.value} update={update} />
@@ -256,6 +258,7 @@ function LastingInjury({ f, list, update }: { f: Fighter; list: string; update: 
 
 // ---------- 4. Captives ----------
 function CaptivesStep({ crew, a, update }: P) {
+  const ask = useAsk();
   const rules = getRules();
   const captured = inBattle(crew, a).filter((f) => positionDef(rules, a.battle.fighters[f.id].position)?.captured);
   const taken = rules.crew.afterBattle.takenFate.value;
@@ -266,7 +269,7 @@ function CaptivesStep({ crew, a, update }: P) {
         <div key={f.id} className="card stack-s">
           <strong>{fighterLabel(f)} was captured</strong>
           <PartsForm update={update} suggest={`Ransom for ${fighterLabel(f)}`} />
-          <button className="btn small danger" onClick={() => { if (confirm(`${fighterLabel(f)} is ${taken}: off the roster, onto the roll. Their gear stays with the captors.`)) update((c) => ({ ...c, fighters: c.fighters.filter((x) => x.id !== f.id), captainId: c.captainId === f.id ? null : c.captainId, items: c.items.filter((o) => o.fighterId !== f.id), notes: { ...c.notes, roll: [...c.notes.roll, { id: uid('r'), name: fighterLabel(f), titles: [f.title, ...f.titles].filter(Boolean).join(', '), fate: taken, note: a.battle.opponent ? `Taken by ${a.battle.opponent}` : '' }] } })); }}>Refused: {taken}</button>
+          <button className="btn small danger" onClick={async () => { if (await ask(`${fighterLabel(f)} is ${taken}: off the roster, onto the roll. Their gear stays with the captors.`)) update((c) => ({ ...c, fighters: c.fighters.filter((x) => x.id !== f.id), captainId: c.captainId === f.id ? null : c.captainId, items: c.items.filter((o) => o.fighterId !== f.id), notes: { ...c.notes, roll: [...c.notes.roll, { id: uid('r'), name: fighterLabel(f), titles: [f.title, ...f.titles].filter(Boolean).join(', '), fate: taken, note: a.battle.opponent ? `Taken by ${a.battle.opponent}` : '' }] } })); }}>Refused: {taken}</button>
         </div>
       ))}
       <div className="card stack-s">

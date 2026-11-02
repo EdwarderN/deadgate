@@ -156,7 +156,11 @@ export function Shop({ crew, update }: { crew: Crew; update: Update }) {
       return next;
     });
   };
-  const setSeller = (it: ItemDef, roll: number | null) => update((c) => setSellerResult(rules, c, it.id, roll));
+  const [last, setLast] = useState<{ name: string; roll: number | null; found: boolean } | null>(null);
+  const setSeller = (it: ItemDef, roll: number | null) => {
+    setLast({ name: it.name, roll, found: roll === null || roll >= target.value });
+    update((c) => setSellerResult(rules, c, it.id, roll));
+  };
 
   return (
     <div className="shop">
@@ -167,6 +171,16 @@ export function Shop({ crew, update }: { crew: Crew; update: Update }) {
         </label>
       </div>
       <p className="muted small">Copies are always for sale. Old stock needs a seller first: one d6 per item per break, {target.value}+{target.why ? ` (${target.why})` : ''} (11.3). Roll in the app, type your own roll, or tick "found". Tap a name to read its rules.</p>
+      {last && (
+        <p className={`seller-result ${last.found ? 'ok' : 'bad'}`} role="status">
+          {last.roll === null ? `${last.name}: marked as found.` : last.found
+            ? `Rolled ${last.roll} for the ${last.name}: a seller (needs ${target.value}+). You can buy it now.`
+            : `Rolled ${last.roll} for the ${last.name}: no seller this break (needs ${target.value}+).`}
+        </p>
+      )}
+      {noSeller.length > 0 && (
+        <p className="muted small no-seller">No seller this break: {noSeller.map((i) => `${i.name} (rolled ${crew.sellers?.[i.id]?.roll ?? '?'})`).join(', ')}. They're back on the list next break.</p>
+      )}
       <ul className="shop-list">
         {list.map((it) => {
           const price = itemPrice(rules, crew, it);
@@ -191,9 +205,6 @@ export function Shop({ crew, update }: { crew: Crew; update: Update }) {
           );
         })}
       </ul>
-      {noSeller.length > 0 && (
-        <p className="muted small">No seller this break: {noSeller.map((i) => i.name).join(', ')}. They're back on the list next break.</p>
-      )}
     </div>
   );
 }

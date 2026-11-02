@@ -9,6 +9,7 @@ import { validate, type Message, type Step } from '../engine/validate';
 import { crewToJson, download, fileName, shareLink } from '../store';
 import { go } from '../App';
 import { Equip, FighterBasics, Hire, ItemChip, Md, Messages, PartsCounter, SellerControl, Shop, Stash, describeType, fighterLabel, patchFighter, type Update } from './common';
+import { copyLink, useAsk } from './confirm';
 import { RuleLink, captainRule, giftRule, itemRule, ritesRule, sectionRule, speciesRule, typeRule } from './rule';
 
 const STEPS: { id: Step | 'review'; label: string; hint: string }[] = [
@@ -91,6 +92,7 @@ const TAPES = ['yellow', 'red', 'gold', 'ink blue', 'hot pink', 'silver', 'black
 const TAPE_CSS: Record<string, string> = { 'ink blue': '#1d3a8a', 'hot pink': '#e0218a', gold: '#c9a227', silver: '#9aa0a6' };
 
 function FactionStep({ crew, update }: { crew: Crew; update: Update }) {
+  const ask = useAsk();
   const rules = getRules();
   const fac = rules.faction(crew.faction ?? '');
   return (
@@ -114,7 +116,7 @@ function FactionStep({ crew, update }: { crew: Crew; update: Update }) {
         {rules.factions.map((f) => (
           <label key={f.name} className={`faction-card ${crew.faction === f.name ? 'on' : ''}`}>
             <input type="radio" name="faction" className="sr-only" checked={crew.faction === f.name}
-              onChange={() => { if (crew.faction !== f.name && (!crew.faction || confirm(`Switch to ${f.name}? Types and starting kit will change.`))) update((c) => setFaction(rules, c, f.name)); }} />
+              onChange={async () => { if (crew.faction !== f.name && (!crew.faction || await ask(`Switch to ${f.name}? Types and starting kit will change.`))) update((c) => setFaction(rules, c, f.name)); }} />
             <strong>{f.name}</strong>
             <span className="muted small">{plain(f.voice).replace(/\s*[(,].*$/, '')}</span>
           </label>
@@ -385,6 +387,7 @@ function SpecialsCard({ crew, fighter: f, update }: { crew: Crew; fighter: Fight
 
 // ---------- 8. Review ----------
 function ReviewStep({ crew, update, messages, onGo }: { crew: Crew; update: Update; messages: Message[]; onGo: (m: Message) => void }) {
+  const ask = useAsk();
   const rules = getRules();
   const errors = messages.filter((m) => m.level === 'error');
   const link = shareLink(crew);
@@ -412,12 +415,12 @@ function ReviewStep({ crew, update, messages, onGo }: { crew: Crew; update: Upda
       <Messages messages={messages} empty="Everything checks out. A legal crew." onGo={onGo} />
       <div className="row gap wrap">
         <button className="btn primary" disabled={errors.length > 0}
-          onClick={() => { if (confirm('Save this crew as legal and start the campaign? Parts left are kept on the roster.')) update((c) => finishCreation(rules, c)); }}>
+          onClick={async () => { if (await ask('Save this crew as legal and start the campaign? Parts left are kept on the roster.')) update((c) => finishCreation(rules, c)); }}>
           Save the crew and start the campaign
         </button>
         <button className="btn" onClick={() => go(`/print/${crew.id}`)}>Print cards</button>
         <button className="btn" onClick={() => download(fileName(crew), crewToJson(crew))}>Export file</button>
-        {link && <button className="btn" onClick={() => { navigator.clipboard?.writeText(link).then(() => alert('Share link copied.'), () => prompt('Copy this link:', link)); }}>Copy share link</button>}
+        {link && <button className="btn" onClick={() => copyLink(ask, link)}>Copy share link</button>}
       </div>
       {errors.length > 0 && <p className="muted small">Your crew is saved on this device as you go. Fix the errors to save it as legal.</p>}
       <p className="muted small"><RuleLink rule={sectionRule('Fill in the cards', '11.1', 'Fill in the cards and the roster (Appendix C): parts, tags, contacts, rivals, rumours.')}>Next</RuleLink>: the campaign screen keeps the roster, experience and injuries.</p>

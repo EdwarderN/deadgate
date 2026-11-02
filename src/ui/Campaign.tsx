@@ -9,12 +9,14 @@ import { validate, type Message } from '../engine/validate';
 import { crewToJson, download, fileName, shareLink } from '../store';
 import { go } from '../App';
 import { Equip, Hire, Messages, PartsCounter, Shop, Stash, describeType, fighterLabel, patchFighter, type Update } from './common';
+import { copyLink, useAsk } from './confirm';
 import { RuleLink, advanceRule, captainRule, contactRule, giftRule, injuryRule, legendRule, ritesRule, sillyRule, speciesRule, tagRule, typeRule } from './rule';
 
 const TABS = ['Fighters', 'Shop and hire', 'Parts', 'Roster notes', 'Season', 'Underdogs'] as const;
 type Tab = (typeof TABS)[number];
 
 export function Campaign({ crew, update }: { crew: Crew; update: Update }) {
+  const ask = useAsk();
   const rules = getRules();
   const [tab, setTab] = useState<Tab>('Fighters');
   const messages = useMemo(() => validate(rules, crew), [rules, crew]);
@@ -36,7 +38,7 @@ export function Campaign({ crew, update }: { crew: Crew; update: Update }) {
           : <button className="btn small primary" onClick={() => go(`/battle/${crew.id}`)}>{crew.battle ? 'Back to the battle' : 'Battle companion'}</button>}
         <button className="btn small" onClick={() => go(`/print/${crew.id}`)}>Print cards and roster</button>
         <button className="btn small" onClick={() => download(fileName(crew), crewToJson(crew))}>Export file</button>
-        {link && <button className="btn small" onClick={() => navigator.clipboard?.writeText(link).then(() => alert('Share link copied.'), () => prompt('Copy this link:', link))}>Copy share link</button>}
+        {link && <button className="btn small" onClick={() => copyLink(ask, link)}>Copy share link</button>}
       </div>
       <nav className="tabs" role="tablist" aria-label="Crew sections">
         {TABS.map((t) => <button key={t} role="tab" aria-selected={tab === t} className={`tab ${tab === t ? 'on' : ''}`} onClick={() => setTab(t)}>{t}</button>)}
@@ -68,6 +70,7 @@ function FightersTab({ crew, update, messages }: { crew: Crew; update: Update; m
 }
 
 function FighterPanel({ crew, fighter: f, update, open, toggle, messages }: { crew: Crew; fighter: Fighter; update: Update; open: boolean; toggle: () => void; messages: Message[] }) {
+  const ask = useAsk();
   const rules = getRules();
   const set = (p: Partial<Fighter>) => patchFighter(update, f.id, (x) => ({ ...x, ...p }));
   const r = currentRatings(rules, f);
@@ -109,7 +112,7 @@ function FighterPanel({ crew, fighter: f, update, open, toggle, messages }: { cr
             {hasRites(rules, crew, f) && <> · <RuleLink rule={ritesRule(rules)}>Rites</RuleLink>: {ritesKnown(rules, f).join(', ') || 'none chosen'}</>}
           </p>
           {f.id !== crew.captainId && (
-            <button className="btn small" onClick={() => { if (confirm(`Make ${fighterLabel(f)} the captain? A new captain takes one captain trait free (11.2).`)) update((c) => ({ ...c, captainId: f.id })); }}>Make captain</button>
+            <button className="btn small" onClick={async () => { if (await ask(`Make ${fighterLabel(f)} the captain? A new captain takes one captain trait free (11.2).`)) update((c) => ({ ...c, captainId: f.id })); }}>Make captain</button>
           )}
           <Experience crew={crew} fighter={f} update={update} />
           <Injuries crew={crew} fighter={f} update={update} />
@@ -321,10 +324,11 @@ function Character({ fighter: f, set }: { fighter: Fighter; set: (p: Partial<Fig
 }
 
 function RemoveFighter({ crew, fighter: f, update }: { crew: Crew; fighter: Fighter; update: Update }) {
+  const ask = useAsk();
   const rules = getRules();
   const [fate, setFate] = useState(rules.crew.campaign.fates.value[0]);
-  const remove = () => {
-    if (!confirm(`Take ${fighterLabel(f)} off the roster as ${fate}? Their gear returns to the crew's stash.`)) return;
+  const remove = async () => {
+    if (!await ask(`Take ${fighterLabel(f)} off the roster as ${fate}? Their gear returns to the crew's stash.`)) return;
     update((c) => ({
       ...c,
       fighters: c.fighters.filter((x) => x.id !== f.id),
@@ -340,7 +344,7 @@ function RemoveFighter({ crew, fighter: f, update }: { crew: Crew; fighter: Figh
       <div className="row gap-s wrap">
         <select value={fate} onChange={(e) => setFate(e.target.value)} aria-label="Fate">{rules.crew.campaign.fates.value.map((x) => <option key={x}>{x}</option>)}</select>
         <button className="btn small danger" onClick={remove}>Put on the roll</button>
-        <button className="btn small" onClick={() => { if (confirm(`Dismiss ${fighterLabel(f)} without a trace?`)) update((c) => ({ ...c, fighters: c.fighters.filter((x) => x.id !== f.id), captainId: c.captainId === f.id ? null : c.captainId, items: c.items.map((o) => (o.fighterId === f.id ? { ...o, fighterId: null, slot: 'stash' } : o)) })); }}>Dismiss</button>
+        <button className="btn small" onClick={async () => { if (await ask(`Dismiss ${fighterLabel(f)} without a trace?`)) update((c) => ({ ...c, fighters: c.fighters.filter((x) => x.id !== f.id), captainId: c.captainId === f.id ? null : c.captainId, items: c.items.map((o) => (o.fighterId === f.id ? { ...o, fighterId: null, slot: 'stash' } : o)) })); }}>Dismiss</button>
       </div>
     </details>
   );

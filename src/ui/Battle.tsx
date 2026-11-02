@@ -11,6 +11,7 @@ import type { Battle, BattleFighter, Crew, Fighter } from '../engine/model';
 import { go } from '../App';
 import { Md, describeType, fighterLabel, type Update } from './common';
 import { PoolRoller, RollOrEnter } from './Dice';
+import { useAsk } from './confirm';
 import { RuleLink, itemRule, sectionRule } from './rule';
 
 export function BattleView({ crew, update }: { crew: Crew; update: Update }) {
@@ -117,6 +118,7 @@ function DeedText({ id }: { id: string }) {
 
 // ---------- playing ----------
 function Playing({ crew, b, setB, setF }: { crew: Crew; b: Battle; setB: SetB; setF: SetF }) {
+  const ask = useAsk();
   const rules = getRules();
   const [tool, setTool] = useState<string | null>(null);
   const [rollFor, setRollFor] = useState<number | null>(null);
@@ -144,7 +146,7 @@ function Playing({ crew, b, setB, setF }: { crew: Crew; b: Battle; setB: SetB; s
             </div>
           )}
           {end === 'over' && <span className="small">Round {R.rounds.max} is the last (9.3).</span>}
-          <button className="btn" onClick={() => { if (confirm('End the battle now?')) over(); }}>End the battle</button>
+          <button className="btn" onClick={async () => { if (await ask('End the battle now?')) over(); }}>End the battle</button>
         </div>
       </div>
       <div className="battle-grid">
