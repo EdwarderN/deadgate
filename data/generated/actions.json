@@ -21,10 +21,10 @@
   },
   {
     "Action": "**Stand up**",
-    "What it does": "Get up from prone. A downed fighter cannot"
+    "What it does": "Get up from prone, then Move up to half your Move (rounded up). It is an ordinary Move: terrain, base contact and parting blows apply. A downed fighter cannot"
   },
   {
     "Action": "**Pick up**",
-    "What it does": "Lift a downed ally, or try to lift a downed enemy (section 5.8)"
+    "What it does": "Lift a downed ally, or try to lift a downed enemy, with a free Hand and never a bot (section 5.8)"
   }
 ]

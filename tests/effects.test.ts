@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { crewOf, patchFighter, rules } from './helpers';
+import { crewOf, otherRule, patchFighter, rules } from './helpers';
 import { resolveEffects, type EffCtx } from '../src/engine/effects';
 import { applyChanges } from '../src/engine/outcomes';
 import { finishCreation } from '../src/engine/crew';
@@ -13,12 +13,37 @@ const story = (row: number, d6: number) => O.storyEvents[Object.keys(O.storyEven
 describe('resolving table effects', () => {
   it('a Pay answer costs parts and gives a tag, with nothing to decide', () => {
     const c = crew();
-    const r = resolveEffects(rules, c, story(1, 1).pay!, { note: 'test' }, {}, 's');
+    const r = resolveEffects(rules, c, story(2, 4).pay!, { note: 'test' }, {}, 's');
     expect(r.missing).toEqual([]);
-    expect(r.changes).toEqual([{ kind: 'parts', amount: -5, note: 'test' }, { kind: 'tag', value: 'Reliable' }]);
+    expect(r.changes).toEqual([{ kind: 'parts', amount: -3, note: 'test' }]);
+    expect(applyChanges(rules, c, r.changes).crew.parts).toBe(c.parts - 3);
+  });
+  it('a Pay answer that is not parts: a fighter wears the badge, and the crew gains a tag', () => {
+    const c = crew();
+    const e = story(1, 1).pay!;
+    expect(resolveEffects(rules, c, e, { note: 'test' }, {}, 's').missing).toEqual(['choose a fighter']);
+    const r = resolveEffects(rules, c, e, { note: 'test' }, { 's.who:choose': c.fighters[1].id }, 's');
+    expect(r.changes).toEqual([{ kind: 'nextBattle', fid: c.fighters[1].id, value: 'Announced' }, { kind: 'tag', value: 'Reliable' }]);
     const after = applyChanges(rules, c, r.changes).crew;
-    expect(after.parts).toBe(c.parts - 5);
+    expect(after.parts).toBe(c.parts);
     expect(after.notes.tags).toContain('Reliable');
+  });
+  it('losses stop at 0; only a crew with credit pays a running cost into debt (14.2)', () => {
+    const c = { ...crew(), parts: 2 };
+    expect(applyChanges(rules, c, [{ kind: 'parts', amount: -5, note: '' }]).crew.parts).toBe(0);
+    expect(applyChanges(rules, c, [{ kind: 'parts', amount: -5, note: '', floor: 'credit' }]).crew.parts).toBe(0);
+    expect(applyChanges(rules, c, [{ kind: 'parts', amount: -5, note: '', floor: 'none' }]).crew.parts).toBe(-3);
+    const led = Object.keys(rules.crew.factions).find((n) => rules.crew.factions[n].credit)!;
+    const l = { ...crewOf(led, undefined, undefined, otherRule(led, rules.crew.factions[led].credit!.rule)), phase: 'campaign' as const, parts: 2 };
+    expect(applyChanges(rules, l, [{ kind: 'parts', amount: -5, note: '', floor: 'credit' }]).crew.parts).toBe(-3);
+    expect(applyChanges(rules, l, [{ kind: 'parts', amount: -50, note: '', floor: 'credit' }]).crew.parts).toBe(rules.crew.factions[led].credit!.value);
+  });
+  it('a crossed-off contact is a choice among the crew\'s contacts, and is removed', () => {
+    const c = crew();
+    expect(resolveEffects(rules, c, [{ crossContact: true }], { note: '' }, {}, 'x').missing).toEqual(['a contact to cross off']);
+    const withC = { ...c, notes: { ...c.notes, contacts: [{ name: rules.contacts[0].name, used: false }] } };
+    const r = resolveEffects(rules, withC, [{ crossContact: true }], { note: '' }, { 'x.0': rules.contacts[0].name }, 'x');
+    expect(applyChanges(rules, withC, r.changes).crew.notes.contacts).toEqual([]);
   });
   it('a choice waits for the player, then gives the chosen option', () => {
     const c = crew();
@@ -47,7 +72,7 @@ describe('resolving table effects', () => {
   });
   it('finds roll nested effects; two finds keep one', () => {
     const c = crew();
-    const e = O.taskTables['Hunt rumours']['10'];
+    const e = O.taskTables['Hunt leads']['10'];
     expect(resolveEffects(rules, c, e, { note: '' }, { 't.0': [1, 3] }, 't').missing).toContain('roll on the finds table');
     const r = resolveEffects(rules, c, e, { note: '' }, { 't.0': [1, 3], 't.0.c': 0 }, 't');
     expect(r.changes).toEqual([{ kind: 'parts', amount: 4, note: '' }]);
@@ -55,7 +80,7 @@ describe('resolving table effects', () => {
   it('a debt clause pays more when the crew is in debt', () => {
     const c = crew();
     const e = O.ownTasks['Ledgerhands'].table['3'];
-    expect(resolveEffects(rules, c, e, { note: '' }, {}, 't').changes).toEqual([{ kind: 'parts', amount: 2, note: '' }]);
+    expect(resolveEffects(rules, c, e, { note: '', self: c.fighters[0].id }, {}, 't').changes).toEqual([{ kind: 'xp', fid: c.fighters[0].id, amount: 1, note: '' }]);
     expect(resolveEffects(rules, { ...c, parts: -4 }, e, { note: '' }, {}, 't').changes).toEqual([{ kind: 'parts', amount: 5, note: '' }]);
   });
   it('a lasting injury roll skips injuries the fighter has; three injuries means Laid up', () => {
@@ -79,7 +104,7 @@ describe('resolving table effects', () => {
   });
   it('recruit offers, relic leads and found sellers carry into the Spend step', () => {
     const c = crew();
-    const r = resolveEffects(rules, c, [...O.finds['4'], ...O.taskTables['Hunt rumours']['7']], { note: '' }, {}, 'x');
+    const r = resolveEffects(rules, c, [...O.finds['4'], ...O.taskTables['Hunt leads']['7']], { note: '' }, {}, 'x');
     const after = applyChanges(rules, c, r.changes).crew;
     expect(after.relicLead).toEqual({ noRoll: true });
     expect(after.hireOffers?.[0].discount).toBe(5);

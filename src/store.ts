@@ -5,11 +5,21 @@ import type { Crew } from './engine/model';
 
 const KEY = 'deadgate.crews.v1';
 
+/** Bring a crew saved under older rules up to the current shape (the roster's rumour note is now a lead, 14.8). */
+export function migrateCrew(c: Crew): Crew {
+  const notes = c.notes as Crew['notes'] & { rumour?: string };
+  if (notes && notes.lead === undefined) {
+    const { rumour, ...rest } = notes;
+    return { ...c, notes: { ...rest, lead: rumour ?? '' } };
+  }
+  return c;
+}
+
 export function loadCrews(): Crew[] {
   try {
     const raw = localStorage.getItem(KEY);
     const list = raw ? (JSON.parse(raw) as Crew[]) : [];
-    return Array.isArray(list) ? list.filter(isStoredCrew) : [];
+    return Array.isArray(list) ? list.filter(isStoredCrew).map(migrateCrew) : [];
   } catch {
     return [];
   }
@@ -83,7 +93,7 @@ export function parseCrewJson(text: string): Crew {
   const data = JSON.parse(text);
   const crew = data?.crew ?? data;
   if (!isCrew(crew)) throw new Error('This file is not a Dead Gate crew.');
-  return crew;
+  return migrateCrew(crew);
 }
 
 export function crewToJson(crew: Crew): string {
@@ -118,7 +128,7 @@ export function crewFromShare(hash: string): Crew | null {
     const json = LZString.decompressFromEncodedURIComponent(m[1]);
     if (!json || json.length > MAX_CREW_BYTES) return null;
     const c = JSON.parse(json);
-    return isCrew(c) ? c : null;
+    return isCrew(c) ? migrateCrew(c) : null;
   } catch {
     return null;
   }

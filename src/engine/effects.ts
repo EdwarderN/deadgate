@@ -70,6 +70,13 @@ export function whoOptions(rules: Rules, crew: Crew, who: string, ctx: EffCtx): 
       return lg.length === 1 ? { auto: lg, options: [], label: 'the legend' } : { auto: null, options: lg.length ? lg : crew.fighters, label: 'the legend' };
     }
     case 'bot': return { auto: null, options: crew.fighters.filter((x) => isBot(rules, x)), label: 'a bot' };
+    // a second, third or fourth fighter of the player's choice, when a result names several (14.5)
+    case 'second': case 'third': case 'fourth': return { auto: null, options: crew.fighters, label: `a ${who} fighter` };
+    case 'highestXp': {
+      const max = Math.max(...crew.fighters.map((x) => x.xp));
+      const top = crew.fighters.filter((x) => x.xp === max);
+      return top.length === 1 ? { auto: top, options: [], label: 'the most experienced fighter' } : { auto: null, options: top, label: 'the most experienced fighter' };
+    }
     default:
       if (who.startsWith('type:')) return { auto: null, options: crew.fighters.filter((x) => x.type === who.slice(5)), label: `a ${who.slice(5)}` };
       return { auto: null, options: crew.fighters, label: 'a fighter' };
@@ -114,7 +121,7 @@ export function resolveEffects(rules: Rules, crew: Crew, effs: Eff[], ctx: EffCt
 
     if (e.parts !== undefined) {
       const n = e.ifDebt !== undefined && crew.parts < 0 ? e.ifDebt : e.parts;
-      if (n) auto({ kind: 'parts', amount: n, note: ctx.note }, `${n > 0 ? '+' : '−'}${Math.abs(n)} parts`);
+      if (n) auto({ kind: 'parts', amount: n, note: ctx.note, ...(e.belowZero ? { floor: 'none' as const } : {}) }, `${n > 0 ? '+' : '−'}${Math.abs(n)} parts${e.belowZero && n < 0 ? ', even below 0' : ''}`);
     }
     if (e.xp) for (const f of people(e.who ?? 'self', p)) auto({ kind: 'xp', fid: f.id, amount: e.xp, note: ctx.note }, `${name(f)} +${e.xp} XP`);
     if (e.status) for (const f of people(e.who ?? 'self', p)) auto({ kind: 'status', fid: f.id, value: e.status }, `${name(f)} is ${e.status}`);
@@ -126,6 +133,16 @@ export function resolveEffects(rules: Rules, crew: Crew, effs: Eff[], ctx: EffCt
       if (take) out.changes.push({ kind: 'title', fid: f.id, value: e.title });
     }
     if (e.tag) auto({ kind: 'tag', value: e.tag }, `The crew gains ${e.tag}`);
+    if (e.crossContact) {
+      // Pay by crossing a contact off the roster (14.5): the crew must have one.
+      const names = Array.from(new Set(crew.notes.contacts.map((c) => c.name)));
+      if (!names.length) { out.nodes.push({ kind: 'note', path: p, text: 'The crew has no contact to cross off: choose another answer.' }); out.missing.push('a contact to cross off'); }
+      else {
+        const v = String(st[p] ?? '');
+        out.nodes.push({ kind: 'select', path: p, label: 'Which contact is crossed off?', options: names.map((n) => ({ value: n, label: n })), value: v });
+        if (v) out.changes.push({ kind: 'removeContact', name: v }); else out.missing.push('choose the contact to cross off');
+      }
+    }
     if (e.contact) {
       if (e.contact === 'choose') {
         const v = String(st[p] ?? '');
@@ -138,10 +155,11 @@ export function resolveEffects(rules: Rules, crew: Crew, effs: Eff[], ctx: EffCt
       out.nodes.push({ kind: 'text', path: p, label: 'Name the rival', value: v, placeholder: 'A crew, gang or patron' });
       if (v.trim()) out.changes.push({ kind: 'rival', value: v.trim() }); else out.missing.push('name the rival');
     }
-    if (e.rumour) {
+    if (e.lead) {
+      // A crew holds at most one lead (14.8): a new one replaces the old. Its wording is the player's, and optional.
       const v = String(st[p] ?? '');
-      out.nodes.push({ kind: 'text', path: p, label: `The crew's rumour${crew.notes.rumour ? ' (replaces the old one)' : ''}`, value: v, placeholder: 'What people say about the crew' });
-      if (v.trim()) out.changes.push({ kind: 'rumour', text: v.trim() }); else out.missing.push('write the rumour');
+      out.nodes.push({ kind: 'text', path: p, label: `The crew gains a lead${crew.notes.lead ? ' (it replaces the one it has)' : ''}: note it if you like`, value: v, placeholder: 'A tip the crew can act on' });
+      out.changes.push({ kind: 'lead', text: v.trim() || 'a lead' });
     }
     if (e.item) {
       const opts = itemOptions(rules, e.item);
@@ -180,7 +198,7 @@ export function resolveEffects(rules: Rules, crew: Crew, effs: Eff[], ctx: EffCt
       const v = String(st[p] ?? '');
       out.nodes.push({ kind: 'select', path: p, label: `Buy one ${e.buyItem.source ?? ''} ${e.buyItem.kinds?.join(' or ') ?? 'item'} at ${e.buyItem.fraction === 0.5 ? 'half ' : ''}price`, options: opts.map((d) => ({ value: d.id, label: `${d.name} (${Math.floor(itemPrice(rules, crew, d) * e.buyItem!.fraction)})` })), value: v });
       const d = opts.find((x) => x.id === v);
-      if (d) { out.changes.push({ kind: 'addItem', itemId: d.id, fid: null, slot: 'stash' }, { kind: 'parts', amount: -Math.floor(itemPrice(rules, crew, d) * e.buyItem.fraction), note: `Bought ${d.name}` }); }
+      if (d) { out.changes.push({ kind: 'addItem', itemId: d.id, fid: null, slot: 'stash' }, { kind: 'parts', amount: -Math.floor(itemPrice(rules, crew, d) * e.buyItem.fraction), note: `Bought ${d.name}`, floor: 'credit' }); }
     }
     if (e.hire) auto({ kind: 'hireOffer', discount: e.hire.free ? null : e.hire.discount ?? 0, note: e.hire.note ?? '', past: e.hire.past }, `A recruit ${e.hire.free ? 'for free' : `for ${e.hire.discount} parts less`} this break${e.hire.note ? ` (${e.hire.note})` : ''}: use it under Spend`);
     if (e.relicLead) auto({ kind: 'relicLead', noRoll: e.relicLead.noRoll }, `One relic at half price this break${e.relicLead.noRoll ? ', no seller roll' : ''}: under Spend`);
@@ -214,6 +232,11 @@ export function resolveEffects(rules: Rules, crew: Crew, effs: Eff[], ctx: EffCt
       const amount = e.recharge === 'full' ? null : e.recharge;
       if ((e.who ?? 'all') === 'all') auto({ kind: 'recharge', fid: null, amount, note: ctx.note }, `Every battery ${amount === null ? 'refills' : `gains ${amount} Energy`}, free`);
       else for (const f of people(e.who!, p)) auto({ kind: 'recharge', fid: f.id, amount, note: ctx.note }, `${name(f)}'s battery ${amount === null ? 'refills' : `gains ${amount} Energy`}, free`);
+    }
+    if (e.debt) {
+      const yes = crew.parts < 0;
+      out.nodes.push({ kind: 'note', path: p, text: yes ? "The crew's parts are below 0." : "The crew's parts are not below 0." });
+      merge(sub(yes ? e.debt.yes : e.debt.no, `${p}.${yes ? 'y' : 'n'}`));
     }
     if (e.allLaidUpToSore) auto({ kind: 'laidUpToSore' }, 'Every Laid up fighter is only Sore');
     if (e.injury) for (const f of people(e.who ?? 'self', p)) auto({ kind: 'injury', fid: f.id, value: e.injury, title: rules.injuries.find((x) => x.name === e.injury)?.title ?? null }, `${name(f)}: ${e.injury}`);

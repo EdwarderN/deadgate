@@ -246,10 +246,13 @@ def factions():
         for i, l in enumerate(block):
             m = re.match(r"(\d)\. \*\*(.+?)\*\* ?(.*)", l)
             if m and not f["subfactions"]:
-                f["rules"].append({"n": int(m.group(1)), "name": m.group(2).rstrip("."), "text": m.group(3)})
-            if l.startswith("| Subfaction | Replaces"):
-                f["subfactions"] = [{"name": plain(r["Subfaction"]), "replaces": int(r["Replaces"]), "rule": r["Rule"]}
-                                    for r in table_at(block, i)[1]]
+                rule = {"n": int(m.group(1)), "name": m.group(2).rstrip("."), "text": m.group(3)}
+                # 12.1: a subfaction replaces any one rule, the player's choice, except a rule that says it cannot be
+                if re.search(r"No subfaction rule can replace this one", m.group(3)):
+                    rule["fixed"] = True
+                f["rules"].append(rule)
+            if l.startswith("| Subfaction | Rule"):
+                f["subfactions"] = [{"name": plain(r["Subfaction"]), "rule": r["Rule"]} for r in table_at(block, i)[1]]
             if l.startswith("| Type | Trait"):
                 f["types"] = [{"name": re.sub(r"\s*\(.*\)", "", plain(r["Type"])), "label": plain(r["Type"]), "trait": r["Trait"]}
                               for r in table_at(block, i)[1]]

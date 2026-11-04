@@ -390,7 +390,7 @@
     "rules": {
       "Frame": "**Civilian** (Frame slot; worn with light or medium armour, not heavy; gives no save of its own)",
       "Basic (no Energy)": "+1 die on Grit tests to haul and jump. **Hauler:** carries a downed ally alone at Move 1 less",
-      "Boosted (1 Energy)": "**Boost:** one Move action leaps a gap or obstacle up to 3 inches, or climbs without a test"
+      "Boosted (1 Energy)": "**Boost:** one Move action leaps a gap or obstacle up to 3 inches, or climbs or descends without a test"
     }
   },
   {
@@ -581,7 +581,7 @@
     "kind": "device",
     "rules": {
       "Device": "**Grapnel and line**",
-      "Basic": "Use: fix the line to a ledge or wall up to 6 inches above or across. The user climbs it **without a Grit test**, and the line stays for allies",
+      "Basic": "Use: fix the line to a ledge or wall up to 6 inches above or across. The user climbs it, up or down, **without a Grit test**, and the line stays for allies",
       "Boosted (1 Energy)": "**Winch:** haul the user or an ally up 6 inches in one action with no test, or drag a downed ally 3 inches toward the user"
     }
   },
@@ -595,7 +595,7 @@
     "kind": "device",
     "rules": {
       "Device": "**Grapnel and line**",
-      "Basic": "Use: fix the line to a ledge or wall up to 6 inches above or across. The user climbs it **without a Grit test**, and the line stays for allies",
+      "Basic": "Use: fix the line to a ledge or wall up to 6 inches above or across. The user climbs it, up or down, **without a Grit test**, and the line stays for allies",
       "Boosted (1 Energy)": "**Winch:** haul the user or an ally up 6 inches in one action with no test, or drag a downed ally 3 inches toward the user"
     }
   },
@@ -707,7 +707,7 @@
     "kind": "device",
     "rules": {
       "Device": "**Spare cell** (old stock only)",
-      "Basic": "Use: the battery gains **2 Energy**, up to its size. The spare is used up",
+      "Basic": "Use: the battery gains **2 Energy**, up to its size. The spare is used up for this battle and is back in the belt after it",
       "Boosted (1 Energy)": "None"
     }
   },
@@ -722,7 +722,7 @@
     "rules": {
       "Tier": "**Crude (8)**",
       "Kit": "**Crude kit** (copy, Belt 1)",
-      "Effect": "Patch up at **Tricky (8)**. Unreliable: a kept total of 3 or less is a botch, and the patient gains Winded"
+      "Effect": "Patch up at **Tricky (8)**. Unreliable: a kept total of 3 or less jams the kit (section 7.2) and the patient also gains Winded"
     }
   },
   {

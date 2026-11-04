@@ -14,7 +14,7 @@
     },
     {
       "d66": "23",
-      "Result": "**Drank from the Tumbler.** Waiting priests nursed them with a holy relic, which is probably the water. Walks it off, and the fighter believes: at the next battle they may swear one more Word, a vow, on top of the crew's Words"
+      "Result": "**Drank from the Tumbler.** Waiting priests nursed them with a holy relic, which is probably the water. Walks it off, and the fighter believes: at the next battle they may swear one more Word, a vow, on top of the crew's Words. Bots and Control Group fighters get no such bonus: they swear no Words"
     },
     {
       "d66": "24-26, 31-32",
@@ -68,7 +68,7 @@
     },
     {
       "d66": "14",
-      "Result": "**Played dead.** They lay very still until everyone left. Walks it off, and starts the next battle **prone**: they are still playing dead"
+      "Result": "**Played dead.** They lay very still until everyone left, then slipped away. Walks it off"
     },
     {
       "d66": "15-16, 21-22",

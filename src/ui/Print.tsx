@@ -1,7 +1,7 @@
 // Fighter cards and crew roster, laid out like Appendix C. Black and white friendly.
 import { useEffect, useState } from 'react';
 import { getRules } from '../data/rules';
-import { advancesEarned, captainOf, captainTraitNames, currentRatings, equipped, fighterStats, hasGift, hasRites, partsLeft, ratingNames, ritesKnown, traitBudgetUsed } from '../engine/crew';
+import { advancesEarned, beltSlots, captainOf, typeCarries, captainTraitNames, currentRatings, equipped, fighterStats, hasGift, hasRites, partsLeft, ratingNames, ritesKnown, traitBudgetUsed } from '../engine/crew';
 import type { Crew, Fighter } from '../engine/model';
 import { describeType, fighterLabel } from './common';
 import { Md } from './md';
@@ -39,7 +39,8 @@ function FighterCard({ crew, fighter: f }: { crew: Crew; fighter: Fighter }) {
   const st = fighterStats(rules, crew, f);
   const r = currentRatings(rules, f);
   const items = equipped(crew, f, rules);
-  const names = (slot: string) => items.filter((o) => o.slot === slot).map((o) => `${o.def?.name ?? '?'}${o.def?.source === 'copy' ? ' (c)' : o.def?.source === 'drop' ? ' (d)' : ''}`);
+  const carried = typeCarries(rules, crew, f);
+  const names = (slot: string) => [...(carried && carried.set === slot ? [carried.name] : []), ...items.filter((o) => o.slot === slot).map((o) => `${o.def?.name ?? '?'}${o.def?.source === 'copy' ? ' (c)' : o.def?.source === 'drop' ? ' (d)' : ''}`)];
   const sp = rules.species.find((s) => s.name === f.species);
   const typeTrait = rules.faction(crew.faction ?? '')?.types.find((t) => t.name === f.type);
   const speciesTraits = [sp ? `${sp.name}: ${strip(sp.trait).split('.')[0]}` : '', typeTrait ? `${typeTrait.name}: ${strip(typeTrait.trait).split('.')[0]}` : ''].filter(Boolean);
@@ -83,7 +84,7 @@ function FighterCard({ crew, fighter: f }: { crew: Crew; fighter: Fighter }) {
           {f.builtIn && <div className="fc-line"><b>Built in</b><span className="ul">{rules.item(f.builtIn)?.name} (c)</span></div>}
           <div className="fc-line"><b>Body</b><span className="ul">{names('body').join(', ')}</span></div>
           <div className="fc-line"><b>Frame</b><span className="ul">{[...names('frame'), ...names('mount').map((n) => `mount: ${n}`)].join(', ')}</span></div>
-          <div className="fc-line"><b>Belt</b><Lines items={names('belt')} n={rules.crew.gear.beltSlots.value} /></div>
+          <div className="fc-line"><b>Belt</b><Lines items={names('belt')} n={beltSlots(rules, crew)} /></div>
           <div className="fc-line"><b>Carried</b><span className="ul">{names('fitted').join(', ')}</span></div>
         </div>
         <div className="fc-col3">
@@ -125,6 +126,7 @@ function Roster({ crew }: { crew: Crew }) {
         <span className="fl w3"><b>Crew name</b> {crew.name}</span>
         <span className="fl w2"><b>Faction</b> {crew.faction}</span>
         <span className="fl w2"><b>Subfaction</b> {crew.subfaction}</span>
+        <span className="fl w2"><b>Replaces rule</b> {(() => { const r = rules.faction(crew.faction ?? '')?.rules.find((x) => x.n === crew.replacedRule); return r ? `${r.n}. ${r.name}` : ''; })()}</span>
         <span className="fl w15"><b>Tape colour</b> {crew.tape}</span>
       </div>
       <div className="fc-row">
@@ -146,7 +148,7 @@ function Roster({ crew }: { crew: Crew }) {
         <div className="ro-box"><div className="fc-h">Tags <i>({rules.crew.limits.maxTags.value}: {rules.tags.map((t) => t.name).join(', ')})</i></div>{crew.notes.tags.map((t) => <div key={t} className="ul-line">{t}</div>)}{blank(3, crew.notes.tags.length)}</div>
         <div className="ro-box"><div className="fc-h">Contacts <i>({rules.crew.limits.maxContacts.value}, each used once)</i></div>{crew.notes.contacts.map((c, i) => <div key={i} className="ul-line">{c.used ? <s>{c.name}</s> : c.name}</div>)}{blank(3, crew.notes.contacts.length)}</div>
         <div className="ro-box"><div className="fc-h">Rivals</div>{crew.notes.rivals.map((r, i) => <div key={i} className="ul-line">{r}</div>)}{blank(3, crew.notes.rivals.length)}</div>
-        <div className="ro-box"><div className="fc-h">Rumour about the crew <i>(1)</i></div><div className="ul-line">{crew.notes.rumour}</div>
+        <div className="ro-box"><div className="fc-h">Lead <i>(1)</i></div><div className="ul-line">{crew.notes.lead}</div>
           <div className="fc-h">Stash (items not carried)</div>
           <div className="ul-line">{crew.items.filter((o) => !o.fighterId).map((o) => rules.item(o.itemId)?.name).join(', ')}</div><div className="ul-line">{crew.notes.stash}</div></div>
       </div>

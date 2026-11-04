@@ -1,7 +1,7 @@
 [
   {
     "Device": "**Grapnel and line**",
-    "Basic": "Use: fix the line to a ledge or wall up to 6 inches above or across. The user climbs it **without a Grit test**, and the line stays for allies",
+    "Basic": "Use: fix the line to a ledge or wall up to 6 inches above or across. The user climbs it, up or down, **without a Grit test**, and the line stays for allies",
     "Boosted (1 Energy)": "**Winch:** haul the user or an ally up 6 inches in one action with no test, or drag a downed ally 3 inches toward the user"
   },
   {
@@ -26,7 +26,7 @@
   },
   {
     "Device": "**Spare cell** (old stock only)",
-    "Basic": "Use: the battery gains **2 Energy**, up to its size. The spare is used up",
+    "Basic": "Use: the battery gains **2 Energy**, up to its size. The spare is used up for this battle and is back in the belt after it",
     "Boosted (1 Energy)": "None"
   },
   {

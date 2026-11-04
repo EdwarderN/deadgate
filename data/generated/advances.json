@@ -2,7 +2,7 @@
   "Common": [
     {
       "Advance": "**Sure-footed**",
-      "Rule": "Standing up costs you no action"
+      "Rule": "Standing up costs you no action (you still get the half Move)"
     },
     {
       "Advance": "**Nerves of tape**",
@@ -19,6 +19,10 @@
     {
       "Advance": "**Loud voice**",
       "Rule": "Your Assist reaches an ally within 6 inches, through walls, and every time you Assist you are **Announced**"
+    },
+    {
+      "Advance": "**Tag team**",
+      "Rule": "Once an activation, swapping places with an ally costs you no action"
     },
     {
       "Advance": "**Quick hands**",
@@ -40,7 +44,7 @@
     },
     {
       "Advance": "**Know where it hurts**",
-      "Rule": "Your glance on an enemy who already has a lasting condition is read as a solid"
+      "Rule": "Your melee attacks against an enemy who already has a lasting condition have +1 die"
     },
     {
       "Advance": "**Hold the door**",
@@ -112,7 +116,7 @@
     },
     {
       "Advance": "**Sure grip**",
-      "Rule": "You climb or jump up to 2 inches without a Grit test"
+      "Rule": "You need no Grit test to climb up or down a height of up to your Move, or to jump a gap you have the Move for. The Move cost is as usual"
     },
     {
       "Advance": "**Second wind**",
@@ -121,6 +125,14 @@
     {
       "Advance": "**Thick-skinned**",
       "Rule": "You pass Cold and Dangerous terrain tests without rolling"
+    },
+    {
+      "Advance": "**Cat's landing**",
+      "Rule": "Your falls count as 3 inches shorter, and you land on your feet, not prone"
+    },
+    {
+      "Advance": "**Quick climber**",
+      "Rule": "Every height you climb up or down, and every ladder, counts as half as tall (rounded up) when you pay Move for it or compare it with your Move. A fall still uses the real height"
     },
     {
       "Advance": "**Tough as old boots**",

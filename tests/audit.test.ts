@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { crewOf, give, patchFighter, rules } from './helpers';
+import { crewOf, give, otherRule, patchFighter, rules } from './helpers';
 import { breakingStatus, deedTier, legendFor, makesLegend, newBattle, positions, RUMOUR, sillyTableFor, startAfterBattle, wagerStake, wordXp, wordsAllowed, taskBlocked } from '../src/engine/battle';
 import { activeEffects } from '../src/engine/faction';
 import { finishCreation, setFighterType } from '../src/engine/crew';
@@ -61,13 +61,12 @@ describe('breaking (9.4)', () => {
   it('a faction can raise the threshold, or add dice to the test', () => {
     const cg = factionWith('breakingThreshold');
     const e = F[cg].effects!.find((x) => x.kind === 'breakingThreshold')!;
-    const sub = rules.faction(cg)!.subfactions.find((s) => s.replaces !== e.rule)!.name;
-    const c = crew(cg, sub);
+    const c = { ...crew(cg), replacedRule: otherRule(cg, e.rule) };
     const b = setF(setF(newBattle(rules, c), c.fighters[1].id, { position: DOWN() }), c.fighters[2].id, { position: DOWN() });
     expect(breakingStatus(rules, c, b, eff(c))).toMatchObject({ threshold: Math.ceil(4 * e.fraction!), needed: false });
     const w = Object.keys(F).find((n) => F[n].effects?.some((x) => x.kind === 'breakingDice' && !x.captain))!;
     const we = F[w].effects!.find((x) => x.kind === 'breakingDice' && !x.captain)!;
-    const wc = crew(w, rules.faction(w)!.subfactions.find((s) => s.replaces !== we.rule)!.name);
+    const wc = { ...crew(w), replacedRule: otherRule(w, we.rule) };
     const before = breakingStatus(rules, crew(), newBattle(rules, crew()), []).dice;
     expect(breakingStatus(rules, wc, newBattle(rules, wc), eff(wc)).dice).toBe(before + we.amount!);
   });

@@ -7,6 +7,7 @@ import {
   advancesEarned, builtInOptions, captainOf, captainTraitNames, creditFloor, currentRatings, equipped, fighterStats, giftPrice, hasGift, hasMilitaryFrame,
   hasRites, isBot, itemPrice, kitLines, kitPickOptions, partsLeft, riteFromAdvance, ritesAllowed, ritesKnown, ritesPrice, ruleActive,
   slotCapacity, slotLoad, traitBudgetUsed,
+  beltSlots, replaceableRules,
 } from './crew';
 
 export type Level = 'error' | 'warning';
@@ -27,6 +28,7 @@ export const validators: Record<string, Validator> = {
     const out: Message[] = [];
     if (!crew.faction || !rules.faction(crew.faction)) out.push(msg('faction', 'error', 'faction', '11.1', 'Choose a faction.'));
     else if (!crew.subfaction || !rules.faction(crew.faction)!.subfactions.some((s) => s.name === crew.subfaction)) out.push(msg('faction', 'error', 'faction', '11.1', 'Choose a subfaction.'));
+    else if (!replaceableRules(rules, crew.faction).some((r) => r.n === crew.replacedRule)) out.push(msg('faction', 'error', 'faction', '12.1', `Choose which faction rule ${crew.subfaction}'s rule replaces.`));
     if (!crew.name.trim()) out.push(msg('faction', 'warning', 'faction', '11.1', 'The crew has no name yet.'));
     return out;
   },
@@ -192,7 +194,8 @@ export const validators: Record<string, Validator> = {
           out.push(msg('slots', 'error', 'equip', g.civilianFrameArmour.source, `A civilian frame is worn only with ${g.civilianFrameArmour.value.join(' or ').toLowerCase()} armour (${w}).`, f.id));
       }
       const belt = slotLoad(rules, crew, f, 'belt');
-      if (belt > g.beltSlots.value) out.push(msg('slots', 'error', 'equip', g.beltSlots.source, `${w}'s belt holds ${belt} items; a belt has ${g.beltSlots.value} slots.`, f.id));
+      const beltMax = beltSlots(rules, crew);
+      if (belt > beltMax) out.push(msg('slots', 'error', 'equip', beltMax === g.beltSlots.value ? g.beltSlots.source : rules.factionRules(crew.faction ?? '')!.beltSlots!.source, `${w}'s belt holds ${belt} items; a belt has ${beltMax} slots.`, f.id));
       const mount = items.filter((o) => o.slot === 'mount');
       if (mount.length && !military) out.push(msg('slots', 'error', 'equip', g.mountWeapons.source, `${w} has no military frame, so no weapon mount. ${mount[0].def?.name ?? 'That weapon'} needs one.`, f.id));
       else if (mount.length > 1) out.push(msg('slots', 'error', 'equip', g.mountWeapons.source, `A weapon mount carries one weapon (${w}).`, f.id));

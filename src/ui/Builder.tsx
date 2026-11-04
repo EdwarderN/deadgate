@@ -2,13 +2,13 @@ import { useEffect, useMemo, useRef } from 'react';
 import { getRules, plain } from '../data/rules';
 import {
   captainOf, creationSpend, finishCreation, giftPrice, hasGift, hasRites, isBot, kitLines, kitPickOptions, partsLeft, resetKit, ritesAllowed, ritesPrice,
-  setFaction, syncKit,
+  activePriceRules, ruleActive, setFaction, syncKit,
 } from '../engine/crew';
 import type { Crew, Fighter } from '../engine/model';
 import { validate, type Message, type Step } from '../engine/validate';
 import { crewToJson, download, fileName, safeColour, shareLink } from '../store';
 import { go } from '../App';
-import { Equip, FighterBasics, Hire, ItemChip, Md, Messages, PartsCounter, SellerControl, Shop, Stash, describeType, fighterLabel, patchFighter, type Update } from './common';
+import { Equip, FighterBasics, Hire, ItemChip, Md, Messages, PartsCounter, SellerControl, Shop, Stash, describeType, fighterLabel, patchFighter, type Update, ReplacedRulePick } from './common';
 import { copyLink, useAsk } from './confirm';
 import { RuleLink, captainRule, giftRule, itemRule, ritesRule, sectionRule, speciesRule, typeRule } from './rule';
 
@@ -128,24 +128,26 @@ function FactionStep({ crew, update }: { crew: Crew; update: Update }) {
           <h4>Faction rules</h4>
           <ol className="faction-rules">
             {fac.rules.map((r) => {
-              const replaced = fac.subfactions.find((s) => s.name === crew.subfaction)?.replaces === r.n;
+              const replaced = !ruleActive(rules, crew, r.n);
               return (
                 <li key={r.n} className={replaced ? 'replaced' : ''}>
                   <strong>{r.name}.</strong> <Md text={r.text} />
                   {replaced && <span className="badge">Replaced by {crew.subfaction}</span>}
+                  {r.fixed && <span className="badge ok">Cannot be replaced</span>}
                 </li>
               );
             })}
           </ol>
-          <h4>Subfaction <span className="muted small">(each replaces one numbered rule)</span></h4>
+          <h4>Subfaction <span className="muted small">(its rule replaces one faction rule of your choice, 12.1)</span></h4>
           <div className="stack-s" role="radiogroup" aria-label="Subfaction">
             {fac.subfactions.map((s) => (
               <label key={s.name} className={`option ${crew.subfaction === s.name ? 'on' : ''}`}>
                 <input type="radio" name="subfaction" checked={crew.subfaction === s.name} onChange={() => update((c) => ({ ...c, subfaction: s.name }))} />
-                <span><strong>{s.name}</strong> <span className="badge">replaces rule {s.replaces}</span><br /><Md text={s.rule} /></span>
+                <span><strong>{s.name}</strong><br /><Md text={s.rule} /></span>
               </label>
             ))}
           </div>
+          <ReplacedRulePick crew={crew} update={update} />
           {fac.types.length > 0 && (
             <>
               <h4>Fighter types</h4>
@@ -279,7 +281,7 @@ function ShopStep({ crew, update }: { crew: Crew; update: Update }) {
   const spend = creationSpend(rules, crew);
   return (
     <div className="stack">
-      {(fr?.priceRules ?? []).length > 0 && <p className="note">Faction prices apply: {fr!.priceRules!.map((p) => p.effect).join('; ')}{crew.subfaction ? ` (unless ${crew.subfaction} replaces the rule)` : ''}.</p>}
+      {activePriceRules(rules, crew).length > 0 && <p className="note">Faction prices apply: {activePriceRules(rules, crew).map((p) => p.effect).join('; ')}.</p>}
       {fr?.credit && <p className="note">{crew.faction} may buy on credit down to {fr.credit.value} parts (rule {fr.credit.rule}).</p>}
       <div className="card">
         <h3>Bought so far</h3>

@@ -64,7 +64,7 @@ describe('every name in outcomes.json exists', () => {
     const silly = rules.silly.map((s) => s.name);
     const lists = Array.from(new Set(rules.injuries.map((i) => i.table)));
     const types = rules.factions.flatMap((f) => f.types.map((t) => t.name));
-    const who = ['self', 'choose', 'all', 'patient', 'teacher', 'captain', 'lowestXp', 'evacuated', 'legend', 'bot'];
+    const who = ['self', 'choose', 'second', 'third', 'fourth', 'all', 'patient', 'teacher', 'captain', 'lowestXp', 'highestXp', 'evacuated', 'legend', 'bot'];
     const kinds = new Set(rules.items.map((i) => i.kind));
     for (const e of all()) {
       if (e.tag) expect(tags).toContain(e.tag);

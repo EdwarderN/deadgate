@@ -1,7 +1,7 @@
 [
   {
     "Tag": "**Ran**",
-    "Gained when": "The crew evacuated or forfeited the prize, or by story events",
+    "Gained when": "The crew called its evac (section 9.6), or by story events",
     "What it does": "Work a job pays **2 less** while the crew has it"
   },
   {
@@ -23,5 +23,15 @@
     "Tag": "**Oathbreakers**",
     "Gained when": "Two failed Words in one battle, or story events",
     "What it does": "A wager offered by this crew finds no taker"
+  },
+  {
+    "Tag": "**Merciful**",
+    "Gained when": "Two captives ransomed at the lowest price allowed in one break, or story events",
+    "What it does": "**Soft.** A captor must ask 5 parts less for this crew's fighters (never below 5): the merciful get mercy"
+  },
+  {
+    "Tag": "**Oathkeepers**",
+    "Gained when": "Two Words fulfilled in one battle, one of them Big or Legendary, or story events",
+    "What it does": "A wager offered by this crew is always taken: if the other player declines, someone watching takes the other side"
   }
 ]

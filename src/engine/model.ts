@@ -86,8 +86,8 @@ export interface BattleFighter {
   reactionUsed: boolean;
   dents: number;
   putDowns: number;
-  /** put-downs with a crushing hit (Box office, 12.7) */
-  crushing?: number;
+  /** spectacular hits or Presses landed on an enemy (Box office, 6.2, 12.7) */
+  spectacular?: number;
   word: BattleWord | null;
   notes: string;
   /** single-use items used this battle, by item uid (grenades, 7.6) */
@@ -144,7 +144,7 @@ export interface AfterBattle {
   ransom?: Record<string, { pay: number | null; refuse: boolean }>;
   captive?: { income: number | null; roll: number | null; xpWho: string | null; picks?: Record<string, boolean> };
   taxUnpaid?: string[];
-  story: { row: string; roll: number | null; notes: string; choice?: string; twistWho?: string | null; twistOk?: boolean | null; picks?: Record<string, boolean>; who?: Record<string, string> };
+  story: { row: string; roll: number | null; notes: string; leadUsed?: boolean; choice?: string; twistWho?: string | null; twistOk?: boolean | null; picks?: Record<string, boolean>; who?: Record<string, string> };
   tasks: Record<string, { task: string; success: boolean | null; testTotal: number | null; tableRoll: number | null; paid?: boolean; picks?: Record<string, boolean>; rating?: string; patient?: string | null; teacher?: string | null }>;
   /** decisions made on table results, by path */
   eff?: Record<string, unknown>;
@@ -177,6 +177,8 @@ export interface Crew {
   tape: string;
   faction: string | null;
   subfaction: string | null;
+  /** the numbered faction rule the subfaction's rule replaces, chosen at creation (12.1) */
+  replacedRule?: number | null;
   captainId: string | null;
   fighters: Fighter[];
   items: OwnedItem[];
@@ -190,7 +192,8 @@ export interface Crew {
     tags: string[];
     contacts: { name: string; used: boolean }[];
     rivals: string[];
-    rumour: string;
+    /** a lead about the crew, at most one (14.8): crossed off, it lets the next story event use any row */
+    lead: string;
     roll: RollEntry[];
     season: SeasonEntry[];
     stash: string;

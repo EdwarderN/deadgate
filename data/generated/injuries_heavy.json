@@ -2,12 +2,12 @@
   {
     "d6": "1",
     "Injury (title)": "**One eye** (\"the Squint\")",
-    "What it does": "Aim gives them nothing, but their shots ignore the \"target moved\" penalty: they never had depth to lose"
+    "What it does": "Aim gives them nothing, and the \"target moved\" penalty on their shots is **-2 dice** instead of -1: with one eye they cannot judge a moving target. But the good eye is sharp up close: **+1 die** on shots at a target within 6 inches"
   },
   {
     "d6": "2",
     "Injury (title)": "**Lost leg** (\"Peg-Leg\")",
-    "What it does": "Move **halved** (rounded up), and Press cannot push them (they are planted). The med-assistant said the leg was optional"
+    "What it does": "Move **halved** (rounded up), **-1 die on Grit tests to climb or jump**, and Press cannot push them (they are planted). The med-assistant said the leg was optional"
   },
   {
     "d6": "3",
@@ -17,7 +17,7 @@
   {
     "d6": "4",
     "Injury (title)": "**Burned** (\"the Unburnt\")",
-    "What it does": "Blasts and fire are read one band lower against them"
+    "What it does": "Their skin is raw: blasts and fire are read one band **higher** against them"
   },
   {
     "d6": "5",

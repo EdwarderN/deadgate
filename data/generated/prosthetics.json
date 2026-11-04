@@ -2,7 +2,7 @@
   {
     "Injury": "Lost arm",
     "Replacement": "**Robo-arm** (section 7.5)",
-    "Effect": "Hands back to normal. A copy arm is Unreliable; an old-stock arm has Servo-grip"
+    "Effect": "Hands back to normal, and no Belt slot. A copy arm is Unreliable; an old-stock arm has Servo-grip"
   },
   {
     "Injury": "Lost leg",

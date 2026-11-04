@@ -17,7 +17,7 @@
   },
   {
     "Trait": "**Hits hard**",
-    "Effect": "The severity is read one band higher"
+    "Effect": "A glance is read as a solid hit. A solid or crushing hit stays as it is: Hits hard never makes a crushing hit"
   },
   {
     "Trait": "**Armour-piercing**",
@@ -29,7 +29,7 @@
   },
   {
     "Trait": "**Reach**",
-    "Effect": "Melee attacks from up to 2 inches away instead of base contact"
+    "Effect": "Melee attacks from up to 2 inches away instead of base contact. **Out of reach:** when a Reach fighter attacks from out of base contact, a target without Reach cannot hurt them back: if the target wins the exchange, nothing happens to the attacker (the blow does not turn back)"
   },
   {
     "Trait": "**Spread**",
@@ -57,7 +57,7 @@
   },
   {
     "Trait": "**Snare**",
-    "Effect": "A fighter this weapon hits cannot Move out of base contact with the wielder until the end of their next activation"
+    "Effect": "A fighter this weapon hits cannot take a Move action until the end of their next activation: they are held where they stand"
   },
   {
     "Trait": "**Thrown**",

@@ -267,7 +267,7 @@
           },
           {
             "label": "Prize",
-            "text": "The prize (10 parts and a finds roll). The doubter's figures were right, and the winner's crew gains a rumour (section 14.8)."
+            "text": "The prize (10 parts and a finds roll). The doubter's figures were right, and the winner's crew gains a lead (section 14.8)."
           },
           {
             "label": "Deployment",
@@ -403,7 +403,7 @@
     "section": "10.3",
     "name": "Encore",
     "ground": "Studio districts and backlots",
-    "alwaysOn": "**Always on: Always filming.** After the battle, each crew gains **1 part** for each enemy it put down with a **crushing** hit: the clips sell.",
+    "alwaysOn": "**Always on: Always filming.** After the battle, each crew gains **1 part** for each **spectacular** hit or Press its fighters landed on an enemy (section 6.2): the clips sell.",
     "terrain": "**Typical terrain.** Sets and backlots (light cover), **façades** (they look like walls, but they are not **Solid**: a fighter pushed or thrown into one knocks it flat, and it is removed), screens (**Powered**), a red carpet strip.",
     "events": [
       {
@@ -477,7 +477,7 @@
           },
           {
             "label": "Always on: Always filming",
-            "text": "After the battle, each crew gains **1 part** for each enemy it put down with a **crushing** hit: the clips sell."
+            "text": "After the battle, each crew gains **1 part** for each **spectacular** hit or Press its fighters landed on an enemy (section 6.2): the clips sell."
           },
           {
             "label": "Pods",
@@ -528,7 +528,7 @@
           },
           {
             "label": "Always on: Always filming",
-            "text": "After the battle, each crew gains **1 part** for each enemy it put down with a **crushing** hit: the clips sell."
+            "text": "After the battle, each crew gains **1 part** for each **spectacular** hit or Press its fighters landed on an enemy (section 6.2): the clips sell."
           },
           {
             "label": "Pods",
@@ -563,7 +563,7 @@
           },
           {
             "label": "Battle rules",
-            "text": "- **The call.** At the start of each round, roll a d6 and read out the director's call (below). If the call cannot be done at that moment (no façade standing, no ally down), roll again. The **first fighter** to do it this round scores one take for their side. If nobody does by the end of the round, nobody scores.\n- **Calls.** **1 Action!** Put an enemy down in melee. **2 Gunfire!** Put an enemy down with a shot. **3 Close-up.** Land a crushing hit on an enemy. **4 Cut to the wall.** Knock a façade flat (the side whose fighter pushed or threw someone into it scores). **5 Rescue.** Pick up a downed ally. **6 Hero shot.** End an activation within 2 inches of a screen."
+            "text": "- **The call.** At the start of each round, roll a d6 and read out the director's call (below). If the call cannot be done at that moment (no façade standing, no ally down), roll again. The **first fighter** to do it this round scores one take for their side. If nobody does by the end of the round, nobody scores.\n- **Calls.** **1 Action!** Put an enemy down in melee. **2 Gunfire!** Put an enemy down with a shot. **3 Close-up.** Land a spectacular hit or Press on an enemy (section 6.2). **4 Cut to the wall.** Knock a façade flat (the side whose fighter pushed or threw someone into it scores). **5 Rescue.** Pick up a downed ally. **6 Hero shot.** End an activation within 2 inches of a screen."
           },
           {
             "label": "Winning condition",
@@ -579,7 +579,7 @@
           },
           {
             "label": "Always on: Always filming",
-            "text": "After the battle, each crew gains **1 part** for each enemy it put down with a **crushing** hit: the clips sell."
+            "text": "After the battle, each crew gains **1 part** for each **spectacular** hit or Press its fighters landed on an enemy (section 6.2): the clips sell."
           },
           {
             "label": "Pods",
@@ -610,7 +610,7 @@
     "events": [
       {
         "d6": "1",
-        "Event": "**A flood surge.** A wave from the sea gate rolls through. Every fighter standing in Wet terrain is knocked **prone** and moved d6 inches in the direction of a direction die, stopping at a terrain piece or another fighter. Brinies are not moved"
+        "Event": "**A flood surge.** A wave from the sea gate rolls through. Every fighter standing in Wet terrain is knocked **prone** and moved d6 inches in the direction of a direction die, stopping at a terrain piece or another fighter. Brinies are neither moved nor knocked prone"
       },
       {
         "d6": "2",
@@ -691,7 +691,7 @@
           },
           {
             "label": "Spillway event at the start of round 3",
-            "text": "(d6)\n| d6 | Event |\n| --- | --- |\n| 1 | **A flood surge.** A wave from the sea gate rolls through. Every fighter standing in Wet terrain is knocked **prone** and moved d6 inches in the direction of a direction die, stopping at a terrain piece or another fighter. Brinies are not moved |\n| 2 | **Something surfaces.** A gnawer appears in the Wet terrain nearest the centre. If a gnawer is already on the table, nothing happens |\n| 3 | **A sluice opens.** A current runs. The player who activates first lays a strip of **Deep water** 3 inches wide across the open ground, from a random edge straight to the opposite edge through the centre. It flows away from the edge it began at (section 5.10). It passes under platforms and gangways |\n| 4 | **The pilings give way.** The highest raised piece on the table (the first player chooses between ties) sags and lets go. Every fighter standing on it makes a Routine Grit test or falls into the Wet terrain beside it, **prone**, and takes a **glance** |\n| 5 | **A cold current.** Water from the deeps. Every fighter standing in Wet terrain, Brinies excepted, makes a Routine Grit test or is **Shook** |\n| 6 | **Flotsam.** A crate of salvage drifts in at the centre of the table (Hands 1; Move -1 while carried). Carried into your deployment zone, it pays **5 parts** |"
+            "text": "(d6)\n| d6 | Event |\n| --- | --- |\n| 1 | **A flood surge.** A wave from the sea gate rolls through. Every fighter standing in Wet terrain is knocked **prone** and moved d6 inches in the direction of a direction die, stopping at a terrain piece or another fighter. Brinies are neither moved nor knocked prone |\n| 2 | **Something surfaces.** A gnawer appears in the Wet terrain nearest the centre. If a gnawer is already on the table, nothing happens |\n| 3 | **A sluice opens.** A current runs. The player who activates first lays a strip of **Deep water** 3 inches wide across the open ground, from a random edge straight to the opposite edge through the centre. It flows away from the edge it began at (section 5.10). It passes under platforms and gangways |\n| 4 | **The pilings give way.** The highest raised piece on the table (the first player chooses between ties) sags and lets go. Every fighter standing on it makes a Routine Grit test or falls into the Wet terrain beside it, **prone**, and takes a **glance** |\n| 5 | **A cold current.** Water from the deeps. Every fighter standing in Wet terrain, Brinies excepted, makes a Routine Grit test or is **Shook** |\n| 6 | **Flotsam.** A crate of salvage drifts in at the centre of the table (Hands 1; Move -1 while carried). Carried into your deployment zone, it pays **5 parts** |"
           },
           {
             "label": "Non-player models",
@@ -742,7 +742,7 @@
           },
           {
             "label": "Spillway event at the start of round 3",
-            "text": "(d6)\n| d6 | Event |\n| --- | --- |\n| 1 | **A flood surge.** A wave from the sea gate rolls through. Every fighter standing in Wet terrain is knocked **prone** and moved d6 inches in the direction of a direction die, stopping at a terrain piece or another fighter. Brinies are not moved |\n| 2 | **Something surfaces.** A gnawer appears in the Wet terrain nearest the centre. If a gnawer is already on the table, nothing happens |\n| 3 | **A sluice opens.** A current runs. The player who activates first lays a strip of **Deep water** 3 inches wide across the open ground, from a random edge straight to the opposite edge through the centre. It flows away from the edge it began at (section 5.10). It passes under platforms and gangways |\n| 4 | **The pilings give way.** The highest raised piece on the table (the first player chooses between ties) sags and lets go. Every fighter standing on it makes a Routine Grit test or falls into the Wet terrain beside it, **prone**, and takes a **glance** |\n| 5 | **A cold current.** Water from the deeps. Every fighter standing in Wet terrain, Brinies excepted, makes a Routine Grit test or is **Shook** |\n| 6 | **Flotsam.** A crate of salvage drifts in at the centre of the table (Hands 1; Move -1 while carried). Carried into your deployment zone, it pays **5 parts** |"
+            "text": "(d6)\n| d6 | Event |\n| --- | --- |\n| 1 | **A flood surge.** A wave from the sea gate rolls through. Every fighter standing in Wet terrain is knocked **prone** and moved d6 inches in the direction of a direction die, stopping at a terrain piece or another fighter. Brinies are neither moved nor knocked prone |\n| 2 | **Something surfaces.** A gnawer appears in the Wet terrain nearest the centre. If a gnawer is already on the table, nothing happens |\n| 3 | **A sluice opens.** A current runs. The player who activates first lays a strip of **Deep water** 3 inches wide across the open ground, from a random edge straight to the opposite edge through the centre. It flows away from the edge it began at (section 5.10). It passes under platforms and gangways |\n| 4 | **The pilings give way.** The highest raised piece on the table (the first player chooses between ties) sags and lets go. Every fighter standing on it makes a Routine Grit test or falls into the Wet terrain beside it, **prone**, and takes a **glance** |\n| 5 | **A cold current.** Water from the deeps. Every fighter standing in Wet terrain, Brinies excepted, makes a Routine Grit test or is **Shook** |\n| 6 | **Flotsam.** A crate of salvage drifts in at the centre of the table (Hands 1; Move -1 while carried). Carried into your deployment zone, it pays **5 parts** |"
           },
           {
             "label": "Non-player models",
@@ -793,7 +793,7 @@
           },
           {
             "label": "Spillway event at the start of round 3",
-            "text": "(d6)\n| d6 | Event |\n| --- | --- |\n| 1 | **A flood surge.** A wave from the sea gate rolls through. Every fighter standing in Wet terrain is knocked **prone** and moved d6 inches in the direction of a direction die, stopping at a terrain piece or another fighter. Brinies are not moved |\n| 2 | **Something surfaces.** A gnawer appears in the Wet terrain nearest the centre. If a gnawer is already on the table, nothing happens |\n| 3 | **A sluice opens.** A current runs. The player who activates first lays a strip of **Deep water** 3 inches wide across the open ground, from a random edge straight to the opposite edge through the centre. It flows away from the edge it began at (section 5.10). It passes under platforms and gangways |\n| 4 | **The pilings give way.** The highest raised piece on the table (the first player chooses between ties) sags and lets go. Every fighter standing on it makes a Routine Grit test or falls into the Wet terrain beside it, **prone**, and takes a **glance** |\n| 5 | **A cold current.** Water from the deeps. Every fighter standing in Wet terrain, Brinies excepted, makes a Routine Grit test or is **Shook** |\n| 6 | **Flotsam.** A crate of salvage drifts in at the centre of the table (Hands 1; Move -1 while carried). Carried into your deployment zone, it pays **5 parts** |"
+            "text": "(d6)\n| d6 | Event |\n| --- | --- |\n| 1 | **A flood surge.** A wave from the sea gate rolls through. Every fighter standing in Wet terrain is knocked **prone** and moved d6 inches in the direction of a direction die, stopping at a terrain piece or another fighter. Brinies are neither moved nor knocked prone |\n| 2 | **Something surfaces.** A gnawer appears in the Wet terrain nearest the centre. If a gnawer is already on the table, nothing happens |\n| 3 | **A sluice opens.** A current runs. The player who activates first lays a strip of **Deep water** 3 inches wide across the open ground, from a random edge straight to the opposite edge through the centre. It flows away from the edge it began at (section 5.10). It passes under platforms and gangways |\n| 4 | **The pilings give way.** The highest raised piece on the table (the first player chooses between ties) sags and lets go. Every fighter standing on it makes a Routine Grit test or falls into the Wet terrain beside it, **prone**, and takes a **glance** |\n| 5 | **A cold current.** Water from the deeps. Every fighter standing in Wet terrain, Brinies excepted, makes a Routine Grit test or is **Shook** |\n| 6 | **Flotsam.** A crate of salvage drifts in at the centre of the table (Hands 1; Move -1 while carried). Carried into your deployment zone, it pays **5 parts** |"
           },
           {
             "label": "Non-player models",
@@ -807,7 +807,7 @@
     "section": "10.5",
     "name": "Ballast",
     "ground": "Heavy gravity",
-    "alwaysOn": "**Always on: Heavy.** Climbing and jumping are **Tricky (8)**, not Routine, and a fighter who fails a climb or jump takes a **glance** as they fall. Hullbacks, and fighters in a frame, climb and jump at Routine as usual.",
+    "alwaysOn": "**Always on: Heavy.** Climbing and jumping (up, across or down) are **Tricky (8)**, not Routine, and a fighter who falls on a failed climb or jump takes at least a **glance**, whatever the distance fallen. Hullbacks, and fighters in a frame, climb and jump at Routine as usual.",
     "terrain": "**Typical terrain.** Machinery and stacked cargo (heavy cover), steps and loading ramps (raised), bunker hatches (**Powered**), slag (**Difficult**), a weigh-in scale (a marked platform).",
     "events": [
       {
@@ -881,7 +881,7 @@
           },
           {
             "label": "Always on: Heavy",
-            "text": "Climbing and jumping are **Tricky (8)**, not Routine, and a fighter who fails a climb or jump takes a **glance** as they fall. Hullbacks, and fighters in a frame, climb and jump at Routine as usual."
+            "text": "Climbing and jumping (up, across or down) are **Tricky (8)**, not Routine, and a fighter who falls on a failed climb or jump takes at least a **glance**, whatever the distance fallen. Hullbacks, and fighters in a frame, climb and jump at Routine as usual."
           },
           {
             "label": "Pods",
@@ -932,7 +932,7 @@
           },
           {
             "label": "Always on: Heavy",
-            "text": "Climbing and jumping are **Tricky (8)**, not Routine, and a fighter who fails a climb or jump takes a **glance** as they fall. Hullbacks, and fighters in a frame, climb and jump at Routine as usual."
+            "text": "Climbing and jumping (up, across or down) are **Tricky (8)**, not Routine, and a fighter who falls on a failed climb or jump takes at least a **glance**, whatever the distance fallen. Hullbacks, and fighters in a frame, climb and jump at Routine as usual."
           },
           {
             "label": "Pods",
@@ -983,7 +983,7 @@
           },
           {
             "label": "Always on: Heavy",
-            "text": "Climbing and jumping are **Tricky (8)**, not Routine, and a fighter who fails a climb or jump takes a **glance** as they fall. Hullbacks, and fighters in a frame, climb and jump at Routine as usual."
+            "text": "Climbing and jumping (up, across or down) are **Tricky (8)**, not Routine, and a fighter who falls on a failed climb or jump takes at least a **glance**, whatever the distance fallen. Hullbacks, and fighters in a frame, climb and jump at Routine as usual."
           },
           {
             "label": "Pods",
@@ -1363,7 +1363,7 @@
           },
           {
             "label": "Battle rules",
-            "text": "- **Scoring.** A side scores **1 point** for each **lasting condition** its attacks give an enemy fighter, and **3 points** instead if that fighter is the enemy's named one. Reveal the names at the end of the battle."
+            "text": "- **Scoring.** A side scores **1 point** for each **lasting condition** its attacks give an enemy fighter, and **3 points** instead if that fighter is the enemy's named one. Reveal the names at the end of the battle.\n- **Cripple, don't kill.** The Visionary wants the named one hobbled, not finished. Only lasting conditions score: a fighter put down outright, with no lasting condition, scores nothing."
           },
           {
             "label": "Winning condition",
@@ -1447,7 +1447,7 @@
       {
         "name": "Roll the Fruit",
         "title": "Plenty: Roll the Fruit",
-        "lore": "It is the only fruit in a bright colour this year, so the judges will pay anything for it. It is also radioactive, so nobody will pick it up. The judges are waiting at the edge of the field. Somebody has to kick it there.",
+        "lore": "It is the only fruit in a bright colour this year, so the judges will pay anything for it. It is also radioactive, so nobody will pick it up. A judge sits in each camp with a tape measure, and the camp the fruit ends up nearest to takes the prize. Somebody has to kick it home.",
         "sections": [
           {
             "label": "Terrain needed",
@@ -1518,7 +1518,7 @@
           },
           {
             "label": "Prize",
-            "text": "The prize (10 parts and a finds roll). The Ledgerhands also pay the winner's debt, **5 parts**."
+            "text": "The prize (10 parts and a finds roll). If there is a winner, the Ledgerhands collect the other crew's debt: it pays the winner **5 parts** (as much as it has)."
           },
           {
             "label": "Deployment",

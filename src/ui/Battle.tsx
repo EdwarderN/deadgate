@@ -2,10 +2,10 @@
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { getRules, plain } from '../data/rules';
 import {
-  addCondition, bandLower, canSwear, conditionLabel, conditionsFor, endActivation, isDown, newBattle, nextRound, positions, roundEnd,
+  addCondition, bandLower, canSwear, conditionLabel, conditionsFor, endActivation, isDown, newBattle, nextRound, positionDef, positions, roundEnd,
   RUMOUR, deedTier, shotSeverity, startAfterBattle, stateNames, toggleState, underdogFor, wordName, wordsAllowed,
 } from '../engine/battle';
-import { addLedger, canSpend, equipped, fighterStats, hasGift, isBot, strength } from '../engine/crew';
+import { addLedger, canSpend, captainOf, equipped, fighterStats, hasGift, isBot, strength } from '../engine/crew';
 import { activeEffects, rulesInForce, type ActiveEffect } from '../engine/faction';
 import { lookup, severityOfMargin } from '../engine/dice';
 import type { Battle, BattleFighter, Crew, Fighter } from '../engine/model';
@@ -13,7 +13,7 @@ import { go } from '../App';
 import { Md, describeType, fighterLabel, type Update } from './common';
 import { PoolRoller, RollOrEnter } from './Dice';
 import { useAsk } from './confirm';
-import { RuleLink, giftRule, itemRule, powersFor, sectionRule } from './rule';
+import { RuleLink, giftRule, glossaryRule, itemRule, powersFor, sectionRule } from './rule';
 import { MdBlock } from './md';
 import { BreakingCard, GearFailTool, GlossaryTool, Grenades, GrenadeTool, Madness, MoreTables, WorldPanel, WorldSetup, scenarioOf } from './BattleExtras';
 
@@ -111,6 +111,8 @@ function Setup({ crew, b, setB, setF, update }: { crew: Crew; b: Battle; setB: S
                   )}
                   {bf.word?.audience === stakes.audience && (crew.notes.tags.includes(stakes.noTakerTag)
                     ? <span className="small muted">{stakes.noTakerTag}: nobody takes the bet, so it is a vow (14.10).</span>
+                    : stakes.alwaysTakerTag && crew.notes.tags.includes(stakes.alwaysTakerTag)
+                    ? <span className="small muted">{stakes.alwaysTakerTag}: the bet is always taken (stake {stakes.value[deedTier(rules, bf.word.deed)?.tier ?? ''] ?? 0} parts, 14.10).</span>
                     : <label className="check small"><input type="checkbox" checked={bf.word.taker !== false} onChange={(e) => setF(f.id, (x) => ({ ...x, word: { ...x.word!, taker: e.target.checked } }))} /> Someone took the bet (stake {stakes.value[deedTier(rules, bf.word.deed)?.tier ?? ''] ?? 0} parts)</label>)}
                   {bf.word && sillyTierUp(f) && <span className="small muted">{f.sillyTrait}: this Word must be a tier above the one they failed (13.7).</span>}
                   {bf.word && <DeedText id={bf.word.deed} audience={bf.word.audience} />}
@@ -225,7 +227,7 @@ function BattleCard({ crew, f, bf, set, update }: { crew: Crew; f: Fighter; bf: 
   const shield = items.some((o) => o.def?.kind === 'shield');
   const conds = conditionsFor(rules, f);
   const ending = rules.data.states;
-  const crushingCounts = activeEffects(rules, crew, 'afterBattle').some((e) => e.effect.per === 'crushingPutDowns');
+  const spectacularCounts = activeEffects(rules, crew, 'afterBattle').find((e) => e.effect.per === 'spectacular');
   const onPutDown = activeEffects(rules, crew, 'putDown');
   return (
     <article className={`card bcard ${down ? 'is-down' : ''} ${bf.activated ? 'is-done' : ''}`}>
@@ -235,7 +237,7 @@ function BattleCard({ crew, f, bf, set, update }: { crew: Crew; f: Fighter; bf: 
           <div className="muted small">{describeType(f)} · Move {st.moveText} · Hands {st.hands} · Save {st.save ?? '–'}</div>
         </div>
         <select aria-label="Position" value={bf.position} onChange={(e) => set((x) => ({ ...x, position: e.target.value, states: positions(rules).find((p) => p.name === e.target.value)?.down ? [] : x.states }))}>
-          {positions(rules).filter((p) => !p.botOnly || isBot(rules, f)).map((p) => <option key={p.name}>{p.name}</option>)}
+          {positions(rules).filter((p) => (!p.botOnly || isBot(rules, f)) && !(p.notBot && isBot(rules, f))).map((p) => <option key={p.name}>{p.name}</option>)}
         </select>
       </header>
 
@@ -295,15 +297,16 @@ function BattleCard({ crew, f, bf, set, update }: { crew: Crew; f: Fighter; bf: 
           <button className="btn small" aria-label="One fewer put down" onClick={() => set((x) => ({ ...x, putDowns: Math.max(0, x.putDowns - 1) }))}>−</button>{bf.putDowns}
           <button className="btn small" aria-label="One more put down" onClick={() => set((x) => ({ ...x, putDowns: x.putDowns + 1 }))}>+</button>
         </span>
-        {crushingCounts && (
-          <span className="row gap-s small">with a crushing hit
-            <button className="btn small" aria-label="One fewer crushing put down" onClick={() => set((x) => ({ ...x, crushing: Math.max(0, (x.crushing ?? 0) - 1) }))}>−</button>{bf.crushing ?? 0}
-            <button className="btn small" aria-label="One more crushing put down" onClick={() => set((x) => ({ ...x, crushing: Math.min(x.putDowns, (x.crushing ?? 0) + 1) }))}>+</button>
+        {spectacularCounts && (
+          <span className="row gap-s small"><RuleLink rule={glossaryRule(rules, spectacularCounts.effect.term ?? '')}>{spectacularCounts.effect.term}</RuleLink> ({spectacularCounts.title})
+            <button className="btn small" aria-label="One fewer spectacular hit" onClick={() => set((x) => ({ ...x, spectacular: Math.max(0, (x.spectacular ?? 0) - 1) }))}>−</button>{bf.spectacular ?? 0}
+            <button className="btn small" aria-label="One more spectacular hit" onClick={() => set((x) => ({ ...x, spectacular: (x.spectacular ?? 0) + 1 }))}>+</button>
           </span>
         )}
       </div>
 
       {bf.putDowns > 0 && onPutDown.map((e) => <FactionNote key={e.effect.id} e={e} small />)}
+      {down && activeEffects(rules, crew, 'allyDown').map((e) => <FactionNote key={e.effect.id} e={e} small />)}
       <Grenades crew={crew} f={f} bf={bf} set={set} />
       {hasGift(rules, crew, f) && (
         <details className="powers small">
@@ -353,7 +356,7 @@ function Tools({ crew, tool, setTool }: { crew: Crew; tool: string | null; setTo
       {tool === 'Hit' && <HitTool />}
       {tool === 'Clash' && <ClashTool />}
       {tool === 'Ask the voice' && <VoiceTool crew={crew} />}
-      {tool === 'Gear fails' && <GearFailTool />}
+      {tool === 'Gear fails' && <><GearFailTool />{activeEffects(getRules(), crew, 'gearFail').map((e) => <FactionNote key={e.effect.id} e={e} small />)}</>}
       {tool === 'Grenade' && <GrenadeTool />}
       {tool === 'Quick reference' && <><QuickRef /><MoreTables /></>}
       {tool === 'Glossary' && <GlossaryTool />}
@@ -489,7 +492,7 @@ function EndBattle({ crew, b, setB, update }: { crew: Crew; b: Battle; setB: Set
           <div key={f.id} className="row gap-s wrap between">
             <span>{fighterLabel(f)}</span>
             <select aria-label={`${fighterLabel(f)}: how they ended`} value={b.fighters[f.id].position} onChange={(e) => setB((x) => ({ ...x, fighters: { ...x.fighters, [f.id]: { ...x.fighters[f.id], position: e.target.value } } }))}>
-              {positions(rules).filter((p) => !p.botOnly || isBot(rules, f)).map((p) => <option key={p.name}>{p.name}</option>)}
+              {positions(rules).filter((p) => (!p.botOnly || isBot(rules, f)) && !(p.notBot && isBot(rules, f))).map((p) => <option key={p.name}>{p.name}</option>)}
             </select>
           </div>
         ))}
@@ -581,7 +584,9 @@ function ResearchTracker({ crew, b, setB }: { crew: Crew; b: Battle; setB: SetB 
 function RoundStart({ crew, b }: { crew: Crew; b: Battle }) {
   const rules = getRules();
   const [roll, setRoll] = useState<Record<string, number | null>>({});
-  const es = activeEffects(rules, crew, 'roundStart').filter((e) => !e.effect.rounds || e.effect.rounds.includes(b.round));
+  const cap = captainOf(crew);
+  const capStanding = !!cap && !!b.fighters[cap.id]?.inBattle && !positionDef(rules, b.fighters[cap.id].position)?.down && !!positionDef(rules, b.fighters[cap.id].position)?.onTable;
+  const es = activeEffects(rules, crew, 'roundStart').filter((e) => (!e.effect.rounds || e.effect.rounds.includes(b.round)) && (e.effect.captain !== 'standing' || capStanding));
   return (
     <>
       {es.map((e) => (

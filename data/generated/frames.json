@@ -2,7 +2,7 @@
   {
     "Frame": "**Civilian** (Frame slot; worn with light or medium armour, not heavy; gives no save of its own)",
     "Basic (no Energy)": "+1 die on Grit tests to haul and jump. **Hauler:** carries a downed ally alone at Move 1 less",
-    "Boosted (1 Energy)": "**Boost:** one Move action leaps a gap or obstacle up to 3 inches, or climbs without a test"
+    "Boosted (1 Energy)": "**Boost:** one Move action leaps a gap or obstacle up to 3 inches, or climbs or descends without a test"
   },
   {
     "Frame": "**Military** (fills Frame and Body; a 2-dice save; a **weapon mount**; a **6-Energy cell**)",

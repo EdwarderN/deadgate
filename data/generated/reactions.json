@@ -12,7 +12,7 @@
   {
     "Reaction": "**Duck**",
     "What it does": "Go prone before the roll: the shooter has -1 die",
-    "The price": "The reaction is used. Standing up costs an action, and a prone fighter is easier to hit in melee"
+    "The price": "The reaction is used. Standing up costs an action (then a half Move), and a prone fighter is easier to hit in melee"
   },
   {
     "Reaction": "**Return fire**",

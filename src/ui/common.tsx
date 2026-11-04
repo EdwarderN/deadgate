@@ -4,6 +4,7 @@ import { getRules, type ItemDef } from '../data/rules';
 import {
   addLedger, autoSlot, canSpend, equipped, fighterStats, giftPrice, hirePrice, isBot, itemPrice, needsSeller, newFighter, partsLeft, ratingNames,
   battery, builtInOptions, rechargeCost, recruitKey, ritesPrice, rookieSurcharge, sellValue, sellerTarget, setFighterType, setSellerResult, slotCapacity, slotLoad, slotOptions,
+  beltSlots, canPayRunningCost, replaceableRules, typeCarries,
 } from '../engine/crew';
 import { uid, type Crew, type Fighter, type ItemSlot, type OwnedItem } from '../engine/model';
 import type { Message } from '../engine/validate';
@@ -301,6 +302,7 @@ export function Equip({ crew, fighter, update, messages }: { crew: Crew; fighter
   return (
     <div className="equip">
       <StatLine crew={crew} fighter={fighter} />
+      {typeCarries(rules, crew, fighter) && (() => { const c = typeCarries(rules, crew, fighter)!; const g = rules.factionRules(crew.faction ?? '')?.typeGrants?.[fighter.type ?? '']; return <p className="small">Always carries: <strong>{c.name}</strong> <span className="muted">({c.hands} Hand of the {c.set === 'set1' ? 'first' : 'second'} set{g?.note ? `; ${g.note}` : ''})</span></p>; })()}
       {fighter.builtIn && rules.item(fighter.builtIn) && <p className="small">Built in: <RuleLink rule={itemRule(rules, rules.item(fighter.builtIn)!)}>{rules.item(fighter.builtIn)!.name}</RuleLink> <span className="muted">(no Hands, never removed)</span></p>}
       <div className="slots">
         {slots.map((s) => {
@@ -334,7 +336,7 @@ export function StatLine({ crew, fighter }: { crew: Crew; fighter: Fighter }) {
       <div><dt>Hands</dt><dd>{st.hands}</dd></div>
       <div><dt>Save</dt><dd>{st.save === null ? '–' : st.save}</dd></div>
       <div><dt>Energy</dt><dd>{st.energy}</dd></div>
-      <div><dt>Belt</dt><dd>{st.beltUsed}/{rules.crew.gear.beltSlots.value}</dd></div>
+      <div><dt>Belt</dt><dd>{st.beltUsed}/{beltSlots(rules, crew)}</dd></div>
     </dl>
   );
 }
@@ -446,7 +448,7 @@ export function Recharge({ crew, update }: { crew: Crew; update: Update }) {
   const want = (r: (typeof rows)[number]) => Math.min(add[r.f.id] ?? 0, r.max - r.now);
   const energy = rows.reduce((s, r) => s + want(r), 0);
   const cost = rechargeCost(rules, energy);
-  const ok = energy > 0 && canSpend(rules, crew, cost);
+  const ok = energy > 0 && canPayRunningCost(rules, crew, cost);
   const pay = () => {
     update((c) => addLedger({ ...c, fighters: c.fighters.map((f) => { const r = rows.find((x) => x.f.id === f.id)!; return want(r) ? { ...f, energy: r.now + want(r) } : f; }) }, -cost, `Recharged ${energy} Energy`));
     setAdd({});
@@ -497,6 +499,46 @@ export function Chassis({ crew, update }: { crew: Crew; update: Update }) {
           </div>
         );
       })}
+    </div>
+  );
+}
+
+/** The faction rule the crew's subfaction replaces: the player's choice, made at creation (12.1). */
+export function ReplacedRulePick({ crew, update }: { crew: Crew; update: Update }) {
+  const rules = getRules();
+  if (!crew.subfaction) return null;
+  return (
+    <fieldset className="stack-s replace-pick">
+      <legend><strong>Which faction rule does {crew.subfaction}'s rule replace?</strong> <span className="muted small">The replaced rule is gone, with everything that depends on it (12.1).</span></legend>
+      {replaceableRules(rules, crew.faction).map((r) => (
+        <label key={r.n} className={`option ${crew.replacedRule === r.n ? 'on' : ''}`}>
+          <input type="radio" name={`replaced-rule-${crew.id}`} checked={crew.replacedRule === r.n} onChange={() => update((c) => ({ ...c, replacedRule: r.n }))} />
+          <span><strong>{r.n}. {r.name}</strong></span>
+        </label>
+      ))}
+    </fieldset>
+  );
+}
+
+/** The doctor of last resort (14.3): when every fighter would miss the next battle, pay all the parts and heal one. */
+export function Doctor({ crew, update }: { crew: Crew; update: Update }) {
+  const rules = getRules();
+  const doc = rules.crew.campaign.doctor;
+  const [who, setWho] = useState('');
+  if (!doc || !crew.fighters.length || !crew.fighters.every((f) => f.status === doc.value)) return null;
+  const fit = rules.crew.campaign.statuses.value[0];
+  const pay = Math.max(0, crew.parts);
+  return (
+    <div className="card stack-s">
+      <h3>The doctor of last resort <span className="section-tag">§ {doc.source}</span></h3>
+      <p className="small">Every fighter is {doc.value}. The crew may pay all its parts ({pay}) for advanced medicines from a drop: one fighter is healed and can play the next battle. Lasting injuries stay.</p>
+      <div className="row gap-s wrap">
+        <select value={who} onChange={(e) => setWho(e.target.value)} aria-label="Fighter to heal">
+          <option value="">Choose the fighter</option>
+          {crew.fighters.map((f) => <option key={f.id} value={f.id}>{fighterLabel(f)}</option>)}
+        </select>
+        <button className="btn small primary" disabled={!who} onClick={() => update((c) => addLedger({ ...c, fighters: c.fighters.map((f) => (f.id === who ? { ...f, status: fit } : f)) }, -pay, 'The doctor of last resort'))}>Call the doctor</button>
+      </div>
     </div>
   );
 }

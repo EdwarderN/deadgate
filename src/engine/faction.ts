@@ -34,8 +34,8 @@ export function rulesInForce(rules: Rules, crew: Crew): { title: string; text: s
   const fac = rules.faction(crew.faction ?? '');
   if (!fac) return [];
   const sub = fac.subfactions.find((s) => s.name === crew.subfaction);
-  const out = fac.rules.filter((r) => sub?.replaces !== r.n).map((r) => ({ title: `${r.n}. ${r.name}`, text: r.text }));
-  if (sub) out.push({ title: `${sub.name} (replaces ${sub.replaces})`, text: sub.rule });
+  const out = fac.rules.filter((r) => ruleActive(rules, crew, r.n)).map((r) => ({ title: `${r.n}. ${r.name}`, text: r.text }));
+  if (sub) out.push({ title: `${sub.name}${crew.replacedRule ? ` (replaces ${crew.replacedRule})` : ''}`, text: sub.rule });
   const types = new Set(crew.fighters.map((f) => f.type).filter(Boolean));
   for (const t of fac.types) if (types.has(t.name)) out.push({ title: t.label, text: t.trait });
   return out;
@@ -101,7 +101,7 @@ export function factionAfterBattle(rules: Rules, crew: Crew, b: Battle, ans: Fac
       }
       case 'partsPer': {
         const n = e.per === 'putDowns' ? took.reduce((s, f) => s + b.fighters[f.id].putDowns, 0)
-          : e.per === 'crushingPutDowns' ? took.reduce((s, f) => s + (b.fighters[f.id].crushing ?? 0), 0)
+          : e.per === 'spectacular' ? took.reduce((s, f) => s + (b.fighters[f.id].spectacular ?? 0), 0)
           : Number(a) || 0;
         if (n) parts.push({ label: `${title} (${n})`, amount: n * (e.amount ?? 0), factionPay: !!e.factionPay });
         break;

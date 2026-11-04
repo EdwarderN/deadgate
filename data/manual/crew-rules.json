@@ -450,16 +450,6 @@
           "source": "copy"
         }
       ],
-      "priceRules": [
-        {
-          "rule": 3,
-          "kind": "copyDiscount",
-          "amount": 1,
-          "min": 1,
-          "effect": "copy items cost 1 part less, never below 1",
-          "replacedBySubfaction": "Silver Tape"
-        }
-      ],
       "specials": {
         "gift": 30,
         "rites": 20,
@@ -478,13 +468,10 @@
           "kind": "reminder"
         },
         {
-          "id": "split-of-the-haul",
+          "id": "hang-on-mate",
           "rule": 4,
-          "when": "afterBattle",
-          "kind": "xpEach",
-          "who": "participants",
-          "amount": 1,
-          "ask": "Did the crew carry off a crate or drop item?"
+          "when": "allyDown",
+          "kind": "reminder"
         },
         {
           "id": "claim-pending",
@@ -493,19 +480,22 @@
           "kind": "reminder"
         },
         {
-          "id": "resale-value",
-          "subfaction": "Black Tape",
-          "when": "break",
-          "kind": "sellDrop",
-          "roll": "d6",
-          "amount": 5
+          "id": "showroom-condition",
+          "subfaction": "Silver Tape",
+          "when": "gearFail",
+          "kind": "reminder"
         },
         {
           "id": "work-them",
           "when": "captive",
           "kind": "rollOwnTaskTable"
         }
-      ]
+      ],
+      "beltSlots": {
+        "value": 4,
+        "rule": 1,
+        "source": "7.1, 12.2"
+      }
     },
     "The Inspectorate": {
       "startingKit": [
@@ -547,6 +537,13 @@
           "factionPay": true
         },
         {
+          "id": "papers-please",
+          "rule": 3,
+          "when": "roundStart",
+          "kind": "reminder",
+          "captain": "standing"
+        },
+        {
           "id": "everything-is-taxed-prize",
           "subfaction": "Weights and Measures",
           "when": "afterBattle",
@@ -569,29 +566,18 @@
           "id": "mandatory-cheer",
           "subfaction": "Department of Improvement",
           "when": "roundStart",
-          "kind": "reminder"
+          "kind": "reminder",
+          "rounds": [
+            1,
+            3,
+            5
+          ]
         },
         {
           "id": "condemned",
           "subfaction": "Fire Marshals",
           "when": "setup",
           "kind": "reminder"
-        },
-        {
-          "id": "strong-boss-up",
-          "rule": 3,
-          "when": "breaking",
-          "kind": "breakingDice",
-          "amount": 1,
-          "captain": "standing"
-        },
-        {
-          "id": "strong-boss-down",
-          "rule": 3,
-          "when": "breaking",
-          "kind": "breakingDice",
-          "amount": -1,
-          "captain": "down"
         }
       ]
     },
@@ -614,8 +600,7 @@
       "types": true,
       "typeGrants": {
         "Priest": {
-          "rites": true,
-          "ritesKnown": 2
+          "rites": true
         },
         "Seer": {
           "gift": true,
@@ -629,10 +614,6 @@
           "note": "a priest within 6 inches may use a relic the Acolyte holds (12.4)"
         }
       },
-      "ritesKnownByAnyPriest": {
-        "value": 2,
-        "rule": 2
-      },
       "wordKind": {
         "value": "Vow",
         "source": "12.1"
@@ -645,10 +626,11 @@
           "kind": "reminder"
         },
         {
-          "id": "omens",
+          "id": "the-omen",
           "rule": 4,
-          "when": "pod",
-          "kind": "reminder"
+          "when": "roundStart",
+          "kind": "reminder",
+          "roll": "d6"
         },
         {
           "id": "thought-leadership",
@@ -685,14 +667,8 @@
           "when": "captive",
           "kind": "captiveXp",
           "amount": 1,
-          "who": "anyFighter"
-        },
-        {
-          "id": "still-waiting",
-          "rule": 1,
-          "when": "breaking",
-          "kind": "breakingDice",
-          "amount": 1
+          "who": "anyFighter",
+          "lead": true
         }
       ]
     },
@@ -709,7 +685,7 @@
       "credit": {
         "value": -20,
         "rule": 3,
-        "note": "may buy and hire down to -20 parts; below 0 it buys and hires nothing more"
+        "note": "may buy and hire down to -20 parts, and pay the air tax and recharging into debt to the same floor; below 0 it buys and hires nothing more (14.2, 14.3)"
       },
       "specials": {
         "gift": 30,
@@ -721,21 +697,23 @@
         "value": "Wager",
         "source": "12.1"
       },
-      "taskPay": [
+      "effects": [
         {
+          "id": "pay-or-walk-up",
           "rule": 1,
-          "task": "Work a job",
-          "parts": 3
+          "when": "breaking",
+          "kind": "breakingDice",
+          "amount": 1,
+          "partsAtLeast": 10
         },
         {
-          "subfaction": "The Indentured",
-          "task": "Work a job",
-          "setParts": 0,
-          "xpSuccess": 2,
-          "xpFailure": 1
-        }
-      ],
-      "effects": [
+          "id": "pay-or-walk-down",
+          "rule": 1,
+          "when": "breaking",
+          "kind": "breakingDice",
+          "amount": -1,
+          "partsBelow": 0
+        },
         {
           "id": "the-mark",
           "rule": 2,
@@ -759,25 +737,22 @@
           "amount": 5
         },
         {
+          "id": "unpaid-overtime",
+          "subfaction": "The Indentured",
+          "when": "roundStart",
+          "kind": "reminder"
+        },
+        {
           "id": "repossession",
           "subfaction": "Collections Department",
           "when": "afterBattle",
           "kind": "reminder"
         },
         {
-          "id": "rated",
+          "id": "on-call",
           "subfaction": "Per-Diem Companies",
-          "when": "afterBattle",
-          "kind": "rating",
-          "who": "participants",
-          "high": {
-            "value": 5,
-            "xp": 1
-          },
-          "low": {
-            "value": 1,
-            "parts": -2
-          }
+          "when": "setup",
+          "kind": "reminder"
         }
       ]
     },
@@ -807,8 +782,7 @@
           "kind": "recruitPrice",
           "recruit": "Volunteer",
           "price": 10,
-          "effect": "volunteers cost 10 instead of 15",
-          "replacedBySubfaction": "Replication Wing"
+          "effect": "volunteers cost 10 instead of 15"
         },
         {
           "subfaction": "Replication Wing",
@@ -830,6 +804,19 @@
       },
       "effects": [
         {
+          "id": "remote-reboot",
+          "rule": 1,
+          "when": "breaking",
+          "kind": "breakingThreshold",
+          "fraction": 0.75
+        },
+        {
+          "id": "remote-reboot-stand",
+          "rule": 1,
+          "when": "roundStart",
+          "kind": "reminder"
+        },
+        {
           "id": "research-tasks",
           "rule": 2,
           "when": "setup",
@@ -846,10 +833,6 @@
           "id": "negative-review",
           "subfaction": "The Dissenters",
           "when": "roundStart",
-          "rounds": [
-            2,
-            4
-          ],
           "kind": "reminder"
         },
         {
@@ -858,13 +841,6 @@
           "kind": "captiveXp",
           "amount": 2,
           "who": "bots"
-        },
-        {
-          "id": "remote-operation",
-          "rule": 1,
-          "when": "breaking",
-          "kind": "breakingThreshold",
-          "fraction": 0.75
         }
       ],
       "typeRules": {
@@ -901,16 +877,6 @@
         "Stunt double"
       ],
       "captainType": "Director",
-      "priceRules": [
-        {
-          "rule": 3,
-          "kind": "noSellerRoll",
-          "itemKind": "weapon",
-          "source": "old stock",
-          "effect": "old-stock weapons need no seller roll",
-          "replacedBySubfaction": "Streaming Platforms"
-        }
-      ],
       "specials": {
         "gift": 30,
         "rites": 20,
@@ -927,9 +893,10 @@
           "rule": 4,
           "when": "afterBattle",
           "kind": "partsPer",
-          "per": "crushingPutDowns",
+          "per": "spectacular",
           "amount": 2,
-          "factionPay": true
+          "factionPay": true,
+          "term": "Spectacular"
         },
         {
           "id": "staged-drama",
@@ -938,11 +905,10 @@
           "kind": "reminder"
         },
         {
-          "id": "cancelled",
+          "id": "autoplay",
           "subfaction": "Streaming Platforms",
-          "when": "break",
-          "kind": "cancelFighter",
-          "condition": "notHeldField"
+          "when": "putDown",
+          "kind": "reminder"
         },
         {
           "id": "directors-call",
@@ -950,15 +916,6 @@
           "when": "roundStart",
           "kind": "reminder",
           "roll": "d6"
-        },
-        {
-          "id": "spin-off",
-          "subfaction": "Franchise Studios",
-          "when": "legend",
-          "kind": "spinOffLegend",
-          "xpBelow": 5,
-          "prefix": "Young",
-          "prefixAfter": "the"
         },
         {
           "id": "cast-them",
@@ -979,6 +936,17 @@
         },
         "source": "12.7",
         "note": "at most one Director (designer's answer 7)"
+      },
+      "typeGrants": {
+        "Director": {
+          "carries": {
+            "name": "Director's camera",
+            "hands": 1,
+            "set": "set1",
+            "source": "12.7"
+          },
+          "note": "free, Hands 1; cannot be sold, dropped or taken, and passes to the next Director (12.7)"
+        }
       }
     }
   },
@@ -1043,7 +1011,7 @@
           "prostheticFraction": 0.5
         },
         "Informer": {
-          "task": "Hunt rumours",
+          "task": "Hunt leads",
           "findsOnFailure": 1
         },
         "Fixer": {
@@ -1073,6 +1041,11 @@
         12
       ],
       "source": "14.11"
+    },
+    "doctor": {
+      "value": "Laid up",
+      "source": "14.3",
+      "note": "when every fighter on the roster has this status, the crew may pay all its parts (even none) in the Spend step: one fighter of the player's choice is healed and can play the next battle; lasting injuries stay"
     }
   },
   "sections": {
@@ -1172,13 +1145,15 @@
           "name": "Down, evacuated",
           "cameHome": true,
           "injury": "gentle",
-          "down": true
+          "down": true,
+          "notBot": true
         },
         {
           "name": "Captured",
           "injury": "gentle",
           "down": true,
-          "captured": true
+          "captured": true,
+          "notBot": true
         },
         {
           "name": "Dragged off",
@@ -1192,8 +1167,8 @@
           "corePulled": true
         }
       ],
-      "source": "5.8, 6.4, 9.6, 13.2, 13.4",
-      "note": "injury: which table a fighter who ended the battle so rolls; heldField means gentle if the crew held the field, else harsh; corePulled: a bot whose core was pulled (13.3): destroyed without a roll, replaced with half its XP if the core got home"
+      "source": "5.8, 6.4, 9.6, 13.2, 13.3, 13.4",
+      "note": "injury: which table a fighter who ended the battle so rolls; heldField means gentle if the crew held the field, else harsh; corePulled: a bot whose core was pulled (13.3): destroyed without a roll, replaced with half its XP if the core got home; notBot: a bot is never picked up, carried or captured, so never evacuated while down or taken captive (5.8, 13.3)"
     },
     "wordsPerSide": {
       "value": 2,
@@ -1277,7 +1252,9 @@
       },
       "audience": "Wager",
       "noTakerTag": "Oathbreakers",
-      "source": "13.5, 14.10"
+      "source": "13.5, 14.10",
+      "alwaysTakerTag": "Oathkeepers",
+      "note": "noTakerTag: a wager this crew offers finds no taker; alwaysTakerTag: it is always taken (14.10)"
     }
   },
   "afterBattle": {
@@ -1347,7 +1324,8 @@
         "3": "ran",
         "4": "lostSomeone",
         "5": "captive",
-        "6": "legend"
+        "6": "legend",
+        "7": "always"
       },
       "source": "14.5",
       "note": "which story rows fit the battle, for the app's suggestion; the player still chooses"
@@ -1370,6 +1348,18 @@
       "value": true,
       "source": "12.3",
       "note": "'pays double' doubles the task's printed pay; pay added by other rules is not doubled (designer's answer 24)"
+    },
+    "ransomTags": {
+      "value": [
+        "Merciful"
+      ],
+      "source": "14.10",
+      "note": "crew tags that change the ransom a captor may ask for this crew's fighters; the app shows their text in the ransom step"
+    },
+    "captorRolls": {
+      "value": true,
+      "source": "14.4",
+      "note": "a captured fighter's gentle roll belongs to the captor: the captor's player makes its choices"
     }
   },
   "factionPayCap": {

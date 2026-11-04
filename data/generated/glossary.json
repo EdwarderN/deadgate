@@ -36,7 +36,7 @@
   },
   {
     "Term": "**Ask the voice**",
-    "Meaning": "A free d6 gamble on the crew's voice's table before a roll, once an activation",
+    "Meaning": "A free d6 gamble on the crew's voice's table before a roll, once an activation (the Waiting twice)",
     "See": "8.6"
   },
   {
@@ -75,13 +75,18 @@
     "See": "9.8"
   },
   {
+    "Term": "**Camera**",
+    "Meaning": "The Hollowood Director's free Hands 1 item: while in use, an ally who gives an enemy a lasting condition is Hyped, and an enemy within 6 inches of the Director who gives a lasting condition is Announced",
+    "See": "12.7"
+  },
+  {
     "Term": "**Captain**",
     "Meaning": "The crew's leader, with captain traits; makes the breaking test",
     "See": "11.2"
   },
   {
     "Term": "**Captive**",
-    "Meaning": "A downed enemy picked up and carried off; ransomed or meets their fate",
+    "Meaning": "A downed enemy (never a bot) picked up and carried off; ransomed or meets their fate",
     "See": "14.4"
   },
   {
@@ -125,6 +130,11 @@
     "See": "3.3"
   },
   {
+    "Term": "**Doctor**",
+    "Meaning": "When every fighter would miss the next battle: the crew pays all its parts and one fighter is healed",
+    "See": "14.3"
+  },
+  {
     "Term": "**Doors and windows**",
     "Meaning": "Shut but unlocked unless hacked: fighters pass through, sight does not. Red Hacked token: locked. Green: open",
     "See": "5.10"
@@ -155,13 +165,18 @@
     "See": "13.4"
   },
   {
+    "Term": "**Falling**",
+    "Meaning": "Going over an edge, or losing grip on a climb or jump: lands prone; 3 to 5 inches a glance, 6 to 9 solid, 10 or more crushing",
+    "See": "5.3"
+  },
+  {
     "Term": "**Final**",
     "Meaning": "The extra battle between the two crews with the most league points",
     "See": "14.13"
   },
   {
     "Term": "**Finds**",
-    "Meaning": "The d6 table of things a prize or a rumour turns up",
+    "Meaning": "The d6 table of things a prize or a lead turns up",
     "See": "14.7"
   },
   {
@@ -255,6 +270,11 @@
     "See": "6.3"
   },
   {
+    "Term": "**Lead**",
+    "Meaning": "A roster note (one at a time): crossed off, it lets the next story event pick any row",
+    "See": "14.8"
+  },
+  {
     "Term": "**League points**",
     "Meaning": "Points a battle scores for the winning condition, the field and Words fulfilled",
     "See": "14.12"
@@ -273,6 +293,11 @@
     "Term": "**Net dice**",
     "Meaning": "The extra dice left after both sides' extras cancel",
     "See": "3.2"
+  },
+  {
+    "Term": "**Obstacle**",
+    "Meaning": "A low (up to 1 inch) or high (up to 2 inches) linear piece: crossed in a Move, and cover",
+    "See": "5.10"
   },
   {
     "Term": "**Old stock**",
@@ -311,7 +336,7 @@
   },
   {
     "Term": "**Prone**",
-    "Meaning": "Lying on their back; standing up costs an action",
+    "Meaning": "Lying on their back; standing up costs an action, then a half Move; or crawl at half Move",
     "See": "5.3"
   },
   {
@@ -351,7 +376,7 @@
   },
   {
     "Term": "**Rumour**",
-    "Meaning": "The past the world writes for an arrival; also a roster note about a crew",
+    "Meaning": "The past the world writes for an arrival",
     "See": "13.9"
   },
   {
@@ -395,6 +420,11 @@
     "See": "13.2"
   },
   {
+    "Term": "**Spectacular**",
+    "Meaning": "A hit or Press that throws the target through a door or window, over an edge (3 inches or more), or hard into a wall or fighter; also Down, flying and Thrown. Some rules pay for them",
+    "See": "6.2"
+  },
+  {
     "Term": "**Spotlight**",
     "Meaning": "In the Final: a fighter named each round is Announced, and Hyped if they put down an enemy",
     "See": "14.13"
@@ -405,13 +435,18 @@
     "See": "14.13"
   },
   {
+    "Term": "**Standing**",
+    "Meaning": "On the table and not down. A prone fighter is standing; an evacuated one is not",
+    "See": "9.5"
+  },
+  {
     "Term": "**State**",
     "Meaning": "A short-lived marker that never puts anyone down: Hyped, Shook, Flustered, Under warranty, Announced",
     "See": "5.9"
   },
   {
     "Term": "**Story event**",
-    "Meaning": "One per crew each break: a row chosen to fit the battle, a d6, then Accept, Pay or Twist",
+    "Meaning": "One per crew each break: a row chosen to fit the battle (or row 7, the crew's own faction), a d6, then Accept, Pay or Twist",
     "See": "14.5"
   },
   {
@@ -420,8 +455,13 @@
     "See": "7.2"
   },
   {
+    "Term": "**Swap**",
+    "Meaning": "An action: exchange places with an allied fighter in base contact",
+    "See": "5.2"
+  },
+  {
     "Term": "**Tag**",
-    "Meaning": "A crew's reputation: Ran, Reliable, Butchers, Showboats, Oathbreakers",
+    "Meaning": "A crew's reputation: Ran, Reliable, Butchers, Merciful, Showboats, Oathbreakers, Oathkeepers",
     "See": "14.10"
   },
   {
@@ -483,6 +523,11 @@
     "Term": "**Winning condition**",
     "Meaning": "What a scenario asks for. Meeting it earns the prize: 10 parts and a finds roll",
     "See": "9.5"
+  },
+  {
+    "Term": "**Wiped out**",
+    "Meaning": "A crew with no fighters left, dead or Taken: out of the league. The player may start again from scratch",
+    "See": "14.11"
   },
   {
     "Term": "**Word**",

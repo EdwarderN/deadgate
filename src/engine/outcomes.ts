@@ -1,11 +1,12 @@
 // Changes to a crew from the after-battle steps, and applying them.
 // What a table row does is data (data/manual/outcomes.json), resolved in effects.ts.
 import { plain, type Rules } from '../data/rules';
-import { addLedger, advancesEarned, battery, isBot } from './crew';
+import { addLedger, advancesEarned, battery, creditFloor, isBot } from './crew';
 import { uid, type Crew, type Fighter, type ItemSlot } from './model';
 
 export type Change =
-  | { kind: 'parts'; amount: number; note: string }
+  /** a loss stops at 0 (14.2), unless floor says the crew may pay into debt: 'credit' to its credit floor, 'none' with no floor (a ransom to the Ledgerhands) */
+  | { kind: 'parts'; amount: number; note: string; floor?: 'credit' | 'none' }
   | { kind: 'xp'; fid: string; amount: number; note: string }
   | { kind: 'status'; fid: string; value: string }
   | { kind: 'injury'; fid: string; value: string; title: string | null }
@@ -21,13 +22,14 @@ export type Change =
   | { kind: 'hireOffer'; discount: number | null; note: string; past?: string }
   | { kind: 'relicLead'; noRoll: boolean }
   | { kind: 'sellerFound'; itemId: string }
-  | { kind: 'rumour'; text: string }
+  | { kind: 'lead'; text: string }
   | { kind: 'gift'; fid: string }
   | { kind: 'healInjury'; fid: string; value: string }
   | { kind: 'laidUpToSore' }
   | { kind: 'title'; fid: string; value: string }
   | { kind: 'recharge'; fid: string | null; amount: number | null; note: string }
   | { kind: 'useContact'; name: string; why: string }
+  | { kind: 'removeContact'; name: string }
   | { kind: 'botCoreLost'; fid: string }
   | { kind: 'botReplace'; fid: string; fraction: number }
   | { kind: 'mark'; fid: string; value: string; title: string | null }
@@ -67,13 +69,14 @@ export function describe(crew: Crew, c: Change): string {
     case 'hireOffer': return `A recruit ${c.discount === null ? 'for free' : `for ${c.discount} parts less`}${c.note ? ` (${c.note})` : ''}, this break`;
     case 'relicLead': return `A relic lead: one relic at half price${c.noRoll ? ', no seller roll' : ''}, this break`;
     case 'sellerFound': return `A seller for the ${itemName(c.itemId)} this break`;
-    case 'rumour': return `Crew rumour: ${c.text}`;
+    case 'lead': return c.text ? `The crew's lead: ${c.text}` : 'The lead is crossed off';
     case 'gift': return `${who(c.fid)} gains the gift`;
     case 'healInjury': return `${who(c.fid)}: ${c.value} healed`;
     case 'laidUpToSore': return 'Every Laid up fighter is only Sore';
     case 'title': return `${who(c.fid)} takes the title "${c.value}"`;
     case 'recharge': return `${c.fid ? who(c.fid) : 'Every fighter'}: battery ${c.amount === null ? 'refilled' : `+${c.amount} Energy`}${c.note ? ` (${c.note})` : ''}`;
     case 'useContact': return `The ${c.name} is used${c.why ? `: ${c.why}` : ''}`;
+    case 'removeContact': return `The ${c.name} is crossed off`;
     case 'botCoreLost': return `${who(c.fid)}'s core is lost: Experience, advances and Legends are gone (13.3)`;
     case 'botReplace': return `${who(c.fid)}'s core keeps ${c.fraction === 0.5 ? 'half' : `${c.fraction}`} their Experience; buy a new chassis in the Spend step (13.3)`;
     case 'mark': return `${who(c.fid)} gains ${c.value}${c.title ? ` ("${c.title}")` : ''}`;
@@ -94,7 +97,15 @@ export function applyChanges(rules: Rules, crew: Crew, changes: Change[]): { cre
     if ('fid' in ch && ch.fid && !c.fighters.some((f) => f.id === ch.fid)) continue;
     lines.push(describe(c, ch));
     switch (ch.kind) {
-      case 'parts': c = addLedger(c, ch.amount, ch.note || (ch.amount > 0 ? 'Parts gained' : 'Parts paid')); break;
+      case 'parts': {
+        let amount = ch.amount;
+        if (amount < 0 && ch.floor !== 'none') {
+          const floor = ch.floor === 'credit' ? creditFloor(rules, c).value : 0;
+          amount = Math.max(amount, Math.min(0, floor - c.parts));
+        }
+        if (amount) c = addLedger(c, amount, ch.note || (amount > 0 ? 'Parts gained' : 'Parts paid'));
+        break;
+      }
       case 'xp': fx(ch.fid, (f) => ({ ...f, xp: f.xp + ch.amount })); break;
       case 'status': fx(ch.fid, (f) => ({ ...f, status: ch.value })); break;
       case 'injury': fx(ch.fid, (f) => (f.injuries.includes(ch.value) ? f : { ...f, injuries: [...f.injuries, ch.value], titles: ch.title ? Array.from(new Set([...f.titles, ch.title])) : f.titles })); break;
@@ -126,7 +137,7 @@ export function applyChanges(rules: Rules, crew: Crew, changes: Change[]): { cre
       case 'hireOffer': c = { ...c, hireOffers: [...(c.hireOffers ?? []), { id: uid('h'), discount: ch.discount, note: ch.note, past: ch.past }] }; break;
       case 'relicLead': c = { ...c, relicLead: { noRoll: ch.noRoll || !!c.relicLead?.noRoll } }; break;
       case 'sellerFound': c = { ...c, sellers: { ...(c.sellers ?? {}), [ch.itemId]: { found: true } } }; break;
-      case 'rumour': c = { ...c, notes: { ...c.notes, rumour: ch.text } }; break;
+      case 'lead': c = { ...c, notes: { ...c.notes, lead: ch.text } }; break;
       case 'gift': fx(ch.fid, (f) => ({ ...f, gift: true })); break;
       case 'healInjury': fx(ch.fid, (f) => ({ ...f, injuries: f.injuries.filter((i) => i !== ch.value) })); break;
       case 'laidUpToSore': {
@@ -147,6 +158,11 @@ export function applyChanges(rules: Rules, crew: Crew, changes: Change[]): { cre
       case 'useContact': {
         const i = c.notes.contacts.findIndex((x) => x.name === ch.name && !x.used);
         c = { ...c, notes: { ...c.notes, contacts: c.notes.contacts.map((x, j) => (j === i ? { ...x, used: true } : x)) } };
+        break;
+      }
+      case 'removeContact': {
+        const i = c.notes.contacts.findIndex((x) => x.name === ch.name);
+        c = { ...c, notes: { ...c.notes, contacts: c.notes.contacts.filter((_, j) => j !== i) } };
         break;
       }
       case 'botCoreLost': {

@@ -1,21 +1,21 @@
 import { describe, expect, it } from 'vitest';
-import { crewOf, give, ids, patchFighter, rules } from './helpers';
+import { crewOf, give, ids, otherRule, patchFighter, rules } from './helpers';
 import {
-  advancesEarned, airTax, canSpend, creditFloor, fighterStats, finishCreation, giftPrice, hirePrice, itemPrice, kitLines, kitPickOptions,
-  needsSeller, partsLeft, ritesAllowed, rookieSurcharge, sellValue, sellerTarget, setFaction, setFighterType, syncKit, underdog, newCrew,
+  advancesEarned, airTax, beltSlots, canSpend, creditFloor, fighterStats, finishCreation, giftPrice, hirePrice, kitLines, kitPickOptions,
+  partsLeft, ritesAllowed, rookieSurcharge, sellValue, sellerTarget, setFaction, setFighterType, syncKit, underdog, newCrew,
 } from '../src/engine/crew';
 import { validate, validators } from '../src/engine/validate';
 import type { Crew } from '../src/engine/model';
 
 const F = rules.crew.factions;
 const factionWith = (pred: (n: string) => boolean) => Object.keys(F).find(pred)!;
-const BODGERS = factionWith((n) => !!F[n].priceRules?.some((p) => p.kind === 'copyDiscount'));
+const BODGERS = factionWith((n) => !!F[n].beltSlots);
 const LEDGER = factionWith((n) => !!F[n].credit);
-const WAITING = factionWith((n) => !!F[n].ritesKnownByAnyPriest);
+const WAITING = factionWith((n) => Object.values(F[n].typeGrants ?? {}).some((g) => g.gift));
 const CG = factionWith((n) => !!F[n].specials.bots);
 const HOLLY = factionWith((n) => !!F[n].fixedRookies);
 const INSP = factionWith((n) => F[n].startingKit.some((k) => k.assign === 'captain'));
-const plainFaction = factionWith((n) => !F[n].types && !F[n].priceRules && !F[n].credit);
+const plainFaction = factionWith((n) => !F[n].types && !F[n].priceRules && !F[n].credit && !F[n].beltSlots);
 
 const copy = (k: string) => `${k}|copy`;
 const old = (k: string) => `${k}|old stock`;
@@ -48,23 +48,15 @@ describe('prices (11.1, 11.3, chapter 12)', () => {
     expect(rookieSurcharge(rules, c2, c2.fighters[1])).toBe(rules.recruitPrices[pricey] - rules.crew.creation.rookieBasePrice.value);
     expect(partsLeft(rules, c2)).toBe(rules.crew.creation.startingParts.value - rookieSurcharge(rules, c2, c2.fighters[1]));
   });
-  it('copy discount applies, never below its minimum, and its subfaction removes it', () => {
-    const pr = F[BODGERS].priceRules!.find((p) => p.kind === 'copyDiscount')!;
-    const c = crewOf(BODGERS);
-    const cheapest = rules.shopItems.filter((i) => i.source === 'copy').sort((a, b) => a.price! - b.price!)[0];
-    expect(itemPrice(rules, c, anyCopy)).toBe(Math.max(pr.min!, anyCopy.price! - pr.amount!));
-    expect(itemPrice(rules, c, cheapest)).toBeGreaterThanOrEqual(pr.min!);
-    const old1 = rules.shopItems.find((i) => i.source === 'old stock')!;
-    expect(itemPrice(rules, c, old1)).toBe(old1.price);
-    const c2 = crewOf(BODGERS, pr.replacedBySubfaction);
-    expect(itemPrice(rules, c2, anyCopy)).toBe(anyCopy.price);
-  });
   it('volunteers are cheaper under the control sample, but not for the subfaction that replaces it', () => {
     const pr = F[CG].priceRules!.find((p) => p.kind === 'recruitPrice')!;
-    const c = crewOf(CG, rules.faction(CG)!.subfactions.find((x) => x.name !== pr.replacedBySubfaction)!.name);
+    const c = crewOf(CG, undefined, undefined, otherRule(CG, pr.rule));
     expect(hirePrice(rules, c, { species: human, type: pr.recruit! })).toBe(pr.price);
-    const c2 = crewOf(CG, pr.replacedBySubfaction);
-    expect(hirePrice(rules, c2, { species: human, type: pr.recruit! })).toBe(rules.recruitPrices[pr.recruit!]);
+    // any subfaction may give up the control sample for its own rule (12.1, 12.6 Specials)
+    for (const s of rules.faction(CG)!.subfactions) {
+      const c2 = crewOf(CG, s.name, undefined, pr.rule);
+      expect(hirePrice(rules, c2, { species: human, type: pr.recruit! })).toBe(F[CG].specials.volunteer);
+    }
   });
   it('a chassis discount subfaction makes chassis cheaper', () => {
     const pr = F[CG].priceRules!.find((p) => p.kind === 'chassisDiscount')!;
@@ -80,13 +72,6 @@ describe('prices (11.1, 11.3, chapter 12)', () => {
     const giftType = Object.entries(F[WAITING].typeGrants!).find(([, g]) => g.gift)![0];
     expect(giftPrice(rules, c, { type: giftType })).toBe(0);
     expect(giftPrice(rules, crewOf(CG), { type: null })).toBeNull();
-  });
-  it('a faction rule removes the seller roll for its items, unless replaced', () => {
-    const pr = F[HOLLY].priceRules!.find((p) => p.kind === 'noSellerRoll')!;
-    const w = rules.shopItems.find((i) => i.kind === pr.itemKind && i.source === pr.source)!;
-    expect(needsSeller(rules, crewOf(HOLLY), w)).toBe(false);
-    expect(needsSeller(rules, crewOf(HOLLY, pr.replacedBySubfaction), w)).toBe(true);
-    expect(needsSeller(rules, crewOf(plainFaction), w)).toBe(true);
   });
   it('the Haggler finds old stock on a lower roll', () => {
     const m = rules.crew.creation.oldStockSeller.modifiers[0];
@@ -222,12 +207,21 @@ describe('slots (7.1, 7.4, 7.5)', () => {
     c = give(c, 0, oneHanded.id, 'set1');
     expect(ids(v('slots', c))).toContain('slots');
   });
-  it('the belt holds 3 slots', () => {
+  it('the belt holds 3 slots, or more under a faction rule while it is kept (7.1, 12.2)', () => {
     const dev = rules.shopItems.find((i) => i.slot === 'belt' && i.source === 'copy')!;
-    let c = bare();
-    for (let i = 0; i < rules.crew.gear.beltSlots.value; i++) c = give(c, 0, dev.id, 'belt');
+    const fill = (c: Crew, n: number) => { for (let i = 0; i < n; i++) c = give(c, 0, dev.id, 'belt'); return c; };
+    const p = { ...crewOf(plainFaction), items: [] };
+    expect(beltSlots(rules, p)).toBe(rules.crew.gear.beltSlots.value);
+    let c = fill(p, rules.crew.gear.beltSlots.value);
     expect(ids(v('slots', c))).toEqual([]);
     expect(ids(v('slots', give(c, 0, dev.id, 'belt')))).toContain('slots');
+    const extra = F[BODGERS].beltSlots!;
+    const b = { ...crewOf(BODGERS, undefined, undefined, otherRule(BODGERS, extra.rule)), items: [] };
+    expect(beltSlots(rules, b)).toBe(extra.value);
+    c = fill(b, extra.value);
+    expect(ids(v('slots', c))).toEqual([]);
+    expect(ids(v('slots', give(c, 0, dev.id, 'belt')))).toContain('slots');
+    expect(beltSlots(rules, { ...b, replacedRule: extra.rule })).toBe(rules.crew.gear.beltSlots.value);
   });
   it('one armour; a military frame fills the body; heavy armour with no frame', () => {
     const g = rules.crew.gear.frameKeys.value;
@@ -292,11 +286,11 @@ describe('specials (4.3, 8.3, 11.4)', () => {
   it('a faction with no psions cannot buy the gift', () => {
     expect(ids(v('gift', patchFighter(crewOf(CG), 0, { species: GS1, gift: true })))).toContain('gift');
   });
-  it('a priest knows one rite, a Waiting priest two', () => {
+  it('a priest knows one rite, a Waiting priest too (8.3, 12.4)', () => {
     const c = patchFighter(crewOf(plainFaction), 0, { rites: true });
     expect(ritesAllowed(rules, c, c.fighters[0])).toBe(1);
     const w = patchFighter(crewOf(WAITING), 0, { rites: true });
-    expect(ritesAllowed(rules, w, w.fighters[0])).toBe(F[WAITING].ritesKnownByAnyPriest!.value);
+    expect(ritesAllowed(rules, w, w.fighters[0])).toBe(1);
     expect(ids(v('rites', patchFighter(c, 0, { ritesKnown: rules.rites.slice(0, 2) })))).toContain('rites');
     expect(ids(v('rites', c), 'warning')).toContain('rites');
   });

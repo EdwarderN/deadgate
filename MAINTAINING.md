@@ -37,7 +37,7 @@ These read the book's own tables too: the consequence tables, clashes, states, c
 
 ## Faction rules
 
-Each faction in `crew-rules.json` has an `effects` list: the faction rules the app acts on (Fines, Box office, the mark, research tasks, and so on). Each names its rule number or subfaction, when it applies, and its number (`amount`). The rule's text always comes from the book. If a faction rule's number changes (say Fines become 3 parts), change `amount`. If a rule is removed, delete its effect; if a subfaction now replaces a different rule, the book's table already says so and the app follows it.
+Each faction in `crew-rules.json` has an `effects` list: the faction rules the app acts on (Fines, Box office, the mark, research tasks, and so on). Each names its rule number or subfaction, when it applies, and its number (`amount`). The rule's text always comes from the book. If a faction rule's number changes (say Fines become 3 parts), change `amount`. If a rule is removed, delete its effect. Which rule a subfaction replaces is the player's choice when they build the crew (12.1); a rule the book says cannot be replaced is never offered, and the app reads that from the book.
 
 ## Trying it on your computer
 

@@ -148,3 +148,9 @@ export const factionRuleRef = (rules: Rules, faction: string, n: number): RuleRe
 };
 
 export const sectionRule = (title: string, section: string, text: string): RuleRef => ({ title, section, lines: [['', text]] });
+
+/** A glossary entry, by its term. */
+export const glossaryRule = (rules: Rules, term: string): RuleRef | null => {
+  const g = rules.data.glossary.find((x) => plain(x.Term) === term);
+  return g ? { title: plain(g.Term), section: g.See, lines: [['Meaning', g.Meaning]] } : null;
+};

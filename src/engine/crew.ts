@@ -10,10 +10,26 @@ export function subfactionOf(rules: Rules, crew: Crew) {
   return rules.faction(crew.faction ?? '')?.subfactions.find((s) => s.name === crew.subfaction);
 }
 
-/** A numbered faction rule is in force unless the crew's subfaction replaces it (12.1). */
+/** A numbered faction rule is in force unless the crew's subfaction replaces it: the player picks which, at creation (12.1). */
 export function ruleActive(rules: Rules, crew: Crew, n: number | undefined): boolean {
   if (n === undefined) return true;
-  return subfactionOf(rules, crew)?.replaces !== n;
+  return !(subfactionOf(rules, crew) && crew.replacedRule === n);
+}
+
+/** The faction rules a subfaction may replace: all but those the book marks as fixed (12.1). */
+export function replaceableRules(rules: Rules, faction: string | null) {
+  return (rules.faction(faction ?? '')?.rules ?? []).filter((r) => !r.fixed);
+}
+
+/** Belt slots for a fighter of this crew (7.1; a faction rule may give more, 12.2). */
+export function beltSlots(rules: Rules, crew: Crew): number {
+  const b = rules.factionRules(crew.faction ?? '')?.beltSlots;
+  return b && ruleActive(rules, crew, b.rule) ? b.value : rules.crew.gear.beltSlots.value;
+}
+
+/** An item a fighter's type always carries (the Director's camera, 12.7). */
+export function typeCarries(rules: Rules, crew: Crew, f: Pick<Fighter, 'type'>) {
+  return f.type ? rules.factionRules(crew.faction ?? '')?.typeGrants?.[f.type]?.carries : undefined;
 }
 
 export function activePriceRules(rules: Rules, crew: Crew): PriceRule[] {
@@ -151,6 +167,11 @@ export function creditFloor(rules: Rules, crew: Crew): { value: number; rule?: n
   return { value: 0 };
 }
 
+/** May the crew pay a running cost (recharging, 14.3) of this much? Only a crew with credit may pay into debt (14.2). */
+export function canPayRunningCost(rules: Rules, crew: Crew, amount: number): boolean {
+  return amount <= 0 || partsLeft(rules, crew) - amount >= creditFloor(rules, crew).value;
+}
+
 /** May the crew spend this much now? (14.2, 12.5: below 0 a crew buys and hires nothing more.) */
 export function canSpend(rules: Rules, crew: Crew, amount: number): boolean {
   if (amount <= 0) return true;
@@ -235,20 +256,22 @@ export function slotOptions(rules: Rules, item: ItemDef): ItemSlot[] {
 }
 
 export function slotLoad(rules: Rules, crew: Crew, f: Fighter, slot: ItemSlot, exceptUid?: string): number {
+  const carried = typeCarries(rules, crew, f);
+  const base = carried && carried.set === slot ? carried.hands : 0;
   return equipped(crew, f, rules).filter((o) => o.slot === slot && o.uid !== exceptUid).reduce((a, o) => {
     const d = o.def;
     if (!d) return a;
     if (slot === 'set1' || slot === 'set2') return a + d.hands;
     if (slot === 'belt') return a + (d.belt || 1);
     return a + 1;
-  }, 0);
+  }, base);
 }
 
 export function slotCapacity(rules: Rules, crew: Crew, f: Fighter, slot: ItemSlot): number {
   const g = rules.crew.gear;
   switch (slot) {
     case 'set1': case 'set2': return g.handsPerSet.value;
-    case 'belt': return g.beltSlots.value;
+    case 'belt': return beltSlots(rules, crew);
     case 'body': return hasMilitaryFrame(rules, crew, f) ? 0 : g.bodySlots.value;
     case 'frame': return g.frameSlots.value;
     case 'mount': return hasMilitaryFrame(rules, crew, f) ? 1 : 0;
@@ -336,10 +359,10 @@ export function newCrew(rules: Rules): Crew {
   const now = new Date().toISOString();
   const n = rules.crew.creation.startingRookies.value;
   return {
-    schema: 1, id: uid('c'), rulesVersion: rules.version, name: '', tape: '', faction: null, subfaction: null, captainId: null,
+    schema: 1, id: uid('c'), rulesVersion: rules.version, name: '', tape: '', faction: null, subfaction: null, replacedRule: null, captainId: null,
     fighters: Array.from({ length: n }, () => newFighter(rules, { rookie: true })),
     items: [], kitPicks: {}, phase: 'creation', step: 0, parts: 0, ledger: [],
-    notes: { tags: [], contacts: [], rivals: [], rumour: '', roll: [], season: [], stash: '' },
+    notes: { tags: [], contacts: [], rivals: [], lead: '', roll: [], season: [], stash: '' },
     created: now, updated: now,
   };
 }
@@ -364,7 +387,7 @@ export function setFaction(rules: Rules, crew: Crew, faction: string): Crew {
   }
   // The kit itself is handed out at the kit step, once the captain is known.
   const items = crew.items.filter((o) => !o.kitRef);
-  return { ...crew, faction, subfaction: null, fighters, captainId, kitPicks: {}, items };
+  return { ...crew, faction, subfaction: null, replacedRule: null, fighters, captainId, kitPicks: {}, items };
 }
 
 /** The weapons a type may have built in (the Prototype, 12.6), or null. */

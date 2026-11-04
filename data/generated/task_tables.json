@@ -56,7 +56,7 @@
     },
     {
       "2d6": "4",
-      "Result": "**Terms and conditions.** The wreck's voice wakes and reads them out, all of them. Agree, and lose **2 parts** in fees; refuse, and the voice locks the wreck: the task pays only its failure pay"
+      "Result": "**Terms and conditions.** The wreck's voice wakes and reads them out, all of them. Agree, and the fighter starts the next battle **Under warranty** and **Announced** (the voice read their name out to everyone); refuse, and the voice locks the wreck: the task pays only its failure pay"
     },
     {
       "2d6": "5",
@@ -64,7 +64,7 @@
     },
     {
       "2d6": "6",
-      "Result": "**A dead bot, still polite.** It thanks the fighter for visiting. Its core is gone; the casing sells for **+2 parts**"
+      "Result": "**A dead bot, still polite.** It thanks the fighter for visiting. Its core is gone, but it asks to be remembered, and the fighter remembers: **+1 XP** (it knew a great deal about wrecks)"
     },
     {
       "2d6": "7",
@@ -76,11 +76,11 @@
     },
     {
       "2d6": "9",
-      "Result": "**Samples.** The Control Group buys scrap nobody wants: **+4 parts**"
+      "Result": "**Samples.** A Control Group bot buys scrap nobody wants and leaves a card: **+4 parts**, or gain the contact **Informer** instead"
     },
     {
       "2d6": "10",
-      "Result": "**Somebody's camp,** abandoned in a hurry: a copy item worth up to 8 parts, and a **rumour**"
+      "Result": "**Somebody's camp,** abandoned in a hurry: a copy item worth up to 8 parts, and a **lead**"
     },
     {
       "2d6": "11",
@@ -98,15 +98,15 @@
     },
     {
       "2d6": "3",
-      "Result": "**The fine print.** Jeminy drafted the contract, and it had a clause. Pay back **4 parts** (never below 0), or refuse and write the patron as a **rival**"
+      "Result": "**The fine print.** Jeminy drafted the contract, and it had a clause. Pay back **4 parts** (never below 0), or refuse: tear up the contract, write the patron as a **rival**, and gain **Oathbreakers**"
     },
     {
       "2d6": "4",
-      "Result": "**One star.** The Per-Diem platform rates the fighter's work, badly, and docks the pay: lose **2 parts**"
+      "Result": "**One star.** The Per-Diem platform rates the fighter's work, badly, and every patron can read it: the fighter starts the next battle **Flustered** (they have seen the comments)"
     },
     {
       "2d6": "5",
-      "Result": "**A collection job.** The debtor was a friend. Squeeze them for **+3 parts** and gain **Butchers**, or let them off"
+      "Result": "**A collection job.** The debtor was a friend. Squeeze them for **+3 parts** and gain **Butchers**, or let them off and gain **Merciful**"
     },
     {
       "2d6": "6",
@@ -114,7 +114,7 @@
     },
     {
       "2d6": "7",
-      "Result": "**Overtime.** The job ran long, and the patron paid for it: **+3 parts**"
+      "Result": "**Overtime.** The job ran long, and the patron noticed who stayed: gain the contact **Patron**"
     },
     {
       "2d6": "8",
@@ -122,7 +122,7 @@
     },
     {
       "2d6": "9",
-      "Result": "**Switched sides.** The patron's rival offers more. Take **+5 parts** and write the first patron as a **rival**, or stay loyal and gain **Reliable**"
+      "Result": "**Switched sides.** The patron's rival offers more. Take **+5 parts** and write the first patron as a **rival**, or stay loyal and gain **Oathkeepers**"
     },
     {
       "2d6": "10",
@@ -137,14 +137,14 @@
       "Result": "**The patron dies,** rich and without heirs: **+15 parts**"
     }
   ],
-  "Hunt rumours": [
+  "Hunt leads": [
     {
       "2d6": "2",
       "Result": "**Dead, says the board.** Gawk's rumour board says the fighter died, and the crew believed it. One of the fighter's items, the player's choice, was already sold: gain half its price in parts"
     },
     {
       "2d6": "3",
-      "Result": "**Wrong bar.** Someone remembers an unpaid boast. Buy the room a round (**3 parts**), or gain **Oathbreakers**"
+      "Result": "**Wrong bar.** Someone remembers an unpaid boast. Buy the room a round (**3 parts**) and gain **Oathkeepers**, or gain **Oathbreakers**"
     },
     {
       "2d6": "4",
@@ -156,7 +156,7 @@
     },
     {
       "2d6": "6",
-      "Result": "**A long story** about a pod, from a drifter. It was a film, but the crew likes it: gain a **rumour**"
+      "Result": "**A long story** about a pod, from a drifter. It was a film, but the crew likes it: gain a **lead**"
     },
     {
       "2d6": "7",
@@ -168,7 +168,7 @@
     },
     {
       "2d6": "9",
-      "Result": "**Sold the rumour on:** **+3 parts**"
+      "Result": "**Sold the lead on:** **+3 parts**"
     },
     {
       "2d6": "10",
@@ -176,7 +176,7 @@
     },
     {
       "2d6": "11",
-      "Result": "**A song about the fighter.** **+1 XP**, and the crew gains **Showboats**"
+      "Result": "**A song about the fighter.** **+1 XP**, and a drifter pays **2 parts** to sing it"
     },
     {
       "2d6": "12",

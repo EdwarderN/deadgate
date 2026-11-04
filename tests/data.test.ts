@@ -32,10 +32,10 @@ describe('data files', () => {
     const book = rules.factions.map((f) => f.name).sort();
     expect(Object.keys(rules.crew.factions).sort()).toEqual(book);
   });
-  it('price rules that a subfaction replaces agree with the book', () => {
+  it('price rules name a rule or subfaction of the book', () => {
     for (const f of rules.factions) {
       for (const pr of rules.factionRules(f.name)!.priceRules ?? []) {
-        if (pr.replacedBySubfaction) expect(f.subfactions.find((s) => s.name === pr.replacedBySubfaction)?.replaces, `${f.name} ${pr.kind}`).toBe(pr.rule);
+        if (pr.rule) expect(f.rules.some((r) => r.n === pr.rule), `${f.name} ${pr.kind}`).toBe(true);
         if (pr.subfaction) expect(f.subfactions.some((s) => s.name === pr.subfaction)).toBe(true);
       }
     }
@@ -114,6 +114,11 @@ describe('data files', () => {
     expect(rules.data.word_audiences.some((a) => a.Audience.includes(rules.crew.battle.boastAudience.value))).toBe(true);
     expect(rules.captainTraits.some((t) => t.name === rules.crew.battle.wordsPerSide.extraFrom.captainTrait)).toBe(true);
     expect(rules.tags.some((t) => t.name === rules.crew.battle.wordsPerSide.extraFrom.tag)).toBe(true);
+    const ws = rules.crew.battle.wagerStakes;
+    for (const t of [ws.noTakerTag, ws.alwaysTakerTag]) expect(rules.tags.some((x) => x.name === t), t).toBe(true);
+    expect(rules.tags.some((t) => t.name === rules.crew.afterBattle.evacTag.value)).toBe(true);
+    for (const t of rules.crew.afterBattle.ransomTags?.value ?? []) expect(rules.tags.some((x) => x.name === t), t).toBe(true);
+    if (rules.crew.campaign.doctor) expect(rules.crew.campaign.statuses.value).toContain(rules.crew.campaign.doctor.value);
     for (const st of rules.crew.afterBattle.taskBlockedStatuses.value) expect(rules.crew.campaign.statuses.value).toContain(st);
     expect(Object.keys(rules.data.voices).length).toBeGreaterThan(0);
   });

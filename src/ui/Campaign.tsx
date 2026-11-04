@@ -2,13 +2,13 @@ import { useEffect, useMemo, useState } from 'react';
 import { getRules } from '../data/rules';
 import {
   addLedger, advancesEarned, airTax, captainOf, captainTraitNames, currentRatings, hasGift, hasRites, isBot, ratingNames, riteFromAdvance, ritesKnown,
-  strength, traitBudgetUsed, underdog,
+  replaceableRules, strength, traitBudgetUsed, underdog,
 } from '../engine/crew';
 import { uid, type Advance, type Crew, type Fighter } from '../engine/model';
 import { validate, type Message } from '../engine/validate';
 import { crewToJson, download, fileName, safeColour, shareLink } from '../store';
 import { go } from '../App';
-import { Chassis, Equip, Hire, Recharge, Messages, PartsCounter, Shop, Stash, describeType, fighterLabel, patchFighter, type Update } from './common';
+import { Chassis, Doctor, Equip, Hire, Recharge, Messages, PartsCounter, ReplacedRulePick, Shop, Stash, describeType, fighterLabel, patchFighter, type Update } from './common';
 import { copyLink, useAsk } from './confirm';
 import { canTakeTitle } from '../engine/faction';
 import { RuleLink, advanceRule, captainRule, contactRule, giftRule, injuryRule, legendRule, ritesRule, sillyRule, speciesRule, tagRule, typeRule } from './rule';
@@ -38,6 +38,9 @@ export function Campaign({ crew, update }: { crew: Crew; update: Update }) {
         <p className="note small">This crew was last checked against rules version {crew.rulesVersion}; the app now has version {rules.version}. Anything the new rules no longer allow is listed below and on the cards.{' '}
           <button className="link" onClick={() => update((c) => ({ ...c, rulesVersion: rules.version }))}>Mark as checked</button></p>
       )}
+      {crew.subfaction && !replaceableRules(rules, crew.faction).some((r) => r.n === crew.replacedRule) && (
+        <div className="card note"><ReplacedRulePick crew={crew} update={update} /></div>
+      )}
       <div className="row gap-s wrap actions">
         {crew.after ? <button className="btn small primary" onClick={() => go(`/after/${crew.id}`)}>Continue after the battle</button>
           : <button className="btn small primary" onClick={() => go(`/battle/${crew.id}`)}>{crew.battle ? 'Back to the battle' : 'Battle companion'}</button>}
@@ -50,7 +53,7 @@ export function Campaign({ crew, update }: { crew: Crew; update: Update }) {
       </nav>
       <div role="tabpanel">
         {tab === 'Fighters' && <FightersTab crew={crew} update={update} messages={messages} />}
-        {tab === 'Shop and hire' && <div className="stack"><Chassis crew={crew} update={update} /><Recharge crew={crew} update={update} /><Stash crew={crew} update={update} /><Shop crew={crew} update={update} /><Hire crew={crew} update={update} /></div>}
+        {tab === 'Shop and hire' && <div className="stack"><Doctor crew={crew} update={update} /><Chassis crew={crew} update={update} /><Recharge crew={crew} update={update} /><Stash crew={crew} update={update} /><Shop crew={crew} update={update} /><Hire crew={crew} update={update} /></div>}
         {tab === 'Parts' && <PartsTab crew={crew} update={update} />}
         {tab === 'Roster notes' && <NotesTab crew={crew} update={update} messages={messages.filter((m) => m.step === 'notes')} />}
         {tab === 'Season' && <SeasonTab crew={crew} update={update} />}
@@ -451,8 +454,8 @@ function NotesTab({ crew, update, messages }: { crew: Crew; update: Update; mess
           </form>
         </div>
         <div className="card stack-s">
-          <h3>Rumour about the crew <span className="muted small">(one, 14.8)</span></h3>
-          <input value={n.rumour} onChange={(e) => setNotes({ rumour: e.target.value })} aria-label="Crew rumour" />
+          <h3>Lead <span className="muted small">(at most one, 14.8)</span></h3>
+          <input value={n.lead} onChange={(e) => setNotes({ lead: e.target.value })} aria-label="Lead" placeholder="A tip the crew can act on" />
           <h3>Stash notes</h3>
           <textarea value={n.stash} onChange={(e) => setNotes({ stash: e.target.value })} aria-label="Stash notes" rows={2} />
         </div>

@@ -9,7 +9,7 @@
   },
   {
     "Row": "3",
-    "Choose it when the crew...": "**Ran:** evacuated, or forfeited the prize"
+    "Choose it when the crew...": "**Ran:** called the evac"
   },
   {
     "Row": "4",
@@ -22,5 +22,9 @@
   {
     "Row": "6",
     "Choose it when the crew...": "**Made a legend:** fulfilled a Big or Legendary Word, or earned a Legend"
+  },
+  {
+    "Row": "7",
+    "Choose it when the crew...": "**Your faction** (any break): roll on your faction's own table, below"
   }
 ]

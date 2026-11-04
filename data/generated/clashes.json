@@ -14,11 +14,11 @@
     },
     {
       "d66": "14",
-      "Result": "**Out of breath.** Both fighters are **Shook**"
+      "Result": "**Headlock.** The active fighter hauls the other round. The active player moves both fighters up to 1 inch in the same direction, still in base contact. A fighter hauled into Dangerous terrain enters it, and one hauled over an edge falls (section 5.3)"
     },
     {
       "d66": "15",
-      "Result": "**Nose to nose.** Both fighters are **Flustered**"
+      "Result": "**Trip.** A boot goes in. Each player rolls their fighter's **Grit** against the other's (an opposed roll, section 3.4). The loser falls prone; a tie changes nothing"
     },
     {
       "d66": "16",
@@ -114,19 +114,19 @@
     },
     {
       "d66": "53",
-      "Result": "**Everyone stops to watch.** Every other fighter within 3 inches is **Flustered**"
+      "Result": "**Into the scenery.** The pair crash into whatever is nearest. Both fighters are shoved together in the same direction, toward the nearest wall, door or terrain piece within 4 inches (the active player picks if two are as near), until the front one stops against it. A fighter shoved into Dangerous terrain enters it (section 5.10). With nothing in reach they only stumble: both are **Flustered**"
     },
     {
       "d66": "54",
-      "Result": "**The crowd has favourites.** The fighter with more Experience is **Hyped**"
+      "Result": "**Stray shot.** \"Somebody, somewhere, fired.\" The nearest other fighter within 6 inches of the pair, friend or foe, takes a **glance** (their save applies). With nobody there, it whines off a wall and nothing happens"
     },
     {
       "d66": "55",
-      "Result": "**Wrong announcement.** The crowd cheers for the wrong fighter: the one with **less** Experience is **Hyped**"
+      "Result": "**Tremor.** \"The gate turns over in its sleep.\" Every other fighter within 3 inches of the pair makes a **Routine (6) Grit test** or falls prone. With nobody else that close, the pair are **Shook** instead"
     },
     {
       "d66": "56",
-      "Result": "**The crowd goes wild.** Both fighters are **Hyped**"
+      "Result": "**Swinging load.** A chain, a crane arm, a signboard. Each player rolls a d6; the **lower** roller's fighter is knocked 2 inches in a direction the other player chooses, and falls prone (a tie: it misses). A fighter knocked into Dangerous terrain enters it, and one knocked over an edge falls (section 5.3)"
     }
   ],
   "Row 6: The odd ones": [

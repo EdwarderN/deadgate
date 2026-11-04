@@ -2,7 +2,7 @@
   {
     "Tier": "**Crude (8)**",
     "Kit": "**Crude kit** (copy, Belt 1)",
-    "Effect": "Patch up at **Tricky (8)**. Unreliable: a kept total of 3 or less is a botch, and the patient gains Winded"
+    "Effect": "Patch up at **Tricky (8)**. Unreliable: a kept total of 3 or less jams the kit (section 7.2) and the patient also gains Winded"
   },
   {
     "Tier": "**Patchwork (6)**",

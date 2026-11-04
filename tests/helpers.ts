@@ -1,16 +1,18 @@
 import { getRules } from '../src/data/rules';
-import { newCrew, setFaction, syncKit, autoSlot } from '../src/engine/crew';
+import { newCrew, replaceableRules, setFaction, syncKit, autoSlot } from '../src/engine/crew';
 import { uid, type Crew, type Fighter, type ItemSlot } from '../src/engine/model';
 
 export const rules = getRules();
 
-/** A crew of the given faction with four named rookies (Fight 1), captain = first, one captain trait. */
-export function crewOf(faction: string, subfaction?: string, edit?: (c: Crew) => Crew): Crew {
+/** A crew of the given faction with four named rookies (Fight 1), captain = first, one captain trait.
+ *  Its subfaction replaces rule `replaced` (default: the last rule that may be replaced, 12.1). */
+export function crewOf(faction: string, subfaction?: string, edit?: (c: Crew) => Crew, replaced?: number): Crew {
   let c = newCrew(rules);
   c.name = 'Test crew';
   c = setFaction(rules, c, faction);
   const fac = rules.faction(faction)!;
   c.subfaction = subfaction ?? fac.subfactions[0].name;
+  c.replacedRule = replaced ?? replaceableRules(rules, faction).at(-1)!.n;
   const fr = rules.factionRules(faction)!;
   const types = fac.types.map((t) => t.name);
   const human = rules.crew.limits.playableSpecies.value[0];
@@ -31,6 +33,9 @@ export function crewOf(faction: string, subfaction?: string, edit?: (c: Crew) =>
   // Fill kit choices with the first legal option.
   return edit ? edit(c) : c;
 }
+
+/** A rule the subfaction may replace that is not `keep` (to keep an effect in force). */
+export const otherRule = (faction: string, keep?: number) => replaceableRules(rules, faction).find((r) => r.n !== keep)!.n;
 
 export function patchFighter(c: Crew, i: number, p: Partial<Fighter>): Crew {
   return { ...c, fighters: c.fighters.map((f, j) => (j === i ? { ...f, ...p } : f)) };

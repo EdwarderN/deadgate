@@ -28,6 +28,22 @@
     "What it does": "A river, a flooded hold, a sump. It is also **Wet**. A fighter who enters it, and again each time they start an activation in it, makes a Routine Grit test. On a failure the current takes them: they are moved d6 inches **downstream** (the players agree which way that is before the battle) and left prone. Brinies make no test: they just move"
   },
   {
+    "Trait": "**Low obstacle**",
+    "What it does": "A wall stub, a row of crates, a pipe, a rail: up to 1 inch high. Crossing costs nothing (section 5.3). It is also **light cover**"
+  },
+  {
+    "Trait": "**High obstacle**",
+    "What it does": "A barricade, a fence, a stacked pile: more than 1 and up to 2 inches high. Crossing costs 2 inches of Move (section 5.3). It is also **heavy cover**"
+  },
+  {
+    "Trait": "**Ladder**",
+    "What it does": "Climbed up or down with no Grit test. It costs the **vertical distance** in Move, however tall it is. If the ladder is taller than the fighter's Move, the climb takes **both actions** of the activation (the fighter must not have acted yet) and they climb all the way, however tall"
+  },
+  {
+    "Trait": "**Stairs, ramp**",
+    "What it does": "Used with no test. They cost the **distance travelled along them**, as on flat ground"
+  },
+  {
     "Trait": "**Powered**",
     "What it does": "A machine with a voice: a door, lift, charging station or turret. It can be prompted (section 8.2)"
   }

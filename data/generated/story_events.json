@@ -4,8 +4,8 @@
       "d6": "1",
       "Event": "**The Department of Improvement** names the battle an improvement",
       "Accept": "It goes in the annual report. Nothing",
-      "Pay": "5 parts: the crew gains **Reliable**",
-      "Twist": "Nerve: gain Reliable / the crew gains Showboats"
+      "Pay": "One fighter wears the badge into the next battle, **Announced**: the crew gains **Reliable**",
+      "Twist": "Nerve: you give the speech, +1 XP to one fighter / you read the wrong page: lose 2 parts"
     },
     {
       "d6": "2",
@@ -19,7 +19,7 @@
       "Event": "**A crowd of bettors** owes the crew",
       "Accept": "4 parts",
       "Pay": "None",
-      "Twist": "Nerve: 8 parts / 0 parts and gain Oathbreakers (you threatened them)"
+      "Twist": "Nerve: 8 parts / you swear to double their bets and never turn up: 0 parts, and gain Oathbreakers"
     },
     {
       "d6": "4",
@@ -49,20 +49,20 @@
       "Event": "**The debt collector calls** (Collections Department)",
       "Accept": "Lose 4 parts",
       "Pay": "None",
-      "Twist": "Fight: they leave / lose 8 parts"
+      "Twist": "Fight: they leave / you promise to pay next week, and don't: lose 4 parts, and gain Oathbreakers"
     },
     {
       "d6": "2",
       "Event": "**Sympathy from a patron**",
       "Accept": "3 parts of pity money",
       "Pay": "None",
-      "Twist": "Nerve: \"we don't need it\", gain **Reliable** / you cried in front of them: 3 parts, and gain Ran"
+      "Twist": "Nerve: \"we don't need it\", gain **Reliable** / you tell them the crew won't fight again without better odds: 3 parts, and gain Ran"
     },
     {
       "d6": "3",
       "Event": "**Scavengers on the field** after you left",
       "Accept": "Nothing",
-      "Pay": "5 parts: buy back one item lost this battle",
+      "Pay": "One fighter takes no task and goes back for it tonight: you get back one item lost this battle",
       "Twist": "Grit: get one back free / one fighter is Sore"
     },
     {
@@ -83,7 +83,7 @@
       "d6": "6",
       "Event": "**Named on the boards.** The winners' victory speech names your captain",
       "Accept": "Nothing, but it stings",
-      "Pay": "3 parts: a reply on the boards; the crew gains **Showboats**",
+      "Pay": "The captain writes the reply on the boards and starts the next battle **Announced**: the crew gains **Showboats**",
       "Twist": "Nerve: the captain answers in person, +1 XP / they get the silly trait \"Big talk\""
     }
   ],
@@ -92,7 +92,7 @@
       "d6": "1",
       "Event": "**Word gets round**",
       "Accept": "The crew gains **Ran**",
-      "Pay": "6 parts: a quiet word with the rumour board",
+      "Pay": "Cross off a contact, or pay 6 parts: a quiet word with the rumour board, and no tag",
       "Twist": "Nerve: no tag / gain Ran and Oathbreakers"
     },
     {
@@ -114,7 +114,7 @@
       "Event": "**Wise retreat.** A Control Group observer notes it",
       "Accept": "Nothing",
       "Pay": "None",
-      "Twist": "Tech: the paper cites you, gain Reliable / it calls you a control sample, gain Ran"
+      "Twist": "Tech: the paper cites you as the one crew that does what it says, gain Oathkeepers / it calls you a control sample, gain Ran"
     },
     {
       "d6": "5",
@@ -157,7 +157,7 @@
       "d6": "4",
       "Event": "**Their gear is claimed** by a creditor",
       "Accept": "Lose one item the lost fighter carried",
-      "Pay": "5 parts: keep it",
+      "Pay": "Write the creditor as a **rival**: keep it",
       "Twist": "Fight: keep it / lose two"
     },
     {
@@ -181,14 +181,14 @@
       "Event": "**The captive talked**",
       "Accept": "It knew a cache: 4 parts",
       "Pay": "None",
-      "Twist": "Nerve: 8 parts / it lied; nothing"
+      "Twist": "Nerve: 8 parts / it lied, and you forgive it: gain Merciful"
     },
     {
       "d6": "2",
       "Event": "**A threat from the captive's crew**",
       "Accept": "Nothing",
       "Pay": "None",
-      "Twist": "Nerve: you send one back, gain Showboats / gain Butchers"
+      "Twist": "Nerve: you send one back, gain Showboats / you send back the captive's boots with a note: gain Butchers"
     },
     {
       "d6": "3",
@@ -209,14 +209,14 @@
       "Event": "**A reputation for business**",
       "Accept": "The crew gains **Reliable**",
       "Pay": "None",
-      "Twist": "Tech: you print a price list, Reliable and 3 parts / it has a typo: gain Butchers"
+      "Twist": "Tech: you print a price list, Reliable and 3 parts / it has a typo, and \"ransoms\" reads \"bodies\". People believe it: gain Butchers"
     },
     {
       "d6": "6",
       "Event": "**The Inspectorate wants paperwork**",
       "Accept": "Pay 2 parts",
       "Pay": "None",
-      "Twist": "Tech: the forms are in order / pay 5 and gain Butchers"
+      "Twist": "Tech: the forms are in order / pay 5, and the clerk files the captive as \"returned unharmed\": gain Merciful"
     }
   ],
   "Row 6: Made a legend": [
@@ -261,6 +261,270 @@
       "Accept": "The fighter starts the next battle Hyped",
       "Pay": "None",
       "Twist": "Nerve: they tell it themselves, +1 XP / they oversell it: they write a Big Word on their card now for the next battle"
+    }
+  ],
+  "Row 7: The Bodgers": [
+    {
+      "d6": "1",
+      "Event": "**The roof comes in.** The wreck-home was held up by tape and hope",
+      "Accept": "One fighter of the crew's choice is **Sore** (they held the beam)",
+      "Pay": "Cross off a contact: a friend turns up with a ladder, and nobody is hurt",
+      "Twist": "Tech: you tape it better than it ever was, and one fighter starts the next battle **Under warranty** / it falls in again: two fighters are **Sore**"
+    },
+    {
+      "d6": "2",
+      "Event": "**Dipstick thinks out loud** about your next fight, all night, one step at a time",
+      "Accept": "Nothing. It has not finished",
+      "Pay": "One fighter stays up to listen and takes no task: gain a **lead**",
+      "Twist": "Tech: you hear the wrong step and say so, +1 XP to one fighter / you follow it to the end: one fighter starts the next battle **Shook**"
+    },
+    {
+      "d6": "3",
+      "Event": "**One of ours is stuck** down a wreck, and calling",
+      "Accept": "You heard nothing. Nothing",
+      "Pay": "One fighter takes no task and goes down after them: the crew gains **Merciful**",
+      "Twist": "Grit: you haul them out, and they owe you: gain a contact of your choice, and the crew gains **Merciful** / the wreck shifts: the fighter is **Sore**, and the Bodger is still down there"
+    },
+    {
+      "d6": "4",
+      "Event": "**A claim on your claim** (Red Tape). Another crew has filed against the item you claimed",
+      "Accept": "Lose one copy item: their paperwork was better",
+      "Pay": "Write the claimant as a **rival**: keep the item",
+      "Twist": "Tech: yours was filed first and they withdraw: the crew gains **Reliable** / wrong colour of ink: lose the item, and one fighter starts the next battle **Announced** (their name is on the form)"
+    },
+    {
+      "d6": "5",
+      "Event": "**A collector watches the restoration** (Silver Tape). They stand and watch a wreck go from scrap to shine",
+      "Accept": "Nothing, but the wreck gleams",
+      "Pay": "Give the collector a copy item: gain the contact **Fence**",
+      "Twist": "Nerve: they love the talk and tell everyone: the crew gains **Showboats** / they ask a question you cannot answer: the fighter gets the silly trait \"Big talk\""
+    },
+    {
+      "d6": "6",
+      "Event": "**The pod queue** (Black Tape). It moves a yard a day, and the whole camp is in it",
+      "Accept": "Nothing. The queue moves a yard",
+      "Pay": "One fighter takes no task and queues all night: roll on the **finds** table",
+      "Twist": "Fight: you take the front of the queue: roll twice on the finds table and keep one / the queue takes it badly: the fighter is **Sore**"
+    }
+  ],
+  "Row 7: The Inspectorate": [
+    {
+      "d6": "1",
+      "Event": "**Surprise audit.** A superior from another district goes through your papers",
+      "Accept": "Two fighters of the crew's choice take no task: they sit with the auditor",
+      "Pay": "Cross off a contact: they vouch for you, and nobody sits",
+      "Twist": "Tech: every form is in order, and the auditor salutes: the crew gains **Reliable** / a stamp is upside down: lose 3 parts, and two fighters take no task"
+    },
+    {
+      "d6": "2",
+      "Event": "**A citizen's complaint** about a fine",
+      "Accept": "Filed under C, for Complaint. Nothing",
+      "Pay": "None",
+      "Twist": "Nerve: you apologise, and mean it: the crew gains **Merciful** / you fine them for complaining, and everyone remembers the face: that fighter starts the next battle **Announced**"
+    },
+    {
+      "d6": "3",
+      "Event": "**New hats.** The district issues one size to every crew",
+      "Accept": "The smallest fighter starts the next battle **Flustered** (the hat is over their eyes)",
+      "Pay": "One fighter takes no task and takes in the hats: up to three fighters start the next battle **Hyped** (it fits)",
+      "Twist": "Nerve: the captain wears two hats and looks it: the captain starts the next battle **Hyped** and **Announced** / the hat catches in the door: the captain is **Sore**"
+    },
+    {
+      "d6": "4",
+      "Event": "**A merchant and a very heavy crate** (Weights and Measures). They have to cross your scale",
+      "Accept": "The scale says what it says: **+3 parts**",
+      "Pay": "None",
+      "Twist": "Tech: you lean on the scale: **+8 parts** / the merchant spots it: write them as a **rival**, and give back 3 parts"
+    },
+    {
+      "d6": "5",
+      "Event": "**Your annual review** (Department of Improvement). Very cheerful",
+      "Accept": "\"Meets expectations.\" It goes in the report. Nothing",
+      "Pay": "The captain takes no task and writes the self-assessment: +1 XP to the captain",
+      "Twist": "Nerve: \"Exceeds expectations\": one fighter gains +1 XP and the crew gains **Showboats** / \"Needs improvement\": the captain gets the silly trait \"Big talk\""
+    },
+    {
+      "d6": "6",
+      "Event": "**A controlled burn** (Fire Marshals). The standing orders say your camp must be set alight once a quarter, for safety, and it is your quarter",
+      "Accept": "Lose one copy item of the crew's choice (it was in the tent)",
+      "Pay": "One fighter takes no task and carries the gear out: lose nothing",
+      "Twist": "Grit: you save the lot, and the Marshals pin a medal on the fighter: +1 XP / the fighter is **Sore**, and the item is lost"
+    }
+  ],
+  "Row 7: The Waiting": [
+    {
+      "d6": "1",
+      "Event": "**A heretic at the fire** says the gate is dead",
+      "Accept": "One fighter of the crew's choice starts the next battle **Flustered** (a doubt is a doubt)",
+      "Pay": "One fighter takes no task and argues with them all night: +1 XP",
+      "Twist": "Nerve: the heretic stays to listen, and knows something: gain a **lead** / you begin to wonder: one fighter gets the silly trait \"Jittery\""
+    },
+    {
+      "d6": "2",
+      "Event": "**A pod lands in the night.** The sky has spoken, and the crew gathers to sing at it",
+      "Accept": "Nobody dares open it. Nothing",
+      "Pay": "One fighter opens it and starts the next battle **Shook** (the blasphemy): roll on the **drop** table (section 9.7). An arrival from it joins as usual",
+      "Twist": "Nerve: the priest blesses it first: roll on the drop table, and nobody is Shook / the sky is displeased: the fighter who opened it is **Sore**, and the pod is empty"
+    },
+    {
+      "d6": "3",
+      "Event": "**A relic with a plaque** turns up in the baggage: VOID IF REMOVED",
+      "Accept": "Nothing. It was removed",
+      "Pay": "None",
+      "Twist": "Nerve: the priest knows what it is: one relic may be bought this break at half price, with no roll for a seller / it was a desk bell, and the fighter who rang it starts the next battle **Announced**"
+    },
+    {
+      "d6": "4",
+      "Event": "**The answer, word for word** (the Listeners). A Listener told a stranger what the voice said, as their own thought, and the stranger acted on it",
+      "Accept": "Nothing came of it. Yet",
+      "Pay": "None",
+      "Twist": "Nerve: it was good advice, and the stranger is grateful: gain the contact **Informer** / it was bad advice, and they want a word: write them as a **rival**"
+    },
+    {
+      "d6": "5",
+      "Event": "**The prophecy** (the Visionaries). A Longshanks Visionary says one of your fighters will not be standing at the end of the next battle. Which one is up to you",
+      "Accept": "The player picks the fighter: they start the next battle **Shook** (they heard)",
+      "Pay": "That fighter swears a Big Word now (a vow, on their card for the next battle): nothing else happens",
+      "Twist": "Nerve: they laugh at it: +1 XP / they believe it: **Shook** and **Flustered**"
+    },
+    {
+      "d6": "6",
+      "Event": "**A long walk** (the Pilgrims). The signs say the next place is the right place, and it is",
+      "Accept": "One fighter is **Sore** (the road)",
+      "Pay": "None",
+      "Twist": "Nerve: you start the singing, and everyone joins: every fighter starts the next battle **Hyped** / you forget the words: one fighter starts the next battle **Flustered**, and nobody will say whose fault it was"
+    }
+  ],
+  "Row 7: Ledgerhands": [
+    {
+      "d6": "1",
+      "Event": "**The account arrives.** Jeminy sends the crew's balance, with a friendly note",
+      "Accept": "If the crew's parts are below 0, lose another 3 (interest). Otherwise nothing",
+      "Pay": "One fighter takes no task and argues with the clerk: no interest",
+      "Twist": "Nerve: they waive it, and the clerk writes that you pay on the day: the crew gains **Oathkeepers** / \"It is going well\": lose 3 parts, even if that takes the crew below 0"
+    },
+    {
+      "d6": "2",
+      "Event": "**A fighter signed something** at the air meter without reading it, and Jeminy has the copy",
+      "Accept": "That fighter must Work a job this break, if they can",
+      "Pay": "Cross off a contact: a friend with a lawyer finds the clause",
+      "Twist": "Nerve: you honour it to the letter, and word gets round: gain **Oathkeepers** / you tear it up in front of the clerk: gain **Oathbreakers**, and the fighter is free"
+    },
+    {
+      "d6": "3",
+      "Event": "**The mark's friends** know who named them",
+      "Accept": "Write the crew whose fighter you named as your mark as a **rival**",
+      "Pay": "None",
+      "Twist": "Nerve: you send a receipt, and a note saying it was only business: no rival, and the crew gains **Reliable** / they read the note aloud at their camp: the rival stands, and one fighter starts the next battle **Announced**"
+    },
+    {
+      "d6": "4",
+      "Event": "**The creditor inspects the gear** (the Indentured). It is their gear, and they want to know why it is dented",
+      "Accept": "One fighter of the crew's choice starts the next battle **Shook** (a lecture on dents)",
+      "Pay": "Cross off a contact: a friend swears it was like that when it arrived",
+      "Twist": "Nerve: you show them what the gear has done, and they let you keep the dents: one fighter gains +1 XP / they add the dents to the debt: lose 3 parts"
+    },
+    {
+      "d6": "5",
+      "Event": "**The last good boots** (Collections Department). A debtor has nothing left but a good pair of boots",
+      "Accept": "You take the boots: a copy armour worth up to 5 parts, and the crew gains **Butchers**",
+      "Pay": "Leave them the boots: the crew gains **Merciful**, and the debtor remembers it: gain the contact **Informer**",
+      "Twist": "Fight: the debtor's cousin has been waiting in the stairwell, and loses: you take a copy weapon worth up to 5 parts as well / the cousin wins: the fighter is **Sore**, and the boots are theirs"
+    },
+    {
+      "d6": "6",
+      "Event": "**Account deactivated** (Per-Diem Companies). The platform has decided a fighter is \"not a good fit\", and will not say why",
+      "Accept": "One fighter of the crew's choice takes no task this break",
+      "Pay": "Cross off a contact: a human at the platform reads the appeal",
+      "Twist": "Tech: the appeal goes through, and the platform apologises with a bonus: +1 XP to that fighter / the appeal gets one star: that fighter starts the next battle **Flustered**"
+    }
+  ],
+  "Row 7: The Control Group": [
+    {
+      "d6": "1",
+      "Event": "**The ethics board visits** the field team and asks to see the consent forms",
+      "Accept": "A volunteer has signed. Nothing",
+      "Pay": "One fighter takes no task and fills in every form: the crew gains **Merciful**",
+      "Twist": "Tech: the board approves, \"broadly humane\": the crew gains **Merciful**, and one bot gains +1 XP (they asked it questions) / the board wants the forms in person: two fighters take no task"
+    },
+    {
+      "d6": "2",
+      "Event": "**A bot asks a question** nobody programmed: \"Why?\"",
+      "Accept": "Nothing. The bot goes quiet",
+      "Pay": "One fighter takes no task and answers it: one bot gains +1 XP",
+      "Twist": "Tech: the bot understands and writes it down: one bot gains +2 XP / the answer breaks something: that bot is **Sore**"
+    },
+    {
+      "d6": "3",
+      "Event": "**Thank you for your participation.** An Observer thanks the crew for taking part in a study nobody mentioned",
+      "Accept": "Nothing. It thanks you again",
+      "Pay": "One fighter takes no task and asks what the study is: gain a **lead** (the answer: \"it concerns you\")",
+      "Twist": "Nerve: it tells you, and a volunteer passes it on: gain the contact **Informer** / it thanks the fighter again, at length: they start the next battle **Flustered**"
+    },
+    {
+      "d6": "4",
+      "Event": "**The same result, again** (Replication Wing). A cheap bot repeats one action all night, until somebody writes it down as proof",
+      "Accept": "Nothing. It has not stopped",
+      "Pay": "One bot takes no task and repeats it: +1 XP to that bot",
+      "Twist": "Tech: replicated: the crew gains **Reliable** / failed to replicate: that bot is **Sore**"
+    },
+    {
+      "d6": "5",
+      "Event": "**Sweeping conclusions** (Observation Wing). They watched a few people for a long time, and now tell everyone what everyone is like",
+      "Accept": "The report calls the crew \"unremarkable\". Nothing",
+      "Pay": "None",
+      "Twist": "Tech: the sample was you, and the finding is flattering: the crew gains **Reliable** / the finding is that you run from danger: the crew gains **Ran**"
+    },
+    {
+      "d6": "6",
+      "Event": "**The Dissenters were right** (the Dissenters). Their own numbers say the crew's method is wrong. Nobody likes them",
+      "Accept": "Nothing. Nobody reads it",
+      "Pay": "One fighter takes no task and checks the numbers: +1 XP to one fighter",
+      "Twist": "Tech: they are right, and you fix it: one bot gains +2 XP / they are right, and you did not check: one fighter starts the next battle **Shook**"
+    }
+  ],
+  "Row 7: Hollowood": [
+    {
+      "d6": "1",
+      "Event": "**Reshoots.** The studio wants the battle again, from a better angle",
+      "Accept": "Nothing. They use what they have",
+      "Pay": "Two fighters take no task and re-enact it: the crew gains **Showboats**",
+      "Twist": "Nerve: it looks better the second time: one fighter gains +1 XP / the extras were better: one fighter starts the next battle **Flustered**"
+    },
+    {
+      "d6": "2",
+      "Event": "**A fan letter** for a fighter nobody has heard of",
+      "Accept": "The crew's newest fighter starts the next battle **Hyped** (somebody believes in them)",
+      "Pay": "None",
+      "Twist": "Nerve: the fan is real, and rich: gain the contact **Patron** / the fan is the studio's lawyer: lose 3 parts"
+    },
+    {
+      "d6": "3",
+      "Event": "**Confessional** (Reality Productions). Every fighter gets a booth and a question",
+      "Accept": "One fighter of the crew's choice says something they regret, and starts the next battle **Announced**",
+      "Pay": "The captain takes no task and writes the lines: nobody says anything",
+      "Twist": "Nerve: the clip is the line of the week: one fighter gains +1 XP / the clip gives away the next battle's plan: that fighter starts **Announced** and **Shook**"
+    },
+    {
+      "d6": "4",
+      "Event": "**The algorithm recommends you** (Streaming Platforms). It thinks you are similar to something else",
+      "Accept": "The crew's most experienced fighter starts the next battle **Announced** (everyone saw the thumbnail)",
+      "Pay": "None",
+      "Twist": "Tech: you pick the thumbnail: that fighter is also **Hyped**, and the crew gains 3 parts / wrong thumbnail: that fighter is also **Flustered**"
+    },
+    {
+      "d6": "5",
+      "Event": "**The director has a new idea** (Festival Auteurs). It involves one fighter, a window and no explanation",
+      "Accept": "One fighter of the crew's choice starts the next battle **Flustered** (they were told to do it differently)",
+      "Pay": "The Director takes no task and explains it: nobody is Flustered",
+      "Twist": "Nerve: it is \"bold\": the Director gains +1 XP / nobody understands it, and the fighter walks off set: they are **Sore**"
+    },
+    {
+      "d6": "6",
+      "Event": "**The sequel** (Franchise Studios). The same picture, only bigger",
+      "Accept": "Nothing. The studio is still counting",
+      "Pay": "One fighter takes no task and rehearses the big finish: +1 XP",
+      "Twist": "Nerve: the audience loves the same thing again: the crew gains **Showboats** / it opens badly: that fighter gets the silly trait \"Big talk\""
     }
   ]
 }

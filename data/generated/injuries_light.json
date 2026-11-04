@@ -2,7 +2,7 @@
   {
     "d6": "1",
     "Injury (title)": "**Jumpy** (\"Flinch\")",
-    "What it does": "When shot at, they must react if they can (Dive, Duck or Return fire). They can never Take it"
+    "What it does": "When shot at, they must react if they can (Dive, Duck or Return fire). They can never Take it. The flinch is quick: their Dive moves up to **3 inches** instead of 2"
   },
   {
     "d6": "2",
@@ -17,7 +17,7 @@
   {
     "d6": "4",
     "Injury (title)": "**Whistler** (\"Whistle\")",
-    "What it does": "A broken tooth whistles: when they Duck, they are also **Announced**"
+    "What it does": "A broken tooth whistles: whenever they take a reaction, they are also **Announced**. Their allies know the signal: the first time each round it happens, one ally within 3 inches is **Hyped**"
   },
   {
     "d6": "5",

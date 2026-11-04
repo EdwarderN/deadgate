@@ -34,7 +34,7 @@ export function newBattle(rules: Rules, crew: Crew): Battle {
     const states = (f.nextBattle ?? []).filter((s) => stateNames(rules).includes(s));
     const pos = (f.nextBattle ?? []).find((s) => positions(rules).some((p) => p.name === s)) ?? first;
     fighters[f.id] = {
-      inBattle: f.status !== 'Laid up' && !f.awaitingChassis, energy: bat.now, conditions: [], states, position: pos,
+      inBattle: f.status !== rules.crew.campaign.doctor?.value && !f.awaitingChassis, energy: bat.now, conditions: [], states, position: pos,
       activated: false, reactionUsed: false, dents: 0, putDowns: 0, word: null, notes: '',
     };
   }
@@ -139,7 +139,8 @@ export const makesLegend = (rules: Rules, deedId: string) => B(rules).legendTier
 /** A wager's stake (13.5): won when fulfilled, paid when failed. None without a taker, or for a crew nobody bets against (14.10). */
 export function wagerStake(rules: Rules, crew: Crew, w: BattleFighter['word']): number {
   const s = B(rules).wagerStakes;
-  if (!w || w.audience !== s.audience || w.taker === false || crew.notes.tags.includes(s.noTakerTag) || !w.result) return 0;
+  const always = !!s.alwaysTakerTag && crew.notes.tags.includes(s.alwaysTakerTag);
+  if (!w || w.audience !== s.audience || (w.taker === false && !always) || crew.notes.tags.includes(s.noTakerTag) || !w.result) return 0;
   const n = s.value[deedTier(rules, w.deed)?.tier ?? ''] ?? 0;
   return w.result === 'fulfilled' ? n : -n;
 }
@@ -343,7 +344,7 @@ export { cellCovers, partsLeft };
 export interface BreakingStatus { needed: boolean; out: number; total: number; threshold: number; tester: Fighter | null; dice: number; notes: string[]; never: boolean }
 
 /** Must the crew test to break this round, who tests, and with how many dice (9.4, faction rules, captain traits)? */
-export function breakingStatus(rules: Rules, crew: Crew, b: Battle, effects: { kind: string; amount?: number; fraction?: number; captain?: string; title: string }[]): BreakingStatus {
+export function breakingStatus(rules: Rules, crew: Crew, b: Battle, effects: { kind: string; amount?: number; fraction?: number; captain?: string; partsAtLeast?: number; partsBelow?: number; title: string }[]): BreakingStatus {
   const br = B(rules).breaking;
   const took = crew.fighters.filter((f) => b.fighters[f.id]?.inBattle);
   const out = took.filter((f) => { const p = positionDef(rules, b.fighters[f.id].position); return p?.down || !p?.onTable; }).length;
@@ -362,8 +363,27 @@ export function breakingStatus(rules: Rules, crew: Crew, b: Battle, effects: { k
     if (e.kind !== 'breakingDice') continue;
     if (e.captain === 'standing' && !capStanding) continue;
     if (e.captain === 'down' && capStanding) continue;
+    if (e.partsAtLeast !== undefined && !(partsLeft(rules, crew) >= e.partsAtLeast)) continue;
+    if (e.partsBelow !== undefined && !(partsLeft(rules, crew) < e.partsBelow)) continue;
     dice += e.amount ?? 0;
     notes.push(`${e.title} ${(e.amount ?? 0) > 0 ? '+' : ''}${e.amount}`);
   }
   return { needed: took.length > 0 && out >= threshold, out, total: took.length, threshold, tester, dice, notes, never: !tester };
 }
+
+// ---------- story events (14.5) ----------
+/** The story events table for a row. A row with one table per faction (row 7) uses the crew's own (14.5). */
+export function storyKey(rules: Rules, crew: Crew, row: string | null | undefined): string | undefined {
+  if (!row) return undefined;
+  const keys = Object.keys(rules.data.story_events).filter((k) => k.startsWith(`Row ${row}:`));
+  if (keys.length <= 1) return keys[0];
+  return keys.find((k) => k.endsWith(`: ${crew.faction}`));
+}
+
+/** The subfaction an event names in brackets, when it is not the crew's own: that event is rerolled (14.5). */
+export function storyEventFor(rules: Rules, crew: Crew, event: string): string | null {
+  const subs = rules.faction(crew.faction ?? '')?.subfactions ?? [];
+  const named = subs.find((s) => new RegExp(`\\((the )?${s.name.replace(/^the /i, '')}\\)`, 'i').test(plain(event)));
+  return named && named.name !== crew.subfaction ? named.name : null;
+}
+
