@@ -1046,6 +1046,15 @@
       "value": "Laid up",
       "source": "14.3",
       "note": "when every fighter on the roster has this status, the crew may pay all its parts (even none) in the Spend step: one fighter of the player's choice is healed and can play the next battle; lasting injuries stay"
+    },
+    "ransom": {
+      "value": {
+        "min": 10,
+        "perXp": 1,
+        "max": 30
+      },
+      "source": "14.4",
+      "note": "the captor names a price from min to min + the captive's Experience, at most max"
     }
   },
   "sections": {
@@ -1254,7 +1263,8 @@
       "noTakerTag": "Oathbreakers",
       "source": "13.5, 14.10",
       "alwaysTakerTag": "Oathkeepers",
-      "note": "noTakerTag: a wager this crew offers finds no taker; alwaysTakerTag: it is always taken (14.10)"
+      "note": "noTakerTag: a wager this crew offers finds no taker; alwaysTakerTag: it is always taken (14.10). A crew holding both: they cancel each other, and the wager is offered as usual (designer's answer 34)",
+      "tagsCancel": true
     }
   },
   "afterBattle": {
@@ -1360,6 +1370,42 @@
       "value": true,
       "source": "14.4",
       "note": "a captured fighter's gentle roll belongs to the captor: the captor's player makes its choices"
+    },
+    "autoTags": {
+      "value": [
+        {
+          "tag": "Showboats",
+          "when": "fulfilledWords",
+          "count": 1,
+          "audience": "Boast"
+        },
+        {
+          "tag": "Oathbreakers",
+          "when": "failedWords",
+          "count": 2
+        },
+        {
+          "tag": "Oathkeepers",
+          "when": "fulfilledWords",
+          "count": 2,
+          "tiers": [
+            "Big",
+            "Legendary"
+          ]
+        },
+        {
+          "tag": "Butchers",
+          "when": "captiveFates",
+          "count": 2
+        },
+        {
+          "tag": "Merciful",
+          "when": "lowestRansoms",
+          "count": 2
+        }
+      ],
+      "source": "14.4, 14.10",
+      "note": "tags a crew gains from what happened, as each tag's 'Gained when' says: Words in one battle, captives in one break. tiers: at least one of the Words is of these tiers. The app adds them (designer's answer 35)"
     }
   },
   "factionPayCap": {

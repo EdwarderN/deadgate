@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { getRules, plain } from '../data/rules';
 import {
   addCondition, bandLower, canSwear, conditionLabel, conditionsFor, endActivation, isDown, newBattle, nextRound, positionDef, positions, roundEnd,
-  RUMOUR, deedTier, shotSeverity, startAfterBattle, stateNames, toggleState, underdogFor, wordName, wordsAllowed,
+  RUMOUR, deedTier, shotSeverity, wagerTags, startAfterBattle, stateNames, toggleState, underdogFor, wordName, wordsAllowed,
 } from '../engine/battle';
 import { addLedger, canSpend, captainOf, equipped, fighterStats, hasGift, isBot, strength } from '../engine/crew';
 import { activeEffects, rulesInForce, type ActiveEffect } from '../engine/faction';
@@ -109,9 +109,9 @@ function Setup({ crew, b, setB, setF, update }: { crew: Crew; b: Battle; setB: S
                       {audiences.map((a) => <option key={a}>{a}</option>)}
                     </select>
                   )}
-                  {bf.word?.audience === stakes.audience && (crew.notes.tags.includes(stakes.noTakerTag)
+                  {bf.word?.audience === stakes.audience && (wagerTags(rules, crew).noTaker
                     ? <span className="small muted">{stakes.noTakerTag}: nobody takes the bet, so it is a vow (14.10).</span>
-                    : stakes.alwaysTakerTag && crew.notes.tags.includes(stakes.alwaysTakerTag)
+                    : wagerTags(rules, crew).always
                     ? <span className="small muted">{stakes.alwaysTakerTag}: the bet is always taken (stake {stakes.value[deedTier(rules, bf.word.deed)?.tier ?? ''] ?? 0} parts, 14.10).</span>
                     : <label className="check small"><input type="checkbox" checked={bf.word.taker !== false} onChange={(e) => setF(f.id, (x) => ({ ...x, word: { ...x.word!, taker: e.target.checked } }))} /> Someone took the bet (stake {stakes.value[deedTier(rules, bf.word.deed)?.tier ?? ''] ?? 0} parts)</label>)}
                   {bf.word && sillyTierUp(f) && <span className="small muted">{f.sillyTrait}: this Word must be a tier above the one they failed (13.7).</span>}

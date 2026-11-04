@@ -3415,5 +3415,12 @@
     {
       "finds": 2
     }
+  ],
+  "_decisions": [
+    {
+      "answer": 33,
+      "section": "12.5, 14.5",
+      "text": "Row 7: Ledgerhands 5, Twist success: the crew takes the boots (a copy armour worth up to 5 parts) and gains Butchers, and takes a copy weapon worth up to 5 parts as well."
+    }
   ]
 }

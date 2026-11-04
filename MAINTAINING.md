@@ -25,6 +25,7 @@ To do it yourself, in this folder:
    If it stops with *"table '…' not found"*, a table's header in the book was renamed. Put the old header back in the book, or ask Claude Code to "fix the table header in the extractor". The app's data is left as it was.
 3. **Check what the report lists:**
    - **Table rows** (story events, injuries, tasks, finds, drops): each has an entry in `data/manual/outcomes.json` saying what it does, for example `{"parts": -5}, {"tag": "Reliable"}` for "5 parts: the crew gains Reliable". Make each listed entry match the new text.
+   - **Tags a crew earns by itself** (a fulfilled Boast, two failed Words, two fates in one break...) are listed under `autoTags` in `data/manual/crew-rules.json`: if a tag's "Gained when" changes, change its line there.
    - **Limits, faction rules, kits and prices in the text** live in `data/manual/crew-rules.json`, each with its section. Change the number or name there.
    - **Renamed injuries, traits or items:** players' saved crews keep the old name. The app shows a warning on those crews, and the player picks the new one on the card.
 4. **Run the tests** (`npm test`) until they pass. They fail if a table row has no entry, if a number in an entry no longer matches the book (say a story event now pays 5 parts and its entry still says 4), or if a name in the hand-kept files no longer exists in the book. The message names the file and the row.

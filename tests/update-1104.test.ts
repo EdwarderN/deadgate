@@ -2,7 +2,7 @@
 // Bodger belts, the Director's camera, bots never captured, debt, leads.
 import { describe, expect, it } from 'vitest';
 import { crewOf, otherRule, rules } from './helpers';
-import { breakingStatus, newBattle, storyEventFor, storyKey } from '../src/engine/battle';
+import { breakingStatus, earnedTags, newBattle, storyEventFor, storyKey, wagerStake, wagerTags } from '../src/engine/battle';
 import { finishCreation, replaceableRules, ruleActive, slotLoad, typeCarries } from '../src/engine/crew';
 import { activeEffects, rulesInForce } from '../src/engine/faction';
 import { validators } from '../src/engine/validate';
@@ -110,5 +110,53 @@ describe('saved crews from before the update', () => {
     expect(migrateCrew(old).notes.lead).toBe('They owe Jeminy');
     expect('rumour' in migrateCrew(old).notes).toBe(false);
     expect(migrateCrew(c)).toBe(c);
+  });
+});
+
+describe('tags the crew earns, and the two Oath tags (14.10, designer\'s answers 34 and 35)', () => {
+  const auto = rules.crew.afterBattle.autoTags!.value;
+  const c = finishCreation(rules, crewOf(rules.factions[0].name));
+  const withWords = (ws: { deed: string; audience: string; result: 'fulfilled' | 'failed' }[]) => {
+    const b = newBattle(rules, c);
+    const ids = Object.keys(b.fighters);
+    ws.forEach((w, i) => { b.fighters[ids[i]] = { ...b.fighters[ids[i]], inBattle: true, word: w }; });
+    return b;
+  };
+  const deedOf = (tier: string) => rules.deeds.find((d) => d.tier.startsWith(tier))!.id;
+  const audiences = rules.data.word_audiences.map((a) => a.Audience.replace(/\*\*/g, ''));
+  const plainAud = audiences.find((a) => a !== rules.crew.battle.boastAudience.value)!;
+  it('every automatic tag is a tag of the book', () => {
+    for (const r of auto) expect(rules.tags.some((t) => t.name === r.tag), r.tag).toBe(true);
+  });
+  it('Words: a fulfilled Boast, two failed, two fulfilled with one Big or Legendary', () => {
+    const tagsFor = (ws: Parameters<typeof withWords>[0]) => earnedTags(rules, withWords(ws), []).map((t) => t.tag);
+    const boast = auto.find((r) => r.audience)!;
+    expect(tagsFor([{ deed: deedOf('Small'), audience: boast.audience!, result: 'fulfilled' }])).toEqual([boast.tag]);
+    const failTag = auto.find((r) => r.when === 'failedWords')!.tag;
+    expect(tagsFor([{ deed: deedOf('Small'), audience: plainAud, result: 'failed' }])).toEqual([]);
+    expect(tagsFor([{ deed: deedOf('Small'), audience: plainAud, result: 'failed' }, { deed: deedOf('Small'), audience: plainAud, result: 'failed' }])).toEqual([failTag]);
+    const keep = auto.find((r) => r.tiers)!;
+    expect(tagsFor([{ deed: deedOf('Small'), audience: plainAud, result: 'fulfilled' }, { deed: deedOf('Small'), audience: plainAud, result: 'fulfilled' }])).toEqual([]);
+    expect(tagsFor([{ deed: deedOf('Small'), audience: plainAud, result: 'fulfilled' }, { deed: deedOf(keep.tiers![0]), audience: plainAud, result: 'fulfilled' }])).toEqual([keep.tag]);
+  });
+  it('captives: two fates, or two ransoms at the lowest price, in one break', () => {
+    const b = newBattle(rules, c);
+    const fate = auto.find((r) => r.when === 'captiveFates')!.tag;
+    const low = auto.find((r) => r.when === 'lowestRansoms')!.tag;
+    expect(earnedTags(rules, b, [{ refused: true }]).map((t) => t.tag)).toEqual([]);
+    expect(earnedTags(rules, b, [{ refused: true }, { refused: true }]).map((t) => t.tag)).toEqual([fate]);
+    expect(earnedTags(rules, b, [{ refused: false, lowest: true }, { refused: false, lowest: false }]).map((t) => t.tag)).toEqual([]);
+    expect(earnedTags(rules, b, [{ refused: false, lowest: true }, { refused: false, lowest: true }]).map((t) => t.tag)).toEqual([low]);
+  });
+  it('no taker, always a taker, and both cancel each other', () => {
+    const ws = rules.crew.battle.wagerStakes;
+    const tagged = (tags: string[]) => ({ ...c, notes: { ...c.notes, tags } });
+    expect(wagerTags(rules, tagged([ws.noTakerTag]))).toEqual({ noTaker: true, always: false });
+    expect(wagerTags(rules, tagged([ws.alwaysTakerTag!]))).toEqual({ noTaker: false, always: true });
+    expect(wagerTags(rules, tagged([ws.noTakerTag, ws.alwaysTakerTag!]))).toEqual({ noTaker: false, always: false });
+    const w = { deed: deedOf('Small'), audience: ws.audience, result: 'fulfilled' as const, taker: false };
+    expect(wagerStake(rules, tagged([ws.alwaysTakerTag!]), w)).toBeGreaterThan(0);
+    expect(wagerStake(rules, tagged([ws.noTakerTag, ws.alwaysTakerTag!]), w)).toBe(0);
+    expect(wagerStake(rules, tagged([ws.noTakerTag, ws.alwaysTakerTag!]), { ...w, taker: true })).toBeGreaterThan(0);
   });
 });

@@ -4,7 +4,7 @@ import { plain, type Rules } from '../data/rules';
 import type { Row } from '../data/schema';
 import { battery, captainOf, captainTraitNames, currentRatings, isBot, partsLeft, strength, underdog } from './crew';
 import { cellCovers, lookup } from './dice';
-import { uid, type AfterBattle, type Battle, type BattleFighter, type Crew, type Fighter } from './model';
+import { uid, type AfterBattle, type Battle, type BattleFighter, type Captive, type Crew, type Fighter } from './model';
 
 const B = (r: Rules) => r.crew.battle;
 
@@ -136,11 +136,20 @@ export const wordName = (rules: Rules, deedId: string) => (deedId.startsWith(RUM
 /** Is this Word Big or Legendary (it makes a legend, 13.8, 14.5)? */
 export const makesLegend = (rules: Rules, deedId: string) => B(rules).legendTiers.value.includes(deedTier(rules, deedId)?.tier ?? '');
 
+/** Does a wager this crew offers find no taker, or always one (14.10)? Holding both tags, they cancel each other. */
+export function wagerTags(rules: Rules, crew: Crew): { noTaker: boolean; always: boolean } {
+  const s = B(rules).wagerStakes;
+  let noTaker = crew.notes.tags.includes(s.noTakerTag);
+  let always = !!s.alwaysTakerTag && crew.notes.tags.includes(s.alwaysTakerTag);
+  if (noTaker && always && s.tagsCancel) noTaker = always = false;
+  return { noTaker, always };
+}
+
 /** A wager's stake (13.5): won when fulfilled, paid when failed. None without a taker, or for a crew nobody bets against (14.10). */
 export function wagerStake(rules: Rules, crew: Crew, w: BattleFighter['word']): number {
   const s = B(rules).wagerStakes;
-  const always = !!s.alwaysTakerTag && crew.notes.tags.includes(s.alwaysTakerTag);
-  if (!w || w.audience !== s.audience || (w.taker === false && !always) || crew.notes.tags.includes(s.noTakerTag) || !w.result) return 0;
+  const { noTaker, always } = wagerTags(rules, crew);
+  if (!w || w.audience !== s.audience || (w.taker === false && !always) || noTaker || !w.result) return 0;
   const n = s.value[deedTier(rules, w.deed)?.tier ?? ''] ?? 0;
   return w.result === 'fulfilled' ? n : -n;
 }
@@ -387,3 +396,35 @@ export function storyEventFor(rules: Rules, crew: Crew, event: string): string |
   return named && named.name !== crew.subfaction ? named.name : null;
 }
 
+
+// ---------- tags the crew earns (14.4, 14.10) ----------
+export interface CaptiveTaken { refused: boolean; lowest?: boolean }
+
+/** Tags the crew gains from this battle's Words and this break's captives, as each tag's "Gained when" says. */
+export function earnedTags(rules: Rules, b: Battle, captives: CaptiveTaken[]): { tag: string; why: string }[] {
+  const rows = rules.crew.afterBattle.autoTags?.value ?? [];
+  const words = Object.values(b.fighters).filter((f) => f.inBattle && f.word?.result).map((f) => f.word!);
+  const out: { tag: string; why: string }[] = [];
+  for (const r of rows) {
+    let n = 0;
+    let ok = true;
+    if (r.when === 'fulfilledWords' || r.when === 'failedWords') {
+      const res = r.when === 'fulfilledWords' ? 'fulfilled' : 'failed';
+      const ws = words.filter((w) => w.result === res && (!r.audience || w.audience === r.audience));
+      n = ws.length;
+      if (r.tiers) ok = ws.some((w) => r.tiers!.some((t) => deedTier(rules, w.deed)?.tier.startsWith(t)));
+    } else if (r.when === 'captiveFates') n = captives.filter((c) => c.refused).length;
+    else if (r.when === 'lowestRansoms') n = captives.filter((c) => !c.refused && c.lowest).length;
+    if (ok && n >= r.count) {
+      const what = r.when === 'fulfilledWords' ? `${n} fulfilled ${r.audience ? `${r.audience}s` : 'Words'}${r.tiers ? `, one ${r.tiers.join(' or ')}` : ''}`
+        : r.when === 'failedWords' ? `${n} failed Words` : r.when === 'captiveFates' ? `${n} captives' fates` : `${n} captives ransomed at the lowest price`;
+      out.push({ tag: r.tag, why: what });
+    }
+  }
+  return out;
+}
+
+/** The captives the crew took this battle (an older break kept one, as tookCaptive). */
+export function captivesOf(a: Pick<AfterBattle, 'captives' | 'tookCaptive' | 'captive'>): Captive[] {
+  return a.captives ?? (a.tookCaptive ? [{ price: a.captive?.income ?? null, refused: false }] : []);
+}

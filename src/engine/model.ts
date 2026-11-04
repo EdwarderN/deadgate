@@ -130,6 +130,8 @@ export interface Battle {
   pod?: { roll: number | null; drop: number | null; ours?: boolean };
 }
 
+export interface Captive { price: number | null; refused: boolean; lowest?: boolean; roll?: number | null; xpWho?: string | null }
+
 export interface AfterBattle {
   /** the id of the step on screen */
   step: number | string;
@@ -143,6 +145,8 @@ export interface AfterBattle {
   injuries: Record<string, { rolls: number[]; chosen?: number | null; listRolls?: number[]; picks?: Record<string, boolean>; done?: boolean; notes?: string }>;
   ransom?: Record<string, { pay: number | null; refuse: boolean }>;
   captive?: { income: number | null; roll: number | null; xpWho: string | null; picks?: Record<string, boolean> };
+  /** captives the crew took this battle (14.4): the asked price, ransomed or refused (the fate), and the fate's roll and XP */
+  captives?: Captive[];
   taxUnpaid?: string[];
   story: { row: string; roll: number | null; notes: string; leadUsed?: boolean; choice?: string; twistWho?: string | null; twistOk?: boolean | null; picks?: Record<string, boolean>; who?: Record<string, string> };
   tasks: Record<string, { task: string; success: boolean | null; testTotal: number | null; tableRoll: number | null; paid?: boolean; picks?: Record<string, boolean>; rating?: string; patient?: string | null; teacher?: string | null }>;
