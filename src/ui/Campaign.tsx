@@ -11,6 +11,7 @@ import { go } from '../App';
 import { Chassis, Doctor, Equip, Hire, Recharge, Messages, PartsCounter, ReplacedRulePick, Shop, Stash, describeType, fighterLabel, patchFighter, type Update } from './common';
 import { copyLink, useAsk } from './confirm';
 import { canTakeTitle } from '../engine/faction';
+import { applyChanges } from '../engine/outcomes';
 import { RuleLink, advanceRule, captainRule, contactRule, giftRule, injuryRule, legendRule, ritesRule, sillyRule, speciesRule, tagRule, typeRule } from './rule';
 
 const TABS = ['Fighters', 'Shop and hire', 'Parts', 'Roster notes', 'Season', 'Underdogs'] as const;
@@ -410,12 +411,8 @@ function NotesTab({ crew, update, messages }: { crew: Crew; update: Update; mess
   const [rival, setRival] = useState('');
   const addTag = () => {
     if (!tag || n.tags.includes(tag)) return;
-    // Ran and Reliable replace each other; a new tag replaces the oldest when there are three (14.10).
-    let tags = n.tags;
-    for (const t of rules.tags) { const m = t.text.match(/cannot have both (\w+) and (\w+)/); if (m && (m[1] === tag || m[2] === tag)) tags = tags.filter((x) => x !== m[1] && x !== m[2]); }
-    tags = [...tags, tag];
-    if (tags.length > L.maxTags.value) tags = tags.slice(tags.length - L.maxTags.value);
-    setNotes({ tags });
+    // Opposite tags cross each other off; a new tag replaces the oldest when there are three (14.10).
+    update((c) => applyChanges(rules, c, [{ kind: 'tag', value: tag }]).crew);
     setTag('');
   };
   return (
@@ -431,7 +428,7 @@ function NotesTab({ crew, update, messages }: { crew: Crew; update: Update; mess
             </li>
           ))}</ul>
           <div className="row gap-s"><select value={tag} onChange={(e) => setTag(e.target.value)} aria-label="Tag"><option value="">Add a tag…</option>{rules.tags.filter((t) => !n.tags.includes(t.name)).map((t) => <option key={t.name}>{t.name}</option>)}</select><button className="btn small" onClick={addTag} disabled={!tag}>Add</button></div>
-          <p className="muted small">A new tag replaces the oldest when there are three.</p>
+          <p className="muted small">A new tag replaces the oldest when there are three. Opposites cancel: {rules.data.tag_opposites.map(([x, y]) => `${x} and ${y}`).join(', ')}. Gaining one while the crew has the other crosses both off.</p>
         </div>
         <div className="card stack-s">
           <h3>Contacts <span className="muted small">({n.contacts.length}/{L.maxContacts.value}, each used once)</span></h3>

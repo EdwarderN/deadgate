@@ -121,6 +121,7 @@ export const generatedSchemas = {
   })).min(1),
   final: z.array(z.object({ label: str, text: str })).min(1),
   gift_rules: z.array(z.object({ label: str, text: str })).min(1),
+  tag_opposites: z.array(z.tuple([str, str])).min(1),
 };
 export type Effect = z.infer<typeof effectSchema>;
 export type TaskPay = z.infer<typeof taskPaySchema>;
@@ -337,7 +338,7 @@ export const crewRulesSchema = z.object({
     tableSize: num.extend({ small: str, large: str }),
     madness: sourced(str).extend({ frenzied: str, cracked: str, trait: str, title: str }),
     rumourWord: num.extend({ tier: str, audience: str, silly: str, past: str }),
-    wagerStakes: sourced(z.record(z.string(), z.number())).extend({ audience: str, noTakerTag: str, alwaysTakerTag: str.optional(), tagsCancel: z.boolean().optional() }),
+    wagerStakes: sourced(z.record(z.string(), z.number())).extend({ audience: str, noTakerTag: str, alwaysTakerTag: str.optional() }),
   }),
   afterBattle: z.object({
     injuryTables: sourced(z.object({ gentle: str, harsh: str })),

@@ -48,7 +48,7 @@ Keep this list accurate if you change the workflow, and keep `MAINTAINING.md` (f
 - `catalog.json` is the shop joined to each item's rules row (`kind` says which table: weapon, armour, frame, grenade, device, medical kit, relic, robo-arm, prosthetic, shield, force field). Prices are per source: copy or old stock.
 - Text fields keep the book's markdown bold (`**word**`); render it as bold, nothing more.
 - Faction data (`factions.json`): numbered rules (`fixed` when no subfaction may replace it), subfactions and their rule, types, voice, starting kit and specials lines, own task and its d6 table. Structured kits and price rules are in `crew-rules.json`.
-- Species, captain traits, advances (by list), injuries, glitches, silly traits, deeds, rumours, tags, contacts and the glossary are all generated.
+- Species, captain traits, advances (by list), injuries, glitches, silly traits, deeds, rumours, tags (and `tag_opposites`, the pairs that cross each other off, from the 14.10 paragraph), contacts and the glossary are all generated.
 - For the battle and the break, also generated: difficulties, severity, states, actions, consequence tables, lasting conditions, clash tables, the five voices (with each voice's own rule), the drop table, generic XP, deed tiers and their XP, Word audiences, the gentle and harsh injury tables, bot words, story events, downtime task tables, finds and league points.
 
 ## Suggested stack

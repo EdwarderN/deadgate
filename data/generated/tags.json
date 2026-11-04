@@ -7,7 +7,7 @@
   {
     "Tag": "**Reliable**",
     "Gained when": "From tasks and story events",
-    "What it does": "Work a job pays **2 more** while the crew has it. A crew cannot have both Ran and Reliable: the newer replaces the older"
+    "What it does": "Work a job pays **2 more** while the crew has it. Its opposite is Ran: if a crew gains one while it has the other, both are crossed off"
   },
   {
     "Tag": "**Butchers**",

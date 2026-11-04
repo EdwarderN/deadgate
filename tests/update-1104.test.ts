@@ -7,6 +7,7 @@ import { finishCreation, replaceableRules, ruleActive, slotLoad, typeCarries } f
 import { activeEffects, rulesInForce } from '../src/engine/faction';
 import { validators } from '../src/engine/validate';
 import { migrateCrew } from '../src/store';
+import { applyChanges } from '../src/engine/outcomes';
 import type { Crew } from '../src/engine/model';
 
 const F = rules.crew.factions;
@@ -113,7 +114,7 @@ describe('saved crews from before the update', () => {
   });
 });
 
-describe('tags the crew earns, and the two Oath tags (14.10, designer\'s answers 34 and 35)', () => {
+describe('tags the crew earns (14.10, designer\'s answer 35), and opposite tags', () => {
   const auto = rules.crew.afterBattle.autoTags!.value;
   const c = finishCreation(rules, crewOf(rules.factions[0].name));
   const withWords = (ws: { deed: string; audience: string; result: 'fulfilled' | 'failed' }[]) => {
@@ -148,15 +149,27 @@ describe('tags the crew earns, and the two Oath tags (14.10, designer\'s answers
     expect(earnedTags(rules, b, [{ refused: false, lowest: true }, { refused: false, lowest: false }]).map((t) => t.tag)).toEqual([]);
     expect(earnedTags(rules, b, [{ refused: false, lowest: true }, { refused: false, lowest: true }]).map((t) => t.tag)).toEqual([low]);
   });
-  it('no taker, always a taker, and both cancel each other', () => {
+  it('no taker, or always a taker', () => {
     const ws = rules.crew.battle.wagerStakes;
     const tagged = (tags: string[]) => ({ ...c, notes: { ...c.notes, tags } });
     expect(wagerTags(rules, tagged([ws.noTakerTag]))).toEqual({ noTaker: true, always: false });
     expect(wagerTags(rules, tagged([ws.alwaysTakerTag!]))).toEqual({ noTaker: false, always: true });
-    expect(wagerTags(rules, tagged([ws.noTakerTag, ws.alwaysTakerTag!]))).toEqual({ noTaker: false, always: false });
     const w = { deed: deedOf('Small'), audience: ws.audience, result: 'fulfilled' as const, taker: false };
     expect(wagerStake(rules, tagged([ws.alwaysTakerTag!]), w)).toBeGreaterThan(0);
-    expect(wagerStake(rules, tagged([ws.noTakerTag, ws.alwaysTakerTag!]), w)).toBe(0);
-    expect(wagerStake(rules, tagged([ws.noTakerTag, ws.alwaysTakerTag!]), { ...w, taker: true })).toBeGreaterThan(0);
+    expect(wagerStake(rules, tagged([ws.noTakerTag]), { ...w, taker: true })).toBe(0);
+  });
+  it('opposite tags: gaining one while holding the other crosses both off (14.10)', () => {
+    const pairs = rules.data.tag_opposites;
+    expect(pairs.length).toBe(3);
+    for (const [x, y] of pairs) {
+      for (const t of [x, y]) expect(rules.tags.some((g) => g.name === t), t).toBe(true);
+      const base = { ...c, notes: { ...c.notes, tags: [x] } };
+      expect(applyChanges(rules, base, [{ kind: 'tag', value: y }]).crew.notes.tags).toEqual([]);
+      expect(applyChanges(rules, { ...c, notes: { ...c.notes, tags: [y] } }, [{ kind: 'tag', value: x }]).crew.notes.tags).toEqual([]);
+      expect(applyChanges(rules, base, [{ kind: 'tag', value: x }]).crew.notes.tags).toEqual([x]);
+    }
+    // the wager tags are a pair, so a crew never holds both
+    const ws = rules.crew.battle.wagerStakes;
+    expect(pairs.some((p) => p.includes(ws.noTakerTag) && p.includes(ws.alwaysTakerTag!))).toBe(true);
   });
 });

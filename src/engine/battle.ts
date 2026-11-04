@@ -136,13 +136,10 @@ export const wordName = (rules: Rules, deedId: string) => (deedId.startsWith(RUM
 /** Is this Word Big or Legendary (it makes a legend, 13.8, 14.5)? */
 export const makesLegend = (rules: Rules, deedId: string) => B(rules).legendTiers.value.includes(deedTier(rules, deedId)?.tier ?? '');
 
-/** Does a wager this crew offers find no taker, or always one (14.10)? Holding both tags, they cancel each other. */
+/** Does a wager this crew offers find no taker, or always one (14.10)? Opposite tags never stand together. */
 export function wagerTags(rules: Rules, crew: Crew): { noTaker: boolean; always: boolean } {
   const s = B(rules).wagerStakes;
-  let noTaker = crew.notes.tags.includes(s.noTakerTag);
-  let always = !!s.alwaysTakerTag && crew.notes.tags.includes(s.alwaysTakerTag);
-  if (noTaker && always && s.tagsCancel) noTaker = always = false;
-  return { noTaker, always };
+  return { noTaker: crew.notes.tags.includes(s.noTakerTag), always: !!s.alwaysTakerTag && crew.notes.tags.includes(s.alwaysTakerTag) };
 }
 
 /** A wager's stake (13.5): won when fulfilled, paid when failed. None without a taker, or for a crew nobody bets against (14.10). */

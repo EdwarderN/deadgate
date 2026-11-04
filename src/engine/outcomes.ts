@@ -1,6 +1,6 @@
 // Changes to a crew from the after-battle steps, and applying them.
 // What a table row does is data (data/manual/outcomes.json), resolved in effects.ts.
-import { plain, type Rules } from '../data/rules';
+import { getRules, plain, type Rules } from '../data/rules';
 import { addLedger, advancesEarned, battery, creditFloor, isBot } from './crew';
 import { uid, type Crew, type Fighter, type ItemSlot } from './model';
 
@@ -59,7 +59,11 @@ export function describe(crew: Crew, c: Change): string {
     case 'injury': return `${who(c.fid)}: ${c.value}`;
     case 'legend': return `${who(c.fid)} earns the Legend ${c.name}${c.title ? ` ("${c.title}")` : ''}`;
     case 'silly': return c.value ? `${who(c.fid)} gets the silly trait ${c.value}` : `${who(c.fid)}'s silly trait is cleared`;
-    case 'tag': return `The crew gains ${c.value}`;
+    case 'tag': {
+      if (crew.notes.tags.includes(c.value)) return `${c.value}: the crew has it already`;
+      const opp = tagOpposite(getRules(), c.value);
+      return opp && crew.notes.tags.includes(opp) ? `${c.value} and ${opp} cancel: both are crossed off` : `The crew gains ${c.value}`;
+    }
     case 'contact': return `New contact: ${c.value}`;
     case 'rival': return `New rival: ${c.value}`;
     case 'nextBattle': return `${who(c.fid)} starts the next battle ${c.value}`;
@@ -113,9 +117,11 @@ export function applyChanges(rules: Rules, crew: Crew, changes: Change[]): { cre
       case 'silly': fx(ch.fid, (f) => ({ ...f, sillyTrait: ch.value, lastFailedTier: ch.tier ?? f.lastFailedTier })); break;
       case 'tag': {
         const max = rules.crew.limits.maxTags.value;
-        let tags = c.notes.tags.filter((x) => x !== ch.value);
-        for (const t of rules.tags) { const m = t.text.match(/cannot have both (\w+) and (\w+)/); if (m && (m[1] === ch.value || m[2] === ch.value)) tags = tags.filter((x) => x !== m[1] && x !== m[2]); }
-        c = { ...c, notes: { ...c.notes, tags: [...tags, ch.value].slice(-max) } };
+        // A tag the crew has does nothing more; gained while the crew has its opposite, both are crossed off (14.10).
+        if (c.notes.tags.includes(ch.value)) break;
+        const opp = tagOpposite(rules, ch.value);
+        if (opp && c.notes.tags.includes(opp)) { c = { ...c, notes: { ...c.notes, tags: c.notes.tags.filter((x) => x !== opp) } }; break; }
+        c = { ...c, notes: { ...c.notes, tags: [...c.notes.tags, ch.value].slice(-max) } };
         break;
       }
       case 'contact': c = { ...c, notes: { ...c.notes, contacts: [...c.notes.contacts.filter((x) => !x.used), { name: ch.value, used: false }].slice(-rules.crew.limits.maxContacts.value) } }; break;
@@ -196,3 +202,9 @@ export function applyChanges(rules: Rules, crew: Crew, changes: Change[]): { cre
 
 /** The fate for a fighter who dies (or a bot destroyed) after a battle (13.2, 13.3). */
 export const deathFate = (rules: Rules, f: Fighter) => (isBot(rules, f) ? rules.crew.afterBattle.botDeadFate.value : rules.crew.afterBattle.deadResult.value);
+
+/** A tag's opposite (14.10), if it has one. */
+export function tagOpposite(rules: Rules, tag: string): string | null {
+  for (const [a, b] of rules.data.tag_opposites) { if (a === tag) return b; if (b === tag) return a; }
+  return null;
+}

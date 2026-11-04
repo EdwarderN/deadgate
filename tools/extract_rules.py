@@ -192,6 +192,15 @@ def bold_paragraphs(file, heading):
     return out
 
 
+def tag_opposites():
+    """The pairs of opposite tags (14.10): "**Opposite tags cancel.** Ran and Reliable, Butchers and Merciful, ... are opposites"."""
+    for l in read("14-break.md"):
+        m = re.match(r"\*\*Opposite tags cancel\.\*\* (.+?) are opposites", l)
+        if m:
+            return [[plain(x) for x in pair.split(" and ")] for pair in m.group(1).split(", ")]
+    sys.exit("extract_rules: the 'Opposite tags cancel' paragraph (14.10) not found.")
+
+
 def plain(md):
     return re.sub(r"\*\*(.+?)\*\*", r"\1", md).strip()
 
@@ -287,6 +296,7 @@ DATA = {
     "relics": lambda: find_table("08-special.md", "| Relic (rite)"),
     "psionic_powers": lambda: find_table("08-special.md", "| Power | Number"),
     "gift_rules": lambda: bold_paragraphs("08-special.md", "## 8.4"),
+    "tag_opposites": tag_opposites,
     "captain_traits": lambda: find_table("11-crews.md", "| Captain trait | Rule"),
     "shop": shop,
     "recruits": recruits,

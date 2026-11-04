@@ -1263,8 +1263,7 @@
       "noTakerTag": "Oathbreakers",
       "source": "13.5, 14.10",
       "alwaysTakerTag": "Oathkeepers",
-      "note": "noTakerTag: a wager this crew offers finds no taker; alwaysTakerTag: it is always taken (14.10). A crew holding both: they cancel each other, and the wager is offered as usual (designer's answer 34)",
-      "tagsCancel": true
+      "note": "noTakerTag: a wager this crew offers finds no taker; alwaysTakerTag: it is always taken (14.10). They are opposites, so a crew never has both (14.10, replacing designer's answer 34)"
     }
   },
   "afterBattle": {
