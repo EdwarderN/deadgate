@@ -1192,6 +1192,10 @@
           "rating": "Shoot",
           "success": [
             {
+              "title": "Fighter of the Year",
+              "who": "legend"
+            },
+            {
               "lead": true
             },
             {
@@ -4236,6 +4240,16 @@
       "answer": 33,
       "section": "10.5, 14.5",
       "text": "Row 7: Ledgerhands 5, Twist success: the crew takes the boots (a copy armour worth up to 5 parts) and gains Butchers, and takes a copy weapon worth up to 5 parts as well."
+    },
+    {
+      "answer": 36,
+      "section": "14.5",
+      "text": "Row 6 event 4, Twist success: \"Fighter of the Year\" is a title the legend takes."
+    },
+    {
+      "answer": 37,
+      "section": "14.8",
+      "text": "When the crew gains a fourth contact, the player chooses which one it replaces."
     }
   ]
 }

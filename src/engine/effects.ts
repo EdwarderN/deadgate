@@ -189,10 +189,24 @@ export function resolveEffects(rules: Rules, crew: Crew, effs: Eff[], ctx: EffCt
       }
     }
     if (e.contact) {
+      // A crew holds at most three contacts: a fourth replaces one of the player's choice (14.8).
+      const held = crew.notes.contacts.filter((c) => !c.used).map((c) => c.name);
+      const full = held.length >= rules.crew.limits.maxContacts.value;
+      const rp = `${p}.replace`;
+      const replace = full ? String(st[rp] ?? '') : '';
+      const askReplace = () => {
+        out.nodes.push({ kind: 'select', path: rp, label: 'The crew has three contacts: which one does the new one replace?', options: Array.from(new Set(held)).map((n) => ({ value: n, label: n })), value: replace });
+        if (!replace) out.missing.push('choose the contact it replaces');
+      };
       if (e.contact === 'choose') {
         const v = String(st[p] ?? '');
         out.nodes.push({ kind: 'select', path: p, label: 'Which contact?', options: rules.contacts.map((c) => ({ value: c.name, label: c.name })), value: v });
-        if (v) out.changes.push({ kind: 'contact', value: v }); else out.missing.push('choose a contact');
+        if (full) askReplace();
+        if (v) out.changes.push({ kind: 'contact', value: v, ...(replace ? { replace } : {}) }); else out.missing.push('choose a contact');
+      } else if (full) {
+        out.nodes.push({ kind: 'auto', path: p, text: `New contact: ${e.contact}` });
+        askReplace();
+        out.changes.push({ kind: 'contact', value: e.contact, ...(replace ? { replace } : {}) });
       } else auto({ kind: 'contact', value: e.contact }, `New contact: ${e.contact}`);
     }
     if (e.rival) {

@@ -13,7 +13,7 @@ export type Change =
   | { kind: 'legend'; fid: string; name: string; title: string | null }
   | { kind: 'silly'; fid: string; value: string | null; tier?: string }
   | { kind: 'tag'; value: string }
-  | { kind: 'contact'; value: string }
+  | { kind: 'contact'; value: string; replace?: string }
   | { kind: 'rival'; value: string }
   | { kind: 'nextBattle'; fid: string; value: string }
   | { kind: 'leave'; fid: string; fate: string; note: string }
@@ -68,7 +68,7 @@ export function describe(crew: Crew, c: Change): string {
       const opp = tagOpposite(getRules(), c.value);
       return opp && crew.notes.tags.includes(opp) ? `${c.value} and ${opp} cancel: both are crossed off` : `The crew gains ${c.value}`;
     }
-    case 'contact': return `New contact: ${c.value}`;
+    case 'contact': return `New contact: ${c.value}${c.replace ? `, in place of the ${c.replace}` : ''}`;
     case 'rival': return `New rival: ${c.value}`;
     case 'nextBattle': return `${who(c.fid)} starts the next battle ${c.value}`;
     case 'leave': return `${who(c.fid)}: ${c.fate}`;
@@ -141,7 +141,13 @@ export function applyChanges(rules: Rules, crew: Crew, changes: Change[]): { cre
         c = { ...c, notes: { ...c.notes, tags: [...c.notes.tags, ch.value].slice(-max) } };
         break;
       }
-      case 'contact': c = { ...c, notes: { ...c.notes, contacts: [...c.notes.contacts.filter((x) => !x.used), { name: ch.value, used: false }].slice(-rules.crew.limits.maxContacts.value) } }; break;
+      case 'contact': {
+        // A used contact is crossed off; a fourth replaces one of the player's choice (14.8).
+        let list = c.notes.contacts.filter((x) => !x.used);
+        if (ch.replace) { const i = list.findIndex((x) => x.name === ch.replace); if (i >= 0) list = list.filter((_, j) => j !== i); }
+        c = { ...c, notes: { ...c.notes, contacts: [...list, { name: ch.value, used: false }].slice(-rules.crew.limits.maxContacts.value) } };
+        break;
+      }
       // At most three rivals: a fourth pushes out the oldest (14.8).
       case 'rival': c = { ...c, notes: { ...c.notes, rivals: [...c.notes.rivals, ch.value].slice(-(rules.crew.limits.maxRivals?.value ?? Infinity)) } }; break;
       case 'nextBattle': fx(ch.fid, (f) => ({ ...f, nextBattle: Array.from(new Set([...(f.nextBattle ?? []), ch.value])) })); break;

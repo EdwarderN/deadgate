@@ -438,6 +438,7 @@ function NotesTab({ crew, update, messages }: { crew: Crew; update: Update; mess
               <button className="link" onClick={() => setNotes({ contacts: n.contacts.filter((_, j) => j !== i) })}>Remove</button>
             </li>
           ))}</ul>
+          {n.contacts.filter((c) => !c.used).length >= L.maxContacts.value && <p className="muted small">Three contacts: to add another, remove the one it replaces (14.8).</p>}
           {n.contacts.filter((c) => !c.used).length < L.maxContacts.value && (
             <div className="row gap-s"><select value={contact} onChange={(e) => setContact(e.target.value)} aria-label="Contact"><option value="">Add a contact…</option>{rules.contacts.map((c) => <option key={c.name}>{c.name}</option>)}</select>
               <button className="btn small" disabled={!contact} onClick={() => { setNotes({ contacts: [...n.contacts.filter((c) => !c.used), { name: contact, used: false }] }); setContact(''); }}>Add</button></div>

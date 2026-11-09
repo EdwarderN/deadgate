@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { getRules, plain } from '../data/rules';
 import {
   addCondition, bandLower, canSwear, conditionLabel, conditionsFor, endActivation, isDown, newBattle, nextRound, positionDef, positions, roundEnd,
-  RUMOUR, deedTier, shotSeverity, wagerTags, startAfterBattle, stateNames, toggleState, underdogFor, wordName, wordsAllowed,
+  RUMOUR, deedTier, shotSeverity, titleReminders, wagerTags, startAfterBattle, stateNames, toggleState, underdogFor, wordName, wordsAllowed,
 } from '../engine/battle';
 import { addLedger, canSpend, captainOf, equipped, fighterStats, hasGift, isBot, strength } from '../engine/crew';
 import { activeEffects, rulesInForce, type ActiveEffect } from '../engine/faction';
@@ -310,6 +310,9 @@ function BattleCard({ crew, f, bf, set, update }: { crew: Crew; f: Fighter; bf: 
       )}
       {bf.putDowns > 0 && onPutDown.map((e) => <FactionNote key={e.effect.id} e={e} small />)}
       {down && activeEffects(rules, crew, 'allyDown').map((e) => <FactionNote key={e.effect.id} e={e} small />)}
+      {titleReminders(rules, crew, f).map((t, i) => (
+        <p key={i} className="note small"><strong>"{t.title}"</strong>{t.plainHolder ? ` (${fighterLabel(t.plainHolder)} holds the plain title)` : ''}: <Md text={t.text} /></p>
+      ))}
       <Grenades crew={crew} f={f} bf={bf} set={set} />
       {hasGift(rules, crew, f) && (
         <details className="powers small">

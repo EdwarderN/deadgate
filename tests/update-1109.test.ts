@@ -2,7 +2,7 @@
 // Butchers' two rolls, Merciful's contact, "Paste", rival XP, the carried downed fighter.
 import { describe, expect, it } from 'vitest';
 import { crewOf, rules } from './helpers';
-import { battleXp, injuryTableFor, newBattle, positions, storyRolls, tagDice } from '../src/engine/battle';
+import { battleXp, injuryTableFor, newBattle, positions, storyRolls, tagDice, titleReminders } from '../src/engine/battle';
 import { finishCreation, hireExtra, rechargeCost, sellValue, shopPrice, useSpend, itemPrice, advancesEarned } from '../src/engine/crew';
 import { resolveEffects } from '../src/engine/effects';
 import { applyChanges } from '../src/engine/outcomes';
@@ -112,5 +112,32 @@ describe('fighters', () => {
     expect(carried.notBot).toBe(true);
     b.fighters[id] = { ...b.fighters[id], position: carried.name };
     expect(injuryTableFor(rules, b, id)?.table).toBe(rules.crew.afterBattle.injuryTables.value.gentle);
+  });
+});
+
+describe("designer's answers 36 and 37, and titles with a rule", () => {
+  it('a fourth contact replaces the one the player chooses', () => {
+    const names = rules.contacts.map((c) => c.name);
+    const max = rules.crew.limits.maxContacts.value;
+    const c = withNotes(base(), { contacts: names.slice(0, max).map((name) => ({ name, used: false })) });
+    const fresh = names[max];
+    const r = run(c, [{ contact: fresh }]);
+    expect(r.missing).toEqual(['choose the contact it replaces']);
+    const r2 = run(c, [{ contact: fresh }], { 'x.0.replace': names[1] });
+    const after = applyChanges(rules, c, r2.changes).crew.notes.contacts.map((x) => x.name);
+    expect(after).toEqual([...names.slice(0, max).filter((n) => n !== names[1]), fresh]);
+  });
+  it('"Fighter of the Year" is a title in the Twist success of Row 6, event 4', () => {
+    const e = rules.outcomes.storyEvents['Row 6: Made a legend']['4'].twist!.success;
+    expect(e.some((x) => x.title === 'Fighter of the Year')).toBe(true);
+  });
+  it('titles with a rule show in battle: a named one, and a prefixed one while a crew-mate holds the plain title', () => {
+    const named = rules.data.title_rules.find((t) => !t.prefixed)!;
+    let c = base();
+    c = { ...c, fighters: c.fighters.map((f, i) => (i === 0 ? { ...f, titles: [named.title] } : i === 1 ? { ...f, title: 'the Hammer' } : i === 2 ? { ...f, title: 'Little Hammer' } : f)) };
+    expect(titleReminders(rules, c, c.fighters[0]).map((t) => t.title)).toEqual([named.title]);
+    const pre = titleReminders(rules, c, c.fighters[2]);
+    expect(pre[0]).toMatchObject({ title: 'Little Hammer', plainHolder: { id: c.fighters[1].id } });
+    expect(titleReminders(rules, c, c.fighters[1])).toEqual([]);
   });
 });

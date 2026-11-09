@@ -235,6 +235,23 @@ def tag_opposites():
     sys.exit("extract_rules: the 'Opposite tags cancel' paragraph (14.10) not found.")
 
 
+def title_rules():
+    """Titles that carry a rule (13.8, 14.6): 'the title "Deputy" (once a battle, ...)' in a table row,
+    and the paragraph on prefixed titles."""
+    out = []
+    for name in ("13-after.md", "14-break.md"):
+        for l in read(name):
+            for m in re.finditer(r'title \*{0,2}"([^"]+)"\*{0,2} \(([^)]+)\)', l):
+                if not any(t["title"] == m.group(1) for t in out):
+                    out.append({"title": m.group(1), "text": m.group(2)})
+            m = re.search(r"\*\*A prefixed title has a use:\*\* (.+)$", l)
+            if m:
+                out.append({"title": "", "prefixed": True, "text": m.group(1)})
+    if not any(t.get("prefixed") for t in out):
+        sys.exit("extract_rules: the paragraph on prefixed titles (13.8) not found.")
+    return out
+
+
 def plain(md):
     return re.sub(r"\*\*(.+?)\*\*", r"\1", md).strip()
 
@@ -331,6 +348,7 @@ DATA = {
     "psionic_powers": lambda: find_table("08-special.md", "| Power | Number"),
     "gift_rules": lambda: bold_paragraphs("08-special.md", "The psionic gift"),
     "tag_opposites": tag_opposites,
+    "title_rules": title_rules,
     "captain_traits": lambda: find_table("11-crews.md", "| Captain trait | Rule"),
     "shop": shop,
     "recruits": recruits,

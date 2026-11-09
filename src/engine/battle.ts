@@ -447,3 +447,24 @@ export function tagDice(rules: Rules, crew: Crew, on: { twist: true } | { task: 
 export function storyRolls(rules: Rules, crew: Crew, row: string | null | undefined): number {
   return Math.max(1, ...(rules.crew.afterBattle.tagStoryRolls?.value ?? []).filter((t) => t.row === row && crew.notes.tags.includes(t.tag)).map((t) => t.rolls));
 }
+
+// ---------- titles with a rule (13.8, 14.6) ----------
+const titlesOf = (f: Fighter) => Array.from(new Set([f.title, ...f.titles, ...f.legends.map((l) => l.title ?? '')].filter(Boolean)));
+const titleCore = (t: string) => t.replace(/^the\s+/i, '').trim().toLowerCase();
+
+/** The title rules a fighter's titles carry in battle: named titles ("Deputy"), and a prefixed title
+ *  ("Little Hammer") while a crew-mate holds the plain one ("the Hammer"). */
+export function titleReminders(rules: Rules, crew: Crew, f: Fighter): { title: string; text: string; plainHolder?: Fighter }[] {
+  const out: { title: string; text: string; plainHolder?: Fighter }[] = [];
+  const mine = titlesOf(f);
+  for (const r of rules.data.title_rules) if (!r.prefixed && mine.includes(r.title)) out.push({ title: r.title, text: r.text });
+  const pre = rules.data.title_rules.find((r) => r.prefixed);
+  if (pre) for (const t of mine) for (const o of crew.fighters) {
+    if (o.id === f.id) continue;
+    for (const p of titlesOf(o)) {
+      const core = titleCore(p);
+      if (core && titleCore(t) !== core && titleCore(t).endsWith(` ${core}`)) out.push({ title: t, text: pre.text, plainHolder: o });
+    }
+  }
+  return out;
+}

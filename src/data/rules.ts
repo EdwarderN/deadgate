@@ -79,6 +79,7 @@ import worlds from '../../data/generated/worlds.json';
 import final from '../../data/generated/final.json';
 import gift_rules from '../../data/generated/gift_rules.json';
 import tag_opposites from '../../data/generated/tag_opposites.json';
+import title_rules from '../../data/generated/title_rules.json';
 import crewRulesJson from '../../data/manual/crew-rules.json';
 import outcomesJson from '../../data/manual/outcomes.json';
 
@@ -89,7 +90,7 @@ export const rawData = {
   rumours, tags, contacts, tasks, glossary, catalog,
   difficulties, severity, states, actions, consequences, lasting_conditions, clashes, voices, drop_table, generic_xp,
   deed_tiers, word_audiences, injury_tables, bot_words, story_rows, story_events, task_tables, finds, league_points, bot_states,
-  gear_failure, grenade_scatter, grenade_distance, prompt_targets, melee_results, melee_dice, shot_results, shooting_helps, shooting_protects, reactions, force_field_saves, terrain_traits, doors, deployment, world_table, npm, worlds, final, gift_rules, tag_opposites,
+  gear_failure, grenade_scatter, grenade_distance, prompt_targets, melee_results, melee_dice, shot_results, shooting_helps, shooting_protects, reactions, force_field_saves, terrain_traits, doors, deployment, world_table, npm, worlds, final, gift_rules, tag_opposites, title_rules,
 };
 
 export type RawData = typeof rawData;

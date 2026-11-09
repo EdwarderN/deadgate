@@ -122,6 +122,7 @@ export const generatedSchemas = {
   final: z.array(z.object({ label: str, text: str })).min(1),
   gift_rules: z.array(z.object({ label: str, text: str })).min(1),
   tag_opposites: z.array(z.tuple([str, str])).min(1),
+  title_rules: z.array(z.object({ title: z.string(), text: str, prefixed: z.boolean().optional() })).min(1),
 };
 export type Effect = z.infer<typeof effectSchema>;
 export type TaskPay = z.infer<typeof taskPaySchema>;
