@@ -69,7 +69,7 @@ describe('every faction effect names real rules, subfactions and types', () => {
   });
 });
 
-describe('faction pay after a battle (chapter 12)', () => {
+describe('faction pay after a battle (chapter 10)', () => {
   it('parts per enemy put down, capped at the faction pay cap', () => {
     const fac = factionWith('partsPer', (e) => e.per === 'putDowns');
     const e = F[fac].effects!.find((x) => x.per === 'putDowns')!;
@@ -136,12 +136,12 @@ describe('faction pay after a battle (chapter 12)', () => {
 });
 
 describe('faction tasks and types', () => {
-  it('captain traits and tags change task pay', () => {
-    const m = rules.crew.taskPay.value.find((x) => x.tag && x.parts! < 0)!;
-    const fac = Object.keys(F).find((n) => !F[n].taskPay)!;
+  it('captain traits change task pay', () => {
+    const m = rules.crew.taskPay.value.find((x) => x.captainTrait)!;
+    const fac = Object.keys(F)[0];
     const c = crewOf(fac);
-    const tagged = { ...c, notes: { ...c.notes, tags: [m.tag!] } };
-    expect(taskPay(rules, tagged, m.task, true, 10).parts).toBe(10 + m.parts!);
+    const capd = { ...c, fighters: c.fighters.map((f) => (f.id === c.captainId ? { ...f, captainTraits: [{ name: m.captainTrait! }] } : f)) };
+    expect(taskPay(rules, capd, m.task, true, 10).parts).toBe(10 + m.parts!);
   });
   it('a type that always rolls the gentle table when left behind', () => {
     const fac = Object.keys(F).find((n) => Object.values(F[n].typeRules ?? {}).some((r) => r.injuryTable))!;

@@ -12,7 +12,7 @@ import type { Crew } from '../src/engine/model';
 
 const F = rules.crew.factions;
 
-describe('a subfaction replaces any one rule, the player\'s choice (12.1)', () => {
+describe('a subfaction replaces any one rule, the player\'s choice (10.1)', () => {
   it('rules the book marks as fixed are never offered', () => {
     for (const f of rules.factions) {
       const offered = replaceableRules(rules, f.name).map((r) => r.n);
@@ -81,7 +81,7 @@ describe('Row 7: a story event table for each faction (14.5)', () => {
 });
 
 describe('gear and fighters', () => {
-  it('the Director carries the camera: one Hand of their first set is always in use (12.7)', () => {
+  it('the Director carries the camera: one Hand of their first set is always in use (10.7)', () => {
     const holly = Object.keys(F).find((n) => Object.values(F[n].typeGrants ?? {}).some((g) => g.carries))!;
     const c = finishCreation(rules, crewOf(holly));
     const [type, g] = Object.entries(F[holly].typeGrants!).find(([, x]) => x.carries)!;
@@ -92,7 +92,7 @@ describe('gear and fighters', () => {
     const other = c.fighters.find((f) => f.type !== type)!;
     expect(slotLoad(rules, { ...c, items: [] }, other, 'set1')).toBe(0);
   });
-  it('a bot is never captured or evacuated while down (5.8, 13.3)', () => {
+  it('a bot is never captured or evacuated while down (5.10, 13.3)', () => {
     const notBot = rules.crew.battle.positions.value.filter((p) => p.notBot).map((p) => p.name);
     expect(rules.crew.battle.positions.value.filter((p) => p.captured).every((p) => p.notBot)).toBe(true);
     expect(notBot.length).toBeGreaterThan(0);

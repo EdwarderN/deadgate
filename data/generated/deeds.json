@@ -6,7 +6,7 @@
     },
     {
       "#": "S2",
-      "Deed": "**Bring them home.** Carry a downed ally to the evac point, or off the table"
+      "Deed": "**Bring them home.** Carry a downed ally to the evac point"
     },
     {
       "#": "S3",
@@ -61,7 +61,7 @@
     },
     {
       "#": "B6",
-      "Deed": "**Three for three.** Ask the voice three times in one battle and end it on your feet",
+      "Deed": "**Three for three.** Ask the voice three times in one battle, get a good result every time, and end it on your feet",
       "Legend": "**Hears voices** (\"the Listener\"): when an ally within 6 inches Asks the voice and gets a good result, you gain the same result too"
     },
     {
@@ -93,7 +93,7 @@
     },
     {
       "#": "L4",
-      "Deed": "**Won't stay down.** Be stood back up after going down, and put down an enemy before the battle ends",
+      "Deed": "**Won't stay down.** Be freed from capture, and see your crew put down your captor before the battle ends",
       "Legend": "**Won't stay down** (\"the Cockroach\"): when you go down, roll a d6; on 5 or 6 you are only prone and **Flustered** instead"
     },
     {

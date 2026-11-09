@@ -6,7 +6,7 @@
   },
   {
     "Source": "**Copy**",
-    "Basic": "Hands +1. **Unreliable:** a kept total of 3 or less on a roll with an item in the arm locks it, and neither arm nor item works until a Use action clears it (Routine Tech)",
+    "Basic": "Hands +1. **Unreliable:** a kept total of 3 or less on a roll with an item in the arm jams it (section 7.2): neither arm nor item works until the jam is cleared",
     "Boosted (1 Energy, once per activation)": "None"
   },
   {

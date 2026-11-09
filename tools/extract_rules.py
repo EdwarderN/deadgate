@@ -21,10 +21,23 @@ BOOK = os.path.abspath(sys.argv[1] if len(sys.argv) > 1 else os.environ.get("RUL
 OUT = os.path.join(ROOT, "data", "generated")
 
 
-def read(name):
+def chapter_file(name):
+    """A chapter by its name, whatever its number: "12-factions.md" finds "10-factions.md" too,
+    so renumbering the book's chapters needs no change here."""
     if not os.path.isdir(BOOK):
         sys.exit(f"extract_rules: no rulebook folder at {BOOK}. Pass the folder: python3 tools/extract_rules.py path/to/rulebook")
-    with open(os.path.join(BOOK, name), encoding="utf-8") as fh:
+    exact = os.path.join(BOOK, name)
+    if os.path.exists(exact):
+        return exact
+    stem = re.sub(r"^\d+-", "", name)
+    hits = sorted(f for f in os.listdir(BOOK) if re.sub(r"^\d+-", "", f) == stem)
+    if len(hits) != 1:
+        sys.exit(f"extract_rules: chapter '{stem}' not found in {BOOK} (or found twice).")
+    return os.path.join(BOOK, hits[0])
+
+
+def read(name):
+    with open(chapter_file(name), encoding="utf-8") as fh:
         return fh.read().splitlines()
 
 
@@ -44,7 +57,21 @@ def table_at(lines, i):
     return header, rows
 
 
+def home_of(file, prefix):
+    """The chapter that holds tables starting with prefix: the named one, or, when the book moved the
+    table, the one other chapter that has it (appendices only copy tables, so they are skipped)."""
+    if any(l.startswith(prefix) for l in read(file)):
+        return file
+    others = sorted(f for f in os.listdir(BOOK) if re.match(r"\d+-(?!appendix).+\.md$", f) and f != os.path.basename(chapter_file(file))
+                    and any(l.startswith(prefix) for l in read(f)))
+    if len(others) == 1:
+        print(f"extract_rules: '{prefix}' moved from {file} to {others[0]}", file=sys.stderr)
+        return others[0]
+    return file
+
+
 def find_table(file, prefix, nth=1):
+    file = home_of(file, prefix)
     lines = read(file)
     hits = [i for i, l in enumerate(lines) if l.startswith(prefix)]
     if len(hits) < nth:
@@ -55,6 +82,7 @@ def find_table(file, prefix, nth=1):
 
 def tables_under_bold(file, prefix):
     """All tables starting with prefix, each keyed by the nearest **bold** line above it."""
+    file = home_of(file, prefix)
     lines = read(file)
     out = {}
     for i, l in enumerate(lines):
@@ -72,6 +100,7 @@ def tables_under_bold(file, prefix):
 def tables_under_heading(file, prefix):
     """All tables starting with prefix, each keyed by the nearest ### heading above it,
     with the first paragraph under that heading (a voice's own rule, say)."""
+    file = home_of(file, prefix)
     lines = read(file)
     out = {}
     for i, l in enumerate(lines):
@@ -119,13 +148,13 @@ def labelled_sections(lines):
 def worlds():
     """Chapter 10: each world's always-on rule, terrain, round 3 events and its three battles."""
     lines = read("10-worlds.md")
-    starts = [i for i, l in enumerate(lines) if re.match(r"## 10\.\d+ ", l)]
+    starts = [i for i, l in enumerate(lines) if re.match(r"## \d+\.\d+ ", l)]
     out = []
     for n, s in enumerate(starts):
         e = starts[n + 1] if n + 1 < len(starts) else len(lines)
         block = lines[s:e]
-        name = re.sub(r"## 10\.\d+ ", "", block[0]).strip()
-        sec = re.match(r"## (10\.\d+)", block[0]).group(1)
+        name = re.sub(r"## \d+\.\d+ ", "", block[0]).strip()
+        sec = re.match(r"## (\d+\.\d+)", block[0]).group(1)
         if not any(l.startswith(":::worldsheet") for l in block):
             continue  # 10.9, terrain to build
         w = {"section": sec, "name": name, "ground": "", "alwaysOn": "", "terrain": "", "events": [], "battles": [], "scenarios": []}
@@ -159,11 +188,16 @@ def worlds():
     return out
 
 
+def section_start(lines, title):
+    """The line of the section heading "## N.N <title>", whatever its number."""
+    return next((k for k, l in enumerate(lines) if re.match(r"## \d+\.\d+ " + re.escape(title) + r"\b", l)), None)
+
+
 def final():
-    lines = read("14-break.md")
-    i = next((k for k, l in enumerate(lines) if l.startswith("## 14.13")), None)
+    lines = read("15-campaigns.md")
+    i = section_start(lines, "The Final")
     if i is None:
-        sys.exit("extract_rules: section 14.13 (The Final) not found.")
+        sys.exit("extract_rules: section 'The Final' not found in the campaigns chapter.")
     out = []
     for l in lines[i + 1:]:
         if l.startswith("## "):
@@ -177,7 +211,7 @@ def final():
 def bold_paragraphs(file, heading):
     """The paragraphs of a section that start with a bold label ("**Using it.** ..."); bullets join the paragraph above."""
     lines = read(file)
-    i = next((k for k, l in enumerate(lines) if l.startswith(heading)), None)
+    i = section_start(lines, heading)
     if i is None:
         sys.exit(f"extract_rules: section '{heading}' not found in {file}.")
     out = []
@@ -244,13 +278,13 @@ def recruits():
 
 def factions():
     lines = read("12-factions.md")
-    starts = [i for i, l in enumerate(lines) if re.match(r"## 12\.[2-9] ", l)]
+    starts = [i for i, l in enumerate(lines) if re.match(r"## \d+\.[2-9] ", l)]
     out = []
     for n, s in enumerate(starts):
         e = starts[n + 1] if n + 1 < len(starts) else len(lines)
         block = lines[s:e]
-        f = {"section": re.match(r"## (12\.\d)", block[0]).group(1),
-             "name": re.sub(r"## 12\.\d ", "", block[0]).strip(),
+        f = {"section": re.match(r"## (\d+\.\d)", block[0]).group(1),
+             "name": re.sub(r"## \d+\.\d ", "", block[0]).strip(),
              "rules": [], "subfactions": [], "types": [], "ownTaskTable": []}
         for i, l in enumerate(block):
             m = re.match(r"(\d)\. \*\*(.+?)\*\* ?(.*)", l)
@@ -295,7 +329,7 @@ DATA = {
     "drop_items": lambda: find_table("07-gear.md", "| Drop item | Slot"),
     "relics": lambda: find_table("08-special.md", "| Relic (rite)"),
     "psionic_powers": lambda: find_table("08-special.md", "| Power | Number"),
-    "gift_rules": lambda: bold_paragraphs("08-special.md", "## 8.4"),
+    "gift_rules": lambda: bold_paragraphs("08-special.md", "The psionic gift"),
     "tag_opposites": tag_opposites,
     "captain_traits": lambda: find_table("11-crews.md", "| Captain trait | Rule"),
     "shop": shop,
@@ -334,7 +368,7 @@ DATA = {
     "shot_results": lambda: find_table("05-battle.md", "| Shot total | Result"),
     "shooting_helps": lambda: find_table("05-battle.md", "| Helps the shooter"),
     "shooting_protects": lambda: find_table("05-battle.md", "| Protects the target"),
-    "reactions": lambda: find_table("05-battle.md", "| Reaction | What it does | The price"),
+    "reactions": lambda: find_table("05-battle.md", "| Reaction | When | What it does | The price"),
     "force_field_saves": lambda: find_table("05-battle.md", "| What hit the wearer"),
     "terrain_traits": lambda: find_table("05-battle.md", "| Trait | What it does"),
     "doors": lambda: find_table("05-battle.md", "| Condition | Token"),

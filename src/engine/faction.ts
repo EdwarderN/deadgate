@@ -8,7 +8,7 @@ import type { Battle, Crew, Fighter } from './model';
 
 export interface ActiveEffect { effect: Effect; title: string; text: string; section: string }
 
-/** Is this effect in force for the crew? A numbered rule is off when the subfaction replaces it (12.1). */
+/** Is this effect in force for the crew? A numbered rule is off when the subfaction replaces it (10.1). */
 export function effectActive(rules: Rules, crew: Crew, e: { rule?: number; subfaction?: string }): boolean {
   if (e.subfaction) return crew.subfaction === e.subfaction;
   return ruleActive(rules, crew, e.rule);
@@ -48,7 +48,7 @@ export function typeRule(rules: Rules, crew: Crew, f: Pick<Fighter, 'type'>) {
 // ---------- tasks ----------
 export interface TaskPayResult { parts: number | null; xp: number; notes: string[] }
 
-/** A task's pay after faction rules, captain traits and tags (12.5, 11.2, 14.10). */
+/** A task's pay after faction rules, captain traits and tags (10.5, 9.2, 14.10). */
 export function taskPay(rules: Rules, crew: Crew, task: string, success: boolean, basePay: number | null): TaskPayResult {
   const fr = rules.factionRules(crew.faction ?? '');
   const cap = captainOf(crew);
@@ -82,7 +82,7 @@ export interface FactionResult {
   capped: number;
 }
 
-/** Faction XP and parts after a battle (chapter 12), with the faction pay cap (12.1). */
+/** Faction XP and parts after a battle (chapter 10), with the faction pay cap (10.1). */
 export function factionAfterBattle(rules: Rules, crew: Crew, b: Battle, ans: FactionAnswers): FactionResult {
   const xp: FactionResult['xp'] = [];
   const parts: FactionResult['parts'] = [];
@@ -144,7 +144,7 @@ export function researchEligible(rules: Rules, crew: Crew, b: Battle): Fighter[]
   return crew.fighters.filter((f) => b.fighters[f.id]?.inBattle && (!e.eligibleTypes || e.eligibleTypes.includes(f.type ?? '')));
 }
 
-/** The faction's Word kind bonus: the first fulfilled Word of that kind gives +1 XP (12.1). */
+/** The faction's Word kind bonus: the first fulfilled Word of that kind gives +1 XP (10.1). */
 export function factionWordBonus(rules: Rules, crew: Crew, b: Battle): { fid: string; label: string; xp: number } | null {
   const kind = rules.factionRules(crew.faction ?? '')?.wordKind?.value;
   if (!kind) return null;
@@ -152,7 +152,7 @@ export function factionWordBonus(rules: Rules, crew: Crew, b: Battle): { fid: st
   return f ? { fid: f.id, label: `${crew.faction}'s kind of Word (${kind})`, xp: 1 } : null;
 }
 
-/** Put-down XP that a type gives away (Stunt double: to an Action star, 12.7). */
+/** Put-down XP that a type gives away (Stunt double: to an Action star, 10.7). */
 export function putDownXpTarget(rules: Rules, crew: Crew, f: Fighter): string | null {
   return typeRule(rules, crew, f)?.putDownXpTo ?? null;
 }
@@ -160,10 +160,10 @@ export function putDownXpTarget(rules: Rules, crew: Crew, f: Fighter): string | 
 export const isBotFighter = (rules: Rules, f: Fighter) => isBot(rules, f);
 export const effectText = (s: string) => plain(s);
 
-/** A type may never take a title (Stunt double, 12.7). */
+/** A type may never take a title (Stunt double, 10.7). */
 export const canTakeTitle = (rules: Rules, crew: Crew, f: Pick<Fighter, 'type'>) => !typeRule(rules, crew, f)?.noTitle;
 
-/** A task's pay after a table row that cancels, halves or doubles it. "Pays double" doubles the printed pay only (12.3). */
+/** A task's pay after a table row that cancels, halves or doubles it. "Pays double" doubles the printed pay only (10.3). */
 export function taskPayWithTable(rules: Rules, crew: Crew, task: string, success: boolean, printed: number | null, mult?: number): TaskPayResult {
   const doublePrinted = mult === 2 && rules.crew.afterBattle.taskPayDoubleIsPrinted.value;
   const tp = taskPay(rules, crew, task, success, doublePrinted && success && printed !== null ? printed * 2 : printed);
@@ -171,7 +171,7 @@ export function taskPayWithTable(rules: Rules, crew: Crew, task: string, success
   return { ...tp, parts: Math.floor(tp.parts * mult) };
 }
 
-/** A title with a prefix, after any leading word such as "the": "the Young Hammer" (12.7). */
+/** A title with a prefix, after any leading word such as "the": "the Young Hammer" (10.7). */
 export function prefixTitle(title: string, prefix: string, after?: string): string {
   if (after && title.toLowerCase().startsWith(`${after.toLowerCase()} `)) return `${title.slice(0, after.length)} ${prefix} ${title.slice(after.length + 1)}`;
   return `${prefix} ${title}`;

@@ -423,7 +423,7 @@
       },
       "**Copy**": {
         "Source": "**Copy**",
-        "Basic": "Hands +1. **Unreliable:** a kept total of 3 or less on a roll with an item in the arm locks it, and neither arm nor item works until a Use action clears it (Routine Tech)",
+        "Basic": "Hands +1. **Unreliable:** a kept total of 3 or less on a roll with an item in the arm jams it (section 7.2): neither arm nor item works until the jam is cleared",
         "Boosted (1 Energy, once per activation)": "None"
       },
       "**Drop**": {
@@ -449,7 +449,7 @@
       },
       "**Copy**": {
         "Source": "**Copy**",
-        "Basic": "Hands +1. **Unreliable:** a kept total of 3 or less on a roll with an item in the arm locks it, and neither arm nor item works until a Use action clears it (Routine Tech)",
+        "Basic": "Hands +1. **Unreliable:** a kept total of 3 or less on a roll with an item in the arm jams it (section 7.2): neither arm nor item works until the jam is cleared",
         "Boosted (1 Energy, once per activation)": "None"
       },
       "**Drop**": {
@@ -665,7 +665,7 @@
     "kind": "device",
     "rules": {
       "Device": "**Crank charger** (copy only)",
-      "Basic": "Use and a Routine Tech test: restore 1 Energy to the user's battery. Reusable. A kept total of 3 or less jams it",
+      "Basic": "Use and a Routine Tech test: restore 1 Energy to the user's battery. Reusable. Unreliable (section 7.2)",
       "Boosted (1 Energy)": "None"
     }
   },
@@ -735,8 +735,8 @@
     "kind": "medical kit",
     "rules": {
       "Tier": "**Patchwork (6)**",
-      "Kit": "**Patchwork med-unit** (old stock, Belt 1, Unreliable)",
-      "Effect": "Patch up at **Routine (6)**. A kept total of 3 or less jams it. Boosted: clears two conditions with one action"
+      "Kit": "**Patchwork med-unit** (old stock, Belt 1)",
+      "Effect": "Patch up at **Routine (6)**. Boosted: clears two conditions with one action"
     }
   },
   {
@@ -749,7 +749,7 @@
     "kind": "device",
     "rules": {
       "Device": "**Relay beacon** (old stock; Control Group)",
-      "Basic": "Use: set it down within 6 inches of the user (it is thrown). Bots within 12 inches of it are not Laggy (section 8.5)",
+      "Basic": "Use: set it down within 6 inches of the user (it is thrown). Bots within 12 inches of it are not Laggy (section 4.5)",
       "Boosted (1 Energy)": "None"
     }
   },
@@ -854,7 +854,7 @@
     "rules": {
       "Relic (rite)": "**Mute remote** (Quiet)",
       "Slot": "Hands 1",
-      "Basic": "Choose two fighters in base contact with each other, in view within 8 inches: each is moved **2 inches straight away** from the other. Resolve the one closest to the user first; each fighter's own player moves them (a move like this gives no parting blow)",
+      "Basic": "Choose two fighters in base contact with each other, in view within 8 inches: each is moved **2 inches straight away** from the other. Resolve the one closest to the user first (a move like this gives no parting blow)",
       "Boosted (1 Energy)": "The user's player decides which of the two moves and in which direction, up to 2 inches each"
     }
   },

@@ -81,7 +81,7 @@ function Setup({ crew, b, setB, setF, update }: { crew: Crew; b: Battle; setB: S
           <label className="field"><span>Their total XP</span><input type="number" min={0} className="num" value={b.opponentXp ?? ''} onChange={(e) => setB((x) => ({ ...x, opponentXp: e.target.value === '' ? null : +e.target.value }))} /></label>
         </div>
         <p className="small">
-          Your strength: {strength(crew)}. {b.opponentFighters !== null && (ud.underdog === 'us' ? <strong>You are the underdog: +{ud.xp} XP each after the battle (11.5).</strong> : ud.underdog === 'them' ? `They are the underdog: +${ud.xp} XP each for them.` : 'Nobody is the underdog.')}
+          Your strength: {strength(crew)}. {b.opponentFighters !== null && (ud.underdog === 'us' ? <strong>You are the underdog: +{ud.xp} XP each after the battle (9.5).</strong> : ud.underdog === 'them' ? `They are the underdog: +${ud.xp} XP each for them.` : 'Nobody is the underdog.')}
         </p>
       </div>
       <WorldSetup crew={crew} b={b} setB={setB} />
@@ -173,12 +173,12 @@ function Playing({ crew, b, setB, setF, update }: { crew: Crew; b: Battle; setB:
         <div className="row gap-s wrap" id="round-end">
           {end === 'roll' && (
             <div className="stack-s">
-              <span className="small">End of round {b.round}: a d6, {R.rounds.extraRoundOn}+ plays another round (9.3).</span>
+              <span className="small">End of round {b.round}: a d6, {R.rounds.extraRoundOn}+ plays another round (11.3).</span>
               <RollOrEnter die="d6" value={rollFor} onResult={(n) => setRollFor(n)} />
               {rollFor !== null && (rollFor >= R.rounds.extraRoundOn ? <button className="btn primary" onClick={next}>Another round: {b.round + 1}</button> : <button className="btn primary" onClick={over}>The battle ends</button>)}
             </div>
           )}
-          {end === 'over' && <span className="small">Round {R.rounds.max} is the last (9.3).</span>}
+          {end === 'over' && <span className="small">Round {R.rounds.max} is the last (11.3).</span>}
           <button className="btn" onClick={async () => { if (await ask('End the battle now?')) over(); }}>End the battle</button>
         </div>
       </div>
@@ -253,7 +253,7 @@ function BattleCard({ crew, f, bf, set, update }: { crew: Crew; f: Fighter; bf: 
       </div>
 
       <div className="stack-s">
-        <span className="small strong">States <RuleLink rule={{ title: 'States', section: '5.9', lines: ending.map((s) => [plain(s.State), `${s['What it does']}. Ends: ${s['When it ends']}`] as [string, string]) }}>§</RuleLink></span>
+        <span className="small strong">States <RuleLink rule={{ title: 'States', section: '5.3', lines: ending.map((s) => [plain(s.State), `${s['What it does']}. Ends: ${s['When it ends']}`] as [string, string]) }}>§</RuleLink></span>
         <div className="seg wrap">
           {stateNames(rules).map((s) => (
             <button key={s} className={`seg-btn tight ${bf.states.includes(s) ? 'on' : ''}`} aria-pressed={bf.states.includes(s)} disabled={down} onClick={() => set((x) => toggleState(rules, x, s))}>{s}</button>
@@ -273,7 +273,7 @@ function BattleCard({ crew, f, bf, set, update }: { crew: Crew; f: Fighter; bf: 
             {conds.map((c) => <button key={c} className="seg-btn tight ghost" onClick={() => set((x) => addCondition(rules, x, c))}>+ {conditionLabel(rules, f, c)}</button>)}
           </div>
         )}
-        {down && <p className="small err-text">Down: face down, one action (crawl 1 inch). Can be carried, captured or rescued (5.8).</p>}
+        {down && <p className="small err-text">Down: face down, one action (crawl 1 inch). Can be carried, captured or rescued (5.10).</p>}
       </div>
 
       {(hands.length > 0 || f.builtIn) && (
@@ -305,6 +305,9 @@ function BattleCard({ crew, f, bf, set, update }: { crew: Crew; f: Fighter; bf: 
         )}
       </div>
 
+      {bf.putDowns > 0 && crew.notes.rivals.length > 0 && !!rules.crew.afterBattle.rivalXp && (
+        <label className="check small"><input type="checkbox" checked={!!bf.rivalDown} onChange={(e) => set((x) => ({ ...x, rivalDown: e.target.checked }))} /> One of them was a rival ({crew.notes.rivals.join(', ')}): +{rules.crew.afterBattle.rivalXp.value} XP, once a battle ({rules.crew.afterBattle.rivalXp.source})</label>
+      )}
       {bf.putDowns > 0 && onPutDown.map((e) => <FactionNote key={e.effect.id} e={e} small />)}
       {down && activeEffects(rules, crew, 'allyDown').map((e) => <FactionNote key={e.effect.id} e={e} small />)}
       <Grenades crew={crew} f={f} bf={bf} set={set} />
@@ -320,7 +323,7 @@ function BattleCard({ crew, f, bf, set, update }: { crew: Crew; f: Fighter; bf: 
       {hasGift(rules, crew, f) && !down && <Madness f={f} bf={bf} set={set} update={update} />}
       {isBot(rules, f) && (
         <div className="seg wrap">
-          <span className="small strong">Bot <RuleLink rule={{ title: 'Bots and relays', section: '8.5', lines: rules.data.bot_states.map((x) => [plain(x.State), `${x['What it does']}. When: ${plain(x.When)}`] as [string, string]) }}>§</RuleLink></span>
+          <span className="small strong">Bot <RuleLink rule={{ title: 'Bots and relays', section: '4.5', lines: rules.data.bot_states.map((x) => [plain(x.State), `${x['What it does']}. When: ${plain(x.When)}`] as [string, string]) }}>§</RuleLink></span>
           {rules.data.bot_states.map((x) => plain(x.State)).map((s) => (
             <button key={s} className={`seg-btn tight ${bf.states.includes(s) ? 'on' : ''}`} aria-pressed={bf.states.includes(s)} disabled={down} onClick={() => set((y) => ({ ...y, states: y.states.includes(s) ? y.states.filter((z) => z !== s) : [...y.states, s] }))}>{s}</button>
           ))}
@@ -430,7 +433,7 @@ function VoiceTool({ crew }: { crew: Crew }) {
   const row = n !== null ? lookup(v.rows, Math.max(1, Math.min(6, n))) : null;
   return (
     <div className="stack-s">
-      <p className="small">Once per activation, before a roll, ask the voice of an item you hold, wear or are (8.6). <RuleLink rule={sectionRule('Ask the voice', '8.6', 'Humans: a natural 1 is rolled again once. A roll above 6 counts as 6, below 1 as 1. Drops have no voice.')}>More</RuleLink></p>
+      <p className="small">Once per activation, before a roll, ask the voice of an item you hold, wear or are (8.5). <RuleLink rule={sectionRule('Ask the voice', '8.5', 'Humans: a natural 1 is rolled again once. A roll above 6 counts as 6, below 1 as 1. Drops have no voice.')}>More</RuleLink></p>
       <label className="field"><span>Voice{own ? '' : ' (choose: your faction prays to several)'}</span>
         <select value={voice} onChange={(e) => { setVoice(e.target.value); setN(null); }}>{voices.map((x) => <option key={x}>{x}</option>)}</select>
       </label>
@@ -451,7 +454,7 @@ function QuickRef() {
       <ul className="plain-list">{rules.data.difficulties.map((d) => <li key={d.Difficulty}><strong>{plain(d.Difficulty)} {d.Target}</strong>: {d.Means}</li>)}</ul>
       <h4>Actions (5.2)</h4>
       <ul className="plain-list">{rules.data.actions.map((a) => <li key={a.Action}><Md text={a.Action} />: <Md text={a['What it does']} /></li>)}</ul>
-      <h4>States (5.9)</h4>
+      <h4>States (5.3)</h4>
       <ul className="plain-list">{rules.data.states.map((s) => <li key={s.State}><Md text={s.State} />: {s['What it does']}. <span className="muted">Ends: {s['When it ends']}</span></li>)}</ul>
       <h4>Psionic powers ({rules.section('gift')})</h4>
       <ul className="plain-list">
@@ -471,7 +474,7 @@ function EndBattle({ crew, b, setB, update }: { crew: Crew; b: Battle; setB: Set
   return (
     <div className="stack">
       <div className="card stack-s">
-        <h3>How did it end? <span className="section-tag">§ 9.5</span></h3>
+        <h3>How did it end? <span className="section-tag">§ 11.5</span></h3>
         <label className="check"><input type="checkbox" checked={b.winCond} onChange={(e) => setB((x) => ({ ...x, winCond: e.target.checked }))} /> We met the winning condition (the prize: parts and a finds roll)</label>
         {b.winCond && (
           <label className="field"><span>Credited to (Did the job, 13.4)</span>
@@ -482,8 +485,8 @@ function EndBattle({ crew, b, setB, update }: { crew: Crew; b: Battle; setB: Set
           </label>
         )}
         <label className="check"><input type="checkbox" checked={b.heldField} onChange={(e) => setB((x) => ({ ...x, heldField: e.target.checked }))} /> We held the field</label>
-        <label className="check"><input type="checkbox" checked={!!b.evacuated} disabled={!!b.final} onChange={(e) => setB((x) => ({ ...x, evacuated: e.target.checked, stoodGround: e.target.checked ? false : !x.broke, heldField: e.target.checked ? false : x.heldField }))} /> We called our evac{b.final ? ' (no evac in the Final)' : ` (the enemy holds the field, takes the prize, and we gain ${rules.crew.afterBattle.evacTag.value}, 9.6)`}</label>
-        <label className="check"><input type="checkbox" checked={!!b.broke} onChange={(e) => setB((x) => ({ ...x, broke: e.target.checked, stoodGround: e.target.checked ? false : !x.evacuated }))} /> We broke (9.4)</label>
+        <label className="check"><input type="checkbox" checked={!!b.evacuated} disabled={!!b.final} onChange={(e) => setB((x) => ({ ...x, evacuated: e.target.checked, stoodGround: e.target.checked ? false : !x.broke, heldField: e.target.checked ? false : x.heldField }))} /> We called our evac{b.final ? ' (no evac in the Final)' : ' (the enemy holds the field and takes the prize, 11.6)'}</label>
+        <label className="check"><input type="checkbox" checked={!!b.broke} onChange={(e) => setB((x) => ({ ...x, broke: e.target.checked, stoodGround: e.target.checked ? false : !x.evacuated }))} /> We broke (11.4)</label>
         <label className="check"><input type="checkbox" checked={b.stoodGround} onChange={(e) => setB((x) => ({ ...x, stoodGround: e.target.checked }))} /> We stood our ground (did not evacuate or forfeit)</label>
       </div>
       <div className="card stack-s">

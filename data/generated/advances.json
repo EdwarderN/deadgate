@@ -33,6 +33,10 @@
       "Rule": "While you are prone, a shooter loses one more die against you (2 in all)"
     },
     {
+      "Advance": "**Low profile**",
+      "Rule": "When you Duck and the shot misses, you keep your reaction"
+    },
+    {
       "Advance": "**Back-seat driver**",
       "Rule": "When an ally within 3 inches Asks the voice, after the roll you may shout over it: nothing happens, whatever the result, and you are **Flustered**"
     }
@@ -124,7 +128,7 @@
     },
     {
       "Advance": "**Thick-skinned**",
-      "Rule": "You pass Cold and Dangerous terrain tests without rolling"
+      "Rule": "You pass the Cold test (Vigil's world rule, chapter 12) and Dangerous terrain tests without rolling"
     },
     {
       "Advance": "**Cat's landing**",
@@ -193,6 +197,10 @@
     {
       "Advance": "**Know the weirdness**",
       "Rule": "When your know-how test fails, roll twice on the weird table and choose"
+    },
+    {
+      "Advance": "**Firewall**",
+      "Rule": "Your Counter-prompt raises the number by 3 instead of 2"
     },
     {
       "Advance": "**Counter-hack**",

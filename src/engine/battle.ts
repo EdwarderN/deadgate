@@ -48,7 +48,7 @@ export function newBattle(rules: Rules, crew: Crew): Battle {
 export function wordsAllowed(rules: Rules, crew: Crew, b?: Battle | null): number {
   const w = B(rules).wordsPerSide;
   if (rules.factionRules(crew.faction ?? '')?.noWords) return 0;
-  // The Final: more Words, and nothing adds to them (14.13).
+  // The Final: more Words, and nothing adds to them (15.3).
   if (b?.final) return rules.crew.final.words.value;
   let n = w.value;
   const cap = captainOf(crew);
@@ -69,7 +69,7 @@ export function addCondition(rules: Rules, bf: BattleFighter, name: string): Bat
   return { ...bf, conditions, position: down && downPos ? downPos : bf.position, states: down ? [] : bf.states };
 }
 
-/** Toggle a state: one of each, and Hyped and Shook cancel at once (5.9). */
+/** Toggle a state: one of each, and Hyped and Shook cancel at once (5.3). */
 export function toggleState(rules: Rules, bf: BattleFighter, name: string): BattleFighter {
   if (bf.states.includes(name)) return { ...bf, states: bf.states.filter((s) => s !== name) };
   const pair = B(rules).cancellingStates.value;
@@ -80,7 +80,7 @@ export function toggleState(rules: Rules, bf: BattleFighter, name: string): Batt
   return { ...bf, states: [...bf.states, name] };
 }
 
-/** States that end at the end of the fighter's own activation (5.9). */
+/** States that end at the end of the fighter's own activation (5.3). */
 export function statesEndingOnActivation(rules: Rules): string[] {
   const k = B(rules).endsOnOwnActivation.value.toLowerCase();
   return rules.data.states.filter((s) => s['When it ends'].toLowerCase().includes(k)).map((s) => plain(s.State));
@@ -96,7 +96,7 @@ export function nextRound(b: Battle): Battle {
   return { ...b, round: b.round + 1, fighters };
 }
 
-/** After round N: is a d6 needed to go on, and can the battle go on at all (9.3)? */
+/** After round N: is a d6 needed to go on, and can the battle go on at all (11.3)? */
 export function roundEnd(rules: Rules, round: number): 'continue' | 'roll' | 'over' {
   const r = B(rules).rounds;
   if (round >= r.max) return 'over';
@@ -172,7 +172,7 @@ export function legendFor(rules: Rules, deedId: string) {
 
 export interface XpLine { label: string; xp: number }
 
-/** Generic, Word and underdog XP for one fighter (13.4, 13.5, 11.5). */
+/** Generic, Word and underdog XP for one fighter (13.4, 13.5, 9.5). */
 export function battleXp(rules: Rules, crew: Crew, b: Battle, fid: string): XpLine[] {
   const bf = b.fighters[fid];
   if (!bf?.inBattle) return [];
@@ -184,6 +184,9 @@ export function battleXp(rules: Rules, crew: Crew, b: Battle, fid: string): XpLi
   const f = crew.fighters.find((x) => x.id === fid);
   const givesAway = !!(f?.type && rules.factionRules(crew.faction ?? '')?.typeRules?.[f.type]?.putDownXpTo);
   if (downs && !givesAway) out.push({ label: `${gx.putDown} x${downs}`, xp: downs * row(gx.putDown) });
+  // Putting down a rival fighter, or a fighter of a rival crew: once a battle (14.8).
+  const rx = rules.crew.afterBattle.rivalXp?.value ?? 0;
+  if (bf.rivalDown && bf.putDowns > 0 && rx) out.push({ label: 'Put down a rival', xp: rx });
   if (b.didJob === fid) out.push({ label: gx.didJob, xp: row(gx.didJob) });
   const wx = wordXp(rules, bf.word);
   if (wx) out.push({ label: `Word: ${bf.word!.deed}`, xp: wx });
@@ -203,7 +206,7 @@ export function injuryTableFor(rules: Rules, b: Battle, fid: string, crew?: Crew
   const p = bf && positionDef(rules, bf.position);
   if (!bf?.inBattle || !p?.injury) return null;
   const t = rules.crew.afterBattle.injuryTables.value;
-  // A type may always roll one table (a Volunteer rolls the gentle one, 12.6).
+  // A type may always roll one table (a Volunteer rolls the gentle one, 10.6).
   const f = crew?.fighters.find((x) => x.id === fid);
   const forced = f?.type && crew ? rules.factionRules(crew.faction ?? '')?.typeRules?.[f.type]?.injuryTable : undefined;
   if (forced && (p.injury === 'harsh' || p.injury === 'heldField')) return { table: t[forced], times: 1 };
@@ -250,7 +253,7 @@ export function botWord(rules: Rules, word: string): string {
   return r ? plain(r['Bot result']) : word;
 }
 
-/** League points from the battle (14.12), row by row. */
+/** League points from the battle (15.2), row by row. */
 export function leaguePoints(rules: Rules, b: Battle): { label: string; count: number; points: number }[] {
   const map = rules.crew.afterBattle.leaguePoints.value;
   const words = Object.values(b.fighters).filter((f) => f.inBattle && f.word?.result === 'fulfilled').map((f) => f.word!);
@@ -327,12 +330,13 @@ export function startAfterBattle(rules: Rules, crew: Crew): Crew {
     step: 'battle', battle: { ...crew.battle, phase: 'ended' }, extraXp: {}, injuries: {}, done: {},
     story: { row: '', roll: null, notes: '' }, tasks: {}, history: {},
   };
-  // A new break: sellers must be found again (11.3).
-  return { ...crew, fighters, items, battle: null, after, sellers: {}, hireOffers: [], relicLead: null, breakNo: (crew.breakNo ?? 0) + 1 };
+  // A new break: sellers must be found again (9.3).
+  return { ...crew, fighters, items, battle: null, after, sellers: {}, hireOffers: [], relicLead: null, spendEffects: [], breakNo: (crew.breakNo ?? 0) + 1 };
 }
 
 export function finishAfterBattle(crew: Crew): Crew {
-  return { ...crew, after: null };
+  // Spend effects last for this break only (14.6).
+  return { ...crew, after: null, spendEffects: [] };
 }
 
 export const totalLeaguePoints = (rules: Rules, b: Battle) => leaguePoints(rules, b).reduce((a, r) => a + r.points, 0);
@@ -346,10 +350,10 @@ export function sellerState(crew: Crew, itemId: string): 'unknown' | 'found' | '
 
 export { cellCovers, partsLeft };
 
-// ---------- breaking (9.4) ----------
+// ---------- breaking (11.4) ----------
 export interface BreakingStatus { needed: boolean; out: number; total: number; threshold: number; tester: Fighter | null; dice: number; notes: string[]; never: boolean }
 
-/** Must the crew test to break this round, who tests, and with how many dice (9.4, faction rules, captain traits)? */
+/** Must the crew test to break this round, who tests, and with how many dice (11.4, faction rules, captain traits)? */
 export function breakingStatus(rules: Rules, crew: Crew, b: Battle, effects: { kind: string; amount?: number; fraction?: number; captain?: string; partsAtLeast?: number; partsBelow?: number; title: string }[]): BreakingStatus {
   const br = B(rules).breaking;
   const took = crew.fighters.filter((f) => b.fighters[f.id]?.inBattle);
@@ -424,4 +428,22 @@ export function earnedTags(rules: Rules, b: Battle, captives: CaptiveTaken[]): {
 /** The captives the crew took this battle (an older break kept one, as tookCaptive). */
 export function captivesOf(a: Pick<AfterBattle, 'captives' | 'tookCaptive' | 'captive'>): Captive[] {
   return a.captives ?? (a.tookCaptive ? [{ price: a.captive?.income ?? null, refused: false }] : []);
+}
+
+/** Dice the crew's tags add (14.10): to every story event Twist test, or to its first test of a task each break. */
+export function tagDice(rules: Rules, crew: Crew, on: { twist: true } | { task: string }): { dice: number; notes: string[] } {
+  let dice = 0;
+  const notes: string[] = [];
+  for (const t of rules.crew.afterBattle.tagDice?.value ?? []) {
+    if (!crew.notes.tags.includes(t.tag)) continue;
+    if ('twist' in on ? t.on !== 'twist' : t.on !== 'task' || t.task !== on.task) continue;
+    dice += t.dice;
+    notes.push(`${t.tag} ${t.dice > 0 ? '+' : ''}${t.dice}`);
+  }
+  return { dice, notes };
+}
+
+/** How many story event rolls the crew makes on this row, choosing one (Butchers on row 5, 14.10). */
+export function storyRolls(rules: Rules, crew: Crew, row: string | null | undefined): number {
+  return Math.max(1, ...(rules.crew.afterBattle.tagStoryRolls?.value ?? []).filter((t) => t.row === row && crew.notes.tags.includes(t.tag)).map((t) => t.rolls));
 }

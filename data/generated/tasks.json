@@ -8,13 +8,13 @@
   {
     "Task": "**Scavenge**",
     "Test": "Tech, Routine (6)",
-    "Success": "**6 parts**",
-    "Failure": "2 parts"
+    "Success": "**10 parts**",
+    "Failure": "4 parts"
   },
   {
     "Task": "**Work a job**",
     "Test": "Fight or Shoot, Tricky (8)",
-    "Success": "**10 parts**",
+    "Success": "**16 parts**",
     "Failure": "Nothing"
   },
   {

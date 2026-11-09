@@ -27,7 +27,7 @@
   {
     "Term": "**Announced**",
     "Meaning": "A state: the fighter can be shot, prompted and targeted without line of sight",
-    "See": "5.9"
+    "See": "5.3"
   },
   {
     "Term": "**Arrival**",
@@ -37,7 +37,7 @@
   {
     "Term": "**Ask the voice**",
     "Meaning": "A free d6 gamble on the crew's voice's table before a roll, once an activation (the Waiting twice)",
-    "See": "8.6"
+    "See": "8.5"
   },
   {
     "Term": "**Assist**",
@@ -67,22 +67,22 @@
   {
     "Term": "**Breaking**",
     "Meaning": "A side at half strength tests each round, and leaves the battle on a failure",
-    "See": "9.4"
+    "See": "11.4"
   },
   {
     "Term": "**Bystander**",
-    "Meaning": "A non-player model to be led off the table",
-    "See": "9.8"
+    "Meaning": "A non-player model to be led home, into a deployment zone",
+    "See": "11.8"
   },
   {
     "Term": "**Camera**",
     "Meaning": "The Hollowood Director's free Hands 1 item: while in use, an ally who gives an enemy a lasting condition is Hyped, and an enemy within 6 inches of the Director who gives a lasting condition is Announced",
-    "See": "12.7"
+    "See": "10.7"
   },
   {
     "Term": "**Captain**",
     "Meaning": "The crew's leader, with captain traits; makes the breaking test",
-    "See": "11.2"
+    "See": "9.2"
   },
   {
     "Term": "**Captive**",
@@ -105,6 +105,11 @@
     "See": "7.2"
   },
   {
+    "Term": "**Cover**",
+    "Meaning": "A terrain trait, light or heavy, for any part of the target hidden by a piece; the best one counts",
+    "See": "5.7"
+  },
+  {
     "Term": "**Crushing**",
     "Meaning": "The worst severity: a margin of 6 or more, or a shot of 11 or more",
     "See": "3.4"
@@ -115,14 +120,24 @@
     "See": "13.6"
   },
   {
+    "Term": "**Dangerous terrain**",
+    "Meaning": "A terrain trait: entering it asks a Routine Grit test; a failure is a glance",
+    "See": "5.4"
+  },
+  {
     "Term": "**Deep water**",
     "Meaning": "A terrain trait: a Routine Grit test to enter and each activation; a failure sweeps the fighter d6 inches downstream, prone. Brinies need no test",
-    "See": "5.10"
+    "See": "5.4"
   },
   {
     "Term": "**Deployment zone**",
     "Meaning": "The area the deployment table gives a side: where its bots reach the operators, where its evac marker goes, and where scenarios send things home",
-    "See": "9.1"
+    "See": "11.1"
+  },
+  {
+    "Term": "**Difficult terrain**",
+    "Meaning": "A terrain trait: halves the distance moved through it. Forced moves ignore it",
+    "See": "5.4"
   },
   {
     "Term": "**Difficulty**",
@@ -136,13 +151,13 @@
   },
   {
     "Term": "**Doors and windows**",
-    "Meaning": "Shut but unlocked unless hacked: fighters pass through, sight does not. Red Hacked token: locked. Green: open",
-    "See": "5.10"
+    "Meaning": "Working only on hollow pieces. Shut but unlocked unless hacked or forced: fighters pass through, sight does not. Red Hacked token: locked. Green: open",
+    "See": "5.11"
   },
   {
     "Term": "**Down**",
     "Meaning": "Out of the fight for this battle; the model lies on their face",
-    "See": "6.4"
+    "See": "5.10"
   },
   {
     "Term": "**Drop**",
@@ -152,12 +167,12 @@
   {
     "Term": "**Energy**",
     "Meaning": "A fighter's one battery: 4, or 6 in a military frame",
-    "See": "5.7"
+    "See": "5.9"
   },
   {
     "Term": "**Evac**",
     "Meaning": "The only way to leave a battle early; a scattering marker, and everyone within 6 inches leaves at the end of the next round",
-    "See": "9.6"
+    "See": "11.6"
   },
   {
     "Term": "**Experience**",
@@ -167,12 +182,12 @@
   {
     "Term": "**Falling**",
     "Meaning": "Going over an edge, or losing grip on a climb or jump: lands prone; 3 to 5 inches a glance, 6 to 9 solid, 10 or more crushing",
-    "See": "5.3"
+    "See": "5.5"
   },
   {
     "Term": "**Final**",
     "Meaning": "The extra battle between the two crews with the most league points",
-    "See": "14.13"
+    "See": "15.3"
   },
   {
     "Term": "**Finds**",
@@ -182,12 +197,22 @@
   {
     "Term": "**Flustered**",
     "Meaning": "A state: no reaction until the end of the fighter's next activation",
-    "See": "5.9"
+    "See": "5.3"
   },
   {
     "Term": "**Force field**",
     "Meaning": "Old-stock Belt kit that cancels or saves against shots and blasts, for 1 Energy",
-    "See": "5.7"
+    "See": "5.9"
+  },
+  {
+    "Term": "**Forced movement**",
+    "Meaning": "Pushed, shoved, knocked, thrown, pulled or hauled: moved in a straight line; stops at a wall, a locked door or another fighter (Flustered if the move was 2 inches or more); the moved fighter tests Grit (Routine for 1 inch, Tricky for 2 or more) or falls prone, except after a Press; can enter Dangerous terrain, go over an edge (a fall) or leave the table",
+    "See": "5.5"
+  },
+  {
+    "Term": "**Forcing a door**",
+    "Meaning": "A Use action in base contact with a locked door or window: a Tricky (8) test with Grit or Fight; on a success it is unlocked",
+    "See": "5.11"
   },
   {
     "Term": "**Frenzied**",
@@ -196,7 +221,7 @@
   },
   {
     "Term": "**Gentle table**",
-    "Meaning": "The kinder injury table, for the evacuated, the captured and the side holding the field",
+    "Meaning": "The kinder injury table, for the evacuated, the carried, the captured and the side holding the field",
     "See": "13.2"
   },
   {
@@ -232,17 +257,27 @@
   {
     "Term": "**Higher ground**",
     "Meaning": "A fighter whose base stands at least 1 inch above the enemy's: +1 die in melee and on shots, and -1 die for shooters against them",
-    "See": "5.10"
+    "See": "5.11"
   },
   {
     "Term": "**Holds the field**",
     "Meaning": "Has more fighters standing at the end, or the enemy evacuated",
-    "See": "9.5"
+    "See": "11.5"
+  },
+  {
+    "Term": "**Hollow piece**",
+    "Meaning": "A terrain piece with an inside; only its doors and windows work",
+    "See": "5.11"
   },
   {
     "Term": "**Hyped**",
     "Meaning": "A state: +1 die, spent on an attack, test or save",
-    "See": "5.9"
+    "See": "5.3"
+  },
+  {
+    "Term": "**Jam**",
+    "Meaning": "A jammed item cannot be used. From a kept total of 3 or less on Unreliable gear, a Chet result or a hack; a Use action and a Routine Tech test clear it",
+    "See": "7.2"
   },
   {
     "Term": "**Kept total**",
@@ -257,7 +292,7 @@
   {
     "Term": "**Laggy**",
     "Meaning": "A bot out of its deployment zone and more than 12 inches from a relay beacon: no reaction, -1 die on attacks",
-    "See": "8.5"
+    "See": "4.5"
   },
   {
     "Term": "**Laid up**",
@@ -277,7 +312,7 @@
   {
     "Term": "**League points**",
     "Meaning": "Points a battle scores for the winning condition, the field and Words fulfilled",
-    "See": "14.12"
+    "See": "15.2"
   },
   {
     "Term": "**Legend**",
@@ -285,9 +320,14 @@
     "See": "13.8"
   },
   {
+    "Term": "**Line of sight**",
+    "Meaning": "True line of sight from the shooter's model; terrain, smoke and fighters block it",
+    "See": "5.7"
+  },
+  {
     "Term": "**Mark**",
     "Meaning": "Each voice result is marked bad, mixed, nothing or good; other rules read the mark",
-    "See": "8.6"
+    "See": "8.5"
   },
   {
     "Term": "**Net dice**",
@@ -297,7 +337,7 @@
   {
     "Term": "**Obstacle**",
     "Meaning": "A low (up to 1 inch) or high (up to 2 inches) linear piece: crossed in a Move, and cover",
-    "See": "5.10"
+    "See": "5.11"
   },
   {
     "Term": "**Old stock**",
@@ -312,7 +352,7 @@
   {
     "Term": "**Pod**",
     "Meaning": "A drop falling from the sky; it may land in any battle",
-    "See": "9.7"
+    "See": "11.7"
   },
   {
     "Term": "**Point-blank**",
@@ -322,12 +362,12 @@
   {
     "Term": "**Press**",
     "Meaning": "A free push, step or break-away for the winner of a melee exchange",
-    "See": "5.4"
+    "See": "5.6"
   },
   {
     "Term": "**Prize**",
     "Meaning": "10 parts and a finds roll, for meeting the winning condition",
-    "See": "9.5"
+    "See": "11.5"
   },
   {
     "Term": "**Prompt**",
@@ -337,12 +377,17 @@
   {
     "Term": "**Prone**",
     "Meaning": "Lying on their back; standing up costs an action, then a half Move; or crawl at half Move",
-    "See": "5.3"
+    "See": "5.10"
   },
   {
     "Term": "**Prosthetic**",
     "Meaning": "A robo-arm, peg-leg or old-stock leg that replaces what an injury took",
     "See": "13.2"
+  },
+  {
+    "Term": "**Push, shove, knock, throw**",
+    "Meaning": "Forced movement: see that entry",
+    "See": "5.5"
   },
   {
     "Term": "**Rating**",
@@ -351,8 +396,8 @@
   },
   {
     "Term": "**Reaction**",
-    "Meaning": "One a round, chosen before the dice: Dive, Duck, Return fire and others",
-    "See": "5.6"
+    "Meaning": "One a round, chosen before the dice: Take it, Dive, Duck, Return fire, parting blow, Block, Parry, Counter-prompt and trait reactions",
+    "See": "5.8"
   },
   {
     "Term": "**Relic**",
@@ -371,7 +416,7 @@
   },
   {
     "Term": "**Rival**",
-    "Meaning": "A crew, gang or patron written on the roster; events and tasks refer to it",
+    "Meaning": "A crew, enemy fighter, gang, patron or person written on the roster (at most three): +1 XP for putting a rival down; story events call on the rest",
     "See": "14.8"
   },
   {
@@ -382,12 +427,12 @@
   {
     "Term": "**Save**",
     "Meaning": "2d6 plus save dice against 7, 9 or 11, before the consequence",
-    "See": "5.7"
+    "See": "5.9"
   },
   {
     "Term": "**Scenario item**",
     "Meaning": "A crate, sample, relic marker or other thing a scenario puts on the table to be carried or used",
-    "See": "9.1"
+    "See": "11.1"
   },
   {
     "Term": "**Severity**",
@@ -397,7 +442,7 @@
   {
     "Term": "**Shook**",
     "Meaning": "A state: -1 die on the next attack, test or save",
-    "See": "5.9"
+    "See": "5.3"
   },
   {
     "Term": "**Silly trait**",
@@ -407,7 +452,7 @@
   {
     "Term": "**Slack**",
     "Meaning": "A bot cut off by a Cut the link prompt (or Jeminy's \"I am a failure\" on its own core): one action, a Move toward the nearest enemy",
-    "See": "8.5"
+    "See": "4.5"
   },
   {
     "Term": "**Solid**",
@@ -420,29 +465,34 @@
     "See": "13.2"
   },
   {
+    "Term": "**Spend effect**",
+    "Meaning": "A story-event result that changes one price for this break only: recharging, the first purchase, the next hire or the first sale",
+    "See": "14.6"
+  },
+  {
     "Term": "**Spectacular**",
     "Meaning": "A hit or Press that throws the target through a door or window, over an edge (3 inches or more), or hard into a wall or fighter; also Down, flying and Thrown. Some rules pay for them",
-    "See": "6.2"
+    "See": "5.5"
   },
   {
     "Term": "**Spotlight**",
     "Meaning": "In the Final: a fighter named each round is Announced, and Hyped if they put down an enemy",
-    "See": "14.13"
+    "See": "15.3"
   },
   {
     "Term": "**Stage**",
     "Meaning": "The 6-inch circle at the centre of the table in the Final",
-    "See": "14.13"
+    "See": "15.3"
   },
   {
     "Term": "**Standing**",
     "Meaning": "On the table and not down. A prone fighter is standing; an evacuated one is not",
-    "See": "9.5"
+    "See": "11.5"
   },
   {
     "Term": "**State**",
     "Meaning": "A short-lived marker that never puts anyone down: Hyped, Shook, Flustered, Under warranty, Announced",
-    "See": "5.9"
+    "See": "5.3"
   },
   {
     "Term": "**Story event**",
@@ -476,8 +526,8 @@
   },
   {
     "Term": "**Terrain trait**",
-    "Meaning": "A property of a terrain piece: cover, Solid, Difficult, Dangerous, Wet, Deep water, Powered",
-    "See": "5.10"
+    "Meaning": "A property of a terrain piece: cover, Solid, Difficult, Dangerous, Wet, Deep water, Powered. What each costs a mover: section 5.4",
+    "See": "5.11"
   },
   {
     "Term": "**Trait budget**",
@@ -492,12 +542,12 @@
   {
     "Term": "**Under warranty**",
     "Meaning": "A state: +1 save die on the next save, even with no armour",
-    "See": "5.9"
+    "See": "5.3"
   },
   {
     "Term": "**Underdog**",
     "Meaning": "The weaker crew; its fighters gain extra XP",
-    "See": "11.5"
+    "See": "9.5"
   },
   {
     "Term": "**Unreliable**",
@@ -522,12 +572,12 @@
   {
     "Term": "**Winning condition**",
     "Meaning": "What a scenario asks for. Meeting it earns the prize: 10 parts and a finds roll",
-    "See": "9.5"
+    "See": "11.5"
   },
   {
     "Term": "**Wiped out**",
     "Meaning": "A crew with no fighters left, dead or Taken: out of the league. The player may start again from scratch",
-    "See": "14.11"
+    "See": "15.1"
   },
   {
     "Term": "**Word**",

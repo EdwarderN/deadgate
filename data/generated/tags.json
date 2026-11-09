@@ -1,18 +1,18 @@
 [
   {
     "Tag": "**Ran**",
-    "Gained when": "The crew called its evac (section 9.6), or by story events",
-    "What it does": "Work a job pays **2 less** while the crew has it"
+    "Gained when": "From story events (most often row 3, after the crew called its evac)",
+    "What it does": "Nobody takes them seriously: every story event **Twist** test the crew makes has **-1 die**"
   },
   {
     "Tag": "**Reliable**",
     "Gained when": "From tasks and story events",
-    "What it does": "Work a job pays **2 more** while the crew has it. Its opposite is Ran: if a crew gains one while it has the other, both are crossed off"
+    "What it does": "People keep their word to them: every story event **Twist** test the crew makes has **+1 die**"
   },
   {
     "Tag": "**Butchers**",
     "Gained when": "Two captives' fates carried out in one break, or story events",
-    "What it does": "**Feared.** Ransoms this crew asks may be up to **5 parts** higher than usual: people pay to get their own back alive"
+    "What it does": "Everyone has a story about them: on story event **row 5** (captives), the crew rolls twice and chooses. People talk to those they fear: **+1 die** on the crew's first Hunt leads test each break"
   },
   {
     "Tag": "**Showboats**",
@@ -22,16 +22,16 @@
   {
     "Tag": "**Oathbreakers**",
     "Gained when": "Two failed Words in one battle, or story events",
-    "What it does": "A wager offered by this crew finds no taker"
+    "What it does": "A wager offered by this crew finds no taker. Patrons do not trust them: **-1 die** on the crew's first Work a job test each break"
   },
   {
     "Tag": "**Merciful**",
     "Gained when": "Two captives ransomed at the lowest price allowed in one break, or story events",
-    "What it does": "**Soft.** A captor must ask 5 parts less for this crew's fighters (never below 5): the merciful get mercy"
+    "What it does": "People remember a kindness: when the crew gains this tag, it gains one **contact** of its choice (section 14.8), if it has fewer than three"
   },
   {
     "Tag": "**Oathkeepers**",
     "Gained when": "Two Words fulfilled in one battle, one of them Big or Legendary, or story events",
-    "What it does": "A wager offered by this crew is always taken: if the other player declines, someone watching takes the other side"
+    "What it does": "A wager offered by this crew is always taken: if the other player declines, someone watching takes the other side. Patrons pay those who keep their word: **+1 die** on the crew's first Work a job test each break"
   }
 ]

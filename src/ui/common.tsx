@@ -4,7 +4,7 @@ import { getRules, type ItemDef } from '../data/rules';
 import {
   addLedger, autoSlot, canSpend, equipped, fighterStats, giftPrice, hirePrice, isBot, itemPrice, needsSeller, newFighter, partsLeft, ratingNames,
   battery, builtInOptions, rechargeCost, recruitKey, ritesPrice, rookieSurcharge, sellValue, sellerTarget, setFighterType, setSellerResult, slotCapacity, slotLoad, slotOptions,
-  beltSlots, canPayRunningCost, replaceableRules, typeCarries,
+  beltSlots, canPayRunningCost, hireExtra, pendingSpend, replaceableRules, shopPrice, typeCarries, useSpend,
 } from '../engine/crew';
 import { uid, type Crew, type Fighter, type ItemSlot, type OwnedItem } from '../engine/model';
 import type { Message } from '../engine/validate';
@@ -124,7 +124,7 @@ export function FighterBasics({ crew, fighter, onChange, lockType }: { crew: Cre
           ))}
         </div>
       </fieldset>
-      {surcharge > 0 && <p className="note">{recruitKey(rules, fighter)} costs {surcharge} more than a rookie: paid from the starting parts (11.1).</p>}
+      {surcharge > 0 && <p className="note">{recruitKey(rules, fighter)} costs {surcharge} more than a rookie: paid from the starting parts (9.1).</p>}
     </div>
   );
 }
@@ -155,7 +155,7 @@ export function Shop({ crew, update }: { crew: Crew; update: Update }) {
   const groups = useMemo(() => ['All', ...Array.from(new Set(rules.shopItems.map((i) => i.group)))], [rules]);
   const restricted = rules.crew.gear.restrictedItems.value;
   const visible = rules.shopItems.filter((i) => !restricted.some((r) => r.key === i.key && !r.factions.includes(crew.faction ?? '')));
-  // An old-stock item with no seller this break is off the list until the next break (11.3).
+  // An old-stock item with no seller this break is off the list until the next break (9.3).
   const lead = crew.relicLead;
   const leadFor = (i: ItemDef) => !!lead && i.kind === rules.crew.campaign.relicLeadKind.value;
   const noSeller = visible.filter((i) => needsSeller(rules, crew, i) && crew.sellers?.[i.id]?.found === false && !(leadFor(i) && lead?.noRoll));
@@ -164,19 +164,20 @@ export function Shop({ crew, update }: { crew: Crew; update: Update }) {
   const target = sellerTarget(rules, crew);
 
   const buy = (it: ItemDef) => {
-    const price = itemPrice(rules, crew, it);
     update((c) => {
+      // The break's first-purchase Spend effect, if any, applies to this one (14.6).
+      const price = shopPrice(rules, c, it);
       const o: OwnedItem = { uid: uid('i'), itemId: it.id, fighterId: null, slot: 'stash', seller: needsSeller(rules, c, it) ? 'found' : undefined, sellerRoll: c.sellers?.[it.id]?.roll };
       let next: Crew = { ...c, items: [...c.items, campaign ? { ...o, paid: price } : o] };
-      if (campaign) next = addLedger(next, -price, `Bought ${it.name} (${it.source})`);
+      if (campaign) next = useSpend(addLedger(next, -price, `Bought ${it.name} (${it.source})`), 'purchase');
       return next;
     });
   };
   const [last, setLast] = useState<{ name: string; roll: number | null; found: boolean } | null>(null);
-  /** A relic lead: one relic at half price, maybe with no seller roll (14.7). */
+  /** A relic tip: one relic at half price, maybe with no seller roll (14.7). */
   const buyWithLead = (it: ItemDef) => {
     const price = Math.floor(itemPrice(rules, crew, it) / 2);
-    update((c) => addLedger({ ...c, relicLead: null, items: [...c.items, { uid: uid('i'), itemId: it.id, fighterId: null, slot: 'stash', seller: 'found', paid: price, note: 'relic lead' }] }, -price, `Bought ${it.name} with a relic lead`));
+    update((c) => addLedger({ ...c, relicLead: null, items: [...c.items, { uid: uid('i'), itemId: it.id, fighterId: null, slot: 'stash', seller: 'found', paid: price, note: 'relic lead' }] }, -price, `Bought ${it.name} with a relic tip`));
   };
   const setSeller = (it: ItemDef, roll: number | null) => {
     setLast({ name: it.name, roll, found: roll === null || roll >= target.value });
@@ -191,8 +192,8 @@ export function Shop({ crew, update }: { crew: Crew; update: Update }) {
           <select value={group} onChange={(e) => setGroup(e.target.value)}>{groups.map((g) => <option key={g}>{g}</option>)}</select>
         </label>
       </div>
-      {lead && campaign && <p className="note small">A relic lead this break: one relic at half price{lead.noRoll ? ', with no seller roll' : ''} (14.7).</p>}
-      <p className="muted small">Copies are always for sale. Old stock needs a seller first: one d6 per item per break, {target.value}+{target.why ? ` (${target.why})` : ''} (11.3). Roll in the app ("Seller"), type your own d6 roll and press Enter, or tick "Found" for a lead or no roll needed. Tap a name to read its rules.</p>
+      {lead && campaign && <p className="note small">A relic tip this break: one relic at half price{lead.noRoll ? ', with no seller roll' : ''} (14.7).</p>}
+      <p className="muted small">Copies are always for sale. Old stock needs a seller first: one d6 per item per break, {target.value}+{target.why ? ` (${target.why})` : ''} (9.3). Roll in the app ("Seller"), type your own d6 roll and press Enter, or tick "Found" for a lead or no roll needed. Tap a name to read its rules.</p>
       {last && (
         <p className={`seller-result ${last.found ? 'ok' : 'bad'}`} role="status">
           {last.roll === null ? `${last.name}: marked as found.` : last.found
@@ -205,7 +206,7 @@ export function Shop({ crew, update }: { crew: Crew; update: Update }) {
       )}
       <ul className="shop-list">
         {list.map((it) => {
-          const price = itemPrice(rules, crew, it);
+          const price = shopPrice(rules, crew, it);
           const ok = canSpend(rules, crew, price);
           const needs = needsSeller(rules, crew, it);
           const found = !needs || crew.sellers?.[it.id]?.found === true;
@@ -248,7 +249,8 @@ export function Hire({ crew, update }: { crew: Crew; update: Update }) {
   const [offerId, setOfferId] = useState('');
   const offer = offers.find((o) => o.id === offerId);
   const hireCost = offer ? (offer.discount === null ? 0 : Math.max(0, price - offer.discount)) : price;
-  const total = hireCost + gp + rp;
+  const extra = campaign0(crew) ? hireExtra(rules, crew) : 0;
+  const total = hireCost + gp + rp + extra;
   const ok = !full && canSpend(rules, crew, total) && (!fr?.types || !!draft.type);
   const campaign = crew.phase === 'campaign';
   const hire = () => {
@@ -259,7 +261,7 @@ export function Hire({ crew, update }: { crew: Crew; update: Update }) {
         const i = next.notes.contacts.findIndex((x) => x.name === n && !x.used);
         next = { ...next, notes: { ...next.notes, contacts: next.notes.contacts.map((x, j) => (j === i ? { ...x, used: true } : x)) } };
       }
-      if (campaign) next = addLedger(next, -total, `Hired ${draft.name || recruitKey(rules, draft)}`);
+      if (campaign) next = useSpend(addLedger(next, -total, `Hired ${draft.name || recruitKey(rules, draft)}`), 'hire');
       return next;
     });
     setDraft(newFighter(rules, { baseRatings: draft.baseRatings, species: draft.species }));
@@ -352,7 +354,7 @@ export function ItemChip({ crew, item, update }: { crew: Crew; item: OwnedItem; 
   const campaign = crew.phase === 'campaign';
   const sv = sellValue(rules, crew, item);
   const fence = crew.notes.contacts.find((c) => c.name === rules.crew.campaign.fenceContact.value && !c.used);
-  // A faction rule may let the crew sell drops for a roll (Black Tape, 12.2).
+  // A faction rule may let the crew sell drops for a roll (Black Tape, 10.2).
   const dropSale = def.source === 'drop' && campaign ? activeEffects(rules, crew, 'break').find((e) => e.effect.kind === 'sellDrop') : undefined;
 
   const move = (val: string) => {
@@ -367,7 +369,9 @@ export function ItemChip({ crew, item, update }: { crew: Crew; item: OwnedItem; 
           const i = next.notes.contacts.findIndex((x) => x.name === rules.crew.campaign.fenceContact.value && !x.used);
           next = { ...next, notes: { ...next.notes, contacts: next.notes.contacts.map((x, j) => (j === i ? { ...x, used: true } : x)) } };
         }
-        return addLedger(next, amount, `Sold ${def.name}${val === 'sell-fence' ? ' through the Fence' : ''}`);
+        const full = val !== 'sell-fence' && !!pendingSpend(c, 'sale');
+        if (full) next = useSpend(next, 'sale');
+        return addLedger(next, amount, `Sold ${def.name}${val === 'sell-fence' ? ' through the Fence' : full ? ' at full price (this break)' : ''}`);
       }
       if (val.startsWith('slot:')) return { ...c, items: c.items.map((o) => (o.uid === item.uid ? { ...o, slot: val.slice(5) as ItemSlot } : o)) };
       if (val.startsWith('to:')) {
@@ -447,7 +451,7 @@ export function Recharge({ crew, update }: { crew: Crew; update: Update }) {
   const missing = rows.reduce((s, r) => s + (r.max - r.now), 0);
   const want = (r: (typeof rows)[number]) => Math.min(add[r.f.id] ?? 0, r.max - r.now);
   const energy = rows.reduce((s, r) => s + want(r), 0);
-  const cost = rechargeCost(rules, energy);
+  const cost = rechargeCost(rules, energy, crew);
   const ok = energy > 0 && canPayRunningCost(rules, crew, cost);
   const pay = () => {
     update((c) => addLedger({ ...c, fighters: c.fighters.map((f) => { const r = rows.find((x) => x.f.id === f.id)!; return want(r) ? { ...f, energy: r.now + want(r) } : f; }) }, -cost, `Recharged ${energy} Energy`));
@@ -456,7 +460,7 @@ export function Recharge({ crew, update }: { crew: Crew; update: Update }) {
   return (
     <div className="card stack-s recharge">
       <h3>Recharge batteries <span className="section-tag">§ {per.source}</span></h3>
-      <p className="small muted">Batteries do not refill by themselves: {per.value} part per Energy, up to the cell's size.{missing === 0 ? ' Every battery is full.' : ''}</p>
+      <p className="small muted">Batteries do not refill by themselves: {rechargeCost(rules, 1, crew)} part{rechargeCost(rules, 1, crew) === 1 ? '' : 's'} per Energy{rechargeCost(rules, 1, crew) !== per.value ? ' this break' : ''}, up to the cell's size.{missing === 0 ? ' Every battery is full.' : ''}</p>
       {missing > 0 && (
         <>
           <ul className="plain-list stack-s">{rows.map((r) => (
@@ -472,7 +476,7 @@ export function Recharge({ crew, update }: { crew: Crew; update: Update }) {
             </li>
           ))}</ul>
           <div className="row gap-s wrap">
-            <button className="btn small" onClick={() => setAdd(Object.fromEntries(rows.map((r) => [r.f.id, r.max - r.now])))}>Fill every battery ({rechargeCost(rules, missing)} parts)</button>
+            <button className="btn small" onClick={() => setAdd(Object.fromEntries(rows.map((r) => [r.f.id, r.max - r.now])))}>Fill every battery ({rechargeCost(rules, missing, crew)} parts)</button>
             <button className="btn small primary" disabled={!ok} onClick={pay}>Recharge {energy} Energy for {cost} parts</button>
           </div>
           {energy > 0 && !ok && <p className="small err-text">Not enough parts.</p>}
@@ -503,13 +507,13 @@ export function Chassis({ crew, update }: { crew: Crew; update: Update }) {
   );
 }
 
-/** The faction rule the crew's subfaction replaces: the player's choice, made at creation (12.1). */
+/** The faction rule the crew's subfaction replaces: the player's choice, made at creation (10.1). */
 export function ReplacedRulePick({ crew, update }: { crew: Crew; update: Update }) {
   const rules = getRules();
   if (!crew.subfaction) return null;
   return (
     <fieldset className="stack-s replace-pick">
-      <legend><strong>Which faction rule does {crew.subfaction}'s rule replace?</strong> <span className="muted small">The replaced rule is gone, with everything that depends on it (12.1).</span></legend>
+      <legend><strong>Which faction rule does {crew.subfaction}'s rule replace?</strong> <span className="muted small">The replaced rule is gone, with everything that depends on it (10.1).</span></legend>
       {replaceableRules(rules, crew.faction).map((r) => (
         <label key={r.n} className={`option ${crew.replacedRule === r.n ? 'on' : ''}`}>
           <input type="radio" name={`replaced-rule-${crew.id}`} checked={crew.replacedRule === r.n} onChange={() => update((c) => ({ ...c, replacedRule: r.n }))} />
@@ -539,6 +543,27 @@ export function Doctor({ crew, update }: { crew: Crew; update: Update }) {
         </select>
         <button className="btn small primary" disabled={!who} onClick={() => update((c) => addLedger({ ...c, fighters: c.fighters.map((f) => (f.id === who ? { ...f, status: fit } : f)) }, -pay, 'The doctor of last resort'))}>Call the doctor</button>
       </div>
+    </div>
+  );
+}
+
+const campaign0 = (crew: Crew) => crew.phase === 'campaign';
+
+/** This break's Spend effects from story events (14.6), shown where they apply. */
+export function SpendEffects({ crew }: { crew: Crew }) {
+  const rules = getRules();
+  const list = (crew.spendEffects ?? []).filter((e) => !e.used);
+  if (!list.length) return null;
+  const se = rules.crew.campaign.spendEffects;
+  const text = (e: NonNullable<Crew['spendEffects']>[number]) =>
+    e.kind === 'rechargeDouble' ? `Recharging costs ${se?.value.rechargeMultiplier ?? 2} times as much`
+      : e.kind === 'purchase' ? `The first purchase costs ${Math.abs(e.amount ?? 0)} ${(e.amount ?? 0) >= 0 ? 'more' : 'less'}`
+      : e.kind === 'hire' ? `The next hire costs ${se?.value.hireExtra ?? 0} more`
+      : 'The first sale is at full price';
+  return (
+    <div className="note small">
+      <strong>This break only</strong> <span className="muted">(Spend effects, § {se?.source ?? ''})</span>:{' '}
+      {list.map((e, i) => <span key={i}>{text(e)}{e.note ? ` (${e.note})` : ''}{i < list.length - 1 ? '; ' : '.'}</span>)}
     </div>
   );
 }

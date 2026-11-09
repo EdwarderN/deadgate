@@ -1,47 +1,47 @@
 [
   {
     "Trait": "**Light cover**",
-    "What it does": "A shooter has -1 die against a target if any part of the target is hidden by this piece"
+    "What it does": "A piece that hides part of a target from shooters. The dice are in section 5.7"
   },
   {
     "Trait": "**Heavy cover**",
-    "What it does": "A shooter has -2 dice against a target if any part of the target is hidden by this piece"
+    "What it does": "A piece that hides part of a target from shooters, and protects more than light cover. The dice are in section 5.7"
   },
   {
     "Trait": "**Solid**",
-    "What it does": "Thick concrete, hull plate, bulkheads. Blocks sight and shots completely, **even against an Announced target**"
+    "What it does": "Thick concrete, hull plate, bulkheads. Blocks sight and shots completely (section 5.7)"
   },
   {
     "Trait": "**Difficult**",
-    "What it does": "Rubble, thick growth, deep mud. Moving through it halves the distance"
+    "What it does": "Rubble, thick growth, deep mud. Moving through it halves the distance (section 5.4)"
   },
   {
     "Trait": "**Dangerous**",
-    "What it does": "Fire, live wires, acid. A fighter who **enters** it (moving, pushed or thrown) makes a Routine Grit test, once per move; on a failure they take a **glance** (their save applies)"
+    "What it does": "Fire, live wires, acid. A fighter who enters it makes a Routine Grit test (section 5.4)"
   },
   {
     "Trait": "**Wet**",
-    "What it does": "Water. Halves movement for a fighter who cannot swim; Brinies move at their water Move"
+    "What it does": "Water. Halves movement for a fighter who cannot swim (section 5.4)"
   },
   {
     "Trait": "**Deep water**",
-    "What it does": "A river, a flooded hold, a sump. It is also **Wet**. A fighter who enters it, and again each time they start an activation in it, makes a Routine Grit test. On a failure the current takes them: they are moved d6 inches **downstream** (the players agree which way that is before the battle) and left prone. Brinies make no test: they just move"
+    "What it does": "A river, a flooded hold, a sump. It is also **Wet**. A Routine Grit test to enter and each activation in it (section 5.4)"
   },
   {
     "Trait": "**Low obstacle**",
-    "What it does": "A wall stub, a row of crates, a pipe, a rail: up to 1 inch high. Crossing costs nothing (section 5.3). It is also **light cover**"
+    "What it does": "A wall stub, a row of crates, a pipe, a rail: up to 1 inch high. It is also **light cover**. Crossing: section 5.4"
   },
   {
     "Trait": "**High obstacle**",
-    "What it does": "A barricade, a fence, a stacked pile: more than 1 and up to 2 inches high. Crossing costs 2 inches of Move (section 5.3). It is also **heavy cover**"
+    "What it does": "A barricade, a fence, a stacked pile: more than 1 and up to 2 inches high. It is also **heavy cover**. Crossing: section 5.4"
   },
   {
     "Trait": "**Ladder**",
-    "What it does": "Climbed up or down with no Grit test. It costs the **vertical distance** in Move, however tall it is. If the ladder is taller than the fighter's Move, the climb takes **both actions** of the activation (the fighter must not have acted yet) and they climb all the way, however tall"
+    "What it does": "A fixed ladder. Climbing it: section 5.4"
   },
   {
     "Trait": "**Stairs, ramp**",
-    "What it does": "Used with no test. They cost the **distance travelled along them**, as on flat ground"
+    "What it does": "Used with no test (section 5.4)"
   },
   {
     "Trait": "**Powered**",

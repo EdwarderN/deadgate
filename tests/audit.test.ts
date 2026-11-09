@@ -32,7 +32,6 @@ describe('the book data the new features read', () => {
     for (const n of Object.keys(rules.crew.campaign.contactUses.value)) expect(rules.contacts.map((c) => c.name)).toContain(n);
     for (const n of Object.keys(rules.crew.campaign.sillyEffects.value)) expect(rules.silly.map((s) => s.name)).toContain(n);
     for (const n of Object.keys(rules.crew.battle.breaking.captainTraits)) expect(rules.captainTraits.map((t) => t.name)).toContain(n);
-    expect(rules.tags.map((t) => t.name)).toContain(rules.crew.afterBattle.evacTag.value);
     expect(rules.tags.map((t) => t.name)).toContain(rules.crew.battle.wagerStakes.noTakerTag);
     expect(rules.data.states.map((s) => plain(s.State))).not.toContain(rules.crew.battle.madness.value);
     expect(Object.keys(rules.data.gear_failure).length).toBe(3);
@@ -41,7 +40,7 @@ describe('the book data the new features read', () => {
   });
 });
 
-describe('breaking (9.4)', () => {
+describe('breaking (11.4)', () => {
   it('starts at half the crew, rounded up; the captain tests with Nerve', () => {
     const c = crew();
     let b = newBattle(rules, c);

@@ -129,7 +129,7 @@ export const powersFor = (rules: Rules, species?: string | null) =>
 /** The gift (8.4): how it is used, the drain, madness, and the powers (only the fighter's own, when a species is given). */
 export const giftRule = (rules: Rules, species?: string | null): RuleRef => ({
   title: 'The gift: psionic powers', section: rules.section('gift'),
-  lines: [['Who', `Only ${rules.crew.limits.giftSpecies.value.join(' and ')}s, at most ${rules.crew.limits.maxGifted.value} in a crew (${rules.crew.limits.giftSpecies.source}, 11.4)`],
+  lines: [['Who', `Only ${rules.crew.limits.giftSpecies.value.join(' and ')}s, at most ${rules.crew.limits.maxGifted.value} in a crew (${rules.crew.limits.giftSpecies.source}, 9.4)`],
     ...rules.data.gift_rules.map((g) => [g.label, g.text] as [string, string]),
     ...powersFor(rules, species).map((p) => [`${p.name} (${p.number})`, p.text] as [string, string])],
 });

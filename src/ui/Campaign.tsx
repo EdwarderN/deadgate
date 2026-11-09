@@ -8,7 +8,7 @@ import { uid, type Advance, type Crew, type Fighter } from '../engine/model';
 import { validate, type Message } from '../engine/validate';
 import { crewToJson, download, fileName, safeColour, shareLink } from '../store';
 import { go } from '../App';
-import { Chassis, Doctor, Equip, Hire, Recharge, Messages, PartsCounter, ReplacedRulePick, Shop, Stash, describeType, fighterLabel, patchFighter, type Update } from './common';
+import { Chassis, Doctor, Equip, SpendEffects, Hire, Recharge, Messages, PartsCounter, ReplacedRulePick, Shop, Stash, describeType, fighterLabel, patchFighter, type Update } from './common';
 import { copyLink, useAsk } from './confirm';
 import { canTakeTitle } from '../engine/faction';
 import { applyChanges } from '../engine/outcomes';
@@ -54,7 +54,7 @@ export function Campaign({ crew, update }: { crew: Crew; update: Update }) {
       </nav>
       <div role="tabpanel">
         {tab === 'Fighters' && <FightersTab crew={crew} update={update} messages={messages} />}
-        {tab === 'Shop and hire' && <div className="stack"><Doctor crew={crew} update={update} /><Chassis crew={crew} update={update} /><Recharge crew={crew} update={update} /><Stash crew={crew} update={update} /><Shop crew={crew} update={update} /><Hire crew={crew} update={update} /></div>}
+        {tab === 'Shop and hire' && <div className="stack"><SpendEffects crew={crew} /><Doctor crew={crew} update={update} /><Chassis crew={crew} update={update} /><Recharge crew={crew} update={update} /><Stash crew={crew} update={update} /><Shop crew={crew} update={update} /><Hire crew={crew} update={update} /></div>}
         {tab === 'Parts' && <PartsTab crew={crew} update={update} />}
         {tab === 'Roster notes' && <NotesTab crew={crew} update={update} messages={messages.filter((m) => m.step === 'notes')} />}
         {tab === 'Season' && <SeasonTab crew={crew} update={update} />}
@@ -123,7 +123,7 @@ function FighterPanel({ crew, fighter: f, update, open, toggle, messages }: { cr
             {f.rumour?.name && <> · Rumour: <strong>{f.rumour.name}</strong>{f.rumour.done ? ' (fulfilled)' : ''}</>}
           </p>
           {f.id !== crew.captainId && (
-            <button className="btn small" onClick={async () => { if (await ask(`Make ${fighterLabel(f)} the captain? A new captain takes one captain trait free (11.2).`)) update((c) => ({ ...c, captainId: f.id })); }}>Make captain</button>
+            <button className="btn small" onClick={async () => { if (await ask(`Make ${fighterLabel(f)} the captain? A new captain takes one captain trait free (9.2).`)) update((c) => ({ ...c, captainId: f.id })); }}>Make captain</button>
           )}
           <Experience crew={crew} fighter={f} update={update} />
           <Injuries crew={crew} fighter={f} update={update} />
@@ -481,10 +481,10 @@ function SeasonTab({ crew, update }: { crew: Crew; update: Update }) {
   const cols: [keyof Crew['notes']['season'][number], string][] = [['battle', 'Battle'], ['world', 'World'], ['opponent', 'Opponent'], ['winCond', 'Winning condition'], ['heldField', 'Held the field'], ['story', 'Story event']];
   return (
     <div className="stack">
-      <p>League points: <strong>{total}</strong> over {played} battle{played === 1 ? '' : 's'} (14.12). A season is {lo} to {hi} battles, then the Final for the top two ({rules.crew.campaign.season.source}).</p>
+      <p>League points: <strong>{total}</strong> over {played} battle{played === 1 ? '' : 's'} (15.2). A season is {lo} to {hi} battles, then the Final for the top two ({rules.crew.campaign.season.source}).</p>
       {crew.parts < 0 && played >= lo && (
         <div className="note small">
-          <strong>Debts come due.</strong> After its last battle of the season, a crew below 0 parts sells items at half price until it reaches 0; the opponent of its last battle picks the items (14.11). Sell them from the stash or a fighter's gear ({-crew.parts} parts to go).
+          <strong>Debts come due.</strong> After its last battle of the season, a crew below 0 parts sells items at half price until it reaches 0; the opponent of its last battle picks the items (15.1). Sell them from the stash or a fighter's gear ({-crew.parts} parts to go).
         </div>
       )}
       <div className="table-scroll">

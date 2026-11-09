@@ -10,13 +10,18 @@
     "Boosted (1 Energy)": "Radius **3 inches**"
   },
   {
+    "Device": "**Hard hat** (copy only, Belt 1)",
+    "Basic": "The wearer's Duck does not use up their reaction, but only against a shot from more than 8 inches away",
+    "Boosted (1 Energy)": "None"
+  },
+  {
     "Device": "**Maintenance slate**",
     "Basic": "Holds the old words: lets a fighter with Tech 0 prompt at all, as a Hard test (section 8.1)",
     "Boosted (1 Energy)": "**+1 die on the prompt.** Slates are never drops"
   },
   {
     "Device": "**Crank charger** (copy only)",
-    "Basic": "Use and a Routine Tech test: restore 1 Energy to the user's battery. Reusable. A kept total of 3 or less jams it",
+    "Basic": "Use and a Routine Tech test: restore 1 Energy to the user's battery. Reusable. Unreliable (section 7.2)",
     "Boosted (1 Energy)": "None"
   },
   {
@@ -31,7 +36,7 @@
   },
   {
     "Device": "**Relay beacon** (old stock; Control Group)",
-    "Basic": "Use: set it down within 6 inches of the user (it is thrown). Bots within 12 inches of it are not Laggy (section 8.5)",
+    "Basic": "Use: set it down within 6 inches of the user (it is thrown). Bots within 12 inches of it are not Laggy (section 4.5)",
     "Boosted (1 Energy)": "None"
   }
 ]

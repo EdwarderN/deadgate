@@ -28,7 +28,7 @@
   "The bodge table.": [
     {
       "d6": "1",
-      "Result": "**The tape gives way.** The item comes apart in the user's hands. If they still have an action this activation, they may spend it on a Routine Tech test to put it back together; otherwise the item is **destroyed for good**: it cannot be recovered after the battle, and can only be bought again"
+      "Result": "**The tape gives way.** The item comes apart in the user's hands. **Armour** only **jams** (section 7.2). Anything else: if they still have an action this activation, they may spend it on a Routine Tech test to put it back together; otherwise the item is **destroyed for good**: it cannot be recovered after the battle, and can only be bought again"
     },
     {
       "d6": "2",
@@ -54,11 +54,11 @@
   "The weird grenade table.": [
     {
       "d6": "1",
-      "Result": "**Dragged in.** Each fighter in the blast is pulled 2 inches straight toward where the grenade landed (they stop at a fighter or a wall)"
+      "Result": "**Dragged in.** Each fighter in the blast is pulled 2 inches straight toward where the grenade landed"
     },
     {
       "d6": "2",
-      "Result": "**Thrown out.** Each fighter in the blast is thrown 2 inches straight away from where the grenade landed (they stop at a fighter or a wall)"
+      "Result": "**Thrown out.** Each fighter in the blast is thrown 2 inches straight away from where the grenade landed"
     },
     {
       "d6": "3",

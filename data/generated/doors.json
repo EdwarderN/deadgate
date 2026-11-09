@@ -2,16 +2,22 @@
   {
     "Condition": "**Shut, unlocked**",
     "Token": "none",
-    "What it does": "Blocks sight and shots. Fighters pass through it"
+    "Sight and shots": "Blocked",
+    "Walking": "Fighters and bots pass",
+    "Forced move": "Goes through"
   },
   {
     "Condition": "**Locked**",
     "Token": "red Hacked token",
-    "What it does": "Blocks sight, shots **and movement**"
+    "Sight and shots": "Blocked",
+    "Walking": "Blocked",
+    "Forced move": "Stops, as at a wall"
   },
   {
     "Condition": "**Open**",
     "Token": "green Hacked token",
-    "What it does": "Open and unlocked: sight and movement pass through, and it stays open"
+    "Sight and shots": "Pass",
+    "Walking": "Pass",
+    "Forced move": "Goes through"
   }
 ]

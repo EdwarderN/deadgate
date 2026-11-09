@@ -97,7 +97,7 @@ describe('the battle companion (5, 6, 9)', () => {
     expect(bf.activated).toBe(true);
     expect(nextRound({ ...b, fighters: { x: bf } }).fighters.x.activated).toBe(false);
   });
-  it('five rounds, then a d6, never past seven (9.3)', () => {
+  it('five rounds, then a d6, never past seven (11.3)', () => {
     const r = rules.crew.battle.rounds;
     expect(roundEnd(rules, r.value - 1)).toBe('continue');
     expect(roundEnd(rules, r.value)).toBe('roll');
@@ -172,7 +172,7 @@ describe('after the battle (13, 14)', () => {
     expect(rules.crew.campaign.statuses.value).toContain(statusForWord(rules, plain(bs['Recovery word'])));
     expect(botWord(rules, plain(rules.data.bot_words[0]['Organic result']))).toBe(plain(rules.data.bot_words[0]['Bot result']));
   });
-  it('league points follow the table (14.12)', () => {
+  it('league points follow the table (15.2)', () => {
     const { crew, b } = battleCrew();
     const id = crew.fighters[0].id;
     const big = rules.deeds.find((d) => d.tier === 'Big deeds')!;
@@ -206,7 +206,7 @@ describe('after the battle (13, 14)', () => {
   });
 });
 
-describe('old-stock sellers (11.3)', () => {
+describe('old-stock sellers (9.3)', () => {
   it('a failed roll makes the item unavailable this break; a success or "found" makes it available', () => {
     const c = crewOf(plainFaction);
     const item = rules.shopItems.find((i) => needsSeller(rules, c, i))!;

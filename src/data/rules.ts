@@ -266,7 +266,7 @@ function buildItems(crew: CrewRules, raw: RawData, cat: CatalogItem[]): ItemDef[
   const items: ItemDef[] = cat.map((c) => make({
     key: c.key, name: c.name, source: c.source, price: c.price, kind: c.kind, group: c.group, note: c.note, rules: c.rules, forSale: true,
   }));
-  // Drops: never for sale, but a crew can find them (9.7).
+  // Drops: never for sale, but a crew can find them (11.7).
   for (const w of raw.weapons.filter((w) => plain(w.Source).toLowerCase() === 'drop')) {
     items.push(make({ key: keyOf(w.Weapon), name: plain(w.Weapon).replace(/\s*\(.*\)/, ''), source: 'drop', price: null, kind: 'weapon', group: 'Drops', note: null, rules: w, forSale: false }));
   }

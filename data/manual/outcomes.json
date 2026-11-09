@@ -1,46 +1,82 @@
 {
-  "_about": "What each table row does, for the app to apply. The text shown is always the book's (data/generated). Keys are the book's own row labels, so a renamed row fails the tests. Effects: parts, xp, status, next (starts the next battle), tag, contact, rival, rumour, silly, item (gain: key or kinds/source/maxPrice, fit), loseItem, sellItem, buyItem, hire (an offer: discount or free), relicLead, sellerFound, noTasks, noTask, gift, healInjury, prosthetic, allLaidUpToSore, injury, injuryRoll (Light/Heavy list, or glitches for bots), reroll, dead, leave, title, finds, drop, d6, test, choice, recharge (Energy, or 'full'; who), taskPay (0, 0.5, 2 or 'failure'), noFinds, retest, swapAdvance, note. who: self, choose, all, patient, teacher, captain, lowestXp, evacuated, legend, bot, type:<Type>. prize / finalPrize: the battle's prize (9.5) and the Final's (14.13).",
-  "source": "13.2, 14.5, 14.6, 14.7, 9.7, chapter 12",
+  "_about": "What each table row does, for the app to apply. The text shown is always the book's (data/generated). Keys are the book's own row labels, so a renamed row fails the tests. Effects: parts, xp, status, next (starts the next battle), tag, contact, rival, rumour, silly, item (gain: key or kinds/source/maxPrice, fit), loseItem, sellItem, buyItem, hire (an offer: discount or free), relicLead, sellerFound, noTasks, noTask, gift, healInjury, prosthetic, allLaidUpToSore, injury, injuryRoll (Light/Heavy list, or glitches for bots), reroll, dead, leave, title, finds, drop, d6, test, choice, recharge (Energy, or 'full'; who), taskPay (0, 0.5, 2 or 'failure'), noFinds, retest, swapAdvance, note. who: self, choose, all, patient, teacher, captain, lowestXp, evacuated, legend, bot, type:<Type>. prize / finalPrize: the battle's prize (11.5) and the Final's (15.3).",
+  "source": "13.2, 14.5, 14.6, 14.7, 11.7, chapter 10",
   "storyEvents": {
     "Row 1: Held the field": {
       "1": {
-        "accept": [],
+        "accept": [
+          {
+            "item": {
+              "source": "copy",
+              "maxPrice": 3
+            }
+          }
+        ],
         "pay": [
           {
-            "next": "Announced",
+            "parts": -1
+          },
+          {
+            "next": "Under warranty",
             "who": "choose"
           },
           {
-            "tag": "Reliable"
+            "lead": true
           }
         ],
         "twist": {
           "rating": "Nerve",
           "success": [
             {
-              "xp": 1,
-              "who": "choose"
+              "contact": "Fixer"
+            },
+            {
+              "item": {
+                "source": "copy",
+                "maxPrice": 3
+              }
             }
           ],
           "failure": [
             {
-              "parts": -2
+              "loseItem": {
+                "source": "copy",
+                "label": "a copy item the Department takes back"
+              }
             }
           ]
         }
       },
       "2": {
-        "accept": [],
+        "accept": [
+          {
+            "item": {
+              "source": "copy",
+              "maxPrice": 3
+            }
+          }
+        ],
+        "pay": [
+          {
+            "parts": -2
+          },
+          {
+            "lead": true
+          },
+          {
+            "contact": "Fence"
+          }
+        ],
         "twist": {
-          "rating": "Nerve",
+          "rating": "Shoot",
           "success": [
             {
-              "parts": 6
+              "finds": 1
             }
           ],
           "failure": [
             {
-              "tag": "Butchers"
+              "loseContact": true
             }
           ]
         }
@@ -52,10 +88,10 @@
           }
         ],
         "twist": {
-          "rating": "Nerve",
+          "rating": "Fight",
           "success": [
             {
-              "parts": 8
+              "finds": 1
             }
           ],
           "failure": [
@@ -90,6 +126,11 @@
             ]
           }
         ],
+        "pay": [
+          {
+            "parts": -1
+          }
+        ],
         "twist": {
           "rating": "Tech",
           "success": [],
@@ -109,55 +150,103 @@
           }
         ],
         "twist": {
-          "rating": "Nerve",
+          "rating": "Grit",
           "success": [
             {
               "hire": {
-                "free": true
+                "discount": 10,
+                "note": "free at most"
               }
             }
           ],
           "failure": [
             {
-              "hire": {
-                "free": true
-              }
+              "rival": true
             },
             {
-              "rival": true
+              "loseItem": {
+                "label": "the item the drifter steals"
+              }
             }
           ]
         }
       },
       "6": {
-        "accept": [],
+        "accept": [
+          {
+            "next": "Hyped",
+            "who": "lowestXp"
+          }
+        ],
         "pay": [
           {
             "parts": -5
           },
           {
             "next": "Hyped",
-            "who": "all"
+            "who": "any:5"
           }
-        ]
+        ],
+        "twist": {
+          "rating": "Nerve",
+          "success": [
+            {
+              "contact": "Patron"
+            },
+            {
+              "item": {
+                "source": "copy",
+                "maxPrice": 2
+              }
+            }
+          ],
+          "failure": [
+            {
+              "loseContact": true
+            }
+          ]
+        }
       }
     },
     "Row 2: Did not hold the field": {
       "1": {
         "accept": [
           {
-            "parts": -4
+            "loseItem": {
+              "source": "copy",
+              "label": "a copy item, as a down payment"
+            }
+          }
+        ],
+        "pay": [
+          {
+            "crossLead": true
+          },
+          {
+            "contact": "Fixer"
           }
         ],
         "twist": {
           "rating": "Fight",
-          "success": [],
-          "failure": [
+          "success": [
             {
-              "parts": -4
+              "item": {
+                "source": "copy",
+                "maxPrice": 3
+              }
             },
             {
+              "crossRival": true
+            }
+          ],
+          "failure": [
+            {
               "tag": "Oathbreakers"
+            },
+            {
+              "spend": {
+                "kind": "rechargeDouble"
+              }
             }
           ]
         }
@@ -165,36 +254,66 @@
       "2": {
         "accept": [
           {
-            "parts": 3
+            "parts": 1
+          },
+          {
+            "next": "Shook",
+            "who": "choose"
+          },
+          {
+            "next": "Shook",
+            "who": "second"
+          }
+        ],
+        "pay": [
+          {
+            "parts": -2
+          },
+          {
+            "hire": {
+              "discount": 5
+            }
           }
         ],
         "twist": {
           "rating": "Nerve",
           "success": [
             {
-              "tag": "Reliable"
+              "spend": {
+                "kind": "purchase",
+                "amount": -5
+              }
             }
           ],
           "failure": [
             {
-              "parts": 3
+              "loseLead": true
             },
             {
-              "tag": "Ran"
+              "spend": {
+                "kind": "purchase",
+                "amount": 3
+              }
             }
           ]
         }
       },
       "3": {
-        "accept": [],
+        "accept": [
+          {
+            "spend": {
+              "kind": "rechargeDouble"
+            }
+          }
+        ],
         "pay": [
           {
-            "noTask": "choose"
+            "parts": -3
           },
           {
             "item": {
               "any": true,
-              "label": "the item lost this battle"
+              "label": "one item lost this battle"
             }
           }
         ],
@@ -204,14 +323,17 @@
             {
               "item": {
                 "any": true,
-                "label": "the item lost this battle"
+                "label": "one item lost this battle"
               }
             }
           ],
           "failure": [
             {
-              "status": "Sore",
-              "who": "choose"
+              "loseItem": {
+                "source": "copy",
+                "count": 2,
+                "label": "two copy items"
+              }
             }
           ]
         }
@@ -219,18 +341,26 @@
       "4": {
         "accept": [
           {
-            "silly": "Jittery",
-            "who": "lowestXp"
+            "loseItem": {
+              "source": "copy",
+              "label": "a copy item the newest fighter carried",
+              "who": "lowestXp"
+            }
           }
         ],
         "pay": [
           {
-            "parts": -3
+            "parts": -1
           }
         ],
         "twist": {
-          "rating": "Nerve",
-          "success": [],
+          "rating": "Grit",
+          "success": [
+            {
+              "xp": 1,
+              "who": "lowestXp"
+            }
+          ],
           "failure": [
             {
               "leave": "lowestXp"
@@ -239,46 +369,72 @@
         }
       },
       "5": {
-        "accept": [],
+        "accept": [
+          {
+            "spend": {
+              "kind": "purchase",
+              "amount": 2
+            }
+          }
+        ],
+        "pay": [
+          {
+            "parts": -2
+          },
+          {
+            "lead": true
+          }
+        ],
         "twist": {
           "rating": "Tech",
           "success": [
             {
               "xp": 1,
               "who": "choose"
+            },
+            {
+              "lead": true
             }
           ],
           "failure": [
             {
-              "next": "Shook",
-              "who": "choose"
+              "parts": -5
             }
           ]
         }
       },
       "6": {
-        "accept": [],
+        "accept": [
+          {
+            "status": "Sore",
+            "who": "captain"
+          }
+        ],
         "pay": [
           {
-            "next": "Announced",
-            "who": "captain"
+            "parts": -2
           },
           {
             "tag": "Showboats"
           }
         ],
         "twist": {
-          "rating": "Nerve",
+          "rating": "Shoot",
           "success": [
             {
-              "xp": 1,
-              "who": "captain"
+              "lead": true
+            },
+            {
+              "parts": 4
             }
           ],
           "failure": [
             {
-              "silly": "Big talk",
+              "status": "Sore",
               "who": "captain"
+            },
+            {
+              "loseContact": true
             }
           ]
         }
@@ -293,35 +449,24 @@
         ],
         "pay": [
           {
-            "choice": [
-              {
-                "label": "Cross off a contact",
-                "effects": [
-                  {
-                    "crossContact": true
-                  }
-                ]
-              },
-              {
-                "label": "Pay 6 parts",
-                "effects": [
-                  {
-                    "parts": -6
-                  }
-                ]
-              }
-            ]
+            "parts": -2
           }
         ],
         "twist": {
-          "rating": "Nerve",
-          "success": [],
+          "rating": "Fight",
+          "success": [
+            {
+              "contact": "Informer"
+            }
+          ],
           "failure": [
             {
               "tag": "Ran"
             },
             {
-              "tag": "Oathbreakers"
+              "spend": {
+                "kind": "rechargeDouble"
+              }
             }
           ]
         }
@@ -329,7 +474,18 @@
       "2": {
         "accept": [
           {
-            "parts": -3
+            "loseContact": true
+          }
+        ],
+        "pay": [
+          {
+            "parts": -2
+          },
+          {
+            "item": {
+              "source": "copy",
+              "maxPrice": 3
+            }
           }
         ],
         "twist": {
@@ -337,9 +493,15 @@
           "success": [
             {
               "parts": 5
+            },
+            {
+              "crossRival": true
             }
           ],
           "failure": [
+            {
+              "parts": -2
+            },
             {
               "tag": "Ran"
             }
@@ -349,18 +511,32 @@
       "3": {
         "accept": [
           {
-            "silly": "Spent your luck",
+            "next": "Shook",
+            "who": "evacuated"
+          }
+        ],
+        "pay": [
+          {
+            "parts": -1
+          },
+          {
+            "next": "Hyped",
             "who": "evacuated"
           }
         ],
         "twist": {
-          "rating": "Nerve",
-          "success": [],
-          "failure": [
+          "rating": "Grit",
+          "success": [
             {
-              "silly": "Spent your luck",
+              "next": "Hyped",
               "who": "evacuated"
             },
+            {
+              "next": "Under warranty",
+              "who": "evacuated"
+            }
+          ],
+          "failure": [
             {
               "tag": "Ran"
             }
@@ -368,12 +544,30 @@
         }
       },
       "4": {
-        "accept": [],
+        "accept": [
+          {
+            "rival": true
+          }
+        ],
+        "pay": [
+          {
+            "parts": -1
+          },
+          {
+            "item": {
+              "source": "copy",
+              "maxPrice": 3
+            }
+          }
+        ],
         "twist": {
           "rating": "Tech",
           "success": [
             {
               "tag": "Oathkeepers"
+            },
+            {
+              "parts": 4
             }
           ],
           "failure": [
@@ -389,12 +583,32 @@
             "parts": -3
           }
         ],
+        "pay": [
+          {
+            "loseItem": {
+              "source": "copy",
+              "label": "a copy item for the pilot"
+            }
+          },
+          {
+            "spend": {
+              "kind": "sale"
+            }
+          }
+        ],
         "twist": {
           "rating": "Tech",
-          "success": [],
+          "success": [
+            {
+              "parts": 2
+            }
+          ],
           "failure": [
             {
               "parts": -6
+            },
+            {
+              "tag": "Ran"
             }
           ]
         }
@@ -402,8 +616,16 @@
       "6": {
         "accept": [
           {
+            "parts": -2
+          }
+        ],
+        "pay": [
+          {
+            "parts": -1
+          },
+          {
             "hire": {
-              "free": true,
+              "discount": 5,
               "past": "Unwritten"
             }
           }
@@ -413,15 +635,20 @@
           "success": [
             {
               "hire": {
-                "free": true,
-                "past": "Unwritten"
+                "discount": 10,
+                "past": "Unwritten",
+                "note": "the player picks their rumour now (13.9)"
               }
-            },
-            {
-              "note": "Pick their rumour now (13.9)."
             }
           ],
-          "failure": []
+          "failure": [
+            {
+              "loseItem": {
+                "source": "copy",
+                "label": "the copy item the arrival takes"
+              }
+            }
+          ]
         }
       }
     },
@@ -429,40 +656,16 @@
       "1": {
         "accept": [
           {
-            "noTasks": true
+            "status": "Sore",
+            "who": "choose"
           }
         ],
         "pay": [
           {
-            "parts": -5
-          }
-        ]
-      },
-      "2": {
-        "accept": [
+            "parts": -2
+          },
           {
-            "note": "One fighter writes a Big Word on their card now, a vow for the next battle (13.5)."
-          }
-        ],
-        "twist": {
-          "rating": "Nerve",
-          "success": [
-            {
-              "next": "Hyped",
-              "who": "all"
-            }
-          ],
-          "failure": [
-            {
-              "note": "The crew swears no Words next battle."
-            }
-          ]
-        }
-      },
-      "3": {
-        "accept": [
-          {
-            "parts": -3
+            "lead": true
           }
         ],
         "twist": {
@@ -471,11 +674,72 @@
             {
               "xp": 1,
               "who": "choose"
+            },
+            {
+              "contact": "Patron"
             }
           ],
           "failure": [
             {
-              "status": "Sore",
+              "loseContact": true
+            },
+            {
+              "spend": {
+                "kind": "rechargeDouble"
+              }
+            }
+          ]
+        }
+      },
+      "2": {
+        "accept": [
+          {
+            "note": "One fighter writes a Big Word on their card now, a vow for the next battle (13.5)."
+          }
+        ],
+        "twist": {
+          "rating": "Grit",
+          "success": [
+            {
+              "note": "The crew may swear one more Word next battle."
+            },
+            {
+              "tag": "Oathkeepers"
+            }
+          ],
+          "failure": [
+            {
+              "note": "The crew swears no Words next battle."
+            },
+            {
+              "tag": "Oathbreakers"
+            }
+          ]
+        }
+      },
+      "3": {
+        "accept": [
+          {
+            "status": "Sore",
+            "who": "choose"
+          }
+        ],
+        "twist": {
+          "rating": "Grit",
+          "success": [
+            {
+              "tag": "Showboats"
+            }
+          ],
+          "failure": [
+            {
+              "loseItem": {
+                "source": "copy",
+                "label": "a copy item broken over a head"
+              }
+            },
+            {
+              "next": "Shook",
               "who": "choose"
             }
           ]
@@ -496,7 +760,11 @@
         ],
         "twist": {
           "rating": "Fight",
-          "success": [],
+          "success": [
+            {
+              "lead": true
+            }
+          ],
           "failure": [
             {
               "loseItem": {
@@ -511,28 +779,35 @@
         "accept": [
           {
             "hire": {
-              "discount": 5,
+              "discount": 2,
+              "note": "same species as the lost fighter"
+            }
+          }
+        ],
+        "pay": [
+          {
+            "loseItem": {
+              "label": "an item the lost fighter carried, given to them"
+            }
+          },
+          {
+            "hire": {
+              "discount": 10,
               "note": "same species as the lost fighter"
             }
           }
         ],
         "twist": {
-          "rating": "Nerve",
+          "rating": "Grit",
           "success": [
             {
               "hire": {
                 "discount": 5,
-                "note": "same species; they take the lost fighter's title with a prefix, and start the next battle Hyped"
+                "note": "same species; they take the lost fighter's title with a prefix, and gain +1 XP when hired"
               }
             }
           ],
           "failure": [
-            {
-              "hire": {
-                "discount": 5,
-                "note": "same species as the lost fighter"
-              }
-            },
             {
               "loseItem": {
                 "label": "an item of the lost fighter's, given to them"
@@ -548,23 +823,27 @@
           }
         ],
         "twist": {
-          "rating": "Nerve",
+          "rating": "Shoot",
           "success": [
             {
-              "rival": true
+              "crossRival": true
             },
             {
               "next": "Hyped",
+              "who": "choose"
+            },
+            {
+              "next": "Under warranty",
               "who": "choose"
             }
           ],
           "failure": [
             {
-              "rival": true
+              "next": "Shook",
+              "who": "choose"
             },
             {
-              "next": "Announced",
-              "who": "choose"
+              "loseLead": true
             }
           ]
         }
@@ -574,35 +853,74 @@
       "1": {
         "accept": [
           {
-            "parts": 4
+            "item": {
+              "source": "copy",
+              "maxPrice": 4
+            }
+          }
+        ],
+        "pay": [
+          {
+            "parts": -1
+          },
+          {
+            "contact": "Informer"
+          },
+          {
+            "item": {
+              "source": "copy",
+              "maxPrice": 5
+            }
           }
         ],
         "twist": {
-          "rating": "Nerve",
+          "rating": "Fight",
           "success": [
+            {
+              "finds": 1
+            }
+          ],
+          "failure": [
+            {
+              "loseLead": true
+            }
+          ]
+        }
+      },
+      "2": {
+        "accept": [
+          {
+            "contact": "Informer"
+          }
+        ],
+        "pay": [
+          {
+            "parts": -2
+          },
+          {
+            "crossRival": true
+          },
+          {
+            "contact": "Fixer"
+          },
+          {
+            "next": "Hyped",
+            "who": "any:2"
+          }
+        ],
+        "twist": {
+          "rating": "Shoot",
+          "success": [
+            {
+              "lead": true
+            },
             {
               "parts": 8
             }
           ],
           "failure": [
             {
-              "tag": "Merciful"
-            }
-          ]
-        }
-      },
-      "2": {
-        "accept": [],
-        "twist": {
-          "rating": "Nerve",
-          "success": [
-            {
-              "tag": "Showboats"
-            }
-          ],
-          "failure": [
-            {
-              "tag": "Butchers"
+              "parts": -2
             }
           ]
         }
@@ -610,12 +928,27 @@
       "3": {
         "accept": [
           {
-            "parts": -3
+            "rival": true
+          }
+        ],
+        "pay": [
+          {
+            "parts": -1
+          },
+          {
+            "item": {
+              "source": "copy",
+              "maxPrice": 3
+            }
           }
         ],
         "twist": {
           "rating": "Tech",
-          "success": [],
+          "success": [
+            {
+              "parts": 4
+            }
+          ],
           "failure": [
             {
               "parts": -6
@@ -626,8 +959,7 @@
       "4": {
         "accept": [
           {
-            "next": "Hyped",
-            "who": "choose"
+            "contact": "Fixer"
           }
         ],
         "twist": {
@@ -640,11 +972,15 @@
             {
               "next": "Under warranty",
               "who": "choose"
+            },
+            {
+              "xp": 1,
+              "who": "choose"
             }
           ],
           "failure": [
             {
-              "next": "Flustered",
+              "next": "Shook",
               "who": "choose"
             }
           ]
@@ -653,22 +989,48 @@
       "5": {
         "accept": [
           {
-            "tag": "Reliable"
+            "spend": {
+              "kind": "purchase",
+              "amount": -3
+            }
+          }
+        ],
+        "pay": [
+          {
+            "parts": -1
+          },
+          {
+            "contact": "Fence"
+          },
+          {
+            "item": {
+              "source": "copy",
+              "maxPrice": 5
+            }
           }
         ],
         "twist": {
           "rating": "Tech",
           "success": [
             {
-              "tag": "Reliable"
+              "spend": {
+                "kind": "purchase",
+                "amount": -5
+              }
             },
             {
-              "parts": 3
+              "item": {
+                "source": "copy",
+                "maxPrice": 4
+              }
             }
           ],
           "failure": [
             {
-              "tag": "Butchers"
+              "rival": true
+            },
+            {
+              "parts": -3
             }
           ]
         }
@@ -676,18 +1038,27 @@
       "6": {
         "accept": [
           {
-            "parts": -2
+            "rival": true
+          }
+        ],
+        "pay": [
+          {
+            "parts": -3
+          },
+          {
+            "lead": true
           }
         ],
         "twist": {
           "rating": "Tech",
-          "success": [],
+          "success": [
+            {
+              "lead": true
+            }
+          ],
           "failure": [
             {
               "parts": -5
-            },
-            {
-              "tag": "Merciful"
             }
           ]
         }
@@ -695,35 +1066,74 @@
     },
     "Row 6: Made a legend": {
       "1": {
-        "accept": [],
-        "twist": {
-          "rating": "Nerve",
-          "success": [
-            {
-              "xp": 1,
-              "who": "legend"
-            }
-          ],
-          "failure": []
-        }
-      },
-      "2": {
         "accept": [
           {
+            "recharge": 3,
+            "who": "choose"
+          }
+        ],
+        "pay": [
+          {
+            "parts": -1
+          },
+          {
             "tag": "Showboats"
+          },
+          {
+            "contact": "Informer"
           }
         ],
         "twist": {
           "rating": "Nerve",
           "success": [
             {
-              "parts": 2
+              "tag": "Showboats"
+            },
+            {
+              "xp": 1,
+              "who": "legend"
             }
           ],
           "failure": [
             {
-              "next": "Announced",
-              "who": "legend"
+              "rival": true
+            }
+          ]
+        }
+      },
+      "2": {
+        "accept": [
+          {
+            "parts": 4
+          }
+        ],
+        "pay": [
+          {
+            "parts": -2
+          },
+          {
+            "tag": "Showboats"
+          },
+          {
+            "item": {
+              "source": "copy",
+              "maxPrice": 5
+            }
+          }
+        ],
+        "twist": {
+          "rating": "Grit",
+          "success": [
+            {
+              "finds": 1
+            }
+          ],
+          "failure": [
+            {
+              "loseItem": {
+                "who": "legend",
+                "label": "an item the legend carried"
+              }
             }
           ]
         }
@@ -744,36 +1154,53 @@
               "parts": 10
             },
             {
-              "noTask": "legend"
+              "crossRival": true
             }
           ],
           "failure": [
             {
-              "status": "Sore",
+              "next": "Shook",
               "who": "legend"
             }
           ]
         }
       },
       "4": {
-        "accept": [],
+        "accept": [
+          {
+            "spend": {
+              "kind": "purchase",
+              "amount": -2
+            }
+          }
+        ],
         "pay": [
           {
-            "parts": -5
+            "parts": -2
+          },
+          {
+            "tag": "Showboats"
+          },
+          {
+            "item": {
+              "source": "copy",
+              "maxPrice": 3
+            }
           }
         ],
         "twist": {
-          "rating": "Nerve",
+          "rating": "Shoot",
           "success": [
             {
-              "xp": 2,
-              "who": "legend"
+              "lead": true
+            },
+            {
+              "parts": 7
             }
           ],
           "failure": [
             {
-              "silly": "Big talk",
-              "who": "legend"
+              "loseLead": true
             }
           ]
         }
@@ -787,20 +1214,34 @@
             }
           }
         ],
+        "pay": [
+          {
+            "parts": -2
+          },
+          {
+            "hire": {
+              "free": true,
+              "note": "they take the legend's title with a prefix"
+            }
+          }
+        ],
         "twist": {
-          "rating": "Nerve",
+          "rating": "Fight",
           "success": [
             {
               "hire": {
-                "free": true,
-                "note": "the legend trains them"
+                "discount": 10,
+                "note": "they take the legend's title with a prefix"
               }
             }
           ],
           "failure": [
             {
-              "silly": "Big talk",
+              "next": "Shook",
               "who": "legend"
+            },
+            {
+              "rival": true
             }
           ]
         }
@@ -808,21 +1249,25 @@
       "6": {
         "accept": [
           {
-            "next": "Hyped",
-            "who": "legend"
+            "contact": "Fixer"
           }
         ],
         "twist": {
           "rating": "Nerve",
           "success": [
             {
-              "xp": 1,
-              "who": "legend"
+              "lead": true
+            },
+            {
+              "spend": {
+                "kind": "purchase",
+                "amount": -5
+              }
             }
           ],
           "failure": [
             {
-              "note": "They write a Big Word on their card now for the next battle."
+              "loseContact": true
             }
           ]
         }
@@ -838,12 +1283,15 @@
         ],
         "pay": [
           {
-            "crossContact": true
+            "parts": -1
           }
         ],
         "twist": {
           "rating": "Tech",
           "success": [
+            {
+              "contact": "Fixer"
+            },
             {
               "next": "Under warranty",
               "who": "choose"
@@ -855,17 +1303,25 @@
               "who": "choose"
             },
             {
-              "status": "Sore",
-              "who": "second"
+              "loseItem": {
+                "source": "copy",
+                "label": "a copy item lost under the beam"
+              }
             }
           ]
         }
       },
       "2": {
-        "accept": [],
+        "accept": [
+          {
+            "spend": {
+              "kind": "rechargeDouble"
+            }
+          }
+        ],
         "pay": [
           {
-            "noTask": "choose"
+            "parts": -2
           },
           {
             "lead": true
@@ -875,23 +1331,36 @@
           "rating": "Tech",
           "success": [
             {
-              "xp": 1,
-              "who": "choose"
+              "lead": true
+            },
+            {
+              "item": {
+                "source": "copy",
+                "maxPrice": 3
+              }
             }
           ],
           "failure": [
             {
-              "next": "Shook",
+              "status": "Sore",
               "who": "choose"
+            },
+            {
+              "loseContact": true
             }
           ]
         }
       },
       "3": {
-        "accept": [],
+        "accept": [
+          {
+            "next": "Shook",
+            "who": "choose"
+          }
+        ],
         "pay": [
           {
-            "noTask": "choose"
+            "parts": -1
           },
           {
             "tag": "Merciful"
@@ -904,16 +1373,15 @@
               "contact": "choose"
             },
             {
-              "tag": "Merciful"
+              "item": {
+                "source": "copy",
+                "maxPrice": 3
+              }
             }
           ],
           "failure": [
             {
-              "status": "Sore",
-              "who": "choose"
-            },
-            {
-              "note": "The Bodger is still down there."
+              "tag": "Ran"
             }
           ]
         }
@@ -936,7 +1404,7 @@
           "rating": "Tech",
           "success": [
             {
-              "tag": "Reliable"
+              "lead": true
             }
           ],
           "failure": [
@@ -947,62 +1415,83 @@
               }
             },
             {
-              "next": "Announced",
-              "who": "choose"
+              "spend": {
+                "kind": "rechargeDouble"
+              }
             }
           ]
         }
       },
       "5": {
-        "accept": [],
+        "accept": [
+          {
+            "item": {
+              "source": "copy",
+              "maxPrice": 3
+            }
+          }
+        ],
         "pay": [
           {
-            "loseItem": {
-              "source": "copy",
-              "label": "a copy item for the collector"
-            }
+            "parts": -1
           },
           {
             "contact": "Fence"
+          },
+          {
+            "item": {
+              "source": "copy",
+              "maxPrice": 3
+            }
           }
         ],
         "twist": {
           "rating": "Nerve",
           "success": [
             {
-              "tag": "Showboats"
+              "lead": true
+            },
+            {
+              "item": {
+                "source": "copy",
+                "maxPrice": 3
+              }
             }
           ],
           "failure": [
             {
-              "silly": "Big talk",
-              "who": "choose"
+              "loseContact": true
             }
           ]
         }
       },
       "6": {
-        "accept": [],
+        "accept": [
+          {
+            "spend": {
+              "kind": "purchase",
+              "amount": 2
+            }
+          }
+        ],
         "pay": [
           {
-            "noTask": "choose"
+            "parts": -3
           },
           {
-            "finds": 1
+            "contact": "Friend at the meter"
           }
         ],
         "twist": {
           "rating": "Fight",
           "success": [
             {
-              "finds": 2,
-              "keep": 1
+              "finds": 1
             }
           ],
           "failure": [
             {
-              "status": "Sore",
-              "who": "choose"
+              "tag": "Ran"
             }
           ]
         }
@@ -1012,50 +1501,70 @@
       "1": {
         "accept": [
           {
-            "noTask": "choose"
-          },
-          {
-            "noTask": "second"
+            "next": "Shook",
+            "who": "choose"
           }
         ],
         "pay": [
           {
-            "crossContact": true
+            "parts": -1
+          },
+          {
+            "hire": {
+              "discount": 5
+            }
           }
         ],
         "twist": {
           "rating": "Tech",
           "success": [
             {
-              "tag": "Reliable"
+              "item": {
+                "source": "copy",
+                "maxPrice": 5
+              }
             }
           ],
           "failure": [
             {
-              "parts": -3
+              "loseLead": true
             },
             {
-              "noTask": "choose"
-            },
-            {
-              "noTask": "second"
+              "rival": true
             }
           ]
         }
       },
       "2": {
-        "accept": [],
+        "accept": [
+          {
+            "rival": true
+          }
+        ],
+        "pay": [
+          {
+            "parts": -2
+          },
+          {
+            "tag": "Merciful"
+          }
+        ],
         "twist": {
           "rating": "Nerve",
           "success": [
             {
-              "tag": "Merciful"
+              "contact": "Informer"
+            },
+            {
+              "item": {
+                "source": "copy",
+                "maxPrice": 3
+              }
             }
           ],
           "failure": [
             {
-              "next": "Announced",
-              "who": "choose"
+              "tag": "Oathbreakers"
             }
           ]
         }
@@ -1063,43 +1572,38 @@
       "3": {
         "accept": [
           {
-            "next": "Flustered",
+            "status": "Sore",
             "who": "choose"
           }
         ],
         "pay": [
           {
-            "noTask": "choose"
+            "parts": -3
           },
           {
-            "next": "Hyped",
-            "who": "second"
-          },
-          {
-            "next": "Hyped",
-            "who": "third"
-          },
-          {
-            "next": "Hyped",
-            "who": "fourth"
+            "next": "Under warranty",
+            "who": "any:3"
           }
         ],
         "twist": {
-          "rating": "Nerve",
+          "rating": "Grit",
           "success": [
             {
-              "next": "Hyped",
-              "who": "captain"
-            },
-            {
-              "next": "Announced",
-              "who": "captain"
+              "spend": {
+                "kind": "purchase",
+                "amount": -5
+              }
             }
           ],
           "failure": [
             {
               "status": "Sore",
               "who": "captain"
+            },
+            {
+              "spend": {
+                "kind": "rechargeDouble"
+              }
             }
           ]
         }
@@ -1107,7 +1611,9 @@
       "4": {
         "accept": [
           {
-            "parts": 3
+            "spend": {
+              "kind": "sale"
+            }
           }
         ],
         "twist": {
@@ -1128,30 +1634,37 @@
         }
       },
       "5": {
-        "accept": [],
+        "accept": [
+          {
+            "recharge": 2,
+            "who": "choose"
+          }
+        ],
         "pay": [
           {
-            "noTask": "captain"
+            "note": "The captain swears a Small Word now: a vow on their card for the next battle (13.5)."
           },
           {
-            "xp": 1,
-            "who": "captain"
+            "parts": 4
           }
         ],
         "twist": {
           "rating": "Nerve",
           "success": [
             {
-              "xp": 1,
+              "next": "Hyped",
               "who": "choose"
             },
             {
-              "tag": "Showboats"
+              "spend": {
+                "kind": "purchase",
+                "amount": -5
+              }
             }
           ],
           "failure": [
             {
-              "silly": "Big talk",
+              "next": "Shook",
               "who": "captain"
             }
           ]
@@ -1162,21 +1675,24 @@
           {
             "loseItem": {
               "source": "copy",
-              "label": "a copy item (it was in the tent)"
+              "label": "a copy item that was in the tent"
             }
           }
         ],
         "pay": [
           {
-            "noTask": "choose"
+            "parts": -1
           }
         ],
         "twist": {
           "rating": "Grit",
           "success": [
             {
-              "xp": 1,
+              "next": "Under warranty",
               "who": "choose"
+            },
+            {
+              "parts": 4
             }
           ],
           "failure": [
@@ -1187,7 +1703,7 @@
             {
               "loseItem": {
                 "source": "copy",
-                "label": "a copy item (it was in the tent)"
+                "label": "a copy item that was in the tent"
               }
             }
           ]
@@ -1198,17 +1714,23 @@
       "1": {
         "accept": [
           {
-            "next": "Flustered",
+            "next": "Shook",
             "who": "choose"
           }
         ],
         "pay": [
           {
-            "noTask": "choose"
+            "parts": -1
           },
           {
-            "xp": 1,
-            "who": "choose"
+            "item": {
+              "source": "copy",
+              "maxPrice": 5,
+              "kinds": [
+                "armour"
+              ],
+              "label": "the heretic's coat: a copy armour worth up to 5 parts"
+            }
           }
         ],
         "twist": {
@@ -1216,21 +1738,38 @@
           "success": [
             {
               "lead": true
+            },
+            {
+              "item": {
+                "source": "copy",
+                "maxPrice": 3,
+                "kinds": [
+                  "armour"
+                ]
+              }
             }
           ],
           "failure": [
             {
-              "silly": "Jittery",
-              "who": "choose"
+              "loseLead": true
+            },
+            {
+              "spend": {
+                "kind": "rechargeDouble"
+              }
             }
           ]
         }
       },
       "2": {
-        "accept": [],
+        "accept": [
+          {
+            "parts": 2
+          }
+        ],
         "pay": [
           {
-            "next": "Shook",
+            "status": "Sore",
             "who": "choose"
           },
           {
@@ -1256,7 +1795,21 @@
         }
       },
       "3": {
-        "accept": [],
+        "accept": [
+          {
+            "loseContact": true
+          }
+        ],
+        "pay": [
+          {
+            "parts": -4
+          },
+          {
+            "relicLead": {
+              "noRoll": true
+            }
+          }
+        ],
         "twist": {
           "rating": "Nerve",
           "success": [
@@ -1268,24 +1821,48 @@
           ],
           "failure": [
             {
-              "next": "Announced",
+              "loseContact": true
+            },
+            {
+              "next": "Shook",
               "who": "choose"
+            },
+            {
+              "rival": true
             }
           ]
         }
       },
       "4": {
-        "accept": [],
+        "accept": [
+          {
+            "parts": -2
+          }
+        ],
+        "pay": [
+          {
+            "parts": -1
+          },
+          {
+            "lead": true
+          }
+        ],
         "twist": {
           "rating": "Nerve",
           "success": [
             {
               "contact": "Informer"
+            },
+            {
+              "parts": 3
             }
           ],
           "failure": [
             {
               "rival": true
+            },
+            {
+              "parts": -4
             }
           ]
         }
@@ -1299,14 +1876,18 @@
         ],
         "pay": [
           {
-            "note": "The fighter the player picked swears a Big Word now: a vow, on their card for the next battle (13.5). Nothing else happens."
+            "note": "That fighter swears a Big Word now: a vow on their card for the next battle (13.5). Nothing else happens."
           }
         ],
         "twist": {
-          "rating": "Nerve",
+          "rating": "Grit",
           "success": [
             {
-              "xp": 1,
+              "next": "Hyped",
+              "who": "choose"
+            },
+            {
+              "next": "Under warranty",
               "who": "choose"
             }
           ],
@@ -1316,8 +1897,7 @@
               "who": "choose"
             },
             {
-              "next": "Flustered",
-              "who": "choose"
+              "loseContact": true
             }
           ]
         }
@@ -1330,16 +1910,29 @@
           }
         ],
         "twist": {
-          "rating": "Nerve",
+          "rating": "Grit",
           "success": [
             {
+              "lead": true
+            },
+            {
+              "next": "Under warranty",
+              "who": "choose"
+            },
+            {
               "next": "Hyped",
-              "who": "all"
+              "who": "choose"
             }
           ],
           "failure": [
             {
-              "next": "Flustered",
+              "loseItem": {
+                "source": "copy",
+                "label": "a copy item left on the road"
+              }
+            },
+            {
+              "next": "Shook",
               "who": "choose"
             }
           ]
@@ -1350,26 +1943,30 @@
       "1": {
         "accept": [
           {
-            "parts": 0,
-            "ifDebt": -3,
-            "belowZero": true
+            "parts": -2
           }
         ],
         "pay": [
           {
-            "noTask": "choose"
+            "parts": -1
+          },
+          {
+            "tag": "Reliable"
           }
         ],
         "twist": {
-          "rating": "Nerve",
+          "rating": "Grit",
           "success": [
             {
               "tag": "Oathkeepers"
+            },
+            {
+              "parts": 4
             }
           ],
           "failure": [
             {
-              "parts": -3,
+              "parts": -5,
               "belowZero": true
             }
           ]
@@ -1383,7 +1980,10 @@
         ],
         "pay": [
           {
-            "crossContact": true
+            "parts": -2
+          },
+          {
+            "lead": true
           }
         ],
         "twist": {
@@ -1393,12 +1993,21 @@
               "tag": "Oathkeepers"
             },
             {
+              "spend": {
+                "kind": "purchase",
+                "amount": -3
+              }
+            },
+            {
               "note": "That fighter must Work a job this break, if they can."
             }
           ],
           "failure": [
             {
               "tag": "Oathbreakers"
+            },
+            {
+              "parts": -2
             }
           ]
         }
@@ -1409,11 +2018,22 @@
             "rival": true
           }
         ],
+        "pay": [
+          {
+            "parts": -2
+          },
+          {
+            "tag": "Reliable"
+          }
+        ],
         "twist": {
-          "rating": "Nerve",
+          "rating": "Fight",
           "success": [
             {
-              "tag": "Reliable"
+              "lead": true
+            },
+            {
+              "contact": "Fixer"
             }
           ],
           "failure": [
@@ -1421,8 +2041,7 @@
               "rival": true
             },
             {
-              "next": "Announced",
-              "who": "choose"
+              "parts": -3
             }
           ]
         }
@@ -1436,20 +2055,36 @@
         ],
         "pay": [
           {
-            "crossContact": true
+            "parts": -1
+          },
+          {
+            "next": "Under warranty",
+            "who": "choose"
           }
         ],
         "twist": {
-          "rating": "Nerve",
+          "rating": "Tech",
           "success": [
             {
-              "xp": 1,
+              "next": "Under warranty",
+              "who": "choose"
+            },
+            {
+              "next": "Hyped",
               "who": "choose"
             }
           ],
           "failure": [
             {
-              "parts": -3
+              "spend": {
+                "kind": "purchase",
+                "amount": 3
+              }
+            },
+            {
+              "spend": {
+                "kind": "rechargeDouble"
+              }
             }
           ]
         }
@@ -1459,10 +2094,10 @@
           {
             "item": {
               "source": "copy",
+              "maxPrice": 5,
               "kinds": [
                 "armour"
               ],
-              "maxPrice": 5,
               "label": "the boots: a copy armour worth up to 5 parts"
             }
           },
@@ -1484,30 +2119,30 @@
             {
               "item": {
                 "source": "copy",
+                "maxPrice": 5,
                 "kinds": [
                   "armour"
                 ],
-                "maxPrice": 5,
                 "label": "the boots: a copy armour worth up to 5 parts"
               }
             },
             {
-              "tag": "Butchers"
-            },
-            {
               "item": {
                 "source": "copy",
+                "maxPrice": 5,
                 "kinds": [
                   "weapon"
                 ],
-                "maxPrice": 5,
                 "label": "a copy weapon worth up to 5 parts, as well"
               }
+            },
+            {
+              "tag": "Butchers"
             }
           ],
           "failure": [
             {
-              "status": "Sore",
+              "next": "Shook",
               "who": "choose"
             }
           ]
@@ -1516,12 +2151,18 @@
       "6": {
         "accept": [
           {
-            "noTask": "choose"
+            "spend": {
+              "kind": "rechargeDouble"
+            }
           }
         ],
         "pay": [
           {
-            "crossContact": true
+            "parts": -1
+          },
+          {
+            "recharge": 3,
+            "who": "choose"
           }
         ],
         "twist": {
@@ -1530,12 +2171,22 @@
             {
               "xp": 1,
               "who": "choose"
+            },
+            {
+              "parts": 5
             }
           ],
           "failure": [
             {
-              "next": "Flustered",
-              "who": "choose"
+              "loseItem": {
+                "who": "choose",
+                "label": "an item that fighter carries"
+              }
+            },
+            {
+              "spend": {
+                "kind": "hire"
+              }
             }
           ]
         }
@@ -1543,10 +2194,15 @@
     },
     "Row 7: The Control Group": {
       "1": {
-        "accept": [],
+        "accept": [
+          {
+            "next": "Shook",
+            "who": "choose"
+          }
+        ],
         "pay": [
           {
-            "noTask": "choose"
+            "parts": -1
           },
           {
             "tag": "Merciful"
@@ -1565,22 +2221,33 @@
           ],
           "failure": [
             {
-              "noTask": "choose"
+              "loseContact": true
             },
             {
-              "noTask": "second"
+              "spend": {
+                "kind": "hire"
+              }
             }
           ]
         }
       },
       "2": {
-        "accept": [],
+        "accept": [
+          {
+            "next": "Shook",
+            "who": "bot"
+          }
+        ],
         "pay": [
           {
-            "noTask": "choose"
+            "parts": -1
           },
           {
-            "xp": 1,
+            "next": "Under warranty",
+            "who": "bot"
+          },
+          {
+            "next": "Hyped",
             "who": "bot"
           }
         ],
@@ -1590,21 +2257,33 @@
             {
               "xp": 2,
               "who": "bot"
+            },
+            {
+              "next": "Under warranty",
+              "who": "bot"
             }
           ],
           "failure": [
             {
-              "status": "Sore",
+              "next": "Shook",
               "who": "bot"
+            },
+            {
+              "loseContact": true
             }
           ]
         }
       },
       "3": {
-        "accept": [],
+        "accept": [
+          {
+            "rival": true
+          }
+        ],
         "pay": [
           {
-            "noTask": "choose"
+            "status": "Sore",
+            "who": "bot"
           },
           {
             "lead": true
@@ -1615,67 +2294,111 @@
           "success": [
             {
               "contact": "Informer"
+            },
+            {
+              "lead": true
             }
           ],
           "failure": [
             {
-              "next": "Flustered",
-              "who": "choose"
+              "loseLead": true
             }
           ]
         }
       },
       "4": {
-        "accept": [],
+        "accept": [
+          {
+            "spend": {
+              "kind": "rechargeDouble"
+            }
+          }
+        ],
         "pay": [
           {
-            "noTask": "bot"
+            "parts": -2
           },
           {
-            "xp": 1,
-            "who": "bot"
+            "lead": true
           }
         ],
         "twist": {
           "rating": "Tech",
           "success": [
             {
-              "tag": "Reliable"
+              "next": "Under warranty",
+              "who": "bot"
+            },
+            {
+              "item": {
+                "source": "copy",
+                "maxPrice": 3
+              }
             }
           ],
           "failure": [
             {
               "status": "Sore",
               "who": "bot"
+            },
+            {
+              "loseContact": true
             }
           ]
         }
       },
       "5": {
-        "accept": [],
+        "accept": [
+          {
+            "loseContact": true
+          }
+        ],
+        "pay": [
+          {
+            "parts": -1
+          },
+          {
+            "next": "Hyped",
+            "who": "captain"
+          }
+        ],
         "twist": {
-          "rating": "Tech",
+          "rating": "Shoot",
           "success": [
             {
-              "tag": "Reliable"
+              "contact": "Informer"
+            },
+            {
+              "spend": {
+                "kind": "purchase",
+                "amount": -3
+              }
             }
           ],
           "failure": [
             {
-              "tag": "Ran"
+              "loseLead": true
+            },
+            {
+              "spend": {
+                "kind": "rechargeDouble"
+              }
             }
           ]
         }
       },
       "6": {
-        "accept": [],
+        "accept": [
+          {
+            "parts": -3
+          }
+        ],
         "pay": [
           {
-            "noTask": "choose"
+            "parts": -3
           },
           {
-            "xp": 1,
-            "who": "second"
+            "contact": "Informer"
           }
         ],
         "twist": {
@@ -1684,12 +2407,18 @@
             {
               "xp": 2,
               "who": "bot"
+            },
+            {
+              "contact": "Informer"
             }
           ],
           "failure": [
             {
-              "next": "Shook",
-              "who": "choose"
+              "xp": -2,
+              "who": "bot"
+            },
+            {
+              "parts": -2
             }
           ]
         }
@@ -1697,30 +2426,47 @@
     },
     "Row 7: Hollowood": {
       "1": {
-        "accept": [],
+        "accept": [
+          {
+            "next": "Shook",
+            "who": "choose"
+          }
+        ],
         "pay": [
           {
-            "noTask": "choose"
-          },
-          {
-            "noTask": "second"
+            "parts": -2
           },
           {
             "tag": "Showboats"
           }
         ],
         "twist": {
-          "rating": "Nerve",
+          "rating": "Shoot",
           "success": [
             {
-              "xp": 1,
+              "item": {
+                "source": "copy",
+                "maxPrice": 5,
+                "kinds": [
+                  "armour"
+                ]
+              }
+            },
+            {
+              "next": "Hyped",
               "who": "choose"
             }
           ],
           "failure": [
             {
-              "next": "Flustered",
+              "next": "Shook",
               "who": "choose"
+            },
+            {
+              "loseItem": {
+                "source": "copy",
+                "label": "a prop the studio keeps"
+              }
             }
           ]
         }
@@ -1732,16 +2478,37 @@
             "who": "lowestXp"
           }
         ],
+        "pay": [
+          {
+            "parts": -1
+          },
+          {
+            "lead": true
+          },
+          {
+            "next": "Hyped",
+            "who": "lowestXp"
+          }
+        ],
         "twist": {
           "rating": "Nerve",
           "success": [
             {
               "contact": "Patron"
+            },
+            {
+              "spend": {
+                "kind": "purchase",
+                "amount": -3
+              }
             }
           ],
           "failure": [
             {
-              "parts": -3
+              "loseItem": {
+                "source": "copy",
+                "label": "a copy item the lawyer seizes"
+              }
             }
           ]
         }
@@ -1749,52 +2516,23 @@
       "3": {
         "accept": [
           {
-            "next": "Announced",
-            "who": "choose"
+            "note": "A showmance: two fighters of the crew's choice must deploy in base contact in the next battle."
           }
         ],
         "pay": [
           {
-            "noTask": "captain"
-          }
-        ],
-        "twist": {
-          "rating": "Nerve",
-          "success": [
-            {
-              "xp": 1,
-              "who": "choose"
-            }
-          ],
-          "failure": [
-            {
-              "next": "Announced",
-              "who": "choose"
-            },
-            {
-              "next": "Shook",
-              "who": "choose"
-            }
-          ]
-        }
-      },
-      "4": {
-        "accept": [
+            "parts": -1
+          },
           {
-            "next": "Announced",
-            "who": "highestXp"
+            "next": "Hyped",
+            "who": "captain"
           }
         ],
         "twist": {
-          "rating": "Tech",
+          "rating": "Shoot",
           "success": [
             {
-              "next": "Announced",
-              "who": "highestXp"
-            },
-            {
-              "next": "Hyped",
-              "who": "highestXp"
+              "tag": "Showboats"
             },
             {
               "parts": 3
@@ -1802,57 +2540,32 @@
           ],
           "failure": [
             {
-              "next": "Announced",
-              "who": "highestXp"
+              "note": "Your next opponent picks the deployment table result instead of rolling (11.1)."
             },
             {
-              "next": "Flustered",
-              "who": "highestXp"
+              "loseContact": true
             }
           ]
         }
       },
-      "5": {
+      "4": {
         "accept": [
           {
-            "next": "Flustered",
-            "who": "choose"
+            "next": "Shook",
+            "who": "highestXp"
           }
         ],
         "pay": [
           {
-            "noTask": "type:Director"
-          }
-        ],
-        "twist": {
-          "rating": "Nerve",
-          "success": [
-            {
-              "xp": 1,
-              "who": "type:Director"
-            }
-          ],
-          "failure": [
-            {
-              "status": "Sore",
-              "who": "choose"
-            }
-          ]
-        }
-      },
-      "6": {
-        "accept": [],
-        "pay": [
-          {
-            "noTask": "choose"
+            "parts": -1
           },
           {
-            "xp": 1,
-            "who": "choose"
+            "next": "Hyped",
+            "who": "highestXp"
           }
         ],
         "twist": {
-          "rating": "Nerve",
+          "rating": "Tech",
           "success": [
             {
               "tag": "Showboats"
@@ -1860,8 +2573,96 @@
           ],
           "failure": [
             {
-              "silly": "Big talk",
+              "next": "Shook",
+              "who": "highestXp"
+            },
+            {
+              "loseContact": true
+            }
+          ]
+        }
+      },
+      "5": {
+        "accept": [
+          {
+            "next": "Shook",
+            "who": "choose"
+          }
+        ],
+        "pay": [
+          {
+            "parts": -1
+          },
+          {
+            "note": "The Director swaps one advance for another they qualify for: do it on their card."
+          }
+        ],
+        "twist": {
+          "rating": "Shoot",
+          "success": [
+            {
+              "note": "The Director swaps one advance for another they qualify for: do it on their card."
+            },
+            {
+              "contact": "Patron"
+            }
+          ],
+          "failure": [
+            {
+              "next": "Shook",
               "who": "choose"
+            },
+            {
+              "loseLead": true
+            }
+          ]
+        }
+      },
+      "6": {
+        "accept": [
+          {
+            "parts": -2
+          }
+        ],
+        "pay": [
+          {
+            "loseItem": {
+              "key": "spare cell",
+              "label": "a spare cell, lost for good"
+            }
+          },
+          {
+            "next": "Hyped",
+            "who": "choose"
+          },
+          {
+            "tag": "Showboats"
+          },
+          {
+            "parts": 4
+          }
+        ],
+        "twist": {
+          "rating": "Fight",
+          "success": [
+            {
+              "tag": "Showboats"
+            },
+            {
+              "spend": {
+                "kind": "purchase",
+                "amount": -3
+              }
+            }
+          ],
+          "failure": [
+            {
+              "loseLead": true
+            },
+            {
+              "spend": {
+                "kind": "hire"
+              }
             }
           ]
         }
@@ -1999,6 +2800,9 @@
             "source": "copy",
             "fit": true
           }
+        },
+        {
+          "note": "Removing the arm costs 5 parts (sell or remove it in the Spend step)."
         }
       ],
       "66": [
@@ -2113,7 +2917,7 @@
           "who": "self"
         },
         {
-          "note": "A stranger wants something: the crew's next story event is about them."
+          "note": "A stranger wants something: the crew's next story event is rolled on row 2 (14.5)."
         }
       ],
       "45": [
@@ -2148,19 +2952,19 @@
     "Scavenge": {
       "success": [
         {
-          "parts": 6
+          "parts": 10
         }
       ],
       "failure": [
         {
-          "parts": 2
+          "parts": 4
         }
       ]
     },
     "Work a job": {
       "success": [
         {
-          "parts": 10
+          "parts": 16
         }
       ],
       "failure": []
@@ -2208,7 +3012,11 @@
       ],
       "5": [
         {
-          "next": "Shook",
+          "title": "Paste",
+          "who": "patient"
+        },
+        {
+          "ward": "Sore",
           "who": "patient"
         }
       ],
@@ -2250,6 +3058,9 @@
       "10": [
         {
           "prosthetic": "patient"
+        },
+        {
+          "contact": "Medic"
         }
       ],
       "11": [
@@ -2260,6 +3071,9 @@
       "12": [
         {
           "healInjury": "patient"
+        },
+        {
+          "contact": "Medic"
         }
       ]
     },
@@ -2299,14 +3113,14 @@
         {
           "choice": [
             {
-              "label": "Agree: Under warranty and Announced next battle",
+              "label": "Agree: Under warranty and Shook next battle",
               "effects": [
                 {
                   "next": "Under warranty",
                   "who": "self"
                 },
                 {
-                  "next": "Announced",
+                  "next": "Shook",
                   "who": "self"
                 }
               ]
@@ -2475,8 +3289,11 @@
       ],
       "4": [
         {
-          "next": "Flustered",
+          "next": "Shook",
           "who": "self"
+        },
+        {
+          "parts": -3
         }
       ],
       "5": [
@@ -2612,7 +3429,7 @@
       ],
       "8": [
         {
-          "next": "Under warranty",
+          "xp": 1,
           "who": "self"
         }
       ],
@@ -2786,10 +3603,10 @@
                 ]
               },
               {
-                "label": "Start the next battle Announced",
+                "label": "Start the next battle Shook",
                 "effects": [
                   {
-                    "next": "Announced",
+                    "next": "Shook",
                     "who": "self"
                   }
                 ]
@@ -2844,7 +3661,7 @@
     "The Inspectorate": {
       "success": [
         {
-          "parts": 8
+          "parts": 13
         }
       ],
       "failure": [],
@@ -2867,8 +3684,7 @@
         ],
         "3": [
           {
-            "next": "Announced",
-            "who": "self"
+            "parts": -2
           },
           {
             "next": "Hyped",
@@ -2981,7 +3797,7 @@
     "Ledgerhands": {
       "success": [
         {
-          "parts": 8
+          "parts": 13
         }
       ],
       "failure": [],
@@ -3105,7 +3921,7 @@
     "Hollowood": {
       "success": [
         {
-          "parts": 8
+          "parts": 13
         }
       ],
       "failure": [],
@@ -3118,8 +3934,7 @@
         ],
         "2": [
           {
-            "next": "Flustered",
-            "who": "self"
+            "rival": true
           }
         ],
         "3": [
@@ -3325,7 +4140,7 @@
         "hire": {
           "free": true,
           "past": "Unwritten",
-          "note": "an arrival, if led off your edge"
+          "note": "an arrival, if led into your deployment zone"
         }
       }
     ],
@@ -3364,12 +4179,12 @@
     ],
     "55": [
       {
-        "note": "Something that breathes: see the drop table (9.7)."
+        "note": "Something that breathes: see the drop table (11.7)."
       }
     ],
     "56": [
       {
-        "note": "A beacon: see the drop table (9.7)."
+        "note": "A beacon: see the drop table (11.7)."
       }
     ],
     "61-63": [
@@ -3419,7 +4234,7 @@
   "_decisions": [
     {
       "answer": 33,
-      "section": "12.5, 14.5",
+      "section": "10.5, 14.5",
       "text": "Row 7: Ledgerhands 5, Twist success: the crew takes the boots (a copy armour worth up to 5 parts) and gains Butchers, and takes a copy weapon worth up to 5 parts as well."
     }
   ]

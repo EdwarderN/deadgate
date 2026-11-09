@@ -14,7 +14,7 @@
     },
     {
       "2d6": "5",
-      "Result": "**Paste, three times a day.** The nurse insists, for the patient's own good. The patient starts the next battle **Shook**, and furious"
+      "Result": "**Paste, three times a day.** The nurse insists, for the patient's own good. It works, and it stinks: the patient's title becomes **\"Paste\"**, and the paste holds: the next time they would be made **Sore**, they are not (once; the name stays)"
     },
     {
       "2d6": "6",
@@ -34,7 +34,7 @@
     },
     {
       "2d6": "10",
-      "Result": "**Fitted while asleep.** If the patient needs a prosthetic, a copy one is fitted free, and they wake up with it"
+      "Result": "**Fitted while asleep.** If the patient needs a prosthetic, a copy one is fitted free, and they wake up with it. The surgeon leaves a number: gain the contact **Medic**"
     },
     {
       "2d6": "11",
@@ -42,7 +42,7 @@
     },
     {
       "2d6": "12",
-      "Result": "**Right, for once.** The med-assistant is right: one **lasting injury** of the patient is gone (the title stays)"
+      "Result": "**Right, for once.** The med-assistant is right: one **lasting injury** of the patient is gone (the title stays). Gain the contact **Medic**"
     }
   ],
   "Scavenge": [
@@ -56,7 +56,7 @@
     },
     {
       "2d6": "4",
-      "Result": "**Terms and conditions.** The wreck's voice wakes and reads them out, all of them. Agree, and the fighter starts the next battle **Under warranty** and **Announced** (the voice read their name out to everyone); refuse, and the voice locks the wreck: the task pays only its failure pay"
+      "Result": "**Terms and conditions.** The wreck's voice wakes and reads them out, all of them. Agree, and the fighter starts the next battle **Under warranty** and **Shook** (the voice read their name out to everyone); refuse, and the voice locks the wreck: the task pays only its failure pay"
     },
     {
       "2d6": "5",
@@ -102,7 +102,7 @@
     },
     {
       "2d6": "4",
-      "Result": "**One star.** The Per-Diem platform rates the fighter's work, badly, and every patron can read it: the fighter starts the next battle **Flustered** (they have seen the comments)"
+      "Result": "**One star.** The Per-Diem platform rates the fighter's work, badly, and every patron can read it: the fighter starts the next battle **Shook**, and the crew loses **3 parts** (the next job pays less)"
     },
     {
       "2d6": "5",
@@ -118,7 +118,7 @@
     },
     {
       "2d6": "8",
-      "Result": "**A uniform.** The Inspectorate hires the fighter for a day and lets them keep the hat. They may take the title \"Deputy\", and the crew pays no Inspectorate fee or fine this break"
+      "Result": "**A uniform.** The Inspectorate hires the fighter for a day and lets them keep the hat. They may take the title \"Deputy\" (once a battle, the Deputy may move a bystander or an arrival up to 3 inches: the hat looks official), and the crew pays no Inspectorate fee or fine this break. The clerk likes the hat: gain the contact **Friend at the meter**"
     },
     {
       "2d6": "9",
@@ -210,7 +210,7 @@
     },
     {
       "2d6": "8",
-      "Result": "**Practised falling.** The trainee starts the next battle **Under warranty**"
+      "Result": "**Practised falling.** The teacher is impressed: the trainee gains **+1 XP** more"
     },
     {
       "2d6": "9",

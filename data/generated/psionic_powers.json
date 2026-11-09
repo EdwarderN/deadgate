@@ -12,7 +12,7 @@
   {
     "Power": "**Push**",
     "Number": "Tricky (8)",
-    "Effect": "A fighter in view within 12 inches is pushed up to 3 inches straight away from the psion, and knocked prone if they end against scenery or another fighter"
+    "Effect": "A fighter in view within 12 inches is pushed up to 3 inches straight away from the psion"
   },
   {
     "Power": "**Dread**",
@@ -32,7 +32,7 @@
   {
     "Power": "**Undertow** (Brinie only)",
     "Number": "Tricky (8)",
-    "Effect": "A fighter in view within 12 inches is pulled up to 3 inches straight toward the psion, and knocked prone if they end against scenery or another fighter"
+    "Effect": "A fighter in view within 12 inches is pulled up to 3 inches straight toward the psion"
   },
   {
     "Power": "**Haze**",

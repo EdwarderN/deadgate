@@ -5,7 +5,7 @@
   },
   {
     "Source": "**Copy**",
-    "Armour rule": "The save above, basic only. **Unreliable:** a kept total of 3 or less on the save jams the armour, which gives no save until a Use action clears it (Routine Tech). A total of exactly 2 is a bodge"
+    "Armour rule": "The save above, basic only. **Unreliable** (section 7.2): the save is the roll that can jam it"
   },
   {
     "Source": "**Drop**",

@@ -1,10 +1,10 @@
 [
   {
-    "Protects the target (the shooter loses dice)": "Light cover (any part of the target hidden by a light-cover piece)",
+    "Protects the target (the shooter loses dice)": "Light cover",
     "Dice": "-1"
   },
   {
-    "Protects the target (the shooter loses dice)": "Heavy cover (any part of the target hidden by a heavy-cover piece)",
+    "Protects the target (the shooter loses dice)": "Heavy cover",
     "Dice": "-2"
   },
   {
@@ -24,7 +24,7 @@
     "Dice": "-1"
   },
   {
-    "Protects the target (the shooter loses dice)": "No line of sight, target Announced (replaces any cover)",
+    "Protects the target (the shooter loses dice)": "No line of sight, target Announced (counts as heavy cover, replaces any other cover)",
     "Dice": "-2"
   }
 ]

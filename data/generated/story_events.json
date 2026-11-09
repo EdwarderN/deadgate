@@ -2,529 +2,529 @@
   "Row 1: Held the field": [
     {
       "d6": "1",
-      "Event": "**The Department of Improvement** names the battle an improvement",
-      "Accept": "It goes in the annual report. Nothing",
-      "Pay": "One fighter wears the badge into the next battle, **Announced**: the crew gains **Reliable**",
-      "Twist": "Nerve: you give the speech, +1 XP to one fighter / you read the wrong page: lose 2 parts"
+      "Event": "**The Department of Improvement** names the battle an improvement, in writing, with a stamp",
+      "Accept": "It goes in the annual report, in a font nobody chose, and the Department sends a commemorative copy item worth up to 3 parts: gain it",
+      "Pay": "Pay **1 part** for the frame and the photographer: one fighter wears the badge into the next battle **Under warranty** (the badge is official), and the photographer talks: gain a **lead**",
+      "Twist": "Nerve, Routine (6): your speech from a crate keeps the printer to the end, and he becomes your contact **Fixer** and leaves a copy item worth up to 3 parts / you read the page on fire exits, and the Department takes back one copy item"
     },
     {
       "d6": "2",
-      "Event": "**Hollowood wants the rights**",
-      "Accept": "Nothing",
-      "Pay": "None",
-      "Twist": "Nerve: 6 parts / the film makes you the villains: gain Butchers"
+      "Event": "**Hollowood wants the rights.** A producer in a very clean coat has brought a contract, and a smile",
+      "Accept": "They send a courtesy copy of the film, with a note thanking you for your cooperation: gain one copy item worth up to 3 parts",
+      "Pay": "Pay **2 parts** for a lawyer who finds a hole in the contract, and a buyer for the props: gain a **lead**, and the contact **Fence** (the lawyer sells the props)",
+      "Twist": "Shoot: they want your best shot again, for the camera, with the producer watching, and you hit it: roll on the **finds** table / you miss on camera, and the film makes you the villains: lose a **contact**, a prop-house friend who saw the cut"
     },
     {
       "d6": "3",
-      "Event": "**A crowd of bettors** owes the crew",
-      "Accept": "4 parts",
+      "Event": "**A crowd of bettors** owes the crew. They bet against you and lost, and are being very friendly about it",
+      "Accept": "4 parts, counted out slowly, in small coins",
       "Pay": "None",
-      "Twist": "Nerve: 8 parts / you swear to double their bets and never turn up: 0 parts, and gain Oathbreakers"
+      "Twist": "Fight: you collect in person, with one hand flat on the table: roll on the **finds** table / they had friends, and you swear you'll be back: you leave with nothing, and gain **Oathbreakers**"
     },
     {
       "d6": "4",
-      "Event": "**The loot is stamped.** The Inspectorate wants a fee",
-      "Accept": "Pay 4 parts or lose one copy item",
-      "Pay": "None",
-      "Twist": "Tech: forge a stamp, keep everything / pay 8"
+      "Event": "**The loot is stamped.** An Inspectorate clerk has found a mark on it, and wants a fee",
+      "Accept": "Pay 4 parts or lose one copy item, and the clerk writes you a receipt either way",
+      "Pay": "Slide the clerk **1 part** under the form: the stamp is waved through, and you pay nothing else",
+      "Twist": "Tech: you forge a stamp, a good one, and keep everything / the clerk knows his own stamp: pay 8"
     },
     {
       "d6": "5",
-      "Event": "**A drifter saw it all** and wants to join",
-      "Accept": "One rookie may be hired for 5 parts less",
+      "Event": "**A drifter saw it all** from behind a wreck, and wants to join. They have brought their own kettle",
+      "Accept": "One rookie may be hired for 5 parts less; the drifter has opinions about the pay",
       "Pay": "None",
-      "Twist": "Nerve: they are the real thing, hire them free / they were running from someone: hire them free, and write that someone as a **rival**"
+      "Twist": "Grit: they keep up on the walk home, so they are the real thing: hire them for 10 parts less (free at most) / they were running from someone: write that someone as a **rival**, and the drifter steals one item and leaves"
     },
     {
       "d6": "6",
-      "Event": "**Victory feast**",
-      "Accept": "Nothing",
-      "Pay": "5 parts: every fighter starts the next battle Hyped",
-      "Twist": "None"
+      "Event": "**Victory feast.** Somebody found a pot, and somebody else found what to put in it",
+      "Accept": "The newest fighter gets a second helping, and a story to go with it: they start the next battle **Hyped**",
+      "Pay": "Pay **5 parts** for the good table: up to five fighters start the next battle **Hyped**",
+      "Twist": "Nerve, Routine (6): your toast lands, and a patron at the next fire hears it: gain the contact **Patron**, and a copy item worth up to 2 parts / a fight breaks out over the toast, and a patron walks out: lose a **contact**"
     }
   ],
   "Row 2: Did not hold the field": [
     {
       "d6": "1",
-      "Event": "**The debt collector calls** (Collections Department)",
-      "Accept": "Lose 4 parts",
-      "Pay": "None",
-      "Twist": "Fight: they leave / you promise to pay next week, and don't: lose 4 parts, and gain Oathbreakers"
+      "Event": "**The debt collector calls** from the Collections Department. He calls everyone friend. If the crew has a rival gang, the gang sent them, mob-handed",
+      "Accept": "He takes one copy item as a down payment, and writes you a receipt",
+      "Pay": "Cross off a **lead**: it tells you where the collector sleeps, and he goes away owing you a favour: gain the contact **Fixer**",
+      "Twist": "Fight (-1 die if a rival gang sent them): they leave, you take a copy item worth up to 3 parts off the field, and a rival gang is crossed off / you promise to pay next week, and don't: gain **Oathbreakers**, and recharging costs double this break"
     },
     {
       "d6": "2",
-      "Event": "**Sympathy from a patron**",
-      "Accept": "3 parts of pity money",
-      "Pay": "None",
-      "Twist": "Nerve: \"we don't need it\", gain **Reliable** / you tell them the crew won't fight again without better odds: 3 parts, and gain Ran"
+      "Event": "**Sympathy from a patron.** They come to the camp with a basket, to say how sorry they are",
+      "Accept": "Take the pity: 1 part, and two fighters start the next battle **Shook**",
+      "Pay": "Refuse the money and pay **2 parts** for the drinks: the patron sends a cousin who needs work, and one rookie may be hired for 5 parts less",
+      "Twist": "Nerve, Routine (6): \"we don't need it\", you say, and mean it, and the patron's driver names a cheap armourer: the first purchase this break costs **5 less** / you say the crew won't fight again without better odds: lose the **lead**, and the first purchase this break costs 3 more"
     },
     {
       "d6": "3",
-      "Event": "**Scavengers on the field** after you left",
-      "Accept": "Nothing",
-      "Pay": "One fighter takes no task and goes back for it tonight: you get back one item lost this battle",
-      "Twist": "Grit: get one back free / one fighter is Sore"
+      "Event": "**Scavengers on the field** after you left. Someone saw the smoke and brought a cart",
+      "Accept": "You let them keep it, and their cart blocks the charging point: recharging costs double this break",
+      "Pay": "Pay **3 parts**: a local guide finds the scavengers' camp, and you get back one item lost this battle",
+      "Twist": "Grit: you walk in and take it back, free: get one item lost this battle back / the cart is gone with the salvage: you lose two copy items"
     },
     {
       "d6": "4",
-      "Event": "**A rookie loses heart**",
-      "Accept": "The newest fighter (lowest Experience) gets the silly trait \"Jittery\" (section 13.7)",
-      "Pay": "3 parts: a pep talk with drinks",
-      "Twist": "Nerve: they shrug it off / they leave the crew (their gear stays)"
+      "Event": "**A rookie loses heart.** They sit at the edge of the camp, looking at their hands",
+      "Accept": "The newest fighter (lowest Experience) loses one copy item they carried, **for good**: it leaves the crew's roster at once (the player picks which; with none, nothing happens)",
+      "Pay": "Pay **1 part**: a pep talk with drinks, and nothing else happens",
+      "Twist": "Grit: they shrug it off and gain +1 XP / they leave the crew in the night (their gear stays)"
     },
     {
       "d6": "5",
-      "Event": "**The voice reviews the battle**",
-      "Accept": "It says you won. Nothing",
-      "Pay": "None",
-      "Twist": "Tech: it finds a real lesson, +1 XP to one fighter / it insists; one fighter starts the next battle Shook"
+      "Event": "**The voice reviews the battle.** It has notes, and it wants to read them all",
+      "Accept": "The voice files a cheerful report, and it is the report the next buyer reads: the first purchase this break costs 2 more",
+      "Pay": "Pay **2 parts** for an appeal: a technician fixes the report, and tells you who read it: gain a **lead**",
+      "Twist": "Tech: it finds a real lesson, +1 XP to one fighter, and gain a **lead** / it insists you won and files it: the crew pays 5 parts in fines"
     },
     {
       "d6": "6",
-      "Event": "**Named on the boards.** The winners' victory speech names your captain",
-      "Accept": "Nothing, but it stings",
-      "Pay": "The captain writes the reply on the boards and starts the next battle **Announced**: the crew gains **Showboats**",
-      "Twist": "Nerve: the captain answers in person, +1 XP / they get the silly trait \"Big talk\""
+      "Event": "**Named on the boards.** The winners' victory speech names your captain, and spells it right",
+      "Accept": "The captain is **Sore**: they went to the board to argue, and the board won",
+      "Pay": "Pay **2 parts** for the board space: the captain writes the reply, and the crew gains **Showboats**",
+      "Twist": "Shoot, Hard (10): one fighter shoots the captain's name off the board, and the camp talks: gain a **lead** and 4 parts / they miss, and the board names that too: the captain is **Sore** again, and the board-keeper stops taking your calls: lose a **contact**"
     }
   ],
   "Row 3: Ran": [
     {
       "d6": "1",
-      "Event": "**Word gets round**",
+      "Event": "**Word gets round.** Gawk's rumour board has your name on it, in chalk",
       "Accept": "The crew gains **Ran**",
-      "Pay": "Cross off a contact, or pay 6 parts: a quiet word with the rumour board, and no tag",
-      "Twist": "Nerve: no tag / gain Ran and Oathbreakers"
+      "Pay": "Pay **2 parts**: a quiet word with the rumour board, and no tag",
+      "Twist": "Fight: you say it to their faces, at the board, and the board is wrong: the board-keeper becomes your contact **Informer** / gain **Ran**, and recharging costs double this break"
     },
     {
       "d6": "2",
-      "Event": "**The patron withholds pay** and keeps the deposit",
-      "Accept": "Lose 3 parts",
-      "Pay": "None",
-      "Twist": "Fight: they pay up after all, +5 parts / gain Ran"
+      "Event": "**The patron withholds pay** and keeps the deposit, and sends a very polite note. If the crew has a rival patron, it is them",
+      "Accept": "The patron blacklists you: lose a **contact**",
+      "Pay": "Pay **2 parts** for a lawyer's letter: they settle, nobody is cut off, and they pay the deposit back in kind: a copy item worth up to 3 parts",
+      "Twist": "Fight: they pay up after all, 5 parts, and if the patron was a rival it is crossed off: paid, and done with them / lose 2 parts, and gain Ran"
     },
     {
       "d6": "3",
-      "Event": "**Shame**",
-      "Accept": "One fighter that was evacuated gets the silly trait \"Spent your luck\"",
-      "Pay": "None",
-      "Twist": "Nerve: they are fine / the trait, and gain Ran"
+      "Event": "**Shame.** Nobody says anything, which is worse",
+      "Accept": "One fighter that was evacuated starts the next battle **Shook** (nobody asked them to come back)",
+      "Pay": "Pay **1 part** for drinks: nobody says a word, and that fighter starts the next battle **Hyped** instead",
+      "Twist": "Grit, Routine (6): they are fine, and say so, and they start the next battle **Hyped** and **Under warranty** / it shows: gain **Ran**"
     },
     {
       "d6": "4",
-      "Event": "**Wise retreat.** A Control Group observer notes it",
-      "Accept": "Nothing",
-      "Pay": "None",
-      "Twist": "Tech: the paper cites you as the one crew that does what it says, gain Oathkeepers / it calls you a control sample, gain Ran"
+      "Event": "**Wise retreat.** A Control Group observer notes it, in a very small hand",
+      "Accept": "The observer notes your cells for the study, and keeps the notes: write the observer on the roster as a **rival**",
+      "Pay": "Pay the observer **1 part** for a footnote: the paper cites you as careful, and the observer leaves a sample kit: a copy item worth up to 3 parts",
+      "Twist": "Tech, Hard (10): the paper cites you as the one crew that does what it says, and the field team sends a bonus: gain **Oathkeepers** and 4 parts / it calls you a control sample, gain Ran"
     },
     {
       "d6": "5",
-      "Event": "**The evac pilot bills you**",
+      "Event": "**The evac pilot bills you.** He itemises the sky",
       "Accept": "Pay 3 parts",
-      "Pay": "None",
-      "Twist": "Tech: the bill has an error in your favour, 0 / pay 6"
+      "Pay": "Give the pilot one copy item (the crew chooses): he waives the bill, and he knows a buyer: the first sale this break is at full price",
+      "Twist": "Tech: the bill has an error in your favour, and he refunds 2 parts / pay 6, and the pilot tells the dock why you called: gain **Ran**"
     },
     {
       "d6": "6",
-      "Event": "**Someone else's pod.** An arrival from a pod nobody claimed wanders into your camp",
-      "Accept": "They join free (a rookie, Past \"Unwritten\")",
-      "Pay": "None",
-      "Twist": "Nerve: you tell them who they were, and they believe it: they join, and the player picks their rumour now / they don't believe you, and wander off"
+      "Event": "**Someone else's pod.** An arrival from a pod nobody claimed wanders into your camp, in their good clothes",
+      "Accept": "The arrival steals 2 parts as they wander through",
+      "Pay": "Pay **1 part** for food: one rookie (Past \"Unwritten\") may be hired for 5 parts less",
+      "Twist": "Nerve: you tell them who they were, and they believe it: they join for 10 parts less, and the player picks their rumour now / they don't believe you, wander off, and take one copy item"
     }
   ],
   "Row 4: Lost someone": [
     {
       "d6": "1",
-      "Event": "**A funeral of tape**",
-      "Accept": "Every fighter takes no task this break",
-      "Pay": "5 parts: a quick one, tasks as normal",
-      "Twist": "None"
+      "Event": "**A funeral of tape.** They are wrapped in it, the Bodger way, and everyone brings a roll",
+      "Accept": "The crew stays by the body all night, and nobody sleeps: one fighter is **Sore**",
+      "Pay": "Pay **2 parts**: a quick one, with a short speech, and the stalls open on time. A mourner tells you who is asking after the dead: gain a **lead**",
+      "Twist": "Nerve, Routine (6): someone gives the eulogy and it carries across the whole camp: +1 XP to the speaker, and a mourner becomes your contact **Patron** / the tape runs out mid-eulogy, and so does the eulogy: lose a **contact**, and recharging costs double this break"
     },
     {
       "d6": "2",
-      "Event": "**An oath at the grave**",
-      "Accept": "One fighter writes a Big Word on their card now, a vow for the next battle (section 13.5)",
+      "Event": "**An oath at the grave.** Somebody has to say it out loud",
+      "Accept": "One fighter kneels and writes a Big Word on their card now, a vow for the next battle (section 13.5)",
       "Pay": "None",
-      "Twist": "Nerve: the whole crew swears; every fighter starts the next battle Hyped / nobody can speak: the crew swears no Words next battle"
+      "Twist": "Grit: the whole crew swears, one after another: the crew may swear one more Word next battle, and gains **Oathkeepers** / nobody can speak: the crew swears no Words next battle, and the promise to the dead goes unsaid: gain **Oathbreakers**"
     },
     {
       "d6": "3",
-      "Event": "**The wake**",
-      "Accept": "The crew drinks to them: lose 3 parts",
+      "Event": "**The wake.** Somebody found the good bottle, the one they were saving",
+      "Accept": "The crew drinks to them, and the bottle was not cheap: one fighter is **Sore** (the morning)",
       "Pay": "None",
-      "Twist": "Nerve: someone tells the story right, +1 XP to one fighter / it turns into a fight: one fighter is Sore"
+      "Twist": "Grit: someone drinks the rest under the table and tells the story right, and the camp goes quiet: the crew gains **Showboats** / it turns into a fight: lose one copy item (broken over a head), and one fighter starts the next battle **Shook**"
     },
     {
       "d6": "4",
-      "Event": "**Their gear is claimed** by a creditor",
+      "Event": "**Their gear is claimed** by a creditor, who has brought the receipts and a cart",
       "Accept": "Lose one item the lost fighter carried",
       "Pay": "Write the creditor as a **rival**: keep it",
-      "Twist": "Fight: keep it / lose two"
+      "Twist": "Fight: you stand in the way of the cart: keep it, and the creditor owes you: gain a **lead** / lose two items"
     },
     {
       "d6": "5",
-      "Event": "**A relative turns up** to fill the space",
-      "Accept": "Hire one rookie for 5 parts less, same species as the lost fighter",
-      "Pay": "None",
-      "Twist": "Nerve: they take the lost fighter's title with a prefix, and start the next battle Hyped / they want the lost fighter's gear: give them one item"
+      "Event": "**A relative turns up** to fill the space, with the same nose and a different surname",
+      "Accept": "Hire one rookie for 2 parts less, same species as the lost fighter",
+      "Pay": "Give them one item the lost fighter carried (the crew chooses): hire them for **10 parts less**",
+      "Twist": "Grit: they take the lost fighter's title with a prefix, and wear it well: hire them for 5 parts less, and they gain **+1 XP** / they want the lost fighter's gear, and say so: give them one item"
     },
     {
       "d6": "6",
-      "Event": "**Revenge.** The crew that did it is written on the roster as a **rival**",
-      "Accept": "Noted",
+      "Event": "**Revenge.** The enemy fighter who put them down is written on the roster as a **rival**",
+      "Accept": "Their name goes up on the wall, and everyone learns to say it",
       "Pay": "None",
-      "Twist": "Nerve: one fighter swears it, and starts the next battle Hyped / they swear it too loudly: Announced"
+      "Twist": "Shoot: one fighter shoots the rival's picture off the boards and swears it: cross the rival off, and they start the next battle **Hyped** and **Under warranty** / they miss, and everyone saw: they start the next battle **Shook**, and the lead goes cold: lose the **lead**"
     }
   ],
   "Row 5: Took a captive or paid a ransom": [
     {
       "d6": "1",
-      "Event": "**The captive talked**",
-      "Accept": "It knew a cache: 4 parts",
-      "Pay": "None",
-      "Twist": "Nerve: 8 parts / it lied, and you forgive it: gain Merciful"
+      "Event": "**The captive talked.** Nobody asked. It started, and then could not stop",
+      "Accept": "It points out a stash: gain one copy item worth up to 4 parts",
+      "Pay": "Pay **1 part**: you turn the captive into your contact **Informer**, and it points out a second stash: a copy item worth up to 5 parts",
+      "Twist": "Fight: you lean on it, gently at first: roll on the **finds** table / it lied, and you let it go anyway: lose the **lead** (it sold your route)"
     },
     {
       "d6": "2",
-      "Event": "**A threat from the captive's crew**",
-      "Accept": "Nothing",
-      "Pay": "None",
-      "Twist": "Nerve: you send one back, gain Showboats / you send back the captive's boots with a note: gain Butchers"
+      "Event": "**A threat from the captive's crew.** A note, in good handwriting, left on a post",
+      "Accept": "The crew sleeps behind the gate, and a night watchman talks: gain the contact **Informer**",
+      "Pay": "Pay **2 parts**: the threat is withdrawn, one rival is crossed off, the crew gains the contact **Fixer** (they mediate), and up to two fighters start the next battle **Hyped**",
+      "Twist": "Shoot, Hard (10): you send one back through their window, with a note of your own: gain a **lead** and 8 parts / you miss: lose 2 parts"
     },
     {
       "d6": "3",
-      "Event": "**The ransom was counterfeit** (if you received one)",
-      "Accept": "Lose 3 parts",
-      "Pay": "None",
-      "Twist": "Tech: the stamps are real / lose 6"
+      "Event": "**The ransom was counterfeit** (if you received one). The ink is the wrong shade of green",
+      "Accept": "The ransom was worth nothing: write the forger on the roster as a **rival**",
+      "Pay": "Pay a notary **1 part** to check the stamps: he finds the forger, and the forger's lawyer pays the damages in kind: a copy item worth up to 3 parts",
+      "Twist": "Tech, Routine (6): the stamps are real, and the sender apologises at length: 4 parts / lose 6 parts"
     },
     {
       "d6": "4",
-      "Event": "**The paid-for fighter is grateful** (if you paid one)",
-      "Accept": "They start the next battle Hyped",
+      "Event": "**The paid-for fighter is grateful** (if you paid one). They keep trying to carry things",
+      "Accept": "The family of the paid-for fighter sends thanks, and a name: gain the contact **Fixer**",
       "Pay": "None",
-      "Twist": "Nerve: they swear to repay it, and start Hyped and Under warranty / they resent being bought: Flustered instead"
+      "Twist": "Nerve, Routine (6): they swear to repay it, and mean it. They start **Hyped** and **Under warranty**, and gain +1 XP / they resent being bought: they start the next battle **Shook**"
     },
     {
       "d6": "5",
-      "Event": "**A reputation for business**",
-      "Accept": "The crew gains **Reliable**",
-      "Pay": "None",
-      "Twist": "Tech: you print a price list, Reliable and 3 parts / it has a typo, and \"ransoms\" reads \"bodies\". People believe it: gain Butchers"
+      "Event": "**A reputation for business.** Word gets round that you ask a fair price and hand back what you sell",
+      "Accept": "The board reads well: the first purchase this break costs 3 less",
+      "Pay": "Pay **1 part** for a price list: merchants read it, and the crew gains the contact **Fence**, and a merchant sends a copy item worth up to 5 parts",
+      "Twist": "Tech: the price list works: the first purchase this break costs **5 less**, and a merchant sends a copy item worth up to 4 parts / a typo makes \"ransoms\" read \"bodies\", and a challenger comes looking: write them as a **rival**, and lose 3 parts"
     },
     {
       "d6": "6",
-      "Event": "**The Inspectorate wants paperwork**",
-      "Accept": "Pay 2 parts",
-      "Pay": "None",
-      "Twist": "Tech: the forms are in order / pay 5, and the clerk files the captive as \"returned unharmed\": gain Merciful"
+      "Event": "**The Inspectorate wants paperwork.** A clerk with a clipboard and no sense of time",
+      "Accept": "The clerk takes the captive's papers and keeps a copy: write the clerk on the roster as a **rival**",
+      "Pay": "A bribe of **3 parts**: the clerk files the captive as \"returned unharmed\", nobody is written down, and he tells you what the next inspection will ask: gain a **lead**",
+      "Twist": "Tech, Routine (6): the forms are in order, and the clerk likes you: gain a **lead** / pay 5 parts"
     }
   ],
   "Row 6: Made a legend": [
     {
       "d6": "1",
-      "Event": "**The song is wrong.** It is about someone else",
-      "Accept": "Nothing",
-      "Pay": "None",
-      "Twist": "Nerve: it is about you, +1 XP / it is about the enemy"
+      "Event": "**The song is wrong.** It is about someone else, and everybody sings it anyway",
+      "Accept": "The bard sells you the tune, and plays it at the charging point: recharge one fighter's battery by 3, free",
+      "Pay": "Pay **1 part**: the song is about the right fighter, the crew gains **Showboats**, and the bard becomes your contact **Informer**",
+      "Twist": "Nerve, Routine (6): it is about you: the crew gains **Showboats**, and the legend gains +1 XP / it is about the enemy, and their crew gets famous: write them as a **rival**"
     },
     {
       "d6": "2",
-      "Event": "**Fans**",
-      "Accept": "The crew gains **Showboats**",
-      "Pay": "None",
-      "Twist": "Nerve: the legend signs everything, 2 parts / a fan follows them into the next fight: they start it Announced"
+      "Event": "**Fans.** A few of them, with pens",
+      "Accept": "Fans leave gifts: 4 parts",
+      "Pay": "Pay **2 parts** for printed pictures: the legend's picture is sold at the next camp, the crew gains **Showboats**, and the fans pass the hat: a copy item worth up to 5 parts",
+      "Twist": "Grit: the legend signs everything, all night, and the pens run dry: roll on the **finds** table / a fan walks off with a keepsake: the legend loses one item they carried, **for good** (the player chooses)"
     },
     {
       "d6": "3",
-      "Event": "**A patron wants the legend** for a job",
+      "Event": "**A patron wants the legend** for a job, by name. If the crew has a rival patron, it is them, and it is a trap",
       "Accept": "The legend takes it instead of their task: 5 parts",
       "Pay": "None",
-      "Twist": "Fight: 10 parts / the legend is Sore"
+      "Twist": "Fight: 10 parts, and a rival patron is crossed off / the legend starts the next battle **Shook**, trap or not"
     },
     {
       "d6": "4",
-      "Event": "**The Annual Improvement Awards** nominate the fighter",
-      "Accept": "Nothing (they lose to a harvest figure)",
-      "Pay": "5 parts: a better seat",
-      "Twist": "Nerve: they win Fighter of the Year, +2 XP / they get the silly trait \"Big talk\""
+      "Event": "**The Annual Improvement Awards** nominate the fighter, in a category nobody can explain",
+      "Accept": "The award goes to a harvest figure, and the committee sends a voucher: the first purchase this break costs 2 less",
+      "Pay": "Pay **2 parts** for a better seat: the crew gains **Showboats**, and a judge leaves a copy item worth up to 3 parts",
+      "Twist": "Shoot, Hard (10): the award is a shooting display, and they win it: Fighter of the Year, gain a **lead**, and 7 parts / they hit the harvest figure that won last year: lose the **lead** (the committee drops you from the list)"
     },
     {
       "d6": "5",
-      "Event": "**Imitators**",
+      "Event": "**Imitators.** Someone has the legend's walk, and the legend's hat",
       "Accept": "A rookie may be hired for 5 parts less; they insist on the same title with a prefix",
-      "Pay": "None",
-      "Twist": "Nerve: the legend trains them, hire them free / the imitator is better at it: the legend gets the silly trait \"Big talk\""
+      "Pay": "Pay **2 parts**: hire the imitator free (they still take the prefixed title)",
+      "Twist": "Fight, Routine (6): the legend spars with the imitator and wins, and lends back the hat: hire them for 10 parts less / the imitator wins: the legend starts the next battle **Shook**, and the imitator is written as a **rival**"
     },
     {
       "d6": "6",
-      "Event": "**The legend grows**",
-      "Accept": "The fighter starts the next battle Hyped",
+      "Event": "**The legend grows.** By the next camp, the story has a horse in it",
+      "Accept": "A fan sends word, and the word gets about: gain the contact **Fixer**",
       "Pay": "None",
-      "Twist": "Nerve: they tell it themselves, +1 XP / they oversell it: they write a Big Word on their card now for the next battle"
+      "Twist": "Nerve: they tell it themselves, and tell it well: gain a **lead**, and the first purchase this break costs 5 less / they oversell it, and a patron stops believing it: lose a **contact**"
     }
   ],
   "Row 7: The Bodgers": [
     {
       "d6": "1",
-      "Event": "**The roof comes in.** The wreck-home was held up by tape and hope",
-      "Accept": "One fighter of the crew's choice is **Sore** (they held the beam)",
-      "Pay": "Cross off a contact: a friend turns up with a ladder, and nobody is hurt",
-      "Twist": "Tech: you tape it better than it ever was, and one fighter starts the next battle **Under warranty** / it falls in again: two fighters are **Sore**"
+      "Event": "**The roof comes in.** The wreck-home was held up by tape and hope, and the tape gave up first",
+      "Accept": "One fighter is **Sore** (they held the beam, and the beam held them)",
+      "Pay": "Pay **1 part**: a mate turns up with a ladder and a roll of silver, and nobody is hurt",
+      "Twist": "Tech: you tape it better than it ever was, and the neighbours want theirs taped too: gain the contact **Fixer**, and one fighter starts the next battle **Under warranty** / it falls in again, slower: one fighter is **Sore**, and one copy item is lost under the beam"
     },
     {
       "d6": "2",
-      "Event": "**Dipstick thinks out loud** about your next fight, all night, one step at a time",
-      "Accept": "Nothing. It has not finished",
-      "Pay": "One fighter stays up to listen and takes no task: gain a **lead**",
-      "Twist": "Tech: you hear the wrong step and say so, +1 XP to one fighter / you follow it to the end: one fighter starts the next battle **Shook**"
+      "Event": "**Dipstick thinks out loud** about your next fight, all night, one step at a time, and does not skip a step",
+      "Accept": "Dipstick has not finished, and the power it used is on the crew's bill: recharging costs double this break",
+      "Pay": "Pay **2 parts** for a flask of something hot: one fighter stays up to listen, and you gain a **lead**",
+      "Twist": "Tech, Hard (10): you hear the wrong step and say so, out loud, to a machine: gain a **lead** and a copy item worth up to 3 parts / you follow it to the end: one fighter is **Sore** (a long night), and Dipstick bills the power: lose a **contact**"
     },
     {
       "d6": "3",
-      "Event": "**One of ours is stuck** down a wreck, and calling",
-      "Accept": "You heard nothing. Nothing",
-      "Pay": "One fighter takes no task and goes down after them: the crew gains **Merciful**",
-      "Twist": "Grit: you haul them out, and they owe you: gain a contact of your choice, and the crew gains **Merciful** / the wreck shifts: the fighter is **Sore**, and the Bodger is still down there"
+      "Event": "**One of ours is stuck** down a wreck, and calling, in the voice you keep for friends",
+      "Accept": "You heard nothing, and it eats at the fighter who did: one fighter starts the next battle **Shook**",
+      "Pay": "Pay **1 part** for a spare cell: the winch runs all night, the Bodger is hauled out, grey and grateful, and the crew gains **Merciful**",
+      "Twist": "Grit: you haul them out by hand, and they owe you: gain a contact of your choice, and a copy item worth up to 3 parts / the wreck shifts, and the Bodger is still down there. Word goes round the tapes: gain **Ran**"
     },
     {
       "d6": "4",
-      "Event": "**A claim on your claim** (Red Tape). Another crew has filed against the item you claimed",
-      "Accept": "Lose one copy item: their paperwork was better",
-      "Pay": "Write the claimant as a **rival**: keep the item",
-      "Twist": "Tech: yours was filed first and they withdraw: the crew gains **Reliable** / wrong colour of ink: lose the item, and one fighter starts the next battle **Announced** (their name is on the form)"
+      "Event": "**A claim on your claim** (Red Tape). Another crew has filed against the item you claimed, and has a stamp for it",
+      "Accept": "Lose one copy item: their paperwork was better, and they say so kindly",
+      "Pay": "Write the claimant as a **rival**: keep the item, and keep the receipt",
+      "Twist": "Tech: yours was filed first, and they withdraw with a bow and leave their stamp: gain a **lead** / wrong colour of ink: lose the item, and recharging costs double this break (their name is on the form)"
     },
     {
       "d6": "5",
-      "Event": "**A collector watches the restoration** (Silver Tape). They stand and watch a wreck go from scrap to shine",
-      "Accept": "Nothing, but the wreck gleams",
-      "Pay": "Give the collector a copy item: gain the contact **Fence**",
-      "Twist": "Nerve: they love the talk and tell everyone: the crew gains **Showboats** / they ask a question you cannot answer: the fighter gets the silly trait \"Big talk\""
+      "Event": "**A collector watches the restoration** (Silver Tape). They stand with their hands behind their back and watch a wreck go from scrap to shine",
+      "Accept": "The collector tips you in kind, a copy item worth up to 3 parts, and tells nobody, which Silver Tape takes hard",
+      "Pay": "Pay **1 part** for polish: the collector takes the wreck, and you gain the contact **Fence** and a copy item worth up to 3 parts",
+      "Twist": "Nerve, Routine (6): they love the talk and tell everyone, which is the point: gain a **lead** and a copy item worth up to 3 parts / they ask a question you cannot answer and leave, and word goes round: lose a **contact**"
     },
     {
       "d6": "6",
-      "Event": "**The pod queue** (Black Tape). It moves a yard a day, and the whole camp is in it",
-      "Accept": "Nothing. The queue moves a yard",
-      "Pay": "One fighter takes no task and queues all night: roll on the **finds** table",
-      "Twist": "Fight: you take the front of the queue: roll twice on the finds table and keep one / the queue takes it badly: the fighter is **Sore**"
+      "Event": "**The pod queue** (Black Tape). It moves a yard a day, and the whole camp is in it, and nobody remembers what for",
+      "Accept": "You give up your place and watch it close behind you: the first purchase this break costs 2 more",
+      "Pay": "Pay **3 parts** for a runner who queues all night and befriends the clerk: gain the contact **Friend at the meter**",
+      "Twist": "Fight: you take the front of the queue, and nobody argues for long: roll on the **finds** table / the queue takes it badly, and word goes round the camps: gain **Ran**"
     }
   ],
   "Row 7: The Inspectorate": [
     {
       "d6": "1",
-      "Event": "**Surprise audit.** A superior from another district goes through your papers",
-      "Accept": "Two fighters of the crew's choice take no task: they sit with the auditor",
-      "Pay": "Cross off a contact: they vouch for you, and nobody sits",
-      "Twist": "Tech: every form is in order, and the auditor salutes: the crew gains **Reliable** / a stamp is upside down: lose 3 parts, and two fighters take no task"
+      "Event": "**Surprise audit.** A superior from another district goes through your papers, one drawer at a time",
+      "Accept": "One fighter sits with the auditor and holds the pen all day: they start the next battle **Shook**",
+      "Pay": "Pay **1 part** for a clean folder: they vouch for you, nobody sits with the auditor, and the auditor's cousin needs work: one rookie may be hired for 5 parts less",
+      "Twist": "Tech: every form is in order, and the auditor leaves a stamped crate: a copy item worth up to 5 parts / a stamp is upside down, and so is the mood: lose the **lead**, and the auditor is written as a **rival**"
     },
     {
       "d6": "2",
-      "Event": "**A citizen's complaint** about a fine",
-      "Accept": "Filed under C, for Complaint. Nothing",
-      "Pay": "None",
-      "Twist": "Nerve: you apologise, and mean it: the crew gains **Merciful** / you fine them for complaining, and everyone remembers the face: that fighter starts the next battle **Announced**"
+      "Event": "**A citizen's complaint** about a fine, in green ink",
+      "Accept": "Filed under C, for Complaint: write the citizen on the roster as a **rival**",
+      "Pay": "Pay **2 parts** for a handwritten apology: no rival, and the crew gains **Merciful**",
+      "Twist": "Nerve, Routine (6): you apologise, and mean it, which confuses the clerk: no rival, the citizen becomes your contact **Informer**, and an old stamp is yours: a copy item worth up to 3 parts / you fine them for complaining, and they appeal: you broke your own apology: gain **Oathbreakers**"
     },
     {
       "d6": "3",
-      "Event": "**New hats.** The district issues one size to every crew",
-      "Accept": "The smallest fighter starts the next battle **Flustered** (the hat is over their eyes)",
-      "Pay": "One fighter takes no task and takes in the hats: up to three fighters start the next battle **Hyped** (it fits)",
-      "Twist": "Nerve: the captain wears two hats and looks it: the captain starts the next battle **Hyped** and **Announced** / the hat catches in the door: the captain is **Sore**"
+      "Event": "**New hats.** The district issues one size to every crew, from a warehouse that sells nothing else",
+      "Accept": "The smallest fighter walks into a post, in the hat: that fighter is **Sore**",
+      "Pay": "Pay a tailor **3 parts**: up to three fighters start the next battle **Under warranty** (it fits like armour)",
+      "Twist": "Grit: the captain wears two hats and looks it, and the district clerk is impressed: the first purchase this break costs 5 less / the hat catches in the door, with the captain under it: the captain is **Sore**, and recharging costs double this break"
     },
     {
       "d6": "4",
-      "Event": "**A merchant and a very heavy crate** (Weights and Measures). They have to cross your scale",
-      "Accept": "The scale says what it says: **+3 parts**",
+      "Event": "**A merchant and a very heavy crate** (Weights and Measures). They have to cross your scale, and the scale has views",
+      "Accept": "The scale says what it says, and nobody argues: the first sale this break is at full price (the scale is on your side)",
       "Pay": "None",
-      "Twist": "Tech: you lean on the scale: **+8 parts** / the merchant spots it: write them as a **rival**, and give back 3 parts"
+      "Twist": "Tech: you lean on the scale, gently: **+8 parts** / the merchant spots it: write them as a **rival**, and give back 3 parts"
     },
     {
       "d6": "5",
-      "Event": "**Your annual review** (Department of Improvement). Very cheerful",
-      "Accept": "\"Meets expectations.\" It goes in the report. Nothing",
-      "Pay": "The captain takes no task and writes the self-assessment: +1 XP to the captain",
-      "Twist": "Nerve: \"Exceeds expectations\": one fighter gains +1 XP and the crew gains **Showboats** / \"Needs improvement\": the captain gets the silly trait \"Big talk\""
+      "Event": "**Your annual review** (Department of Improvement). Very cheerful, and printed on Gawk's best paper",
+      "Accept": "The Department sends a small grant in kind: recharge one fighter's battery by 2, free",
+      "Pay": "The captain swears to improve: a **Small Word**, a vow on their card for the next battle (section 13.5), and the Department sends **4 parts**",
+      "Twist": "Nerve: \"Exceeds expectations\", in a round hand: one fighter starts the next battle **Hyped**, and the first purchase this break costs 5 less / \"Needs improvement\": the Department sends a trainer, and the captain starts the next battle **Shook** (a week of lectures)"
     },
     {
       "d6": "6",
-      "Event": "**A controlled burn** (Fire Marshals). The standing orders say your camp must be set alight once a quarter, for safety, and it is your quarter",
-      "Accept": "Lose one copy item of the crew's choice (it was in the tent)",
-      "Pay": "One fighter takes no task and carries the gear out: lose nothing",
-      "Twist": "Grit: you save the lot, and the Marshals pin a medal on the fighter: +1 XP / the fighter is **Sore**, and the item is lost"
+      "Event": "**A controlled burn** (Fire Marshals). The standing orders say your camp must be set alight once a quarter, for safety, and it is your quarter, and they have brought matches",
+      "Accept": "Lose one copy item (it was in the tent)",
+      "Pay": "Pay **1 part**: a fighter carries the tent out first, and you lose nothing",
+      "Twist": "Grit, Hard (10): you save the lot, through the smoke, and the Marshals pin a medal on the fighter: they start the next battle **Under warranty**, and 4 parts / the fighter is **Sore**, and the item is lost"
     }
   ],
   "Row 7: The Waiting": [
     {
       "d6": "1",
-      "Event": "**A heretic at the fire** says the gate is dead",
-      "Accept": "One fighter of the crew's choice starts the next battle **Flustered** (a doubt is a doubt)",
-      "Pay": "One fighter takes no task and argues with them all night: +1 XP",
-      "Twist": "Nerve: the heretic stays to listen, and knows something: gain a **lead** / you begin to wonder: one fighter gets the silly trait \"Jittery\""
+      "Event": "**A heretic at the fire** says the gate is dead, mildly, over the stew",
+      "Accept": "One fighter starts the next battle **Shook** (a doubt is a doubt)",
+      "Pay": "Pay **1 part**: the heretic leaves their coat, a copy armour worth up to 5 parts, and walks on",
+      "Twist": "Nerve: the heretic stays to listen, and knows something: gain a **lead** and a copy armour worth up to 3 parts / you begin to wonder, and the singing sounds thinner: lose the **lead** (the doubt got there first), and recharging costs double this break"
     },
     {
       "d6": "2",
       "Event": "**A pod lands in the night.** The sky has spoken, and the crew gathers to sing at it",
-      "Accept": "Nobody dares open it. Nothing",
-      "Pay": "One fighter opens it and starts the next battle **Shook** (the blasphemy): roll on the **drop** table (section 9.7). An arrival from it joins as usual",
-      "Twist": "Nerve: the priest blesses it first: roll on the drop table, and nobody is Shook / the sky is displeased: the fighter who opened it is **Sore**, and the pod is empty"
+      "Accept": "The crew sings at it all night, and nobody opens it, and the priest leaves an offering: 2 parts",
+      "Pay": "One fighter opens it and is **Sore** (a week of penance for the blasphemy): roll on the **drop** table (section 11.7). An arrival from it joins as usual",
+      "Twist": "Nerve: the priest blesses it first, at length: roll on the drop table, and nobody does penance / the sky is displeased: the fighter who opened it is **Sore**, and the pod is empty"
     },
     {
       "d6": "3",
       "Event": "**A relic with a plaque** turns up in the baggage: VOID IF REMOVED",
-      "Accept": "Nothing. It was removed",
-      "Pay": "None",
-      "Twist": "Nerve: the priest knows what it is: one relic may be bought this break at half price, with no roll for a seller / it was a desk bell, and the fighter who rang it starts the next battle **Announced**"
+      "Accept": "It was removed, and the priest has seen the empty hook, and tells the camp: lose a **contact**",
+      "Pay": "Pay **4 parts** for a plaque remover: gain a **relic tip** (section 14.7)",
+      "Twist": "Nerve, Hard (10): the priest knows what it is, and kneels: one relic may be bought this break at half price, with no roll for a seller, and gain a **relic tip** / it was a desk bell: lose a **contact**, one fighter starts the next battle **Shook**, and the priest writes the crew down as a **rival**"
     },
     {
       "d6": "4",
       "Event": "**The answer, word for word** (the Listeners). A Listener told a stranger what the voice said, as their own thought, and the stranger acted on it",
-      "Accept": "Nothing came of it. Yet",
-      "Pay": "None",
-      "Twist": "Nerve: it was good advice, and the stranger is grateful: gain the contact **Informer** / it was bad advice, and they want a word: write them as a **rival**"
+      "Accept": "The stranger turns up, hungry, and cites you: lose 2 parts",
+      "Pay": "Pay **1 part** for a copy of the recording: gain a **lead**",
+      "Twist": "Nerve: it was good advice, and the stranger is grateful: gain the contact **Informer** and 3 parts / it was bad advice, and they want a word: write them as a **rival**, and lose 4 parts"
     },
     {
       "d6": "5",
       "Event": "**The prophecy** (the Visionaries). A Longshanks Visionary says one of your fighters will not be standing at the end of the next battle. Which one is up to you",
       "Accept": "The player picks the fighter: they start the next battle **Shook** (they heard)",
       "Pay": "That fighter swears a Big Word now (a vow, on their card for the next battle): nothing else happens",
-      "Twist": "Nerve: they laugh at it: +1 XP / they believe it: **Shook** and **Flustered**"
+      "Twist": "Grit: they laugh at it, loudly: they start the next battle **Hyped** and **Under warranty** / they believe it: they start the next battle **Shook**, and a contact believes it too and leaves: lose a **contact**"
     },
     {
       "d6": "6",
       "Event": "**A long walk** (the Pilgrims). The signs say the next place is the right place, and it is",
       "Accept": "One fighter is **Sore** (the road)",
       "Pay": "None",
-      "Twist": "Nerve: you start the singing, and everyone joins: every fighter starts the next battle **Hyped** / you forget the words: one fighter starts the next battle **Flustered**, and nobody will say whose fault it was"
+      "Twist": "Grit, Hard (10): you set the pace, and everyone keeps up, singing: the crew gains a **lead**, and one fighter starts the next battle **Under warranty** and **Hyped** / you forget the words: one copy item is left on the road, and one fighter starts the next battle **Shook**"
     }
   ],
   "Row 7: Ledgerhands": [
     {
       "d6": "1",
-      "Event": "**The account arrives.** Jeminy sends the crew's balance, with a friendly note",
-      "Accept": "If the crew's parts are below 0, lose another 3 (interest). Otherwise nothing",
-      "Pay": "One fighter takes no task and argues with the clerk: no interest",
-      "Twist": "Nerve: they waive it, and the clerk writes that you pay on the day: the crew gains **Oathkeepers** / \"It is going well\": lose 3 parts, even if that takes the crew below 0"
+      "Event": "**The account arrives.** Jeminy sends the crew's balance, with a friendly note and a very long attachment",
+      "Accept": "Jeminy adds a fee, in a footnote: lose 2 parts",
+      "Pay": "Pay **1 part** for a courier: Jeminy waives the fee, and the crew gains **Reliable**",
+      "Twist": "Grit, Hard (10): you stand at the desk until they waive it, and the clerk writes that you pay on the day: the crew gains **Oathkeepers** and 4 parts / \"It is going well,\" says the note: lose 5 parts, even if that takes the crew below 0"
     },
     {
       "d6": "2",
       "Event": "**A fighter signed something** at the air meter without reading it, and Jeminy has the copy",
       "Accept": "That fighter must Work a job this break, if they can",
-      "Pay": "Cross off a contact: a friend with a lawyer finds the clause",
-      "Twist": "Nerve: you honour it to the letter, and word gets round: gain **Oathkeepers** / you tear it up in front of the clerk: gain **Oathbreakers**, and the fighter is free"
+      "Pay": "Pay **2 parts**: a friend with a lawyer finds the clause, the fighter is free, and you gain a **lead**",
+      "Twist": "Nerve: you honour it to the letter, and word gets round: gain **Oathkeepers**, and the first purchase this break costs 3 less / you tear it up in front of the clerk, who has seen it before: gain **Oathbreakers**, lose 2 parts, and the fighter is free"
     },
     {
       "d6": "3",
-      "Event": "**The mark's friends** know who named them",
+      "Event": "**The mark's friends** know who named them, and have written it down",
       "Accept": "Write the crew whose fighter you named as your mark as a **rival**",
-      "Pay": "None",
-      "Twist": "Nerve: you send a receipt, and a note saying it was only business: no rival, and the crew gains **Reliable** / they read the note aloud at their camp: the rival stands, and one fighter starts the next battle **Announced**"
+      "Pay": "Pay **2 parts** for a messenger with a receipt: no rival, and the crew gains **Reliable**",
+      "Twist": "Fight: you deliver a receipt and a note saying it was only business: no rival, you gain a **lead** (the note says where they will be), and the courier becomes your contact **Fixer** / they read the note aloud at their camp: the rival stands, and you lose 3 parts"
     },
     {
       "d6": "4",
       "Event": "**The creditor inspects the gear** (the Indentured). It is their gear, and they want to know why it is dented",
-      "Accept": "One fighter of the crew's choice starts the next battle **Shook** (a lecture on dents)",
-      "Pay": "Cross off a contact: a friend swears it was like that when it arrived",
-      "Twist": "Nerve: you show them what the gear has done, and they let you keep the dents: one fighter gains +1 XP / they add the dents to the debt: lose 3 parts"
+      "Accept": "One fighter starts the next battle **Shook** (a lecture on dents)",
+      "Pay": "Pay **1 part**: a friend swears it was like that when it arrived, and the fighter starts the next battle **Under warranty** instead",
+      "Twist": "Tech: you show them the dents are improvements, with a pointer: one fighter starts the next battle **Under warranty** and **Hyped** / they add the dents to the debt: the first purchase this break costs 3 more, and recharging costs double this break"
     },
     {
       "d6": "5",
-      "Event": "**The last good boots** (Collections Department). A debtor has nothing left but a good pair of boots",
+      "Event": "**The last good boots** (Collections Department). A debtor has nothing left but a good pair of boots, and is standing very straight",
       "Accept": "You take the boots: a copy armour worth up to 5 parts, and the crew gains **Butchers**",
       "Pay": "Leave them the boots: the crew gains **Merciful**, and the debtor remembers it: gain the contact **Informer**",
-      "Twist": "Fight: the debtor's cousin has been waiting in the stairwell, and loses: you take a copy weapon worth up to 5 parts as well / the cousin wins: the fighter is **Sore**, and the boots are theirs"
+      "Twist": "Fight: the debtor's cousin has been waiting in the stairwell, and loses: you take the boots, a copy weapon worth up to 5 parts as well, and the crew gains **Butchers** / the cousin wins: the fighter starts the next battle **Shook**, and the boots are theirs"
     },
     {
       "d6": "6",
       "Event": "**Account deactivated** (Per-Diem Companies). The platform has decided a fighter is \"not a good fit\", and will not say why",
-      "Accept": "One fighter of the crew's choice takes no task this break",
-      "Pay": "Cross off a contact: a human at the platform reads the appeal",
-      "Twist": "Tech: the appeal goes through, and the platform apologises with a bonus: +1 XP to that fighter / the appeal gets one star: that fighter starts the next battle **Flustered**"
+      "Accept": "The fighter is struck off, and the crew's account goes with them: recharging costs double this break (the charging point is on the platform too)",
+      "Pay": "Pay **1 part**: a human at the platform reads the appeal, and the fighter keeps the account, with a loyalty bonus: recharge one fighter's battery by 3, free",
+      "Twist": "Tech, Hard (10): the appeal goes through, with a bonus: +1 XP to that fighter, and 5 parts / the appeal gets one star, and the platform reclaims its kit: lose **one item** that fighter carries, and the next hire this break costs 3 more"
     }
   ],
   "Row 7: The Control Group": [
     {
       "d6": "1",
-      "Event": "**The ethics board visits** the field team and asks to see the consent forms",
-      "Accept": "A volunteer has signed. Nothing",
-      "Pay": "One fighter takes no task and fills in every form: the crew gains **Merciful**",
-      "Twist": "Tech: the board approves, \"broadly humane\": the crew gains **Merciful**, and one bot gains +1 XP (they asked it questions) / the board wants the forms in person: two fighters take no task"
+      "Event": "**The ethics board visits** the field team and asks to see the consent forms, all of them",
+      "Accept": "The board notes \"concerns about the form\", in the margin: one fighter starts the next battle **Shook** (they were observed)",
+      "Pay": "Pay **1 part** for a form clerk who fills in every form: the crew gains **Merciful**",
+      "Twist": "Tech: the board approves, \"broadly humane\": the crew gains **Merciful**, and one bot gains +1 XP (they asked it questions) / the board wants the forms in person: lose a **contact**, and the next hire this break costs 3 more"
     },
     {
       "d6": "2",
-      "Event": "**A bot asks a question** nobody programmed: \"Why?\"",
-      "Accept": "Nothing. The bot goes quiet",
-      "Pay": "One fighter takes no task and answers it: one bot gains +1 XP",
-      "Twist": "Tech: the bot understands and writes it down: one bot gains +2 XP / the answer breaks something: that bot is **Sore**"
+      "Event": "**A bot asks a question** nobody programmed: \"Why?\" It asks it twice, then waits",
+      "Accept": "The bot goes quiet and stares: that bot starts the next battle **Shook** (it was not answered)",
+      "Pay": "Pay **1 part** for a ledger: the answer is written down, and that bot starts the next battle **Under warranty** and **Hyped** (it was told the truth)",
+      "Twist": "Tech, Hard (10): the bot understands and writes it down: one bot gains +2 XP, and starts the next battle **Under warranty** / the answer breaks something: that bot starts the next battle **Shook**, and its technician walks out: lose a **contact**"
     },
     {
       "d6": "3",
       "Event": "**Thank you for your participation.** An Observer thanks the crew for taking part in a study nobody mentioned",
-      "Accept": "Nothing. It thanks you again",
-      "Pay": "One fighter takes no task and asks what the study is: gain a **lead** (the answer: \"it concerns you\")",
-      "Twist": "Nerve: it tells you, and a volunteer passes it on: gain the contact **Informer** / it thanks the fighter again, at length: they start the next battle **Flustered**"
+      "Accept": "The Observer thanks you again, at length, and signs you up for the follow-up: write the Observer on the roster as a **rival**",
+      "Pay": "Lend them a bot for their tests: that bot is **Sore** (the tests), and the crew gains a **lead** (the answer: \"it concerns you\")",
+      "Twist": "Nerve: it tells you, and a volunteer passes it on: gain the contact **Informer**, and a **lead** / it thanks the fighter again, at length, and takes notes: lose the **lead** (the Observer has your answer)"
     },
     {
       "d6": "4",
       "Event": "**The same result, again** (Replication Wing). A cheap bot repeats one action all night, until somebody writes it down as proof",
-      "Accept": "Nothing. It has not stopped",
-      "Pay": "One bot takes no task and repeats it: +1 XP to that bot",
-      "Twist": "Tech: replicated: the crew gains **Reliable** / failed to replicate: that bot is **Sore**"
+      "Accept": "It has not stopped, and the bot runs the power down: recharging costs double this break",
+      "Pay": "Pay **2 parts** for the journal fee: the repeat is published, and you gain a **lead**",
+      "Twist": "Tech, Routine (6): replicated: the bot starts the next battle **Under warranty**, and the journal sends a copy item worth up to 3 parts / failed to replicate: that bot is **Sore**, and a reviewer writes to your contacts: lose a **contact**"
     },
     {
       "d6": "5",
       "Event": "**Sweeping conclusions** (Observation Wing). They watched a few people for a long time, and now tell everyone what everyone is like",
-      "Accept": "The report calls the crew \"unremarkable\". Nothing",
-      "Pay": "None",
-      "Twist": "Tech: the sample was you, and the finding is flattering: the crew gains **Reliable** / the finding is that you run from danger: the crew gains **Ran**"
+      "Accept": "The report quotes the captain out of context, and a contact reads it: lose a **contact**",
+      "Pay": "Pay **1 part** for a footnote: the Observers add a correction, nobody loses a contact, and that fighter starts the next battle **Hyped**",
+      "Twist": "Shoot: a demonstration worth writing up: the crew gains the contact **Informer**, and the first purchase this break costs 3 less / they watch you miss, and the finding is that you run from danger: lose the **lead**, and recharging costs double this break"
     },
     {
       "d6": "6",
-      "Event": "**The Dissenters were right** (the Dissenters). Their own numbers say the crew's method is wrong. Nobody likes them",
-      "Accept": "Nothing. Nobody reads it",
-      "Pay": "One fighter takes no task and checks the numbers: +1 XP to one fighter",
-      "Twist": "Tech: they are right, and you fix it: one bot gains +2 XP / they are right, and you did not check: one fighter starts the next battle **Shook**"
+      "Event": "**The Dissenters were right** (the Dissenters). Their own numbers say the crew's method is wrong. Nobody likes them, and they have brought a chart",
+      "Accept": "The paper is withdrawn, and the method must be corrected: lose 3 parts",
+      "Pay": "Pay an outside lab **3 parts** to check the numbers: it confirms them, and its technician becomes your contact **Informer**",
+      "Twist": "Tech, Hard (10): they are right, and you fix it: one bot gains +2 XP, and its technician becomes your contact **Informer** / you did not check: the paper is retracted, one bot loses **2 XP** (never below its last advance threshold), and you lose 2 parts"
     }
   ],
   "Row 7: Hollowood": [
     {
       "d6": "1",
-      "Event": "**Reshoots.** The studio wants the battle again, from a better angle",
-      "Accept": "Nothing. They use what they have",
-      "Pay": "Two fighters take no task and re-enact it: the crew gains **Showboats**",
-      "Twist": "Nerve: it looks better the second time: one fighter gains +1 XP / the extras were better: one fighter starts the next battle **Flustered**"
+      "Event": "**Reshoots.** The studio wants the battle again, from a better angle, with better light",
+      "Accept": "The studio uses the first take, and the notes are brutal: one fighter starts the next battle **Shook**",
+      "Pay": "Pay **2 parts** for a second camera crew: the crew re-enacts it, and gains **Showboats**",
+      "Twist": "Shoot, Hard (10): you hit every mark on the second take: the studio sends a copy armour worth up to 5 parts, and one fighter starts the next battle **Hyped** / the extras were better: one fighter starts the next battle **Shook**, and the studio keeps a prop: lose one copy item"
     },
     {
       "d6": "2",
-      "Event": "**A fan letter** for a fighter nobody has heard of",
-      "Accept": "The crew's newest fighter starts the next battle **Hyped** (somebody believes in them)",
-      "Pay": "None",
-      "Twist": "Nerve: the fan is real, and rich: gain the contact **Patron** / the fan is the studio's lawyer: lose 3 parts"
+      "Event": "**A fan letter** for a fighter nobody has heard of, in violet ink",
+      "Accept": "The newest fighter reads the letter all night: they start the next battle **Hyped**",
+      "Pay": "Pay **1 part** for a reply on headed paper: the fan club talks, you gain a **lead**, and the newest fighter starts the next battle **Hyped**",
+      "Twist": "Nerve: the fan is real, and rich: gain the contact **Patron**, and the first purchase this break costs 3 less / the fan is the studio's lawyer, and signed it \"with love\": a copy item is seized"
     },
     {
       "d6": "3",
-      "Event": "**Confessional** (Reality Productions). Every fighter gets a booth and a question",
-      "Accept": "One fighter of the crew's choice says something they regret, and starts the next battle **Announced**",
-      "Pay": "The captain takes no task and writes the lines: nobody says anything",
-      "Twist": "Nerve: the clip is the line of the week: one fighter gains +1 XP / the clip gives away the next battle's plan: that fighter starts **Announced** and **Shook**"
+      "Event": "**Confessional** (Reality Productions). Every fighter gets a booth and a question, and the question is always the same",
+      "Accept": "A showmance: the edit pairs two of the crew's fighters, who must deploy in base contact in the next battle",
+      "Pay": "Pay **1 part** for a script doctor: nobody says anything, and the captain starts the next battle **Hyped**",
+      "Twist": "Shoot: the clip is the line of the week: the crew gains **Showboats**, and 3 parts / the clip gives away the next battle's plan: your next opponent picks the deployment table result instead of rolling (section 11.1), and a contact sees the clip: lose a **contact**"
     },
     {
       "d6": "4",
-      "Event": "**The algorithm recommends you** (Streaming Platforms). It thinks you are similar to something else",
-      "Accept": "The crew's most experienced fighter starts the next battle **Announced** (everyone saw the thumbnail)",
-      "Pay": "None",
-      "Twist": "Tech: you pick the thumbnail: that fighter is also **Hyped**, and the crew gains 3 parts / wrong thumbnail: that fighter is also **Flustered**"
+      "Event": "**The algorithm recommends you** (Streaming Platforms). It thinks you are similar to something else, and will not be told differently",
+      "Accept": "The crew's most experienced fighter starts the next battle **Shook** (everyone saw the thumbnail)",
+      "Pay": "Pay **1 part** for a thumbnail artist: no Shook, and that fighter starts the next battle **Hyped** instead",
+      "Twist": "Tech, Routine (6): you pick the thumbnail: the Shook is gone, and the crew gains **Showboats** / wrong thumbnail: the Shook stays, and lose a **contact** who saw the thumbnail"
     },
     {
       "d6": "5",
-      "Event": "**The director has a new idea** (Festival Auteurs). It involves one fighter, a window and no explanation",
-      "Accept": "One fighter of the crew's choice starts the next battle **Flustered** (they were told to do it differently)",
-      "Pay": "The Director takes no task and explains it: nobody is Flustered",
-      "Twist": "Nerve: it is \"bold\": the Director gains +1 XP / nobody understands it, and the fighter walks off set: they are **Sore**"
+      "Event": "**The director has a new idea** (Festival Auteurs). It involves one fighter, a window and no explanation, and Chet Jippity loves it",
+      "Accept": "One fighter is told to do it differently: they start the next battle **Shook** (nobody told them why)",
+      "Pay": "Pay **1 part**: the Director does it differently instead, and swaps one advance for another they qualify for; nobody else changes",
+      "Twist": "Shoot: it is \"bold\": the Director swaps one advance, and the Director's friend becomes your contact **Patron** / nobody understands it, and the fighter walks off set: they start the next battle **Shook**, and the Director's notes reach everyone: lose the **lead**"
     },
     {
       "d6": "6",
-      "Event": "**The sequel** (Franchise Studios). The same picture, only bigger",
-      "Accept": "Nothing. The studio is still counting",
-      "Pay": "One fighter takes no task and rehearses the big finish: +1 XP",
-      "Twist": "Nerve: the audience loves the same thing again: the crew gains **Showboats** / it opens badly: that fighter gets the silly trait \"Big talk\""
+      "Event": "**The sequel** (Franchise Studios). The same picture, only bigger, and a bigger sign outside",
+      "Accept": "The studio cuts your fee, and calls it a budget: lose 2 parts",
+      "Pay": "Blow the effects budget: one fighter's **spare cell** goes into the big finish (it is lost for good), that fighter starts the next battle **Hyped**, the crew gains **Showboats**, and the studio pays back 4 parts",
+      "Twist": "Fight: the big finish is a real fight, and it shows: the crew gains **Showboats**, and the first purchase this break costs 3 less / it opens badly, and the studio blames the crew's plan: lose the **lead**, and the next hire this break costs 3 more"
     }
   ]
 }

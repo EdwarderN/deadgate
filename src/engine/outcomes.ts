@@ -2,7 +2,7 @@
 // What a table row does is data (data/manual/outcomes.json), resolved in effects.ts.
 import { getRules, plain, type Rules } from '../data/rules';
 import { addLedger, advancesEarned, battery, creditFloor, isBot } from './crew';
-import { uid, type Crew, type Fighter, type ItemSlot } from './model';
+import { uid, type Crew, type Fighter, type ItemSlot, type SpendEffect } from './model';
 
 export type Change =
   /** a loss stops at 0 (14.2), unless floor says the crew may pay into debt: 'credit' to its credit floor, 'none' with no floor (a ransom to the Ledgerhands) */
@@ -30,6 +30,9 @@ export type Change =
   | { kind: 'recharge'; fid: string | null; amount: number | null; note: string }
   | { kind: 'useContact'; name: string; why: string }
   | { kind: 'removeContact'; name: string }
+  | { kind: 'removeRival'; value: string }
+  | { kind: 'ward'; fid: string; value: string }
+  | { kind: 'spendEffect'; effect: SpendEffect }
   | { kind: 'botCoreLost'; fid: string }
   | { kind: 'botReplace'; fid: string; fraction: number }
   | { kind: 'mark'; fid: string; value: string; title: string | null }
@@ -38,13 +41,14 @@ export type Change =
   | { kind: 'crewRoll'; name: string; titles: string; fate: string }
   | { kind: 'note'; text: string };
 
-/** The two halves of a story event's twist: "Nerve: success / failure". */
-export function splitTwist(text: string): { rating: string | null; success: string; failure: string } {
+/** The two halves of a story event's twist: "Nerve: success / failure", or "Nerve, Routine (6): ...",
+ *  or "Fight (-1 die if ...): ...". difficulty is the named one, if the cell names one (14.5). */
+export function splitTwist(text: string): { rating: string | null; difficulty: string | null; note: string | null; success: string; failure: string } {
   const t = plain(text);
-  const m = t.match(/^(\w+):\s*(.*)$/);
-  const body = m ? m[2] : t;
+  const m = t.match(/^(\w+)(?: \(([^)]*)\))?(?:, (\w+) \(\d+\))?:\s*(.*)$/);
+  const body = m ? m[4] : t;
   const [success, failure = ''] = body.split(' / ');
-  return { rating: m ? m[1] : null, success: success.trim(), failure: failure.trim() };
+  return { rating: m ? m[1] : null, difficulty: m?.[3] ?? null, note: m?.[2] ?? null, success: success.trim(), failure: failure.trim() };
 }
 
 let itemName = (id: string) => id.split('|')[0];
@@ -54,7 +58,7 @@ export function describe(crew: Crew, c: Change): string {
   const who = (fid: string) => crew.fighters.find((f) => f.id === fid)?.name || 'a fighter';
   switch (c.kind) {
     case 'parts': return `${c.amount > 0 ? '+' : '−'}${Math.abs(c.amount)} parts${c.note ? ` (${c.note})` : ''}`;
-    case 'xp': return `${who(c.fid)} +${c.amount} XP${c.note ? ` (${c.note})` : ''}`;
+    case 'xp': return `${who(c.fid)} ${c.amount >= 0 ? '+' : '−'}${Math.abs(c.amount)} XP${c.note ? ` (${c.note})` : ''}`;
     case 'status': return `${who(c.fid)} is ${c.value}`;
     case 'injury': return `${who(c.fid)}: ${c.value}`;
     case 'legend': return `${who(c.fid)} earns the Legend ${c.name}${c.title ? ` ("${c.title}")` : ''}`;
@@ -71,7 +75,7 @@ export function describe(crew: Crew, c: Change): string {
     case 'addItem': return `${c.fid ? `${who(c.fid)} gets` : 'Into the stash:'} ${itemName(c.itemId)}`;
     case 'removeItem': return `Lose ${c.label}`;
     case 'hireOffer': return `A recruit ${c.discount === null ? 'for free' : `for ${c.discount} parts less`}${c.note ? ` (${c.note})` : ''}, this break`;
-    case 'relicLead': return `A relic lead: one relic at half price${c.noRoll ? ', no seller roll' : ''}, this break`;
+    case 'relicLead': return `A relic tip: one relic at half price${c.noRoll ? ', no seller roll' : ''}, this break`;
     case 'sellerFound': return `A seller for the ${itemName(c.itemId)} this break`;
     case 'lead': return c.text ? `The crew's lead: ${c.text}` : 'The lead is crossed off';
     case 'gift': return `${who(c.fid)} gains the gift`;
@@ -81,6 +85,9 @@ export function describe(crew: Crew, c: Change): string {
     case 'recharge': return `${c.fid ? who(c.fid) : 'Every fighter'}: battery ${c.amount === null ? 'refilled' : `+${c.amount} Energy`}${c.note ? ` (${c.note})` : ''}`;
     case 'useContact': return `The ${c.name} is used${c.why ? `: ${c.why}` : ''}`;
     case 'removeContact': return `The ${c.name} is crossed off`;
+    case 'removeRival': return `${c.value} is crossed off the rivals`;
+    case 'ward': return `${who(c.fid)}: the next time they would be ${c.value}, they are not (once)`;
+    case 'spendEffect': return `This break: ${c.effect.kind === 'rechargeDouble' ? 'recharging costs double' : c.effect.kind === 'purchase' ? `the first purchase costs ${Math.abs(c.effect.amount ?? 0)} ${(c.effect.amount ?? 0) >= 0 ? 'more' : 'less'}` : c.effect.kind === 'hire' ? 'the next hire costs more' : 'the first sale is at full price'}`;
     case 'botCoreLost': return `${who(c.fid)}'s core is lost: Experience, advances and Legends are gone (13.3)`;
     case 'botReplace': return `${who(c.fid)}'s core keeps ${c.fraction === 0.5 ? 'half' : `${c.fraction}`} their Experience; buy a new chassis in the Spend step (13.3)`;
     case 'mark': return `${who(c.fid)} gains ${c.value}${c.title ? ` ("${c.title}")` : ''}`;
@@ -110,8 +117,18 @@ export function applyChanges(rules: Rules, crew: Crew, changes: Change[]): { cre
         if (amount) c = addLedger(c, amount, ch.note || (amount > 0 ? 'Parts gained' : 'Parts paid'));
         break;
       }
-      case 'xp': fx(ch.fid, (f) => ({ ...f, xp: f.xp + ch.amount })); break;
-      case 'status': fx(ch.fid, (f) => ({ ...f, status: ch.value })); break;
+      case 'xp': fx(ch.fid, (f) => {
+        if (ch.amount >= 0) return { ...f, xp: f.xp + ch.amount };
+        // An XP loss never goes below the fighter's last advance threshold (14.5).
+        const n = advancesEarned(rules, f.xp);
+        const floor = n > 0 ? rules.thresholds(n)[n - 1] : 0;
+        return { ...f, xp: Math.max(floor, f.xp + ch.amount) };
+      }); break;
+      case 'status': fx(ch.fid, (f) => {
+        const i = f.wards?.indexOf(ch.value) ?? -1;
+        return i >= 0 ? { ...f, wards: f.wards!.filter((_, j) => j !== i) } : { ...f, status: ch.value };
+      }); break;
+      case 'ward': fx(ch.fid, (f) => ({ ...f, wards: [...(f.wards ?? []), ch.value] })); break;
       case 'injury': fx(ch.fid, (f) => (f.injuries.includes(ch.value) ? f : { ...f, injuries: [...f.injuries, ch.value], titles: ch.title ? Array.from(new Set([...f.titles, ch.title])) : f.titles })); break;
       case 'legend': fx(ch.fid, (f) => (f.legends.some((l) => l.name === ch.name) ? f : { ...f, legends: [...f.legends, { id: uid('g'), name: ch.name, title: ch.title }] })); break;
       case 'silly': fx(ch.fid, (f) => ({ ...f, sillyTrait: ch.value, lastFailedTier: ch.tier ?? f.lastFailedTier })); break;
@@ -125,7 +142,8 @@ export function applyChanges(rules: Rules, crew: Crew, changes: Change[]): { cre
         break;
       }
       case 'contact': c = { ...c, notes: { ...c.notes, contacts: [...c.notes.contacts.filter((x) => !x.used), { name: ch.value, used: false }].slice(-rules.crew.limits.maxContacts.value) } }; break;
-      case 'rival': c = { ...c, notes: { ...c.notes, rivals: [...c.notes.rivals, ch.value] } }; break;
+      // At most three rivals: a fourth pushes out the oldest (14.8).
+      case 'rival': c = { ...c, notes: { ...c.notes, rivals: [...c.notes.rivals, ch.value].slice(-(rules.crew.limits.maxRivals?.value ?? Infinity)) } }; break;
       case 'nextBattle': fx(ch.fid, (f) => ({ ...f, nextBattle: Array.from(new Set([...(f.nextBattle ?? []), ch.value])) })); break;
       case 'leave': {
         const f = c.fighters.find((x) => x.id === ch.fid)!;
@@ -143,7 +161,8 @@ export function applyChanges(rules: Rules, crew: Crew, changes: Change[]): { cre
       case 'hireOffer': c = { ...c, hireOffers: [...(c.hireOffers ?? []), { id: uid('h'), discount: ch.discount, note: ch.note, past: ch.past }] }; break;
       case 'relicLead': c = { ...c, relicLead: { noRoll: ch.noRoll || !!c.relicLead?.noRoll } }; break;
       case 'sellerFound': c = { ...c, sellers: { ...(c.sellers ?? {}), [ch.itemId]: { found: true } } }; break;
-      case 'lead': c = { ...c, notes: { ...c.notes, lead: ch.text } }; break;
+      // A crew that still holds a lead gains no second; crossing one off empties it (14.8).
+      case 'lead': if (!ch.text || !c.notes.lead) c = { ...c, notes: { ...c.notes, lead: ch.text } }; break;
       case 'gift': fx(ch.fid, (f) => ({ ...f, gift: true })); break;
       case 'healInjury': fx(ch.fid, (f) => ({ ...f, injuries: f.injuries.filter((i) => i !== ch.value) })); break;
       case 'laidUpToSore': {
@@ -166,6 +185,8 @@ export function applyChanges(rules: Rules, crew: Crew, changes: Change[]): { cre
         c = { ...c, notes: { ...c.notes, contacts: c.notes.contacts.map((x, j) => (j === i ? { ...x, used: true } : x)) } };
         break;
       }
+      case 'removeRival': { const i = c.notes.rivals.indexOf(ch.value); if (i >= 0) c = { ...c, notes: { ...c.notes, rivals: c.notes.rivals.filter((_, j) => j !== i) } }; break; }
+      case 'spendEffect': c = { ...c, spendEffects: [...(c.spendEffects ?? []), ch.effect] }; break;
       case 'removeContact': {
         const i = c.notes.contacts.findIndex((x) => x.name === ch.name);
         c = { ...c, notes: { ...c.notes, contacts: c.notes.contacts.filter((_, j) => j !== i) } };

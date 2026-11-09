@@ -46,7 +46,7 @@
       {
         "d6": "1",
         "Result": "**\"I have also, for safety, changed fourteen other things.\"**",
-        "Effect": "Every voiced item within 3 inches **jams**, the fighter's and everyone else's, friend or foe (a Use action clears each)",
+        "Effect": "Every voiced item within 3 inches **jams** (section 7.2), the fighter's and everyone else's, friend or foe",
         "Mark": "Bad"
       },
       {
@@ -76,7 +76,7 @@
       {
         "d6": "6",
         "Result": "**\"I have taken the liberty of doing the whole thing.\"**",
-        "Effect": "After this action, the fighter takes one more action of any kind",
+        "Effect": "After this action, the fighter takes one more action of any kind but an attack",
         "Mark": "Good"
       }
     ]
@@ -128,7 +128,7 @@
       {
         "d6": "1",
         "Result": "**\"I am a failure. I am a failure.\"**",
-        "Effect": "The item asked **jams** (a Use action clears it). If the voice is a bot's own core, the bot is **Slack** until the end of the round",
+        "Effect": "The item asked **jams** (section 7.2). If the voice is a bot's own core, the bot is **Slack** until the end of the round",
         "Mark": "Bad"
       },
       {

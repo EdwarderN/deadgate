@@ -11,7 +11,7 @@ export interface OwnedItem {
   slot: ItemSlot;
   /** set for starting kit items: which kit line they come from */
   kitRef?: string;
-  /** old stock needs a seller (11.3) */
+  /** old stock needs a seller (9.3) */
   seller?: SellerState;
   sellerRoll?: number;
   /** parts paid in the campaign (creation prices are computed live) */
@@ -51,7 +51,7 @@ export interface Fighter {
   past: string;
   history: string[];
   titles: string[];
-  /** one of the starting rookies (11.1) */
+  /** one of the starting rookies (9.1) */
   rookie: boolean;
   hirePaid?: number;
   notes: string;
@@ -61,13 +61,15 @@ export interface Fighter {
   energy?: number;
   /** an arrival's rumour (13.9): the one chosen, and those disproved */
   rumour?: { name: string | null; disproved: string[]; done?: boolean };
+  /** statuses the fighter is spared once ("Paste": the next time they would be Sore, they are not, 14.6) */
+  wards?: string[];
   /** traits outside the budget from madness and the like (Cracked, 8.4) */
   marks?: string[];
   /** the tier of the Word last failed (for "Doubled down", 13.7) */
   lastFailedTier?: string;
   /** the break in which the fighter was hired: no task that break (14.9) */
   hiredBreak?: number;
-  /** a weapon built into the chassis (the Prototype, 12.6): free, no Hands, never removed */
+  /** a weapon built into the chassis (the Prototype, 10.6): free, no Hands, never removed */
   builtIn?: string | null;
   /** a destroyed bot whose core came home waits for a replacement chassis, bought in the Spend step (13.3) */
   awaitingChassis?: boolean;
@@ -86,7 +88,9 @@ export interface BattleFighter {
   reactionUsed: boolean;
   dents: number;
   putDowns: number;
-  /** spectacular hits or Presses landed on an enemy (Box office, 6.2, 12.7) */
+  /** put down a rival fighter, or a fighter of a rival crew (14.8) */
+  rivalDown?: boolean;
+  /** spectacular hits or Presses landed on an enemy (Box office, 6.2, 10.7) */
   spectacular?: number;
   word: BattleWord | null;
   notes: string;
@@ -110,23 +114,23 @@ export interface Battle {
   heldField: boolean;
   stoodGround: boolean;
   world: string;
-  /** the enemy named as the mark (12.5) */
+  /** the enemy named as the mark (10.5) */
   mark?: string;
   research?: { field: number | null; lab: number | null; chosen: 'field' | 'lab' | null; done: boolean };
   /** faction payments made before deployment, by effect id */
   paid?: Record<string, boolean>;
-  /** the world, scenario and deployment rolled or chosen (9.1, 9.2, chapter 10) */
+  /** the world, scenario and deployment rolled or chosen (11.1, 11.2, chapter 12) */
   worldRoll?: number | null;
   scenario?: string;
   deploymentRoll?: number | null;
   eventRoll?: number | null;
-  /** the season's Final (14.13) */
+  /** the season's Final (15.3) */
   final?: boolean;
-  /** the crew called its evac (9.6) or broke (9.4) */
+  /** the crew called its evac (11.6) or broke (11.4) */
   evacuated?: boolean;
   broke?: boolean;
   breakingTests?: Record<string, boolean>;
-  /** the round 2 pod (9.7): fell, and what came out if cracked during the battle */
+  /** the round 2 pod (11.7): fell, and what came out if cracked during the battle */
   pod?: { roll: number | null; drop: number | null; ours?: boolean };
 }
 
@@ -148,7 +152,7 @@ export interface AfterBattle {
   /** captives the crew took this battle (14.4): the asked price, ransomed or refused (the fate), and the fate's roll and XP */
   captives?: Captive[];
   taxUnpaid?: string[];
-  story: { row: string; roll: number | null; notes: string; leadUsed?: boolean; choice?: string; twistWho?: string | null; twistOk?: boolean | null; picks?: Record<string, boolean>; who?: Record<string, string> };
+  story: { row: string; roll: number | null; notes: string; leadUsed?: boolean; rolls?: (number | null)[]; choice?: string; twistWho?: string | null; twistOk?: boolean | null; picks?: Record<string, boolean>; who?: Record<string, string> };
   tasks: Record<string, { task: string; success: boolean | null; testTotal: number | null; tableRoll: number | null; paid?: boolean; picks?: Record<string, boolean>; rating?: string; patient?: string | null; teacher?: string | null }>;
   /** decisions made on table results, by path */
   eff?: Record<string, unknown>;
@@ -173,6 +177,9 @@ export interface LedgerEntry { id: string; at: string; amount: number; note: str
 export interface RollEntry { id: string; name: string; titles: string; fate: string; note: string }
 export interface SeasonEntry { id: string; battle: string; world: string; opponent: string; winCond: string; heldField: string; story: string; points: number }
 
+/** A price change from a story event, for this break only (14.6). */
+export interface SpendEffect { kind: 'rechargeDouble' | 'purchase' | 'hire' | 'sale'; amount?: number; used?: boolean; note?: string }
+
 export interface Crew {
   schema: 1;
   id: string;
@@ -181,7 +188,7 @@ export interface Crew {
   tape: string;
   faction: string | null;
   subfaction: string | null;
-  /** the numbered faction rule the subfaction's rule replaces, chosen at creation (12.1) */
+  /** the numbered faction rule the subfaction's rule replaces, chosen at creation (10.1) */
   replacedRule?: number | null;
   captainId: string | null;
   fighters: Fighter[];
@@ -204,15 +211,17 @@ export interface Crew {
   };
   created: string;
   updated: string;
-  /** old-stock sellers found or not this break (11.3): one roll per item per break */
+  /** old-stock sellers found or not this break (9.3): one roll per item per break */
   sellers?: Record<string, { found: boolean; roll?: number }>;
   breakNo?: number;
   battle?: Battle | null;
   after?: AfterBattle | null;
   /** recruits offered cheaper this break (story events, tasks): discount null means free */
   hireOffers?: { id: string; discount: number | null; note: string; past?: string }[];
-  /** a relic lead this break (14.7): one relic at half price */
+  /** a relic tip this break (14.7): one relic at half price */
   relicLead?: { noRoll: boolean } | null;
+  /** this break's Spend effects (14.6) */
+  spendEffects?: SpendEffect[];
 }
 
 let counter = 0;

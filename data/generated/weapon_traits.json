@@ -41,7 +41,7 @@
   },
   {
     "Trait": "**Point-blank**",
-    "Effect": "The wielder may shoot an enemy in base contact with them, and only that enemy, with -1 die. Without it, a fighter in base contact cannot shoot"
+    "Effect": "The wielder may shoot the enemy in base contact with them (section 5.7)"
   },
   {
     "Trait": "**Quick**",

@@ -14,7 +14,7 @@
     },
     {
       "d66": "14",
-      "Result": "**Headlock.** The active fighter hauls the other round. The active player moves both fighters up to 1 inch in the same direction, still in base contact. A fighter hauled into Dangerous terrain enters it, and one hauled over an edge falls (section 5.3)"
+      "Result": "**Headlock.** The active fighter hauls the other round. The active player moves both fighters up to 1 inch in the same direction, still in base contact (forced movement, section 5.5)"
     },
     {
       "d66": "15",
@@ -28,7 +28,7 @@
   "Row 2: Scramble": [
     {
       "d66": "21",
-      "Result": "**Both go down.** Both fighters are prone where they stand"
+      "Result": "**Both hit the floor.** Both fighters are prone where they stand"
     },
     {
       "d66": "22",
@@ -58,15 +58,15 @@
     },
     {
       "d66": "32",
-      "Result": "**Grit in the works.** Each fighter's weapon jams (a copy) or loses 1 Energy from its holder's battery (old stock). A drop shrugs it off"
+      "Result": "**Wrong hands.** In the tangle, both fighters switch to their other set of Hands items, even an empty one. Changing back is a Use action (section 7.1). A Fourhands, with both sets in use, keeps them"
     },
     {
       "d66": "33",
-      "Result": "**Jammed together.** Every Unreliable item either fighter holds jams. Old-stock items lose 1 Energy instead"
+      "Result": "**The voices shout.** Both fighters' gear speaks at once: each fighter with a voiced device rolls on their crew's voice table now (section 8.5), free, and the result happens. It does not use their ask. A result that works on \"this roll\" works on their next attack, test or save"
     },
     {
       "d66": "34",
-      "Result": "**Plates snag.** The armour catches and twists: each fighter wearing armour is **Shook**"
+      "Result": "**Plates settle.** The armour catches and sits right: each fighter wearing armour is **Under warranty**"
     },
     {
       "d66": "35",
@@ -74,7 +74,7 @@
     },
     {
       "d66": "36",
-      "Result": "**Wrenched aside.** Each fighter spends 1 Energy or is **Shook** (their player's choice)"
+      "Result": "**Covered.** The gear takes the knock, and its voice promises it is all covered: each fighter is **Under warranty**"
     }
   ],
   "Row 4: The room": [
@@ -114,7 +114,7 @@
     },
     {
       "d66": "53",
-      "Result": "**Into the scenery.** The pair crash into whatever is nearest. Both fighters are shoved together in the same direction, toward the nearest wall, door or terrain piece within 4 inches (the active player picks if two are as near), until the front one stops against it. A fighter shoved into Dangerous terrain enters it (section 5.10). With nothing in reach they only stumble: both are **Flustered**"
+      "Result": "**Into the scenery.** The pair crash into whatever is nearest. Both fighters are shoved together in the same direction, toward the nearest wall, locked door or terrain piece within 4 inches (the active player picks if two are as near), until the front one stops against it. With nothing in reach they only stumble: both are **Flustered**"
     },
     {
       "d66": "54",
@@ -126,7 +126,7 @@
     },
     {
       "d66": "56",
-      "Result": "**Swinging load.** A chain, a crane arm, a signboard. Each player rolls a d6; the **lower** roller's fighter is knocked 2 inches in a direction the other player chooses, and falls prone (a tie: it misses). A fighter knocked into Dangerous terrain enters it, and one knocked over an edge falls (section 5.3)"
+      "Result": "**Swinging load.** A chain, a crane arm, a signboard. Each player rolls a d6; the **lower** roller's fighter is knocked 2 inches in a direction the other player chooses, and falls prone (a tie: it misses)"
     }
   ],
   "Row 6: The odd ones": [

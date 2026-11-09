@@ -54,7 +54,7 @@
     },
     {
       "d66": "65",
-      "Result": "**A souvenir.** The medic fitted a spare scrap robo-arm (copy): Hands +1, Unreliable. The fighter did not ask. Removing it costs parts"
+      "Result": "**A souvenir.** The medic fitted a spare scrap robo-arm (copy): Hands +1, Unreliable. The fighter did not ask. Removing it costs **5 parts**"
     },
     {
       "d66": "66",
@@ -108,7 +108,7 @@
     },
     {
       "d66": "44",
-      "Result": "**Found by strangers.** **Sore**, and a stranger now wants something: the crew's next story event is about them"
+      "Result": "**Found by strangers.** **Sore**, and a stranger now wants something: the crew's next story event is rolled on **row 2** (section 14.5)"
     },
     {
       "d66": "45",

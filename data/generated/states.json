@@ -21,7 +21,7 @@
   },
   {
     "State": "**Announced**",
-    "What it does": "Everyone knows where the fighter is. They can be **shot without line of sight** (through one wall, never through a Solid piece or two walls), and **prompted and targeted by psionic powers** without line of sight, if in range",
+    "What it does": "Everyone knows where the fighter is. They can be **shot without line of sight** (section 5.7), and **prompted and targeted by psionic powers** without line of sight, if in range. Nothing blocks a prompt or a power, not even a Solid piece",
     "When it ends": "At the end of the fighter's own next activation"
   }
 ]

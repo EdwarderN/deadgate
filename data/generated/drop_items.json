@@ -32,6 +32,6 @@
   {
     "Drop item": "**A cell nobody can explain**",
     "Slot": "Belt 1",
-    "What it does": "Once, as a Use action, it refills its carrier's battery to full. Then it is dead for the rest of the battle"
+    "What it does": "Once, as a Use action and after a know-how test (Weirdness 6), it refills its carrier's battery to full. Then it is dead for the rest of the battle"
   }
 ]

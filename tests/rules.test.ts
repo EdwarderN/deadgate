@@ -40,7 +40,7 @@ describe('a legal starting crew', () => {
   });
 });
 
-describe('prices (11.1, 11.3, chapter 12)', () => {
+describe('prices (9.1, 9.3, chapter 10)', () => {
   it('a species that costs more than a rookie pays the difference', () => {
     const c = crewOf(plainFaction);
     const pricey = rules.crew.limits.playableSpecies.value.find((s) => rules.recruitPrices[s] > rules.crew.creation.rookieBasePrice.value)!;
@@ -52,7 +52,7 @@ describe('prices (11.1, 11.3, chapter 12)', () => {
     const pr = F[CG].priceRules!.find((p) => p.kind === 'recruitPrice')!;
     const c = crewOf(CG, undefined, undefined, otherRule(CG, pr.rule));
     expect(hirePrice(rules, c, { species: human, type: pr.recruit! })).toBe(pr.price);
-    // any subfaction may give up the control sample for its own rule (12.1, 12.6 Specials)
+    // any subfaction may give up the control sample for its own rule (10.1, 10.6 Specials)
     for (const s of rules.faction(CG)!.subfactions) {
       const c2 = crewOf(CG, s.name, undefined, pr.rule);
       expect(hirePrice(rules, c2, { species: human, type: pr.recruit! })).toBe(F[CG].specials.volunteer);
@@ -110,7 +110,7 @@ describe('budget validator', () => {
   });
 });
 
-describe('rookies (4.2, 4.3, 11.1)', () => {
+describe('rookies (4.2, 4.3, 9.1)', () => {
   it('needs exactly one rating at 1', () => {
     expect(ids(v('ratings', patchFighter(crewOf(plainFaction), 0, { baseRatings: one('') })))).toContain('ratings');
     const two = { ...one(R[0]), [R[1]]: 1 };
@@ -152,7 +152,7 @@ describe('rookies (4.2, 4.3, 11.1)', () => {
   });
 });
 
-describe('captain (11.2)', () => {
+describe('captain (9.2)', () => {
   it('needs a captain with one captain trait', () => {
     const c = crewOf(plainFaction);
     expect(ids(v('captain', { ...c, captainId: null }))).toContain('captain');
@@ -162,7 +162,7 @@ describe('captain (11.2)', () => {
   });
 });
 
-describe('starting kit (chapter 12)', () => {
+describe('starting kit (chapter 10)', () => {
   it('is free and assigned as the faction says', () => {
     const c = crewOf(INSP);
     const cap = c.fighters.find((f) => f.id === c.captainId)!;
@@ -207,7 +207,7 @@ describe('slots (7.1, 7.4, 7.5)', () => {
     c = give(c, 0, oneHanded.id, 'set1');
     expect(ids(v('slots', c))).toContain('slots');
   });
-  it('the belt holds 3 slots, or more under a faction rule while it is kept (7.1, 12.2)', () => {
+  it('the belt holds 3 slots, or more under a faction rule while it is kept (7.1, 10.2)', () => {
     const dev = rules.shopItems.find((i) => i.slot === 'belt' && i.source === 'copy')!;
     const fill = (c: Crew, n: number) => { for (let i = 0; i < n; i++) c = give(c, 0, dev.id, 'belt'); return c; };
     const p = { ...crewOf(plainFaction), items: [] };
@@ -272,7 +272,7 @@ describe('stats', () => {
   });
 });
 
-describe('specials (4.3, 8.3, 11.4)', () => {
+describe('specials (4.3, 8.3, 9.4)', () => {
   it("only gift species can have the gift, in the book's words", () => {
     const c = patchFighter(crewOf(plainFaction), 0, { species: noGift, gift: true });
     const m = v('gift', c);
@@ -286,7 +286,7 @@ describe('specials (4.3, 8.3, 11.4)', () => {
   it('a faction with no psions cannot buy the gift', () => {
     expect(ids(v('gift', patchFighter(crewOf(CG), 0, { species: GS1, gift: true })))).toContain('gift');
   });
-  it('a priest knows one rite, a Waiting priest too (8.3, 12.4)', () => {
+  it('a priest knows one rite, a Waiting priest too (8.3, 10.4)', () => {
     const c = patchFighter(crewOf(plainFaction), 0, { rites: true });
     expect(ritesAllowed(rules, c, c.fighters[0])).toBe(1);
     const w = patchFighter(crewOf(WAITING), 0, { rites: true });
@@ -304,7 +304,7 @@ describe('specials (4.3, 8.3, 11.4)', () => {
   });
 });
 
-describe('campaign (13.4, 4.4, 13.2, 14.3, 11.5)', () => {
+describe('campaign (13.4, 4.4, 13.2, 14.3, 9.5)', () => {
   const trait = (list: string, i = 0) => rules.advanceDefs.filter((d) => d.list === list && !d.needs)[i];
   const common = rules.crew.experience.commonList.value;
   it('advances come from crossing thresholds', () => {

@@ -5,7 +5,7 @@
   },
   {
     "label": "The world",
-    "text": "The two players agree on one of the eight worlds. If they cannot agree, the player whose crew has more league points chooses. Use the world's page (chapter 10) for its always-on rule, pod rule and event table, and the first battle page's non-player models. Deploy on **battle lines** (section 9.1), whatever the table says. Ignore that page's terrain needs, set-up, battle rules, winning condition and prize, and replace anything it would put in the centre of the table with the stage."
+    "text": "The two players agree on one of the eight worlds. If they cannot agree, the player whose crew has more league points chooses. Use the world's page (chapter 12) for its always-on rule, pod rule and event table, and the first battle page's non-player models. Deploy on **battle lines** (section 11.1), whatever the table says. Ignore that page's terrain needs, set-up, battle rules, winning condition and prize, and replace anything it would put in the centre of the table with the stage."
   },
   {
     "label": "The stage",
@@ -21,11 +21,11 @@
   },
   {
     "label": "No way out",
-    "text": "There is no evac in the Final (section 9.6). A side that breaks (section 9.4) loses the prize to the other."
+    "text": "There is no evac in the Final (section 11.6). A side that breaks (section 11.4) loses the prize to the other."
   },
   {
     "label": "The winning condition: the stage",
-    "text": "At the end of the battle, the crew with more standing fighters in contact with or inside the stage wins. A tie goes to the crew that holds the field (section 9.5). If still tied, the crews are joint champions and each takes 15 parts and one roll on the finds table."
+    "text": "At the end of the battle, the crew with more standing fighters in contact with or inside the stage wins. A tie goes to the crew that holds the field (section 11.5). If still tied, the crews are joint champions and each takes 15 parts and one roll on the finds table."
   },
   {
     "label": "The prize",
@@ -33,6 +33,6 @@
   },
   {
     "label": "The end",
-    "text": "The battle ends as usual (section 9.3). Injuries are rolled as usual (section 13.2). The Final scores no league points."
+    "text": "The battle ends as usual (section 11.3). Injuries are rolled as usual (section 13.2). The Final scores no league points."
   }
 ]

@@ -3,31 +3,31 @@
 import type { Rules, ItemDef } from '../data/rules';
 import { keyOf } from '../data/rules';
 import type { PriceRule } from '../data/schema';
-import { uid, type Crew, type Fighter, type ItemSlot, type OwnedItem } from './model';
+import { uid, type Crew, type Fighter, type ItemSlot, type OwnedItem, type SpendEffect } from './model';
 
 // ---------- faction rules ----------
 export function subfactionOf(rules: Rules, crew: Crew) {
   return rules.faction(crew.faction ?? '')?.subfactions.find((s) => s.name === crew.subfaction);
 }
 
-/** A numbered faction rule is in force unless the crew's subfaction replaces it: the player picks which, at creation (12.1). */
+/** A numbered faction rule is in force unless the crew's subfaction replaces it: the player picks which, at creation (10.1). */
 export function ruleActive(rules: Rules, crew: Crew, n: number | undefined): boolean {
   if (n === undefined) return true;
   return !(subfactionOf(rules, crew) && crew.replacedRule === n);
 }
 
-/** The faction rules a subfaction may replace: all but those the book marks as fixed (12.1). */
+/** The faction rules a subfaction may replace: all but those the book marks as fixed (10.1). */
 export function replaceableRules(rules: Rules, faction: string | null) {
   return (rules.faction(faction ?? '')?.rules ?? []).filter((r) => !r.fixed);
 }
 
-/** Belt slots for a fighter of this crew (7.1; a faction rule may give more, 12.2). */
+/** Belt slots for a fighter of this crew (7.1; a faction rule may give more, 10.2). */
 export function beltSlots(rules: Rules, crew: Crew): number {
   const b = rules.factionRules(crew.faction ?? '')?.beltSlots;
   return b && ruleActive(rules, crew, b.rule) ? b.value : rules.crew.gear.beltSlots.value;
 }
 
-/** An item a fighter's type always carries (the Director's camera, 12.7). */
+/** An item a fighter's type always carries (the Director's camera, 10.7). */
 export function typeCarries(rules: Rules, crew: Crew, f: Pick<Fighter, 'type'>) {
   return f.type ? rules.factionRules(crew.faction ?? '')?.typeGrants?.[f.type]?.carries : undefined;
 }
@@ -70,7 +70,7 @@ export function sellerTarget(rules: Rules, crew: Crew): { value: number; source:
   return { value: s.value, source: s.source };
 }
 
-/** Record a seller roll for an old-stock item this break: a d6 against the target, or null for "found" (11.3). */
+/** Record a seller roll for an old-stock item this break: a d6 against the target, or null for "found" (9.3). */
 export function setSellerResult(rules: Rules, crew: Crew, itemId: string, roll: number | null): Crew {
   const found = roll === null || roll >= sellerTarget(rules, crew).value;
   return { ...crew, sellers: { ...(crew.sellers ?? {}), [itemId]: roll === null ? { found } : { found, roll } } };
@@ -135,7 +135,7 @@ export function ritesKnown(rules: Rules, f: Fighter): string[] {
 
 export interface SpendLine { label: string; amount: number; fighterId?: string; uid?: string }
 
-/** What crew creation costs, line by line (11.1, 11.3). */
+/** What crew creation costs, line by line (9.1, 9.3). */
 export function creationSpend(rules: Rules, crew: Crew): SpendLine[] {
   const lines: SpendLine[] = [];
   for (const f of crew.fighters) {
@@ -160,7 +160,7 @@ export function partsLeft(rules: Rules, crew: Crew): number {
   return rules.crew.creation.startingParts.value - creationSpend(rules, crew).reduce((a, l) => a + l.amount, 0);
 }
 
-/** The lowest the crew's parts may go: 0, or a faction's credit (Ledgerhands, 12.5). */
+/** The lowest the crew's parts may go: 0, or a faction's credit (Ledgerhands, 10.5). */
 export function creditFloor(rules: Rules, crew: Crew): { value: number; rule?: number } {
   const c = rules.factionRules(crew.faction ?? '')?.credit;
   if (c && ruleActive(rules, crew, c.rule)) return { value: c.value, rule: c.rule };
@@ -172,7 +172,7 @@ export function canPayRunningCost(rules: Rules, crew: Crew, amount: number): boo
   return amount <= 0 || partsLeft(rules, crew) - amount >= creditFloor(rules, crew).value;
 }
 
-/** May the crew spend this much now? (14.2, 12.5: below 0 a crew buys and hires nothing more.) */
+/** May the crew spend this much now? (14.2, 10.5: below 0 a crew buys and hires nothing more.) */
 export function canSpend(rules: Rules, crew: Crew, amount: number): boolean {
   if (amount <= 0) return true;
   const left = partsLeft(rules, crew);
@@ -322,7 +322,7 @@ export function resetKit(rules: Rules, crew: Crew): Crew {
   return syncKit(rules, { ...crew, items: crew.items.filter((o) => !o.kitRef) });
 }
 
-/** Make the crew's kit items match its faction's starting kit (chapter 12). */
+/** Make the crew's kit items match its faction's starting kit (chapter 10). */
 export function syncKit(rules: Rules, crew: Crew): Crew {
   const lines = kitLines(rules, crew);
   const refs = new Set(lines.map((l) => l.ref));
@@ -367,7 +367,7 @@ export function newCrew(rules: Rules): Crew {
   };
 }
 
-/** Choose a faction: types and kit follow it (11.1, chapter 12). */
+/** Choose a faction: types and kit follow it (9.1, chapter 10). */
 export function setFaction(rules: Rules, crew: Crew, faction: string): Crew {
   const fr = rules.factionRules(faction);
   const fac = rules.faction(faction);
@@ -390,7 +390,7 @@ export function setFaction(rules: Rules, crew: Crew, faction: string): Crew {
   return { ...crew, faction, subfaction: null, replacedRule: null, fighters, captainId, kitPicks: {}, items };
 }
 
-/** The weapons a type may have built in (the Prototype, 12.6), or null. */
+/** The weapons a type may have built in (the Prototype, 10.6), or null. */
 export function builtInOptions(rules: Rules, crew: Crew, type: string | null): ItemDef[] | null {
   const b = type ? rules.factionRules(crew.faction ?? '')?.typeRules?.[type]?.builtIn : undefined;
   if (!b) return null;
@@ -422,11 +422,11 @@ export function finishCreation(rules: Rules, crew: Crew): Crew {
 }
 
 /** Half the price, rounded down; full with a Fence (14.8). Drops are not sold. */
-export function sellValue(rules: Rules, _crew: Crew, o: OwnedItem, fence = false): number | null {
+export function sellValue(rules: Rules, crew: Crew, o: OwnedItem, fence = false): number | null {
   const d = rules.item(o.itemId);
   if (!d || d.price === null) return null;
   const base = d.price;
-  if (fence) return base;
+  if (fence || pendingSpend(crew, 'sale')) return base;
   return Math.floor(base * rules.crew.campaign.sellFraction.value);
 }
 
@@ -440,7 +440,7 @@ export function strength(crew: Crew): number {
   return crew.fighters.reduce((a, f) => a + f.xp, 0) + 10 * crew.fighters.length;
 }
 
-/** Underdog XP for the weaker crew (11.5). */
+/** Underdog XP for the weaker crew (9.5). */
 export function underdog(rules: Rules, ours: number, theirs: number): { underdog: 'us' | 'them' | null; diff: number; xp: number } {
   const u = rules.crew.underdogs.threshold;
   const diff = Math.abs(ours - theirs);
@@ -473,6 +473,27 @@ export function battery(rules: Rules, crew: Crew, f: Fighter): { now: number; ma
   const max = fighterStats(rules, crew, f).energy;
   return { now: Math.min(max, Math.max(0, f.energy ?? max)), max };
 }
-export function rechargeCost(rules: Rules, energy: number): number {
-  return energy * rules.crew.campaign.rechargePerEnergy.value;
+export function rechargeCost(rules: Rules, energy: number, crew?: Crew): number {
+  const double = crew?.spendEffects?.some((e) => e.kind === 'rechargeDouble');
+  return energy * rules.crew.campaign.rechargePerEnergy.value * (double ? rules.crew.campaign.spendEffects?.value.rechargeMultiplier ?? 1 : 1);
+}
+
+// ---------- Spend effects: one break's price changes from story events (14.6) ----------
+export function pendingSpend(crew: Crew, kind: SpendEffect['kind']): SpendEffect | undefined {
+  return crew.phase === 'campaign' ? crew.spendEffects?.find((e) => e.kind === kind && !e.used) : undefined;
+}
+/** Mark the first unused Spend effect of this kind as used. */
+export function useSpend(crew: Crew, kind: SpendEffect['kind']): Crew {
+  const i = crew.spendEffects?.findIndex((e) => e.kind === kind && !e.used) ?? -1;
+  return i < 0 ? crew : { ...crew, spendEffects: crew.spendEffects!.map((e, j) => (j === i ? { ...e, used: true } : e)) };
+}
+/** What the shop asks for an item now: its price, and the break's first-purchase change if one is waiting (never below 0). */
+export function shopPrice(rules: Rules, crew: Crew, item: ItemDef): number {
+  const p = itemPrice(rules, crew, item);
+  const e = pendingSpend(crew, 'purchase');
+  return e ? Math.max(0, p + (e.amount ?? 0)) : p;
+}
+/** The extra the next hire costs this break, if a story event said so. */
+export function hireExtra(rules: Rules, crew: Crew): number {
+  return pendingSpend(crew, 'hire') ? rules.crew.campaign.spendEffects?.value.hireExtra ?? 0 : 0;
 }

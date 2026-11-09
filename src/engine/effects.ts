@@ -6,7 +6,7 @@ import { plain, type Eff, type ItemDef, type Rules } from '../data/rules';
 import { captainOf, isBot, itemPrice } from './crew';
 import { cellCovers, lookup } from './dice';
 import { makesLegend, positionDef } from './battle';
-import { deathFate, type Change } from './outcomes';
+import { deathFate, tagOpposite, type Change } from './outcomes';
 import type { Battle, Crew, Fighter } from './model';
 
 export interface EffCtx {
@@ -99,6 +99,14 @@ export function resolveEffects(rules: Rules, crew: Crew, effs: Eff[], ctx: EffCt
 
   /** Resolve a "who" to fighters, asking once per list for each kind of who. */
   const people = (who: string, p: string): Fighter[] => {
+    const any = who.match(/^any:(\d+)$/);
+    if (any) {
+      // up to N fighters of the crew's choice (14.5)
+      const key = `${path}.who:${who}`;
+      const v = (Array.isArray(st[key]) ? st[key] : st[key] ? String(st[key]).split(',') : []) as string[];
+      if (!out.nodes.some((n) => n.path === key)) out.nodes.push({ kind: 'select', path: key, label: `Which fighters? (up to ${any[1]})`, multi: +any[1], options: crew.fighters.map((x) => ({ value: x.id, label: x.name || 'Unnamed fighter' })), value: v.join(',') });
+      return crew.fighters.filter((x) => v.includes(x.id)).slice(0, +any[1]);
+    }
     const w = whoOptions(rules, crew, who, ctx);
     if (w.auto) return w.auto;
     if (w.options.length === 1) return w.options;
@@ -110,10 +118,11 @@ export function resolveEffects(rules: Rules, crew: Crew, effs: Eff[], ctx: EffCt
     void p;
     return [f];
   };
-  const crewItems = (o: { who?: string; kinds?: string[]; source?: string }, p: string) => {
+  const crewItems = (o: { who?: string; kinds?: string[]; source?: string; key?: string }, p: string) => {
     const owner = o.who ? people(o.who, p).map((f) => f.id) : null;
-    return crew.items.filter((i) => { const d = rules.item(i.itemId); return d && (!owner || owner.includes(i.fighterId ?? '')) && (!o.kinds || o.kinds.includes(d.kind)) && (!o.source || d.source === o.source); });
+    return crew.items.filter((i) => { const d = rules.item(i.itemId); return d && (!owner || owner.includes(i.fighterId ?? '')) && (!o.kinds || o.kinds.includes(d.kind)) && (!o.source || d.source === o.source) && (!o.key || d.key === o.key); });
   };
+  const fallback = rules.crew.campaign.loseNoteFallback?.value ?? 0;
 
   effs.forEach((e, i) => {
     const p = `${path}.${i}`;
@@ -126,13 +135,49 @@ export function resolveEffects(rules: Rules, crew: Crew, effs: Eff[], ctx: EffCt
     if (e.xp) for (const f of people(e.who ?? 'self', p)) auto({ kind: 'xp', fid: f.id, amount: e.xp, note: ctx.note }, `${name(f)} +${e.xp} XP`);
     if (e.status) for (const f of people(e.who ?? 'self', p)) auto({ kind: 'status', fid: f.id, value: e.status }, `${name(f)} is ${e.status}`);
     if (e.next) for (const f of people(e.who ?? 'self', p)) auto({ kind: 'nextBattle', fid: f.id, value: e.next }, `${name(f)} starts the next battle ${e.next}`);
+    if (e.ward) for (const f of people(e.who ?? 'self', p)) auto({ kind: 'ward', fid: f.id, value: e.ward }, `${name(f)}: the next time they would be ${e.ward}, they are not (once)`);
     if (e.silly) for (const f of people(e.who ?? 'self', p)) auto({ kind: 'silly', fid: f.id, value: e.silly }, `${name(f)} gets the silly trait ${e.silly}`);
     if (e.title) for (const f of people(e.who ?? 'self', p)) {
       const take = st[p] !== false;
       out.nodes.push({ kind: 'choice', path: p, options: [`Take the title "${e.title}"`, 'No'], value: take ? 0 : 1 });
       if (take) out.changes.push({ kind: 'title', fid: f.id, value: e.title });
     }
-    if (e.tag) auto({ kind: 'tag', value: e.tag }, `The crew gains ${e.tag}`);
+    if (e.tag) {
+      const opp = tagOpposite(rules, e.tag);
+      const cancels = !!opp && crew.notes.tags.includes(opp);
+      const has = crew.notes.tags.includes(e.tag);
+      auto({ kind: 'tag', value: e.tag }, has ? `${e.tag}: the crew has it already` : cancels ? `${e.tag} and ${opp} cancel: both are crossed off (14.10)` : `The crew gains ${e.tag}`);
+      // What a tag gives when it is gained (Merciful: a contact, if the crew has fewer than three, 14.10).
+      const gain = rules.crew.afterBattle.tagGain?.value[e.tag];
+      if (gain && !has && !cancels && crew.notes.contacts.length < rules.crew.limits.maxContacts.value) merge(sub(gain, `${p}.gain`));
+    }
+    if (e.spend) auto({ kind: 'spendEffect', effect: { ...e.spend, note: ctx.note } }, e.spend.kind === 'rechargeDouble' ? 'Recharging costs double this break' : e.spend.kind === 'purchase' ? `The first purchase this break costs ${Math.abs(e.spend.amount ?? 0)} ${(e.spend.amount ?? 0) >= 0 ? 'more' : 'less'}` : e.spend.kind === 'hire' ? 'The next hire this break costs more' : 'The first sale this break is at full price');
+    // Losing a note (14.8): a contact (the crew's choice) or the lead; a crew with none loses parts instead.
+    if (e.loseContact) {
+      const names = Array.from(new Set(crew.notes.contacts.map((c) => c.name)));
+      if (!names.length) auto({ kind: 'parts', amount: -fallback, note: `${ctx.note}: no contact to lose` }, `No contact to lose: −${fallback} parts`);
+      else {
+        const v = String(st[p] ?? '');
+        out.nodes.push({ kind: 'select', path: p, label: 'Which contact is lost?', options: names.map((n) => ({ value: n, label: n })), value: v });
+        if (v) out.changes.push({ kind: 'removeContact', name: v }); else out.missing.push('choose the contact that is lost');
+      }
+    }
+    if (e.loseLead) {
+      if (crew.notes.lead) auto({ kind: 'lead', text: '' }, 'The lead is lost');
+      else auto({ kind: 'parts', amount: -fallback, note: `${ctx.note}: no lead to lose` }, `No lead to lose: −${fallback} parts`);
+    }
+    if (e.crossLead) {
+      if (crew.notes.lead) auto({ kind: 'lead', text: '' }, 'The lead is crossed off');
+      else { out.nodes.push({ kind: 'note', path: p, text: 'The crew has no lead to cross off: choose another answer.' }); out.missing.push('a lead to cross off'); }
+    }
+    if (e.crossRival) {
+      if (!crew.notes.rivals.length) out.nodes.push({ kind: 'note', path: p, text: 'The crew has no rival to cross off.' });
+      else {
+        const v = String(st[p] ?? '');
+        out.nodes.push({ kind: 'select', path: p, label: 'Which rival is crossed off? (only if the result applies to them)', options: [{ value: '-', label: 'None' }, ...crew.notes.rivals.map((n) => ({ value: n, label: n }))], value: v });
+        if (v && v !== '-') out.changes.push({ kind: 'removeRival', value: v });
+      }
+    }
     if (e.crossContact) {
       // Pay by crossing a contact off the roster (14.5): the crew must have one.
       const names = Array.from(new Set(crew.notes.contacts.map((c) => c.name)));

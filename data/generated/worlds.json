@@ -1,6 +1,6 @@
 [
   {
-    "section": "10.1",
+    "section": "12.1",
     "name": "Landfall",
     "ground": "Wrecked ships and drop pods",
     "alwaysOn": "**Always on: Dead signal.** A relay beacon reaches only **6 inches** here, not 12.",
@@ -57,11 +57,11 @@
           },
           {
             "label": "Set-up",
-            "text": "The pod sits shut at the centre. It landed minutes ago, and nothing else is within 6 inches of it. Put a d6 beside it showing **3**: the lock."
+            "text": "The pod sits shut at the centre. It landed minutes ago, and nothing else is within 6 inches of it. Put a d6 beside it showing **3**: the lock. **Hazard.** Before deployment, the player who activates first marks one wreck as burning: the ground within 1 inch of it is **Dangerous** for the whole battle."
           },
           {
             "label": "Battle rules",
-            "text": "- **Cracking it.** A fighter in base contact may spend a Use action and make a **Tricky (8) Grit** test. On a success, turn the lock die down by 1; a success on a die showing 1 opens the pod. A failure costs the action and nothing else. Either side can work on it, and the die stays where it is between rounds.\n- **What came out.** When the last number is turned, the pod opens: roll a d66 on the drop table (section 9.7). What comes out goes to the fighter who made the last success, and can be taken from them in melee."
+            "text": "- **Cracking it.** A fighter in base contact may spend a Use action and make a **Tricky (8) Grit** test. On a success, turn the lock die down by 1; a success on a die showing 1 opens the pod. A failure costs the action and nothing else. Either side can work on it, and the die stays where it is between rounds.\n- **What came out.** When the last number is turned, the pod opens: roll a d66 on the drop table (section 11.7). What comes out goes to the fighter who made the last success, and can be taken from them in melee."
           },
           {
             "label": "Winning condition",
@@ -73,7 +73,7 @@
           },
           {
             "label": "Deployment",
-            "text": "Roll on the deployment table (section 9.1)."
+            "text": "Roll on the deployment table (section 11.1)."
           },
           {
             "label": "Always on: Dead signal",
@@ -85,7 +85,7 @@
           },
           {
             "label": "The end",
-            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 9.4). Evac: section 9.6."
+            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 11.4). Evac: section 11.6."
           },
           {
             "label": "Landfall event at the start of round 3",
@@ -93,7 +93,7 @@
           },
           {
             "label": "Non-player models",
-            "text": "They act at the end of each round (section 9.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Bystander** | Move 4, Fight 0, Tough 2 | **Dazed.** Unless led, moves 2 inches in the direction of a direction die. Led: moves with the leader, who has Move -1. Not a target: nobody may attack a bystander, but a blast or a missed shot into melee can hit one as a glance, with no save |"
+            "text": "They act at the end of each round (section 11.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Bystander** | Move 4, Fight 0, Tough 2 | **Dazed.** Unless led, moves 2 inches in the direction of a direction die. Led: moves with the leader, who has Move -1. Not a target: nobody may attack a bystander, but a blast or a missed shot into melee can hit one as a glance, with no save |"
           }
         ]
       },
@@ -108,7 +108,7 @@
           },
           {
             "label": "Set-up",
-            "text": "Each player marks wrecks with their own dice, so each player needs a different colour of d6 (or any two different markers)."
+            "text": "Each player marks wrecks with their own dice, so each player needs a different colour of d6 (or any two different markers). **Hazard.** Before deployment, the player who activates first marks one wreck as burning: the ground within 1 inch of it is **Dangerous** for the whole battle."
           },
           {
             "label": "Battle rules",
@@ -124,7 +124,7 @@
           },
           {
             "label": "Deployment",
-            "text": "Roll on the deployment table (section 9.1)."
+            "text": "Roll on the deployment table (section 11.1)."
           },
           {
             "label": "Always on: Dead signal",
@@ -132,11 +132,11 @@
           },
           {
             "label": "Pods",
-            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 9.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
+            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 11.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
           },
           {
             "label": "The end",
-            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 9.4). Evac: section 9.6."
+            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 11.4). Evac: section 11.6."
           },
           {
             "label": "Landfall event at the start of round 3",
@@ -155,11 +155,11 @@
           },
           {
             "label": "Set-up",
-            "text": "At the **end of round 1** the drop lands. The **arrival** (a bystander, dazed, tangled in a parachute) lands first: roll a direction die and **3d6** inches from the centre of the table (they stop at an edge, or beside any terrain they would hit). If they would land in a deployment zone or within 6 inches of one, roll the direction and distance again. Their parachute is a 3-inch template, **Difficult** terrain. Then the **cargo** (a marker) lands: roll a direction die and **2d6** inches from where the arrival came down, the same way."
+            "text": "At the **end of round 1** the drop lands. The **arrival** (a bystander, dazed, tangled in a parachute) lands first: roll a direction die and **3d6** inches from the centre of the table (they stop at an edge, or beside any terrain they would hit). If they would land in a deployment zone or within 6 inches of one, roll the direction and distance again. Their parachute is a 3-inch template, **Difficult** terrain. Then the **cargo** (a marker) lands: roll a direction die and **2d6** inches from where the arrival came down, the same way. **Hazard.** Before deployment, the player who activates first marks one wreck as burning: the ground within 1 inch of it is **Dangerous** for the whole battle."
           },
           {
             "label": "Battle rules",
-            "text": "- **The arrival** is a bystander in every way (section 9.8): lead them with a Use action, and bring them home.\n- **The cargo.** A fighter in base contact may open it with a Use action: roll a d66 on the drop table (section 9.7), and roll again on any arrival or pod result (41-44, 54, 64, 65). The item goes to the opener, as for a pod. The empty cargo stays where it is."
+            "text": "- **The arrival** is a bystander in every way (section 11.8): lead them with a Use action, and bring them home.\n- **The cargo.** A fighter in base contact may open it with a Use action: roll a d66 on the drop table (section 11.7), and roll again on any arrival or pod result (41-44, 54, 64, 65). The item goes to the opener, as for a pod. The empty cargo stays where it is."
           },
           {
             "label": "Winning condition",
@@ -171,7 +171,7 @@
           },
           {
             "label": "Deployment",
-            "text": "Roll on the deployment table (section 9.1)."
+            "text": "Roll on the deployment table (section 11.1)."
           },
           {
             "label": "Always on: Dead signal",
@@ -183,7 +183,7 @@
           },
           {
             "label": "The end",
-            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 9.4). Evac: section 9.6."
+            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 11.4). Evac: section 11.6."
           },
           {
             "label": "Landfall event at the start of round 3",
@@ -191,14 +191,14 @@
           },
           {
             "label": "Non-player models",
-            "text": "They act at the end of each round (section 9.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Bystander** | Move 4, Fight 0, Tough 2 | **Dazed.** Unless led, moves 2 inches in the direction of a direction die. Led: moves with the leader, who has Move -1. Not a target: nobody may attack a bystander, but a blast or a missed shot into melee can hit one as a glance, with no save |"
+            "text": "They act at the end of each round (section 11.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Bystander** | Move 4, Fight 0, Tough 2 | **Dazed.** Unless led, moves 2 inches in the direction of a direction die. Led: moves with the leader, who has Move -1. Not a target: nobody may attack a bystander, but a blast or a missed shot into melee can hit one as a glance, with no save |"
           }
         ]
       }
     ]
   },
   {
-    "section": "10.2",
+    "section": "12.2",
     "name": "Concord",
     "ground": "Crumbling colony cities",
     "alwaysOn": "**Always on: Smog.** Nothing can be seen beyond **18 inches**.",
@@ -210,7 +210,7 @@
       },
       {
         "d6": "2",
-        "Event": "**Stamps required.** The Department wants a stamp for every door. Every door and window on the table is **locked** (a red Hacked token). With none on the table, nothing happens"
+        "Event": "**Stamps required.** The Department wants a stamp for every door. Every working door and window on the table is **locked** (a red Hacked token). With none, nothing happens"
       },
       {
         "d6": "3",
@@ -255,11 +255,11 @@
           },
           {
             "label": "Set-up",
-            "text": "A **doubter** (a bystander) and **two Inspectorate escorts** start at the centre. Roll a d6: on 1-3 they walk toward the edge on the first player's left, on 4-6 toward the edge on their right."
+            "text": "A **doubter** (a bystander) and **two Inspectorate escorts** start at the centre. Roll a d6: on 1-3 they walk toward the edge on the first player's left, on 4-6 toward the edge on their right. **Hazard.** Before deployment, the player who activates first marks one stamp booth as shorted out: the ground within 1 inch of it is **Dangerous** for the whole battle."
           },
           {
             "label": "Battle rules",
-            "text": "- **The march.** At the end of each round the escorts walk the doubter 4 inches toward that edge. If an escort reaches the edge with the doubter still in its charge, the prosecution goes ahead: the doubter is gone and nobody wins the winning condition.\n- **Freeing the doubter.** While an escort stands in base contact with the doubter, a fighter in base contact with the doubter may spend a Use action and make an opposed Fight roll against that escort, as for a capture (section 5.8). If they win they take the doubter and may lead them. With no escort in contact, a Use action is enough.\n- **Retaking the doubter.** Escorts who have lost the doubter walk toward them instead of toward the edge. An escort in base contact with the fighter leading the doubter attacks that fighter, then makes an opposed Fight roll against them, as for a capture: if the escort wins, it has the doubter back and the march goes on.\n- **The escorts** are attacked like fighters, shot or fought, and cannot be led. If one goes down, the other still walks. If both go down, the doubter is an ordinary bystander."
+            "text": "- **The march.** At the end of each round the escorts walk the doubter 4 inches toward that edge. If an escort reaches the edge with the doubter still in its charge, the prosecution goes ahead: the doubter is gone and nobody wins the winning condition.\n- **Freeing the doubter.** While an escort stands in base contact with the doubter, a fighter in base contact with the doubter may spend a Use action and make an opposed Fight roll against that escort, as for a capture (section 5.10). If they win they take the doubter and may lead them. With no escort in contact, a Use action is enough.\n- **Retaking the doubter.** Escorts who have lost the doubter walk toward them instead of toward the edge. An escort in base contact with the fighter leading the doubter attacks that fighter, then makes an opposed Fight roll against them, as for a capture: if the escort wins, it has the doubter back and the march goes on.\n- **The escorts** are attacked like fighters, shot or fought, and cannot be led. If one goes down, the other still walks. If both go down, the doubter is an ordinary bystander."
           },
           {
             "label": "Winning condition",
@@ -271,7 +271,7 @@
           },
           {
             "label": "Deployment",
-            "text": "Battle lines (section 9.1), whatever the table says. The sides face each other along the street, and the doubter is marched between them."
+            "text": "Battle lines (section 11.1), whatever the table says. The sides face each other along the street, and the doubter is marched between them."
           },
           {
             "label": "Always on: Smog",
@@ -279,19 +279,19 @@
           },
           {
             "label": "Pods",
-            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 9.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
+            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 11.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
           },
           {
             "label": "The end",
-            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 9.4). Evac: section 9.6."
+            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 11.4). Evac: section 11.6."
           },
           {
             "label": "Concord event at the start of round 3",
-            "text": "(d6)\n| d6 | Event |\n| --- | --- |\n| 1 | **Gala rehearsal.** The spotlights sweep the street for the cameras. Every fighter in the open (more than 1 inch from any terrain piece) is **Announced** |\n| 2 | **Stamps required.** The Department wants a stamp for every door. Every door and window on the table is **locked** (a red Hacked token). With none on the table, nothing happens |\n| 3 | **The news is rewritten.** A broadcast declares the side with fewer fighters standing the winner, and its fighters cheer: each is **Hyped**. It changes nothing about who holds the field or the winning condition |\n| 4 | **A dignitary** in a sash wanders in at the centre (a bystander). Leading them into your deployment zone pays **5 parts** (a bribe) |\n| 5 | **A passing patrol.** Two Inspectorate escorts enter at a random edge and walk straight across to the opposite edge, attacking any fighter in base contact with them on the way |\n| 6 | **The smog thickens.** Nothing can be seen beyond **12 inches** for the rest of the battle |"
+            "text": "(d6)\n| d6 | Event |\n| --- | --- |\n| 1 | **Gala rehearsal.** The spotlights sweep the street for the cameras. Every fighter in the open (more than 1 inch from any terrain piece) is **Announced** |\n| 2 | **Stamps required.** The Department wants a stamp for every door. Every working door and window on the table is **locked** (a red Hacked token). With none, nothing happens |\n| 3 | **The news is rewritten.** A broadcast declares the side with fewer fighters standing the winner, and its fighters cheer: each is **Hyped**. It changes nothing about who holds the field or the winning condition |\n| 4 | **A dignitary** in a sash wanders in at the centre (a bystander). Leading them into your deployment zone pays **5 parts** (a bribe) |\n| 5 | **A passing patrol.** Two Inspectorate escorts enter at a random edge and walk straight across to the opposite edge, attacking any fighter in base contact with them on the way |\n| 6 | **The smog thickens.** Nothing can be seen beyond **12 inches** for the rest of the battle |"
           },
           {
             "label": "Non-player models",
-            "text": "They act at the end of each round (section 9.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Inspectorate escort** | Move 4, Fight 1, Save 1, Tough 2 | **Keeps the line.** Walks 4 inches toward the table edge the scenario or event names, and leaves the table there, unless the scenario says otherwise. Attacks the nearest fighter in base contact with it or with the doubter it walks. A doubter moves with the escorts |\n| **Bystander** | Move 4, Fight 0, Tough 2 | **Dazed.** Unless led, moves 2 inches in the direction of a direction die. Led: moves with the leader, who has Move -1. Not a target: nobody may attack a bystander, but a blast or a missed shot into melee can hit one as a glance, with no save |"
+            "text": "They act at the end of each round (section 11.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Inspectorate escort** | Move 4, Fight 1, Save 1, Tough 2 | **Keeps the line.** Walks 4 inches toward the table edge the scenario or event names, and leaves the table there, unless the scenario says otherwise. Attacks the nearest fighter in base contact with it or with the doubter it walks. A doubter moves with the escorts |\n| **Bystander** | Move 4, Fight 0, Tough 2 | **Dazed.** Unless led, moves 2 inches in the direction of a direction die. Led: moves with the leader, who has Move -1. Not a target: nobody may attack a bystander, but a blast or a missed shot into melee can hit one as a glance, with no save |"
           }
         ]
       },
@@ -306,7 +306,7 @@
           },
           {
             "label": "Set-up",
-            "text": "Each player needs a die in their own colour (any two different markers will do). The stage starts with no speech on it."
+            "text": "Each player needs a die in their own colour (any two different markers will do). The stage starts with no speech on it. **Hazard.** Before deployment, the player who activates first marks one stamp booth as shorted out: the ground within 1 inch of it is **Dangerous** for the whole battle."
           },
           {
             "label": "Battle rules",
@@ -322,7 +322,7 @@
           },
           {
             "label": "Deployment",
-            "text": "Roll on the deployment table (section 9.1)."
+            "text": "Roll on the deployment table (section 11.1)."
           },
           {
             "label": "Always on: Smog",
@@ -330,19 +330,19 @@
           },
           {
             "label": "Pods",
-            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 9.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
+            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 11.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
           },
           {
             "label": "The end",
-            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 9.4). Evac: section 9.6."
+            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 11.4). Evac: section 11.6."
           },
           {
             "label": "Concord event at the start of round 3",
-            "text": "(d6)\n| d6 | Event |\n| --- | --- |\n| 1 | **Gala rehearsal.** The spotlights sweep the street for the cameras. Every fighter in the open (more than 1 inch from any terrain piece) is **Announced** |\n| 2 | **Stamps required.** The Department wants a stamp for every door. Every door and window on the table is **locked** (a red Hacked token). With none on the table, nothing happens |\n| 3 | **The news is rewritten.** A broadcast declares the side with fewer fighters standing the winner, and its fighters cheer: each is **Hyped**. It changes nothing about who holds the field or the winning condition |\n| 4 | **A dignitary** in a sash wanders in at the centre (a bystander). Leading them into your deployment zone pays **5 parts** (a bribe) |\n| 5 | **A passing patrol.** Two Inspectorate escorts enter at a random edge and walk straight across to the opposite edge, attacking any fighter in base contact with them on the way |\n| 6 | **The smog thickens.** Nothing can be seen beyond **12 inches** for the rest of the battle |"
+            "text": "(d6)\n| d6 | Event |\n| --- | --- |\n| 1 | **Gala rehearsal.** The spotlights sweep the street for the cameras. Every fighter in the open (more than 1 inch from any terrain piece) is **Announced** |\n| 2 | **Stamps required.** The Department wants a stamp for every door. Every working door and window on the table is **locked** (a red Hacked token). With none, nothing happens |\n| 3 | **The news is rewritten.** A broadcast declares the side with fewer fighters standing the winner, and its fighters cheer: each is **Hyped**. It changes nothing about who holds the field or the winning condition |\n| 4 | **A dignitary** in a sash wanders in at the centre (a bystander). Leading them into your deployment zone pays **5 parts** (a bribe) |\n| 5 | **A passing patrol.** Two Inspectorate escorts enter at a random edge and walk straight across to the opposite edge, attacking any fighter in base contact with them on the way |\n| 6 | **The smog thickens.** Nothing can be seen beyond **12 inches** for the rest of the battle |"
           },
           {
             "label": "Non-player models",
-            "text": "They act at the end of each round (section 9.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Inspectorate escort** | Move 4, Fight 1, Save 1, Tough 2 | **Keeps the line.** Walks 4 inches toward the table edge the scenario or event names, and leaves the table there, unless the scenario says otherwise. Attacks the nearest fighter in base contact with it or with the doubter it walks. A doubter moves with the escorts |\n| **Bystander** | Move 4, Fight 0, Tough 2 | **Dazed.** Unless led, moves 2 inches in the direction of a direction die. Led: moves with the leader, who has Move -1. Not a target: nobody may attack a bystander, but a blast or a missed shot into melee can hit one as a glance, with no save |"
+            "text": "They act at the end of each round (section 11.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Inspectorate escort** | Move 4, Fight 1, Save 1, Tough 2 | **Keeps the line.** Walks 4 inches toward the table edge the scenario or event names, and leaves the table there, unless the scenario says otherwise. Attacks the nearest fighter in base contact with it or with the doubter it walks. A doubter moves with the escorts |\n| **Bystander** | Move 4, Fight 0, Tough 2 | **Dazed.** Unless led, moves 2 inches in the direction of a direction die. Led: moves with the leader, who has Move -1. Not a target: nobody may attack a bystander, but a blast or a missed shot into melee can hit one as a glance, with no save |"
           }
         ]
       },
@@ -357,11 +357,11 @@
           },
           {
             "label": "Set-up",
-            "text": "Each booth holds one fee and starts **locked** (a red Hacked token). Each player needs dice in their own colour, one for every booth."
+            "text": "Each booth holds one fee and starts **locked** (a red Hacked token). Each player needs dice in their own colour, one for every booth. **Hazard.** Before deployment, the player who activates first marks one stamp booth as shorted out: the ground within 1 inch of it is **Dangerous** for the whole battle."
           },
           {
             "label": "Battle rules",
-            "text": "- **Opening a booth.** A hacker prompts the door (Routine, 6) to unlock it (section 8.2). Any fighter in base contact may instead force it with a Use action and a **Tricky (8) Grit** test; a forced door stays unlocked.\n- **Emptying a booth.** A fighter in base contact with an unlocked booth may spend a Use action to take its fee, once: put a die of their side's colour beside the fighter's base. The fee needs no Hands, and it stays with the fighter.\n- **Alarm.** A fighter who takes a fee is **Announced**: the booths are wired to the Inspectorate.\n- **Dropped fees.** A fighter who goes down drops their fee dice where they fall. Any fighter in base contact may pick them up with a Use action; the die changes to the picker's side's colour."
+            "text": "- **Opening a booth.** A hacker unlocks the door (section 8.2), or any fighter forces it (section 5.11).\n- **Emptying a booth.** A fighter in base contact with an unlocked booth may spend a Use action to take its fee, once: put a die of their side's colour beside the fighter's base. The fee needs no Hands, and it stays with the fighter.\n- **Alarm.** A fighter who takes a fee is **Announced**: the booths are wired to the Inspectorate. The receipt is a promise, though: they are also **Under warranty**.\n- **Dropped fees.** A fighter who goes down drops their fee dice where they fall. Any fighter in base contact may pick them up with a Use action; the die changes to the picker's side's colour."
           },
           {
             "label": "Winning condition",
@@ -373,7 +373,7 @@
           },
           {
             "label": "Deployment",
-            "text": "Roll on the deployment table (section 9.1)."
+            "text": "Roll on the deployment table (section 11.1)."
           },
           {
             "label": "Always on: Smog",
@@ -381,29 +381,29 @@
           },
           {
             "label": "Pods",
-            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 9.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
+            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 11.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
           },
           {
             "label": "The end",
-            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 9.4). Evac: section 9.6."
+            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 11.4). Evac: section 11.6."
           },
           {
             "label": "Concord event at the start of round 3",
-            "text": "(d6)\n| d6 | Event |\n| --- | --- |\n| 1 | **Gala rehearsal.** The spotlights sweep the street for the cameras. Every fighter in the open (more than 1 inch from any terrain piece) is **Announced** |\n| 2 | **Stamps required.** The Department wants a stamp for every door. Every door and window on the table is **locked** (a red Hacked token). With none on the table, nothing happens |\n| 3 | **The news is rewritten.** A broadcast declares the side with fewer fighters standing the winner, and its fighters cheer: each is **Hyped**. It changes nothing about who holds the field or the winning condition |\n| 4 | **A dignitary** in a sash wanders in at the centre (a bystander). Leading them into your deployment zone pays **5 parts** (a bribe) |\n| 5 | **A passing patrol.** Two Inspectorate escorts enter at a random edge and walk straight across to the opposite edge, attacking any fighter in base contact with them on the way |\n| 6 | **The smog thickens.** Nothing can be seen beyond **12 inches** for the rest of the battle |"
+            "text": "(d6)\n| d6 | Event |\n| --- | --- |\n| 1 | **Gala rehearsal.** The spotlights sweep the street for the cameras. Every fighter in the open (more than 1 inch from any terrain piece) is **Announced** |\n| 2 | **Stamps required.** The Department wants a stamp for every door. Every working door and window on the table is **locked** (a red Hacked token). With none, nothing happens |\n| 3 | **The news is rewritten.** A broadcast declares the side with fewer fighters standing the winner, and its fighters cheer: each is **Hyped**. It changes nothing about who holds the field or the winning condition |\n| 4 | **A dignitary** in a sash wanders in at the centre (a bystander). Leading them into your deployment zone pays **5 parts** (a bribe) |\n| 5 | **A passing patrol.** Two Inspectorate escorts enter at a random edge and walk straight across to the opposite edge, attacking any fighter in base contact with them on the way |\n| 6 | **The smog thickens.** Nothing can be seen beyond **12 inches** for the rest of the battle |"
           },
           {
             "label": "Non-player models",
-            "text": "They act at the end of each round (section 9.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Inspectorate escort** | Move 4, Fight 1, Save 1, Tough 2 | **Keeps the line.** Walks 4 inches toward the table edge the scenario or event names, and leaves the table there, unless the scenario says otherwise. Attacks the nearest fighter in base contact with it or with the doubter it walks. A doubter moves with the escorts |\n| **Bystander** | Move 4, Fight 0, Tough 2 | **Dazed.** Unless led, moves 2 inches in the direction of a direction die. Led: moves with the leader, who has Move -1. Not a target: nobody may attack a bystander, but a blast or a missed shot into melee can hit one as a glance, with no save |"
+            "text": "They act at the end of each round (section 11.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Inspectorate escort** | Move 4, Fight 1, Save 1, Tough 2 | **Keeps the line.** Walks 4 inches toward the table edge the scenario or event names, and leaves the table there, unless the scenario says otherwise. Attacks the nearest fighter in base contact with it or with the doubter it walks. A doubter moves with the escorts |\n| **Bystander** | Move 4, Fight 0, Tough 2 | **Dazed.** Unless led, moves 2 inches in the direction of a direction die. Led: moves with the leader, who has Move -1. Not a target: nobody may attack a bystander, but a blast or a missed shot into melee can hit one as a glance, with no save |"
           }
         ]
       }
     ]
   },
   {
-    "section": "10.3",
+    "section": "12.3",
     "name": "Encore",
     "ground": "Studio districts and backlots",
-    "alwaysOn": "**Always on: Always filming.** After the battle, each crew gains **1 part** for each **spectacular** hit or Press its fighters landed on an enemy (section 6.2): the clips sell.",
+    "alwaysOn": "**Always on: Always filming.** After the battle, each crew gains **1 part** for each **spectacular** hit or Press its fighters landed on an enemy (section 5.5): the clips sell.",
     "terrain": "**Typical terrain.** Sets and backlots (light cover), **façades** (they look like walls, but they are not **Solid**: a fighter pushed or thrown into one knocks it flat, and it is removed), screens (**Powered**), a red carpet strip.",
     "events": [
       {
@@ -457,7 +457,7 @@
           },
           {
             "label": "Set-up",
-            "text": "A **fan crowd** starts on the carpet at the centre."
+            "text": "A **fan crowd** starts on the carpet at the centre. **Hazard.** Before deployment, the player who activates first marks one set as the effects department's test site: the ground within 1 inch of it is **Dangerous** for the whole battle (nobody was told)."
           },
           {
             "label": "Battle rules",
@@ -473,19 +473,19 @@
           },
           {
             "label": "Deployment",
-            "text": "Roll on the deployment table (section 9.1)."
+            "text": "Roll on the deployment table (section 11.1)."
           },
           {
             "label": "Always on: Always filming",
-            "text": "After the battle, each crew gains **1 part** for each **spectacular** hit or Press its fighters landed on an enemy (section 6.2): the clips sell."
+            "text": "After the battle, each crew gains **1 part** for each **spectacular** hit or Press its fighters landed on an enemy (section 5.5): the clips sell."
           },
           {
             "label": "Pods",
-            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 9.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
+            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 11.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
           },
           {
             "label": "The end",
-            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 9.4). Evac: section 9.6."
+            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 11.4). Evac: section 11.6."
           },
           {
             "label": "Encore event at the start of round 3",
@@ -493,7 +493,7 @@
           },
           {
             "label": "Non-player models",
-            "text": "They act at the end of each round (section 9.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Fan crowd** (template 4 inches across) | Move 3 | **Follows the star.** Moves toward the standing fighter with the most Experience (tie: the nearest). Fighters inside move through it as Difficult and cannot shoot out of it; it blocks sight like smoke |"
+            "text": "They act at the end of each round (section 11.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Fan crowd** (template 4 inches across) | Move 3 | **Follows the star.** Moves toward the standing fighter with the most Experience (tie: the nearest). Fighters inside move through it as Difficult and cannot shoot out of it; it blocks sight like smoke |"
           }
         ]
       },
@@ -508,7 +508,7 @@
           },
           {
             "label": "Set-up",
-            "text": "No tokens are needed."
+            "text": "No tokens are needed. **Hazard.** Before deployment, the player who activates first marks one set as the effects department's test site: the ground within 1 inch of it is **Dangerous** for the whole battle (nobody was told)."
           },
           {
             "label": "Battle rules",
@@ -524,19 +524,19 @@
           },
           {
             "label": "Deployment",
-            "text": "Roll on the deployment table (section 9.1)."
+            "text": "Roll on the deployment table (section 11.1)."
           },
           {
             "label": "Always on: Always filming",
-            "text": "After the battle, each crew gains **1 part** for each **spectacular** hit or Press its fighters landed on an enemy (section 6.2): the clips sell."
+            "text": "After the battle, each crew gains **1 part** for each **spectacular** hit or Press its fighters landed on an enemy (section 5.5): the clips sell."
           },
           {
             "label": "Pods",
-            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 9.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
+            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 11.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
           },
           {
             "label": "The end",
-            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 9.4). Evac: section 9.6."
+            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 11.4). Evac: section 11.6."
           },
           {
             "label": "Encore event at the start of round 3",
@@ -544,7 +544,7 @@
           },
           {
             "label": "Non-player models",
-            "text": "They act at the end of each round (section 9.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Fan crowd** (template 4 inches across) | Move 3 | **Follows the star.** Moves toward the standing fighter with the most Experience (tie: the nearest). Fighters inside move through it as Difficult and cannot shoot out of it; it blocks sight like smoke |"
+            "text": "They act at the end of each round (section 11.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Fan crowd** (template 4 inches across) | Move 3 | **Follows the star.** Moves toward the standing fighter with the most Experience (tie: the nearest). Fighters inside move through it as Difficult and cannot shoot out of it; it blocks sight like smoke |"
           }
         ]
       },
@@ -559,11 +559,11 @@
           },
           {
             "label": "Set-up",
-            "text": "Keep a count of **takes** for each side."
+            "text": "Keep a count of **takes** for each side. **Hazard.** Before deployment, the player who activates first marks one set as the effects department's test site: the ground within 1 inch of it is **Dangerous** for the whole battle (nobody was told)."
           },
           {
             "label": "Battle rules",
-            "text": "- **The call.** At the start of each round, roll a d6 and read out the director's call (below). If the call cannot be done at that moment (no façade standing, no ally down), roll again. The **first fighter** to do it this round scores one take for their side. If nobody does by the end of the round, nobody scores.\n- **Calls.** **1 Action!** Put an enemy down in melee. **2 Gunfire!** Put an enemy down with a shot. **3 Close-up.** Land a spectacular hit or Press on an enemy (section 6.2). **4 Cut to the wall.** Knock a façade flat (the side whose fighter pushed or threw someone into it scores). **5 Rescue.** Pick up a downed ally. **6 Hero shot.** End an activation within 2 inches of a screen."
+            "text": "- **The call.** At the start of each round, roll a d6 and read out the director's call (below). If the call cannot be done at that moment (no façade standing, no ally down), roll again. The **first fighter** to do it this round scores one take for their side. If nobody does by the end of the round, nobody scores.\n- **Calls.** **1 Action!** Put an enemy down in melee. **2 Gunfire!** Put an enemy down with a shot. **3 Close-up.** Land a spectacular hit or Press on an enemy (section 5.5). **4 Cut to the wall.** Knock a façade flat (the side whose fighter pushed or threw someone into it scores). **5 Rescue.** Pick up a downed ally. **6 Hero shot.** End an activation within 2 inches of a screen."
           },
           {
             "label": "Winning condition",
@@ -575,19 +575,19 @@
           },
           {
             "label": "Deployment",
-            "text": "Roll on the deployment table (section 9.1)."
+            "text": "Roll on the deployment table (section 11.1)."
           },
           {
             "label": "Always on: Always filming",
-            "text": "After the battle, each crew gains **1 part** for each **spectacular** hit or Press its fighters landed on an enemy (section 6.2): the clips sell."
+            "text": "After the battle, each crew gains **1 part** for each **spectacular** hit or Press its fighters landed on an enemy (section 5.5): the clips sell."
           },
           {
             "label": "Pods",
-            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 9.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
+            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 11.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
           },
           {
             "label": "The end",
-            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 9.4). Evac: section 9.6."
+            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 11.4). Evac: section 11.6."
           },
           {
             "label": "Encore event at the start of round 3",
@@ -595,14 +595,14 @@
           },
           {
             "label": "Non-player models",
-            "text": "They act at the end of each round (section 9.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Fan crowd** (template 4 inches across) | Move 3 | **Follows the star.** Moves toward the standing fighter with the most Experience (tie: the nearest). Fighters inside move through it as Difficult and cannot shoot out of it; it blocks sight like smoke |"
+            "text": "They act at the end of each round (section 11.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Fan crowd** (template 4 inches across) | Move 3 | **Follows the star.** Moves toward the standing fighter with the most Experience (tie: the nearest). Fighters inside move through it as Difficult and cannot shoot out of it; it blocks sight like smoke |"
           }
         ]
       }
     ]
   },
   {
-    "section": "10.4",
+    "section": "12.4",
     "name": "Spillway",
     "ground": "The drowned world",
     "alwaysOn": "**Always on: Shallows.** All open ground is **Wet**: everything outdoors that is not inside a building and not at least **1 inch** above the ground (platforms, docks, roofs, steps). Brinies move 6 inches in Wet terrain.",
@@ -618,7 +618,7 @@
       },
       {
         "d6": "3",
-        "Event": "**A sluice opens.** A current runs. The player who activates first lays a strip of **Deep water** 3 inches wide across the open ground, from a random edge straight to the opposite edge through the centre. It flows away from the edge it began at (section 5.10). It passes under platforms and gangways"
+        "Event": "**A sluice opens.** A current runs. The player who activates first lays a strip of **Deep water** 3 inches wide across the open ground, from a random edge straight to the opposite edge through the centre. It flows away from the edge it began at (section 5.4). It passes under platforms and gangways"
       },
       {
         "d6": "4",
@@ -659,7 +659,7 @@
           },
           {
             "label": "Set-up",
-            "text": "Three **salvage sacks** lie on the seabed under the dive site. They are not on the table. Each player needs a die in their own colour, to mark where a diver went in."
+            "text": "Three **salvage sacks** lie on the seabed under the dive site. They are not on the table. Each player needs a die in their own colour, to mark where a diver went in. **Hazard.** Before deployment, the player who activates first lays one 2-inch-wide strip of **Deep water** between two platforms for the whole battle: the tide is in."
           },
           {
             "label": "Battle rules",
@@ -675,7 +675,7 @@
           },
           {
             "label": "Deployment",
-            "text": "Roll on the deployment table (section 9.1)."
+            "text": "Roll on the deployment table (section 11.1)."
           },
           {
             "label": "Always on: Shallows",
@@ -683,19 +683,19 @@
           },
           {
             "label": "Pods",
-            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 9.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
+            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 11.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
           },
           {
             "label": "The end",
-            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 9.4). Evac: section 9.6."
+            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 11.4). Evac: section 11.6."
           },
           {
             "label": "Spillway event at the start of round 3",
-            "text": "(d6)\n| d6 | Event |\n| --- | --- |\n| 1 | **A flood surge.** A wave from the sea gate rolls through. Every fighter standing in Wet terrain is knocked **prone** and moved d6 inches in the direction of a direction die, stopping at a terrain piece or another fighter. Brinies are neither moved nor knocked prone |\n| 2 | **Something surfaces.** A gnawer appears in the Wet terrain nearest the centre. If a gnawer is already on the table, nothing happens |\n| 3 | **A sluice opens.** A current runs. The player who activates first lays a strip of **Deep water** 3 inches wide across the open ground, from a random edge straight to the opposite edge through the centre. It flows away from the edge it began at (section 5.10). It passes under platforms and gangways |\n| 4 | **The pilings give way.** The highest raised piece on the table (the first player chooses between ties) sags and lets go. Every fighter standing on it makes a Routine Grit test or falls into the Wet terrain beside it, **prone**, and takes a **glance** |\n| 5 | **A cold current.** Water from the deeps. Every fighter standing in Wet terrain, Brinies excepted, makes a Routine Grit test or is **Shook** |\n| 6 | **Flotsam.** A crate of salvage drifts in at the centre of the table (Hands 1; Move -1 while carried). Carried into your deployment zone, it pays **5 parts** |"
+            "text": "(d6)\n| d6 | Event |\n| --- | --- |\n| 1 | **A flood surge.** A wave from the sea gate rolls through. Every fighter standing in Wet terrain is knocked **prone** and moved d6 inches in the direction of a direction die, stopping at a terrain piece or another fighter. Brinies are neither moved nor knocked prone |\n| 2 | **Something surfaces.** A gnawer appears in the Wet terrain nearest the centre. If a gnawer is already on the table, nothing happens |\n| 3 | **A sluice opens.** A current runs. The player who activates first lays a strip of **Deep water** 3 inches wide across the open ground, from a random edge straight to the opposite edge through the centre. It flows away from the edge it began at (section 5.4). It passes under platforms and gangways |\n| 4 | **The pilings give way.** The highest raised piece on the table (the first player chooses between ties) sags and lets go. Every fighter standing on it makes a Routine Grit test or falls into the Wet terrain beside it, **prone**, and takes a **glance** |\n| 5 | **A cold current.** Water from the deeps. Every fighter standing in Wet terrain, Brinies excepted, makes a Routine Grit test or is **Shook** |\n| 6 | **Flotsam.** A crate of salvage drifts in at the centre of the table (Hands 1; Move -1 while carried). Carried into your deployment zone, it pays **5 parts** |"
           },
           {
             "label": "Non-player models",
-            "text": "They act at the end of each round (section 9.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Gnawer** (monster) | Move 6, Wet terrain only, Fight 2, Save 1, Tough 3 | **Hunts from the water.** It stays on the table, in Wet terrain, until put down. Moves toward the nearest fighter who is in Wet terrain or within 2 inches of it, and attacks if it reaches. In Wet terrain it counts as in light cover; it can be shot and fought like a fighter. A fighter it puts down is dragged off |"
+            "text": "They act at the end of each round (section 11.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Gnawer** (monster) | Move 6, Wet terrain only, Fight 2, Save 1, Tough 3 | **Hunts from the water.** It stays on the table, in Wet terrain, until put down. Moves toward the nearest fighter who is in Wet terrain or within 2 inches of it, and attacks if it reaches. In Wet terrain it counts as in light cover; it can be shot and fought like a fighter. A fighter it puts down is dragged off |"
           }
         ]
       },
@@ -710,11 +710,11 @@
           },
           {
             "label": "Set-up",
-            "text": "The barge starts at the centre. Find a random edge (see How to read a battle page, at the start of this chapter): that is the edge it drifts toward."
+            "text": "The barge starts at the centre. Find a random edge (see How to read a battle page, at the start of this chapter): that is the edge it drifts toward. **Hazard.** Before deployment, the player who activates first lays one 2-inch-wide strip of **Deep water** between two platforms for the whole battle: the tide is in."
           },
           {
             "label": "Battle rules",
-            "text": "- **Drifting.** At the end of each round the barge moves 3 inches toward its edge. It stops when it touches a table edge or a terrain piece. It pushes fighters in its path aside, **prone**.\n- **Poling it free.** A fighter aboard a barge that has stopped against a terrain piece may spend a Use action and make a **Routine Grit** test: on a success the barge moves 2 inches in any direction they choose, then drifts on toward its edge as before.\n- **Boarding.** A fighter in base contact with the barge may climb on with a Move and a **Routine Grit** test (section 5.3). Fighters aboard move with it, have the higher ground, and are not in Wet terrain. Leaving it is an ordinary move."
+            "text": "- **Drifting.** At the end of each round the barge moves 3 inches toward its edge. It stops when it touches a table edge or a terrain piece. It pushes fighters in its path aside, **prone**.\n- **Poling it free.** A fighter aboard a barge that has stopped against a terrain piece may spend a Use action and make a **Routine Grit** test: on a success the barge moves 2 inches in any direction they choose, then drifts on toward its edge as before.\n- **Boarding.** A fighter in base contact with the barge may climb on with a Move and a **Routine Grit** test (section 5.4). Fighters aboard move with it, have the higher ground, and are not in Wet terrain. Leaving it is an ordinary move."
           },
           {
             "label": "Winning condition",
@@ -726,7 +726,7 @@
           },
           {
             "label": "Deployment",
-            "text": "Roll on the deployment table (section 9.1)."
+            "text": "Roll on the deployment table (section 11.1)."
           },
           {
             "label": "Always on: Shallows",
@@ -734,19 +734,19 @@
           },
           {
             "label": "Pods",
-            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 9.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
+            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 11.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
           },
           {
             "label": "The end",
-            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 9.4). Evac: section 9.6."
+            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 11.4). Evac: section 11.6."
           },
           {
             "label": "Spillway event at the start of round 3",
-            "text": "(d6)\n| d6 | Event |\n| --- | --- |\n| 1 | **A flood surge.** A wave from the sea gate rolls through. Every fighter standing in Wet terrain is knocked **prone** and moved d6 inches in the direction of a direction die, stopping at a terrain piece or another fighter. Brinies are neither moved nor knocked prone |\n| 2 | **Something surfaces.** A gnawer appears in the Wet terrain nearest the centre. If a gnawer is already on the table, nothing happens |\n| 3 | **A sluice opens.** A current runs. The player who activates first lays a strip of **Deep water** 3 inches wide across the open ground, from a random edge straight to the opposite edge through the centre. It flows away from the edge it began at (section 5.10). It passes under platforms and gangways |\n| 4 | **The pilings give way.** The highest raised piece on the table (the first player chooses between ties) sags and lets go. Every fighter standing on it makes a Routine Grit test or falls into the Wet terrain beside it, **prone**, and takes a **glance** |\n| 5 | **A cold current.** Water from the deeps. Every fighter standing in Wet terrain, Brinies excepted, makes a Routine Grit test or is **Shook** |\n| 6 | **Flotsam.** A crate of salvage drifts in at the centre of the table (Hands 1; Move -1 while carried). Carried into your deployment zone, it pays **5 parts** |"
+            "text": "(d6)\n| d6 | Event |\n| --- | --- |\n| 1 | **A flood surge.** A wave from the sea gate rolls through. Every fighter standing in Wet terrain is knocked **prone** and moved d6 inches in the direction of a direction die, stopping at a terrain piece or another fighter. Brinies are neither moved nor knocked prone |\n| 2 | **Something surfaces.** A gnawer appears in the Wet terrain nearest the centre. If a gnawer is already on the table, nothing happens |\n| 3 | **A sluice opens.** A current runs. The player who activates first lays a strip of **Deep water** 3 inches wide across the open ground, from a random edge straight to the opposite edge through the centre. It flows away from the edge it began at (section 5.4). It passes under platforms and gangways |\n| 4 | **The pilings give way.** The highest raised piece on the table (the first player chooses between ties) sags and lets go. Every fighter standing on it makes a Routine Grit test or falls into the Wet terrain beside it, **prone**, and takes a **glance** |\n| 5 | **A cold current.** Water from the deeps. Every fighter standing in Wet terrain, Brinies excepted, makes a Routine Grit test or is **Shook** |\n| 6 | **Flotsam.** A crate of salvage drifts in at the centre of the table (Hands 1; Move -1 while carried). Carried into your deployment zone, it pays **5 parts** |"
           },
           {
             "label": "Non-player models",
-            "text": "They act at the end of each round (section 9.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Gnawer** (monster) | Move 6, Wet terrain only, Fight 2, Save 1, Tough 3 | **Hunts from the water.** It stays on the table, in Wet terrain, until put down. Moves toward the nearest fighter who is in Wet terrain or within 2 inches of it, and attacks if it reaches. In Wet terrain it counts as in light cover; it can be shot and fought like a fighter. A fighter it puts down is dragged off |\n| **Barge** (a piece about 6 by 3 inches) | Move 3 | **Drifts.** Moves toward the table edge the scenario names, and stops when it touches a table edge or a terrain piece. Pushes fighters in its way aside, prone. Fighters aboard move with it |"
+            "text": "They act at the end of each round (section 11.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Gnawer** (monster) | Move 6, Wet terrain only, Fight 2, Save 1, Tough 3 | **Hunts from the water.** It stays on the table, in Wet terrain, until put down. Moves toward the nearest fighter who is in Wet terrain or within 2 inches of it, and attacks if it reaches. In Wet terrain it counts as in light cover; it can be shot and fought like a fighter. A fighter it puts down is dragged off |\n| **Barge** (a piece about 6 by 3 inches) | Move 3 | **Drifts.** Moves toward the table edge the scenario names, and stops when it touches a table edge or a terrain piece. Pushes fighters in its way aside, prone. Fighters aboard move with it |"
           }
         ]
       },
@@ -761,11 +761,11 @@
           },
           {
             "label": "Set-up",
-            "text": "After deployment, each player picks **one of their fighters** to carry a **bait** (Hands 1; Move -1 while carried). Then the player who activates second places the **gnawer** in any Wet terrain at least 8 inches from both deployment zones and from both bait carriers (ignore a carrier who is not yet on the table)."
+            "text": "After deployment, each player picks **one of their fighters** to carry a **bait** (Hands 1; Move -1 while carried). Then the player who activates second places the **gnawer** in any Wet terrain at least 8 inches from both deployment zones and from both bait carriers (ignore a carrier who is not yet on the table). **Hazard.** Before deployment, the player who activates first lays one 2-inch-wide strip of **Deep water** between two platforms for the whole battle: the tide is in."
           },
           {
             "label": "Battle rules",
-            "text": "- **Bait.** The gnawer moves toward the **closest bait**, whoever carries it, and attacks any fighter it reaches on the way. A carrier who goes down drops the bait where they fall; any fighter in base contact may pick it up with a Use action. A bait the gnawer cannot reach (the carrier is out of Wet terrain and more than 2 inches from it) still draws it to the nearest Wet terrain.\n- **The gnawer** stays on the table and can be shot and fought like a fighter (section 9.8)."
+            "text": "- **Bait.** The gnawer moves toward the **closest bait**, whoever carries it, and attacks any fighter it reaches on the way. A carrier who goes down drops the bait where they fall; any fighter in base contact may pick it up with a Use action. A bait the gnawer cannot reach (the carrier is out of Wet terrain and more than 2 inches from it) still draws it to the nearest Wet terrain.\n- **The gnawer** stays on the table and can be shot and fought like a fighter (section 11.8)."
           },
           {
             "label": "Winning condition",
@@ -777,7 +777,7 @@
           },
           {
             "label": "Deployment",
-            "text": "Roll on the deployment table (section 9.1)."
+            "text": "Roll on the deployment table (section 11.1)."
           },
           {
             "label": "Always on: Shallows",
@@ -785,26 +785,26 @@
           },
           {
             "label": "Pods",
-            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 9.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
+            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 11.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
           },
           {
             "label": "The end",
-            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 9.4). Evac: section 9.6."
+            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 11.4). Evac: section 11.6."
           },
           {
             "label": "Spillway event at the start of round 3",
-            "text": "(d6)\n| d6 | Event |\n| --- | --- |\n| 1 | **A flood surge.** A wave from the sea gate rolls through. Every fighter standing in Wet terrain is knocked **prone** and moved d6 inches in the direction of a direction die, stopping at a terrain piece or another fighter. Brinies are neither moved nor knocked prone |\n| 2 | **Something surfaces.** A gnawer appears in the Wet terrain nearest the centre. If a gnawer is already on the table, nothing happens |\n| 3 | **A sluice opens.** A current runs. The player who activates first lays a strip of **Deep water** 3 inches wide across the open ground, from a random edge straight to the opposite edge through the centre. It flows away from the edge it began at (section 5.10). It passes under platforms and gangways |\n| 4 | **The pilings give way.** The highest raised piece on the table (the first player chooses between ties) sags and lets go. Every fighter standing on it makes a Routine Grit test or falls into the Wet terrain beside it, **prone**, and takes a **glance** |\n| 5 | **A cold current.** Water from the deeps. Every fighter standing in Wet terrain, Brinies excepted, makes a Routine Grit test or is **Shook** |\n| 6 | **Flotsam.** A crate of salvage drifts in at the centre of the table (Hands 1; Move -1 while carried). Carried into your deployment zone, it pays **5 parts** |"
+            "text": "(d6)\n| d6 | Event |\n| --- | --- |\n| 1 | **A flood surge.** A wave from the sea gate rolls through. Every fighter standing in Wet terrain is knocked **prone** and moved d6 inches in the direction of a direction die, stopping at a terrain piece or another fighter. Brinies are neither moved nor knocked prone |\n| 2 | **Something surfaces.** A gnawer appears in the Wet terrain nearest the centre. If a gnawer is already on the table, nothing happens |\n| 3 | **A sluice opens.** A current runs. The player who activates first lays a strip of **Deep water** 3 inches wide across the open ground, from a random edge straight to the opposite edge through the centre. It flows away from the edge it began at (section 5.4). It passes under platforms and gangways |\n| 4 | **The pilings give way.** The highest raised piece on the table (the first player chooses between ties) sags and lets go. Every fighter standing on it makes a Routine Grit test or falls into the Wet terrain beside it, **prone**, and takes a **glance** |\n| 5 | **A cold current.** Water from the deeps. Every fighter standing in Wet terrain, Brinies excepted, makes a Routine Grit test or is **Shook** |\n| 6 | **Flotsam.** A crate of salvage drifts in at the centre of the table (Hands 1; Move -1 while carried). Carried into your deployment zone, it pays **5 parts** |"
           },
           {
             "label": "Non-player models",
-            "text": "They act at the end of each round (section 9.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Gnawer** (monster) | Move 6, Wet terrain only, Fight 2, Save 1, Tough 3 | **Hunts from the water.** It stays on the table, in Wet terrain, until put down. Moves toward the nearest fighter who is in Wet terrain or within 2 inches of it, and attacks if it reaches. In Wet terrain it counts as in light cover; it can be shot and fought like a fighter. A fighter it puts down is dragged off |"
+            "text": "They act at the end of each round (section 11.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Gnawer** (monster) | Move 6, Wet terrain only, Fight 2, Save 1, Tough 3 | **Hunts from the water.** It stays on the table, in Wet terrain, until put down. Moves toward the nearest fighter who is in Wet terrain or within 2 inches of it, and attacks if it reaches. In Wet terrain it counts as in light cover; it can be shot and fought like a fighter. A fighter it puts down is dragged off |"
           }
         ]
       }
     ]
   },
   {
-    "section": "10.5",
+    "section": "12.5",
     "name": "Ballast",
     "ground": "Heavy gravity",
     "alwaysOn": "**Always on: Heavy.** Climbing and jumping (up, across or down) are **Tricky (8)**, not Routine, and a fighter who falls on a failed climb or jump takes at least a **glance**, whatever the distance fallen. Hullbacks, and fighters in a frame, climb and jump at Routine as usual.",
@@ -861,11 +861,11 @@
           },
           {
             "label": "Set-up",
-            "text": "Four crates are scattered within 8 inches of the centre, none touching the scale or each other."
+            "text": "Four crates are scattered within 8 inches of the centre, none touching the scale or each other. **Hazard.** Before deployment, the player who activates first marks one machinery piece as a running press: the ground within 1 inch of it is **Dangerous** for the whole battle."
           },
           {
             "label": "Battle rules",
-            "text": "- **Weight.** The first time a crate is lifted, the lifter's player rolls a d6: that is its **weight**. Put the die beside the crate.\n- **Hauling.** A crate of weight **1 to 3** is carried like a downed ally (section 5.8): one carrier at half Move, or two at full Move. A crate of weight **4 or more** moves only while two fighters carry it, and then at half Move. Each carrier spends a Pick up action in base contact to take hold. A carrier who goes down drops it.\n- **Weighing.** A carrier in base contact with the scale spends a Use action to set the crate on it. A crate on the scale can be lifted off again with a Pick up action."
+            "text": "- **Weight.** The first time a crate is lifted, the lifter's player rolls a d6: that is its **weight**. Put the die beside the crate.\n- **Hauling.** A crate of weight **1 to 3** is carried like a downed ally (section 5.10): one carrier at half Move, or two at full Move. A crate of weight **4 or more** moves only while two fighters carry it, and then at half Move. Each carrier spends a Pick up action in base contact to take hold. A carrier who goes down drops it.\n- **Weighing.** A carrier in base contact with the scale spends a Use action to set the crate on it. A crate on the scale can be lifted off again with a Pick up action."
           },
           {
             "label": "Winning condition",
@@ -877,7 +877,7 @@
           },
           {
             "label": "Deployment",
-            "text": "Roll on the deployment table (section 9.1)."
+            "text": "Roll on the deployment table (section 11.1)."
           },
           {
             "label": "Always on: Heavy",
@@ -885,11 +885,11 @@
           },
           {
             "label": "Pods",
-            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 9.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
+            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 11.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
           },
           {
             "label": "The end",
-            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 9.4). Evac: section 9.6."
+            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 11.4). Evac: section 11.6."
           },
           {
             "label": "Ballast event at the start of round 3",
@@ -897,7 +897,7 @@
           },
           {
             "label": "Non-player models",
-            "text": "They act at the end of each round (section 9.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Rogue machine** | Move 4, Fight 1, Shoot 1 (range 12), Save 2, Tough 3 | **On its old route.** Walks the route the scenario sets and attacks the nearest fighter in its way (melee in contact, otherwise a shot). Prompt: Calm, Hard (10) |"
+            "text": "They act at the end of each round (section 11.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Rogue machine** | Move 4, Fight 1, Shoot 1 (range 12), Save 2, Tough 3 | **On its old route.** Walks the route the scenario sets and attacks the nearest fighter in its way (melee in contact, otherwise a shot). Prompt: Calm, Hard (10) |"
           }
         ]
       },
@@ -912,7 +912,7 @@
           },
           {
             "label": "Set-up",
-            "text": "Nothing waits on the hatch at first."
+            "text": "Nothing waits on the hatch at first. **Hazard.** Before deployment, the player who activates first marks one machinery piece as a running press: the ground within 1 inch of it is **Dangerous** for the whole battle."
           },
           {
             "label": "Battle rules",
@@ -928,7 +928,7 @@
           },
           {
             "label": "Deployment",
-            "text": "Roll on the deployment table (section 9.1)."
+            "text": "Roll on the deployment table (section 11.1)."
           },
           {
             "label": "Always on: Heavy",
@@ -936,11 +936,11 @@
           },
           {
             "label": "Pods",
-            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 9.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
+            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 11.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
           },
           {
             "label": "The end",
-            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 9.4). Evac: section 9.6."
+            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 11.4). Evac: section 11.6."
           },
           {
             "label": "Ballast event at the start of round 3",
@@ -948,7 +948,7 @@
           },
           {
             "label": "Non-player models",
-            "text": "They act at the end of each round (section 9.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Rogue machine** | Move 4, Fight 1, Shoot 1 (range 12), Save 2, Tough 3 | **On its old route.** Walks the route the scenario sets and attacks the nearest fighter in its way (melee in contact, otherwise a shot). Prompt: Calm, Hard (10) |"
+            "text": "They act at the end of each round (section 11.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Rogue machine** | Move 4, Fight 1, Shoot 1 (range 12), Save 2, Tough 3 | **On its old route.** Walks the route the scenario sets and attacks the nearest fighter in its way (melee in contact, otherwise a shot). Prompt: Calm, Hard (10) |"
           }
         ]
       },
@@ -963,11 +963,11 @@
           },
           {
             "label": "Set-up",
-            "text": "After deployment, place **six dice** with a number each showing, anywhere on the table outside the deployment zones: each player places three, taking turns, starting with the player who deployed second. Each number 1 to 6 is used once, and no two dice are within 4 inches of each other. A **rogue machine** starts beside the die showing 1. The **core** (a marker) is strapped to it."
+            "text": "After deployment, place **six dice** with a number each showing, anywhere on the table outside the deployment zones: each player places three, taking turns, starting with the player who deployed second. Each number 1 to 6 is used once, and no two dice are within 4 inches of each other. A **rogue machine** starts beside the die showing 1. The **core** (a marker) is strapped to it. **Hazard.** Before deployment, the player who activates first marks one machinery piece as a running press: the ground within 1 inch of it is **Dangerous** for the whole battle."
           },
           {
             "label": "Battle rules",
-            "text": "- **On its route.** The machine walks from die 1 to die 2, then 3, and so on to die 6, and then back to die 1, and loops for the rest of the battle (section 9.8). It moves on to the next die as soon as it touches one.\n- **Taking the core.** A fighter in base contact with a machine that is down or Calmed (a red Hacked token) may take the core with a Use action (Hands 1; Move -1 while carried). A carrier who goes down drops it. The machine can be shot, fought, or prompted (Calm, Hard (10))."
+            "text": "- **On its route.** The machine walks from die 1 to die 2, then 3, and so on to die 6, and then back to die 1, and loops for the rest of the battle (section 11.8). It moves on to the next die as soon as it touches one.\n- **Taking the core.** A fighter in base contact with a machine that is down or Calmed (a red Hacked token) may take the core with a Use action (Hands 1; Move -1 while carried). A carrier who goes down drops it. The machine can be shot, fought, or prompted (Calm, Hard (10))."
           },
           {
             "label": "Winning condition",
@@ -979,7 +979,7 @@
           },
           {
             "label": "Deployment",
-            "text": "Roll on the deployment table (section 9.1)."
+            "text": "Roll on the deployment table (section 11.1)."
           },
           {
             "label": "Always on: Heavy",
@@ -987,11 +987,11 @@
           },
           {
             "label": "Pods",
-            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 9.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
+            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 11.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
           },
           {
             "label": "The end",
-            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 9.4). Evac: section 9.6."
+            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 11.4). Evac: section 11.6."
           },
           {
             "label": "Ballast event at the start of round 3",
@@ -999,14 +999,14 @@
           },
           {
             "label": "Non-player models",
-            "text": "They act at the end of each round (section 9.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Rogue machine** | Move 4, Fight 1, Shoot 1 (range 12), Save 2, Tough 3 | **On its old route.** Walks the route the scenario sets and attacks the nearest fighter in its way (melee in contact, otherwise a shot). Prompt: Calm, Hard (10) |"
+            "text": "They act at the end of each round (section 11.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Rogue machine** | Move 4, Fight 1, Shoot 1 (range 12), Save 2, Tough 3 | **On its old route.** Walks the route the scenario sets and attacks the nearest fighter in its way (melee in contact, otherwise a shot). Prompt: Calm, Hard (10) |"
           }
         ]
       }
     ]
   },
   {
-    "section": "10.6",
+    "section": "12.6",
     "name": "Hush",
     "ground": "Overgrown wilds",
     "alwaysOn": "**Always on: Hush.** Nothing can be seen beyond **12 inches**. A fighter who **shoots a gun** (not a relic, a grenade or a melee attack) is **Announced**.",
@@ -1063,11 +1063,11 @@
           },
           {
             "label": "Set-up",
-            "text": "Keep a point count for each side. An **earwig** starts at the middle of a random edge (see How to read a battle page, at the start of this chapter)."
+            "text": "Keep a point count for each side. An **earwig** starts at the middle of a random edge (see How to read a battle page, at the start of this chapter). **Hazard.** Before deployment, the player who activates first marks one patch of growth as a bog: it is **Deep water** for the whole battle, 3 inches across."
           },
           {
             "label": "Battle rules",
-            "text": "- **The earwig** acts at the end of each round (section 9.8): it hunts the loudest. Shooting makes a fighter Announced, and the earwig hunts the Announced.\n- **Scoring.** A side scores **1 point** each time the earwig attacks a fighter of the **other** side, and **1 point** for each lasting condition its fighters give the earwig. The side whose fighter puts it down scores **3 points**."
+            "text": "- **The earwig** acts at the end of each round (section 11.8): it hunts the loudest. Shooting makes a fighter Announced, and the earwig hunts the Announced.\n- **Scoring.** A side scores **1 point** each time the earwig attacks a fighter of the **other** side, and **1 point** for each lasting condition its fighters give the earwig. The side whose fighter puts it down scores **3 points**."
           },
           {
             "label": "Winning condition",
@@ -1079,7 +1079,7 @@
           },
           {
             "label": "Deployment",
-            "text": "Roll on the deployment table (section 9.1)."
+            "text": "Roll on the deployment table (section 11.1)."
           },
           {
             "label": "Always on: Hush",
@@ -1087,11 +1087,11 @@
           },
           {
             "label": "Pods",
-            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 9.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
+            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 11.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
           },
           {
             "label": "The end",
-            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 9.4). Evac: section 9.6."
+            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 11.4). Evac: section 11.6."
           },
           {
             "label": "Hush event at the start of round 3",
@@ -1099,7 +1099,7 @@
           },
           {
             "label": "Non-player models",
-            "text": "They act at the end of each round (section 9.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Earwig** (monster) | Move 8, Fight 2, Save 1, Tough 3 | **Hunts the loudest.** Moves toward the nearest **Announced** fighter, or if none, the fighter who made a **ranged attack** most recently (if nobody has, the nearest fighter), and attacks if it reaches. If it starts in contact with a downed fighter, it drags them off instead |\n| **Turret** | Move none, Shoot 1 (range 18), Save 2, Tough 2 | **Fires at the nearest fighter,** friend or foe, in its line of sight. Prompt: Quiet or Claim, Tricky (8) |"
+            "text": "They act at the end of each round (section 11.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Earwig** (monster) | Move 8, Fight 2, Save 1, Tough 3 | **Hunts the loudest.** Moves toward the nearest **Announced** fighter, or if none, the fighter who made a **ranged attack** most recently (if nobody has, the nearest fighter), and attacks if it reaches. If it starts in contact with a downed fighter, it drags them off instead |\n| **Turret** | Move none, Shoot 1 (range 18), Save 2, Tough 2 | **Fires at the nearest fighter,** friend or foe, in its line of sight. Prompt: Quiet or Claim, Tricky (8) |"
           }
         ]
       },
@@ -1114,11 +1114,11 @@
           },
           {
             "label": "Set-up",
-            "text": "Three **pilgrims** (bystanders) start at the centre, in a row. An **earwig** starts at the middle of a random edge (see How to read a battle page, at the start of this chapter)."
+            "text": "Three **pilgrims** (bystanders) start at the centre, in a row. An **earwig** starts at the middle of a random edge (see How to read a battle page, at the start of this chapter). **Hazard.** Before deployment, the player who activates first marks one patch of growth as a bog: it is **Deep water** for the whole battle, 3 inches across."
           },
           {
             "label": "Battle rules",
-            "text": "- **Singing.** Pilgrims are always **Announced**. The earwig hunts them like fighters, and attacks them if it reaches them. A pilgrim who goes down can be carried like a downed ally.\n- **Leading.** Lead a pilgrim with a Use action (section 9.8).\n- **Making noise.** A fighter with a ranged weapon may spend a Use action to fire a shot into the air: they become **Announced**, and the earwig hunts the nearest Announced fighter or pilgrim, which may now be them."
+            "text": "- **Singing.** Pilgrims are always **Announced**. The earwig hunts them like fighters, and attacks them if it reaches them. A pilgrim who goes down can be carried like a downed ally.\n- **Leading.** Lead a pilgrim with a Use action (section 11.8).\n- **Making noise.** A fighter with a ranged weapon may spend a Use action to fire a shot into the air: they become **Announced**, and the earwig hunts the nearest Announced fighter or pilgrim, which may now be them."
           },
           {
             "label": "Winning condition",
@@ -1130,7 +1130,7 @@
           },
           {
             "label": "Deployment",
-            "text": "Roll on the deployment table (section 9.1)."
+            "text": "Roll on the deployment table (section 11.1)."
           },
           {
             "label": "Always on: Hush",
@@ -1138,11 +1138,11 @@
           },
           {
             "label": "Pods",
-            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 9.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
+            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 11.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
           },
           {
             "label": "The end",
-            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 9.4). Evac: section 9.6."
+            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 11.4). Evac: section 11.6."
           },
           {
             "label": "Hush event at the start of round 3",
@@ -1150,7 +1150,7 @@
           },
           {
             "label": "Non-player models",
-            "text": "They act at the end of each round (section 9.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Earwig** (monster) | Move 8, Fight 2, Save 1, Tough 3 | **Hunts the loudest.** Moves toward the nearest **Announced** fighter, or if none, the fighter who made a **ranged attack** most recently (if nobody has, the nearest fighter), and attacks if it reaches. If it starts in contact with a downed fighter, it drags them off instead |\n| **Turret** | Move none, Shoot 1 (range 18), Save 2, Tough 2 | **Fires at the nearest fighter,** friend or foe, in its line of sight. Prompt: Quiet or Claim, Tricky (8) |\n| **Bystander** | Move 4, Fight 0, Tough 2 | **Dazed.** Unless led, moves 2 inches in the direction of a direction die. Led: moves with the leader, who has Move -1. Not a target: nobody may attack a bystander, but a blast or a missed shot into melee can hit one as a glance, with no save |"
+            "text": "They act at the end of each round (section 11.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Earwig** (monster) | Move 8, Fight 2, Save 1, Tough 3 | **Hunts the loudest.** Moves toward the nearest **Announced** fighter, or if none, the fighter who made a **ranged attack** most recently (if nobody has, the nearest fighter), and attacks if it reaches. If it starts in contact with a downed fighter, it drags them off instead |\n| **Turret** | Move none, Shoot 1 (range 18), Save 2, Tough 2 | **Fires at the nearest fighter,** friend or foe, in its line of sight. Prompt: Quiet or Claim, Tricky (8) |\n| **Bystander** | Move 4, Fight 0, Tough 2 | **Dazed.** Unless led, moves 2 inches in the direction of a direction die. Led: moves with the leader, who has Move -1. Not a target: nobody may attack a bystander, but a blast or a missed shot into melee can hit one as a glance, with no save |"
           }
         ]
       },
@@ -1165,7 +1165,7 @@
           },
           {
             "label": "Set-up",
-            "text": "Keep a point count for each side."
+            "text": "Keep a point count for each side. **Hazard.** Before deployment, the player who activates first marks one patch of growth as a bog: it is **Deep water** for the whole battle, 3 inches across."
           },
           {
             "label": "Battle rules",
@@ -1181,7 +1181,7 @@
           },
           {
             "label": "Deployment",
-            "text": "Roll on the deployment table (section 9.1)."
+            "text": "Roll on the deployment table (section 11.1)."
           },
           {
             "label": "Always on: Hush",
@@ -1189,11 +1189,11 @@
           },
           {
             "label": "Pods",
-            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 9.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
+            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 11.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
           },
           {
             "label": "The end",
-            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 9.4). Evac: section 9.6."
+            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 11.4). Evac: section 11.6."
           },
           {
             "label": "Hush event at the start of round 3",
@@ -1201,14 +1201,14 @@
           },
           {
             "label": "Non-player models",
-            "text": "They act at the end of each round (section 9.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Earwig** (monster) | Move 8, Fight 2, Save 1, Tough 3 | **Hunts the loudest.** Moves toward the nearest **Announced** fighter, or if none, the fighter who made a **ranged attack** most recently (if nobody has, the nearest fighter), and attacks if it reaches. If it starts in contact with a downed fighter, it drags them off instead |\n| **Turret** | Move none, Shoot 1 (range 18), Save 2, Tough 2 | **Fires at the nearest fighter,** friend or foe, in its line of sight. Prompt: Quiet or Claim, Tricky (8) |"
+            "text": "They act at the end of each round (section 11.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Earwig** (monster) | Move 8, Fight 2, Save 1, Tough 3 | **Hunts the loudest.** Moves toward the nearest **Announced** fighter, or if none, the fighter who made a **ranged attack** most recently (if nobody has, the nearest fighter), and attacks if it reaches. If it starts in contact with a downed fighter, it drags them off instead |\n| **Turret** | Move none, Shoot 1 (range 18), Save 2, Tough 2 | **Fires at the nearest fighter,** friend or foe, in its line of sight. Prompt: Quiet or Claim, Tricky (8) |"
           }
         ]
       }
     ]
   },
   {
-    "section": "10.7",
+    "section": "12.7",
     "name": "Vigil",
     "ground": "Cold and the array",
     "alwaysOn": "**Always on: Cold.** A fighter who **moved** in their activation and ends it in the open (more than 1 inch from any terrain piece) makes a Routine Grit test; on a failure they are **Shook**. Bots never test. Every battery starts the battle **1 Energy short**.",
@@ -1265,7 +1265,7 @@
           },
           {
             "label": "Set-up",
-            "text": "Each player needs dice in their own colour (any two kinds of marker will do), to put on consoles."
+            "text": "Each player needs dice in their own colour (any two kinds of marker will do), to put on consoles. **Hazard.** Before deployment, the player who activates first marks one array console as arcing: the ground within 1 inch of it is **Dangerous** for the whole battle."
           },
           {
             "label": "Battle rules",
@@ -1281,7 +1281,7 @@
           },
           {
             "label": "Deployment",
-            "text": "Roll on the deployment table (section 9.1)."
+            "text": "Roll on the deployment table (section 11.1)."
           },
           {
             "label": "Always on: Cold",
@@ -1289,11 +1289,11 @@
           },
           {
             "label": "Pods",
-            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 9.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
+            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 11.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
           },
           {
             "label": "The end",
-            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 9.4). Evac: section 9.6."
+            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 11.4). Evac: section 11.6."
           },
           {
             "label": "Vigil event at the start of round 3",
@@ -1312,7 +1312,7 @@
           },
           {
             "label": "Set-up",
-            "text": "A **relic marker** lies at the centre. Find a random edge (see How to read a battle page, at the start of this chapter): that is the edge the relic points at."
+            "text": "A **relic marker** lies at the centre. Find a random edge (see How to read a battle page, at the start of this chapter): that is the edge the relic points at. **Hazard.** Before deployment, the player who activates first marks one array console as arcing: the ground within 1 inch of it is **Dangerous** for the whole battle."
           },
           {
             "label": "Battle rules",
@@ -1328,7 +1328,7 @@
           },
           {
             "label": "Deployment",
-            "text": "Roll on the deployment table (section 9.1)."
+            "text": "Roll on the deployment table (section 11.1)."
           },
           {
             "label": "Always on: Cold",
@@ -1336,11 +1336,11 @@
           },
           {
             "label": "Pods",
-            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 9.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
+            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 11.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
           },
           {
             "label": "The end",
-            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 9.4). Evac: section 9.6."
+            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 11.4). Evac: section 11.6."
           },
           {
             "label": "Vigil event at the start of round 3",
@@ -1359,7 +1359,7 @@
           },
           {
             "label": "Set-up",
-            "text": "**Before deployment**, each player secretly writes down one of their **own** fighters: the one the Visionary has named. Keep a count of points for each side."
+            "text": "**Before deployment**, each player secretly writes down one of their **own** fighters: the one the Visionary has named. Keep a count of points for each side. **Hazard.** Before deployment, the player who activates first marks one array console as arcing: the ground within 1 inch of it is **Dangerous** for the whole battle."
           },
           {
             "label": "Battle rules",
@@ -1375,7 +1375,7 @@
           },
           {
             "label": "Deployment",
-            "text": "Roll on the deployment table (section 9.1)."
+            "text": "Roll on the deployment table (section 11.1)."
           },
           {
             "label": "Always on: Cold",
@@ -1383,11 +1383,11 @@
           },
           {
             "label": "Pods",
-            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 9.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
+            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 11.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
           },
           {
             "label": "The end",
-            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 9.4). Evac: section 9.6."
+            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 11.4). Evac: section 11.6."
           },
           {
             "label": "Vigil event at the start of round 3",
@@ -1398,7 +1398,7 @@
     ]
   },
   {
-    "section": "10.8",
+    "section": "12.8",
     "name": "Plenty",
     "ground": "Silos and growing halls",
     "alwaysOn": "**Always on: Dry wind.** Grenades scatter **1 inch further**.",
@@ -1455,7 +1455,7 @@
           },
           {
             "label": "Set-up",
-            "text": "The fruit starts at the centre of the table."
+            "text": "The fruit starts at the centre of the table. **Hazard.** Before deployment, the player who activates first marks one irrigation work as burst: a 2-inch-wide strip around it is **Deep water** for the whole battle."
           },
           {
             "label": "Battle rules",
@@ -1471,7 +1471,7 @@
           },
           {
             "label": "Deployment",
-            "text": "Roll on the deployment table (section 9.1)."
+            "text": "Roll on the deployment table (section 11.1)."
           },
           {
             "label": "Always on: Dry wind",
@@ -1479,11 +1479,11 @@
           },
           {
             "label": "Pods",
-            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 9.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
+            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 11.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
           },
           {
             "label": "The end",
-            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 9.4). Evac: section 9.6."
+            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 11.4). Evac: section 11.6."
           },
           {
             "label": "Plenty event at the start of round 3",
@@ -1491,7 +1491,7 @@
           },
           {
             "label": "Non-player models",
-            "text": "They act at the end of each round (section 9.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Festival float** (a 4-by-8-inch piece) | Move 3 | **The parade.** Moves in a straight line toward the edge or deployment zone the scenario or event names. An event's float leaves the table at the edge; a scenario's float stops there. Anything in its way is pushed aside and knocked prone. It cannot be shot or fought |\n| **Rolling fruit** (a 3-inch piece) | Move 6 | **Rolls.** Moves 6 inches straight toward the table edge the event names, and leaves there. A fighter in its path makes a Routine Grit test or takes a glance and is knocked prone |"
+            "text": "They act at the end of each round (section 11.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Festival float** (a 4-by-8-inch piece) | Move 3 | **The parade.** Moves in a straight line toward the edge or deployment zone the scenario or event names. An event's float leaves the table at the edge; a scenario's float stops there. Anything in its way is pushed aside and knocked prone. It cannot be shot or fought |\n| **Rolling fruit** (a 3-inch piece) | Move 6 | **Rolls.** Moves 6 inches straight toward the table edge the event names, and leaves there. A fighter in its path makes a Routine Grit test or takes a glance and is knocked prone |"
           }
         ]
       },
@@ -1506,11 +1506,11 @@
           },
           {
             "label": "Set-up",
-            "text": "The hall's door and every window start **locked** (red Hacked tokens)."
+            "text": "The hall's door and every window start **locked** (red Hacked tokens). **Hazard.** Before deployment, the player who activates first marks one irrigation work as burst: a 2-inch-wide strip around it is **Deep water** for the whole battle."
           },
           {
             "label": "Battle rules",
-            "text": "- **Getting in.** A hacker prompts the door or a window (Routine, 6) to unlock it (section 8.2). Any fighter in base contact may instead force it with a Use action and a **Tricky (8) Grit** test; a forced door or window stays unlocked.\n- **Inside.** A fighter is inside if their base is wholly in the hall. The walls block sight and shots as usual, and a fighter inside may lock the door again with a hack."
+            "text": "- **Getting in.** A hacker unlocks the door or a window (section 8.2), or any fighter forces one (section 5.11).\n- **Inside.** A fighter is inside if their base is wholly in the hall. The walls block sight and shots as usual, and a fighter inside may lock the door again with a hack."
           },
           {
             "label": "Winning condition",
@@ -1522,7 +1522,7 @@
           },
           {
             "label": "Deployment",
-            "text": "Roll on the deployment table (section 9.1)."
+            "text": "Roll on the deployment table (section 11.1)."
           },
           {
             "label": "Always on: Dry wind",
@@ -1530,11 +1530,11 @@
           },
           {
             "label": "Pods",
-            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 9.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
+            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 11.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
           },
           {
             "label": "The end",
-            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 9.4). Evac: section 9.6."
+            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 11.4). Evac: section 11.6."
           },
           {
             "label": "Plenty event at the start of round 3",
@@ -1542,7 +1542,7 @@
           },
           {
             "label": "Non-player models",
-            "text": "They act at the end of each round (section 9.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Festival float** (a 4-by-8-inch piece) | Move 3 | **The parade.** Moves in a straight line toward the edge or deployment zone the scenario or event names. An event's float leaves the table at the edge; a scenario's float stops there. Anything in its way is pushed aside and knocked prone. It cannot be shot or fought |\n| **Rolling fruit** (a 3-inch piece) | Move 6 | **Rolls.** Moves 6 inches straight toward the table edge the event names, and leaves there. A fighter in its path makes a Routine Grit test or takes a glance and is knocked prone |"
+            "text": "They act at the end of each round (section 11.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Festival float** (a 4-by-8-inch piece) | Move 3 | **The parade.** Moves in a straight line toward the edge or deployment zone the scenario or event names. An event's float leaves the table at the edge; a scenario's float stops there. Anything in its way is pushed aside and knocked prone. It cannot be shot or fought |\n| **Rolling fruit** (a 3-inch piece) | Move 6 | **Rolls.** Moves 6 inches straight toward the table edge the event names, and leaves there. A fighter in its path makes a Routine Grit test or takes a glance and is knocked prone |"
           }
         ]
       },
@@ -1557,11 +1557,11 @@
           },
           {
             "label": "Set-up",
-            "text": "The float and **two Inspectorate escorts** (the officials) start at the centre. Roll a d6: on 1-3 they head for the edge on the first player's left, on 4-6 for the edge on their right."
+            "text": "The float and **two Inspectorate escorts** (the officials) start at the centre. Roll a d6: on 1-3 they head for the edge on the first player's left, on 4-6 for the edge on their right. **Hazard.** Before deployment, the player who activates first marks one irrigation work as burst: a 2-inch-wide strip around it is **Deep water** for the whole battle."
           },
           {
             "label": "Battle rules",
-            "text": "- **The parade.** At the end of each round the float moves 3 inches toward the edge it is heading for, pushing aside, prone, anything in its way, and the officials walk with it instead of making their own walk. If it reaches that edge, it stops.\n- **Taking the controls.** A fighter in base contact with the float may spend a Use action and make a **Tricky (8) Tech** test (either mode). On a success the float now heads for the nearest point of **their** deployment zone, and keeps going there at the end of each round until someone else takes it. The float cannot be shot or fought.\n- **The officials** keep the line: they attack any fighter in base contact with the float. They can be shot and fought like fighters."
+            "text": "- **The parade.** At the end of each round the float moves 3 inches toward the edge it is heading for, pushing aside, prone, anything in its way, and the officials walk with it instead of making their own walk. If it reaches that edge, it stops.\n- **Taking the controls.** A fighter in base contact with the float may spend a Use action to prompt the float (section 8.1): a **Tricky (8)** prompt, either mode. On a success the float now heads for the nearest point of **their** deployment zone, and keeps going there at the end of each round until someone else takes it. The float cannot be shot or fought.\n- **The officials** keep the line: they attack any fighter in base contact with the float. They can be shot and fought like fighters."
           },
           {
             "label": "Winning condition",
@@ -1573,7 +1573,7 @@
           },
           {
             "label": "Deployment",
-            "text": "Battle lines (section 9.1), whatever the table says. The parade runs along the street between the sides."
+            "text": "Battle lines (section 11.1), whatever the table says. The parade runs along the street between the sides."
           },
           {
             "label": "Always on: Dry wind",
@@ -1581,11 +1581,11 @@
           },
           {
             "label": "Pods",
-            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 9.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
+            "text": "At the start of **round 2**, roll a d6: on a **5+** a pod falls 2d6 inches from the centre (direction die), knocking prone every fighter within 2 inches. It cannot be picked up: crack it open (Use; the drop table, section 11.7). A pod still shut at the end goes to the side that holds the field and is opened after the battle."
           },
           {
             "label": "The end",
-            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 9.4). Evac: section 9.6."
+            "text": "After round 5, roll a d6 at the end of each round: on a **4+** play another round, up to round 7. A side with half or more of its fighters down, captured or gone tests to break at the start of each round (section 11.4). Evac: section 11.6."
           },
           {
             "label": "Plenty event at the start of round 3",
@@ -1593,7 +1593,7 @@
           },
           {
             "label": "Non-player models",
-            "text": "They act at the end of each round (section 9.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Festival float** (a 4-by-8-inch piece) | Move 3 | **The parade.** Moves in a straight line toward the edge or deployment zone the scenario or event names. An event's float leaves the table at the edge; a scenario's float stops there. Anything in its way is pushed aside and knocked prone. It cannot be shot or fought |\n| **Inspectorate escort** | Move 4, Fight 1, Save 1, Tough 2 | **Keeps the line.** Walks 4 inches toward the table edge the scenario or event names, and leaves the table there, unless the scenario says otherwise. Attacks the nearest fighter in base contact with it or with the doubter it walks. A doubter moves with the escorts |\n| **Rolling fruit** (a 3-inch piece) | Move 6 | **Rolls.** Moves 6 inches straight toward the table edge the event names, and leaves there. A fighter in its path makes a Routine Grit test or takes a glance and is knocked prone |"
+            "text": "They act at the end of each round (section 11.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Festival float** (a 4-by-8-inch piece) | Move 3 | **The parade.** Moves in a straight line toward the edge or deployment zone the scenario or event names. An event's float leaves the table at the edge; a scenario's float stops there. Anything in its way is pushed aside and knocked prone. It cannot be shot or fought |\n| **Inspectorate escort** | Move 4, Fight 1, Save 1, Tough 2 | **Keeps the line.** Walks 4 inches toward the table edge the scenario or event names, and leaves the table there, unless the scenario says otherwise. Attacks the nearest fighter in base contact with it or with the doubter it walks. A doubter moves with the escorts |\n| **Rolling fruit** (a 3-inch piece) | Move 6 | **Rolls.** Moves 6 inches straight toward the table edge the event names, and leaves there. A fighter in its path makes a Routine Grit test or takes a glance and is knocked prone |"
           }
         ]
       }

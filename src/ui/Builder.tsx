@@ -13,13 +13,13 @@ import { copyLink, useAsk } from './confirm';
 import { RuleLink, captainRule, giftRule, itemRule, ritesRule, sectionRule, speciesRule, typeRule } from './rule';
 
 const STEPS: { id: Step | 'review'; label: string; hint: string }[] = [
-  { id: 'faction', label: 'Faction', hint: 'Choose who is paying (11.1, chapter 12).' },
-  { id: 'rookies', label: 'Rookies', hint: 'Four free rookies: a name, a species, a type if your faction has them, and one rating at 1 (11.1).' },
-  { id: 'captain', label: 'Captain', hint: 'One rookie leads, with one captain trait (11.2).' },
-  { id: 'kit', label: 'Kit', hint: "Your faction's starting kit is free (chapter 12)." },
-  { id: 'shop', label: 'Shop', hint: 'Spend the starting parts (11.3). What is not spent stays as parts.' },
+  { id: 'faction', label: 'Faction', hint: 'Choose who is paying (9.1, chapter 10).' },
+  { id: 'rookies', label: 'Rookies', hint: 'Four free rookies: a name, a species, a type if your faction has them, and one rating at 1 (9.1).' },
+  { id: 'captain', label: 'Captain', hint: 'One rookie leads, with one captain trait (9.2).' },
+  { id: 'kit', label: 'Kit', hint: "Your faction's starting kit is free (chapter 10)." },
+  { id: 'shop', label: 'Shop', hint: 'Spend the starting parts (9.3). What is not spent stays as parts.' },
   { id: 'equip', label: 'Equip', hint: 'Two Hands sets of up to 2 Hands, one Body, one Frame, a Belt of 3 (7.1).' },
-  { id: 'specials', label: 'Specials', hint: 'The gift and Rites, at hire (11.4).' },
+  { id: 'specials', label: 'Specials', hint: 'The gift and Rites, at hire (9.4).' },
   { id: 'review', label: 'Review', hint: 'Check the crew, fix what is red, and save it.' },
 ];
 
@@ -138,7 +138,7 @@ function FactionStep({ crew, update }: { crew: Crew; update: Update }) {
               );
             })}
           </ol>
-          <h4>Subfaction <span className="muted small">(its rule replaces one faction rule of your choice, 12.1)</span></h4>
+          <h4>Subfaction <span className="muted small">(its rule replaces one faction rule of your choice, 10.1)</span></h4>
           <div className="stack-s" role="radiogroup" aria-label="Subfaction">
             {fac.subfactions.map((s) => (
               <label key={s.name} className={`option ${crew.subfaction === s.name ? 'on' : ''}`}>
@@ -428,7 +428,7 @@ function ReviewStep({ crew, update, messages, onGo }: { crew: Crew; update: Upda
         {link && <button className="btn" onClick={() => copyLink(ask, link)}>Copy share link</button>}
       </div>
       {errors.length > 0 && <p className="muted small">Your crew is saved on this device as you go. Fix the errors to save it as legal.</p>}
-      <p className="muted small"><RuleLink rule={sectionRule('Fill in the cards', '11.1', 'Fill in the cards and the roster (Appendix C): parts, tags, contacts, rivals, rumours.')}>Next</RuleLink>: the campaign screen keeps the roster, experience and injuries.</p>
+      <p className="muted small"><RuleLink rule={sectionRule('Fill in the cards', '9.1', 'Fill in the cards and the roster (Appendix C): parts, tags, contacts, rivals, rumours.')}>Next</RuleLink>: the campaign screen keeps the roster, experience and injuries.</p>
     </div>
   );
 }

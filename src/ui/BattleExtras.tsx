@@ -1,5 +1,5 @@
-// More of the battle companion: worlds and scenarios (9.1, 9.2, chapter 10), the Final (14.13),
-// breaking tests (9.4), madness (8.4), grenades (7.6, 7.7) and the reference tables.
+// More of the battle companion: worlds and scenarios (11.1, 11.2, chapter 12), the Final (15.3),
+// breaking tests (11.4), madness (8.4), grenades (7.6, 7.7) and the reference tables.
 import { useState } from 'react';
 import { getRules, plain } from '../data/rules';
 import { breakingStatus, positionDef } from '../engine/battle';
@@ -16,7 +16,7 @@ type SetB = (fn: (b: Battle) => Battle) => void;
 export const worldOf = (b: Battle) => getRules().data.worlds.find((w) => w.name === b.world);
 export const scenarioOf = (b: Battle) => worldOf(b)?.scenarios.find((s) => s.name === b.scenario);
 
-/** Before the battle: the world, the scenario, deployment and the table (9.1, 9.2), or the Final (14.13). */
+/** Before the battle: the world, the scenario, deployment and the table (11.1, 11.2), or the Final (15.3). */
 export function WorldSetup({ crew, b, setB }: { crew: Crew; b: Battle; setB: SetB }) {
   const rules = getRules();
   const w = worldOf(b);
@@ -29,8 +29,8 @@ export function WorldSetup({ crew, b, setB }: { crew: Crew; b: Battle; setB: Set
   const ownDeployment = scenarioDeploy && !/deployment table/i.test(scenarioDeploy);
   return (
     <div className="card stack-s">
-      <h3>World and scenario <span className="section-tag">§ 9.1, 9.2</span></h3>
-      <label className="check"><input type="checkbox" checked={!!b.final} onChange={(e) => setB((x) => ({ ...x, final: e.target.checked, scenario: e.target.checked ? '' : x.scenario }))} /> This is the season's Final (14.13)</label>
+      <h3>World and scenario <span className="section-tag">§ 11.1, 11.2</span></h3>
+      <label className="check"><input type="checkbox" checked={!!b.final} onChange={(e) => setB((x) => ({ ...x, final: e.target.checked, scenario: e.target.checked ? '' : x.scenario }))} /> This is the season's Final (15.3)</label>
       {b.final && (
         <details className="small" open>
           <summary>The Final</summary>
@@ -61,7 +61,7 @@ export function WorldSetup({ crew, b, setB }: { crew: Crew; b: Battle; setB: Set
       )}
       {sc && <ScenarioPage b={b} />}
       <div className="row gap-s wrap">
-        {b.final ? <span className="small"><strong>Deployment:</strong> {rules.crew.final.deployment.value} (14.13)</span>
+        {b.final ? <span className="small"><strong>Deployment:</strong> {rules.crew.final.deployment.value} (15.3)</span>
           : ownDeployment ? <span className="small"><strong>Deployment:</strong> <Md text={scenarioDeploy} /></span>
           : <><span className="small strong">Deployment</span><RollOrEnter die="d6" label="Roll deployment" value={b.deploymentRoll ?? null} onResult={(n) => setB((x) => ({ ...x, deploymentRoll: n }))} /></>}
       </div>
@@ -99,7 +99,7 @@ export function WorldPanel({ b, setB }: { b: Battle; setB: SetB }) {
       {w && <p className="small faction-note"><strong>{w.name}.</strong> <Md text={w.alwaysOn} /></p>}
       {w && b.round === R && (
         <div className="note stack-s">
-          <span className="small">Start of round {R}: the {w.name} event (d6, 9.1).</span>
+          <span className="small">Start of round {R}: the {w.name} event (d6, 11.1).</span>
           <RollOrEnter die="d6" value={b.eventRoll ?? null} onResult={(n) => setB((x) => ({ ...x, eventRoll: n }))} />
           {ev && <p className="small"><Md text={ev.Event} /></p>}
         </div>
@@ -110,7 +110,7 @@ export function WorldPanel({ b, setB }: { b: Battle; setB: SetB }) {
   );
 }
 
-/** Breaking (9.4): when the crew must test, who tests, the dice, and the result. */
+/** Breaking (11.4): when the crew must test, who tests, the dice, and the result. */
 export function BreakingCard({ crew, b, setB }: { crew: Crew; b: Battle; setB: SetB }) {
   const rules = getRules();
   const effects = activeEffects(rules, crew, 'breaking').map((e) => ({ ...e.effect, title: e.title }));
@@ -263,18 +263,18 @@ export function MoreTables() {
   );
   return (
     <div className="stack-s">
-      {table('Melee results', D.melee_results, '5.4')}
-      {table('Extra dice in melee', D.melee_dice, '5.4')}
-      {table('Shot totals', D.shot_results, '5.5')}
-      {table('Helps the shooter', D.shooting_helps, '5.5')}
-      {table('Protects the target', D.shooting_protects, '5.5')}
-      {table('Reactions', D.reactions, '5.6')}
-      {table('Force fields', D.force_field_saves, '5.7')}
-      {table('Terrain traits', D.terrain_traits, '5.10')}
-      {table('Doors and windows', D.doors, '5.10')}
+      {table('Melee results', D.melee_results, '5.6')}
+      {table('Extra dice in melee', D.melee_dice, '5.6')}
+      {table('Shot totals', D.shot_results, '5.7')}
+      {table('Helps the shooter', D.shooting_helps, '5.7')}
+      {table('Protects the target', D.shooting_protects, '5.7')}
+      {table('Reactions', D.reactions, '5.8')}
+      {table('Force fields', D.force_field_saves, '5.9')}
+      {table('Terrain traits', D.terrain_traits, '5.11')}
+      {table('Doors and windows', D.doors, '5.11')}
       {table('What can be prompted', D.prompt_targets, '8.2')}
       {table('Grenade scatter', D.grenade_scatter, '7.6')}
-      {table('Non-player models', D.npm, '9.8')}
+      {table('Non-player models', D.npm, '11.8')}
     </div>
   );
 }

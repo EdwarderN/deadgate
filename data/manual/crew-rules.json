@@ -3,32 +3,32 @@
   "creation": {
     "startingParts": {
       "value": 60,
-      "source": "11.1"
+      "source": "9.1"
     },
     "startingRookies": {
       "value": 4,
-      "source": "11.1",
+      "source": "9.1",
       "note": "Rookies are free, but a species or chassis that costs more than 15 to hire pays the difference from the 60 parts."
     },
     "rookieBasePrice": {
       "value": 15,
-      "source": "11.1"
+      "source": "9.1"
     },
     "rookieRatings": {
       "value": "exactly one rating at 1, the others 0",
-      "source": "4.2, 11.1"
+      "source": "4.2, 9.1"
     },
     "captainTraitsAtStart": {
       "value": 1,
-      "source": "11.2"
+      "source": "9.2"
     },
     "oldStockAvailability": {
       "value": "a d6 per item per break; 4+ available (3+ with the Haggler captain trait)",
-      "source": "11.3"
+      "source": "9.3"
     },
     "dropsForSale": {
       "value": false,
-      "source": "11.3"
+      "source": "9.3"
     },
     "sellPrice": {
       "value": "half the price, rounded down (full with a Fence contact)",
@@ -36,12 +36,12 @@
     },
     "oldStockSeller": {
       "value": 4,
-      "source": "11.3",
+      "source": "9.3",
       "modifiers": [
         {
           "captainTrait": "Haggler",
           "value": 3,
-          "source": "11.2"
+          "source": "9.2"
         }
       ],
       "note": "the d6 score that finds a seller for an old-stock item"
@@ -50,12 +50,12 @@
   "limits": {
     "maxFighters": {
       "value": 9,
-      "source": "11.1",
+      "source": "9.1",
       "note": "bots included"
     },
     "maxGifted": {
       "value": 2,
-      "source": "4.3, 11.4"
+      "source": "4.3, 9.4"
     },
     "giftSpecies": {
       "value": [
@@ -91,7 +91,7 @@
     },
     "botForbiddenRating": {
       "value": "Nerve",
-      "source": "4.5, 12.6",
+      "source": "4.5, 10.6",
       "note": "a bot never has or raises Nerve"
     },
     "ratingNames": {
@@ -112,8 +112,8 @@
         "Longshanks",
         "Brinie"
       ],
-      "source": "11.1",
-      "note": "bots come from chassis types (12.6)"
+      "source": "9.1",
+      "note": "bots come from chassis types (10.6)"
     },
     "botSpecies": {
       "value": "Bot",
@@ -130,6 +130,11 @@
     "maxCrewRumours": {
       "value": 1,
       "source": "14.8"
+    },
+    "maxRivals": {
+      "value": 3,
+      "source": "14.8",
+      "note": "a fourth pushes out the oldest"
     }
   },
   "gear": {
@@ -199,7 +204,7 @@
         "default": 4,
         "militaryFrame": 6
       },
-      "source": "5.7"
+      "source": "5.9"
     },
     "kindSlots": {
       "value": {
@@ -328,7 +333,7 @@
           ]
         }
       ],
-      "source": "7.6, 11.3"
+      "source": "7.6, 9.3"
     },
     "singleUse": {
       "value": [
@@ -405,18 +410,18 @@
     },
     "captainListAsAdvance": {
       "value": true,
-      "source": "11.2, 13.4"
+      "source": "9.2, 13.4"
     },
     "ritesAdvance": {
       "value": "Rites",
-      "source": "8.3, 11.4, 13.4",
+      "source": "8.3, 9.4, 13.4",
       "note": "the Tech advance that gives Rites; rite advances name it in their (needs ...)"
     }
   },
   "underdogs": {
     "strength": {
       "value": "total Experience + 10 per fighter on the roster",
-      "source": "11.5"
+      "source": "9.5"
     },
     "threshold": {
       "value": [
@@ -427,7 +432,7 @@
         1,
         2
       ],
-      "source": "11.5"
+      "source": "9.5"
     }
   },
   "factions": {
@@ -458,7 +463,7 @@
       "types": false,
       "wordKind": {
         "value": "Wager",
-        "source": "12.1"
+        "source": "10.1"
       },
       "effects": [
         {
@@ -494,7 +499,7 @@
       "beltSlots": {
         "value": 4,
         "rule": 1,
-        "source": "7.1, 12.2"
+        "source": "7.1, 10.2"
       }
     },
     "The Inspectorate": {
@@ -524,7 +529,7 @@
       "types": false,
       "wordKind": {
         "value": "Boast",
-        "source": "12.1"
+        "source": "10.1"
       },
       "effects": [
         {
@@ -568,9 +573,9 @@
           "when": "roundStart",
           "kind": "reminder",
           "rounds": [
-            1,
-            3,
-            5
+            2,
+            4,
+            6
           ]
         },
         {
@@ -611,12 +616,12 @@
         },
         "Acolyte": {
           "carriesRelics": true,
-          "note": "a priest within 6 inches may use a relic the Acolyte holds (12.4)"
+          "note": "a priest within 6 inches may use a relic the Acolyte holds (10.4)"
         }
       },
       "wordKind": {
         "value": "Vow",
-        "source": "12.1"
+        "source": "10.1"
       },
       "effects": [
         {
@@ -695,7 +700,7 @@
       "types": false,
       "wordKind": {
         "value": "Wager",
-        "source": "12.1"
+        "source": "10.1"
       },
       "effects": [
         {
@@ -793,7 +798,7 @@
       ],
       "rookiesMayBeBots": {
         "value": true,
-        "source": "12.6",
+        "source": "10.6",
         "note": "any of the four rookies may be a bot chassis instead (a Lab-hand pays 5 over a rookie)"
       },
       "typeSpecies": {
@@ -846,7 +851,7 @@
       "typeRules": {
         "Volunteer": {
           "injuryTable": "gentle",
-          "source": "12.6"
+          "source": "10.6"
         },
         "Prototype": {
           "builtIn": {
@@ -854,7 +859,7 @@
             "source": "copy",
             "maxPrice": 8
           },
-          "source": "12.6",
+          "source": "10.6",
           "note": "a free copy weapon worth up to 8 parts, chosen at hire; it takes no Hands and no set, and cannot be removed (designer's answer 1)"
         }
       }
@@ -885,7 +890,7 @@
       "types": true,
       "wordKind": {
         "value": "Boast",
-        "source": "12.1"
+        "source": "10.1"
       },
       "effects": [
         {
@@ -927,14 +932,14 @@
         "Stunt double": {
           "putDownXpTo": "Action star",
           "noTitle": true,
-          "source": "12.7"
+          "source": "10.7"
         }
       },
       "typeLimits": {
         "value": {
           "Director": 1
         },
-        "source": "12.7",
+        "source": "10.7",
         "note": "at most one Director (designer's answer 7)"
       },
       "typeGrants": {
@@ -943,9 +948,9 @@
             "name": "Director's camera",
             "hands": 1,
             "set": "set1",
-            "source": "12.7"
+            "source": "10.7"
           },
-          "note": "free, Hands 1; cannot be sold, dropped or taken, and passes to the next Director (12.7)"
+          "note": "free, Hands 1; cannot be sold, dropped or taken, and passes to the next Director (10.7)"
         }
       }
     }
@@ -1040,7 +1045,7 @@
         8,
         12
       ],
-      "source": "14.11"
+      "source": "15.1"
     },
     "doctor": {
       "value": "Laid up",
@@ -1055,6 +1060,19 @@
       },
       "source": "14.4",
       "note": "the captor names a price from min to min + the captive's Experience, at most max"
+    },
+    "spendEffects": {
+      "value": {
+        "rechargeMultiplier": 2,
+        "hireExtra": 3
+      },
+      "source": "14.6",
+      "note": "Spend effects from story events last for this break only: recharging costs double, the first purchase costs N more or less (N from the event), the next hire costs 3 more, the first sale is at full price"
+    },
+    "loseNoteFallback": {
+      "value": 3,
+      "source": "14.8",
+      "note": "a crew told to lose a contact or the lead that has none loses this many parts instead"
     }
   },
   "sections": {
@@ -1072,7 +1090,7 @@
       "relic": "8.3",
       "prosthetic": "13.2",
       "species": "4.3",
-      "captain": "11.2",
+      "captain": "9.2",
       "advance": "13.4",
       "gift": "8.4",
       "rites": "8.3",
@@ -1084,7 +1102,7 @@
       "tag": "14.10",
       "contact": "14.8",
       "weaponTrait": "7.3",
-      "recruit": "11.3",
+      "recruit": "9.3",
       "gearSlots": "7.1"
     },
     "note": "where in the book each kind of rule lives, for the in-app rule text"
@@ -1104,13 +1122,13 @@
       "value": 5,
       "extraRoundOn": 4,
       "max": 7,
-      "source": "9.3",
+      "source": "11.3",
       "note": "at the end of round 5 and each later round, a d6: 4+ plays another round; never past round 7"
     },
     "pod": {
       "value": 2,
       "fallsOn": 5,
-      "source": "9.7",
+      "source": "11.7",
       "note": "at the start of round 2, a d6: 5+ a pod falls"
     },
     "conditionsToDown": {
@@ -1122,11 +1140,11 @@
         "Hyped",
         "Shook"
       ],
-      "source": "5.9"
+      "source": "5.3"
     },
     "endsOnOwnActivation": {
       "value": "own next activation",
-      "source": "5.9",
+      "source": "5.3",
       "note": "states whose 'When it ends' says this are cleared when the fighter's activation ends"
     },
     "positions": {
@@ -1158,6 +1176,12 @@
           "notBot": true
         },
         {
+          "name": "Down, carried by an ally",
+          "injury": "gentle",
+          "down": true,
+          "notBot": true
+        },
+        {
           "name": "Captured",
           "injury": "gentle",
           "down": true,
@@ -1176,8 +1200,8 @@
           "corePulled": true
         }
       ],
-      "source": "5.8, 6.4, 9.6, 13.2, 13.3, 13.4",
-      "note": "injury: which table a fighter who ended the battle so rolls; heldField means gentle if the crew held the field, else harsh; corePulled: a bot whose core was pulled (13.3): destroyed without a roll, replaced with half its XP if the core got home; notBot: a bot is never picked up, carried or captured, so never evacuated while down or taken captive (5.8, 13.3)"
+      "source": "5.10, 6.4, 11.6, 13.2, 13.3, 13.4",
+      "note": "injury: which table a fighter who ended the battle so rolls; heldField means gentle if the crew held the field, else harsh; corePulled: a bot whose core was pulled (13.3): destroyed without a roll, replaced with half its XP if the core got home; notBot: a bot is never picked up, carried or captured, so never evacuated while down or taken captive (5.10, 13.3); a downed fighter an ally is carrying when the battle ends rolls the gentle table (13.2)"
     },
     "wordsPerSide": {
       "value": 2,
@@ -1222,18 +1246,18 @@
       "captainTraits": {
         "Steady crew": 1
       },
-      "source": "9.4",
+      "source": "11.4",
       "note": "once this share of the crew (rounded up) is down, captured or gone, the captain tests at the start of each round"
     },
     "worldEventRound": {
       "value": 3,
-      "source": "9.1"
+      "source": "11.1"
     },
     "tableSize": {
       "value": 6,
       "small": "3 by 3 feet",
       "large": "4 by 4 feet",
-      "source": "9.1",
+      "source": "11.1",
       "note": "the small table if neither crew has more than this many fighters"
     },
     "madness": {
@@ -1305,7 +1329,7 @@
         "A Legendary Word fulfilled": "word:Legendary",
         "A Boast fulfilled": "boast"
       },
-      "source": "14.12",
+      "source": "15.2",
       "note": "how each league points row is counted from the battle"
     },
     "taskBlockedStatuses": {
@@ -1319,7 +1343,7 @@
     "taskTableDie": {
       "value": "2d6",
       "ownTask": "d6",
-      "source": "14.6, chapter 12"
+      "source": "14.6, chapter 10"
     },
     "resetStatusesAtBreak": {
       "value": true,
@@ -1339,10 +1363,6 @@
       "source": "14.5",
       "note": "which story rows fit the battle, for the app's suggestion; the player still chooses"
     },
-    "evacTag": {
-      "value": "Ran",
-      "source": "9.6"
-    },
     "botCore": {
       "value": 0.5,
       "source": "13.3",
@@ -1355,15 +1375,13 @@
     },
     "taskPayDoubleIsPrinted": {
       "value": true,
-      "source": "12.3",
+      "source": "10.3",
       "note": "'pays double' doubles the task's printed pay; pay added by other rules is not doubled (designer's answer 24)"
     },
     "ransomTags": {
-      "value": [
-        "Merciful"
-      ],
+      "value": [],
       "source": "14.10",
-      "note": "crew tags that change the ransom a captor may ask for this crew's fighters; the app shows their text in the ransom step"
+      "note": "crew tags that change the ransom a captor may ask for this crew's fighters; the app shows their text in the ransom step (none since 2026-11-09: Butchers and Merciful act between battles, 14.10)"
     },
     "captorRolls": {
       "value": true,
@@ -1405,11 +1423,72 @@
       ],
       "source": "14.4, 14.10",
       "note": "tags a crew gains from what happened, as each tag's 'Gained when' says: Words in one battle, captives in one break. tiers: at least one of the Words is of these tiers. The app adds them (designer's answer 35)"
+    },
+    "tagDice": {
+      "value": [
+        {
+          "tag": "Ran",
+          "on": "twist",
+          "dice": -1
+        },
+        {
+          "tag": "Reliable",
+          "on": "twist",
+          "dice": 1
+        },
+        {
+          "tag": "Butchers",
+          "on": "task",
+          "task": "Hunt leads",
+          "dice": 1
+        },
+        {
+          "tag": "Oathbreakers",
+          "on": "task",
+          "task": "Work a job",
+          "dice": -1
+        },
+        {
+          "tag": "Oathkeepers",
+          "on": "task",
+          "task": "Work a job",
+          "dice": 1
+        }
+      ],
+      "source": "14.10",
+      "note": "twist: every story event Twist test; task: the crew's first test of that task each break"
+    },
+    "tagStoryRolls": {
+      "value": [
+        {
+          "tag": "Butchers",
+          "row": "5",
+          "rolls": 2
+        }
+      ],
+      "source": "14.10",
+      "note": "on this story row the crew rolls this many times and chooses"
+    },
+    "tagGain": {
+      "value": {
+        "Merciful": [
+          {
+            "contact": "choose"
+          }
+        ]
+      },
+      "source": "14.10",
+      "note": "what a tag gives when the crew gains it (a contact only if it has fewer than three)"
+    },
+    "rivalXp": {
+      "value": 1,
+      "source": "14.8",
+      "note": "a fighter whose attack puts down a rival fighter, or any fighter of a rival crew, gains this much more, at most once a battle"
     }
   },
   "factionPayCap": {
     "value": 5,
-    "source": "12.1",
+    "source": "10.1",
     "note": "parts a crew gains from faction, subfaction and type rules, per battle; effects marked factionPay count toward it"
   },
   "taskPay": {
@@ -1418,41 +1497,29 @@
         "task": "Work a job",
         "captainTrait": "Paymaster",
         "parts": 2,
-        "source": "11.2"
-      },
-      {
-        "task": "Work a job",
-        "tag": "Ran",
-        "parts": -2,
-        "source": "14.10"
-      },
-      {
-        "task": "Work a job",
-        "tag": "Reliable",
-        "parts": 2,
-        "source": "14.10"
+        "source": "9.2"
       }
     ],
-    "source": "11.2, 14.10",
-    "note": "changes to a task's pay from captain traits and tags"
+    "source": "9.2",
+    "note": "changes to a task's pay from captain traits (tags now add dice instead: afterBattle.tagDice, 14.10)"
   },
   "_effectsNote": "factions[].effects: faction rules the app acts on. 'rule' (a numbered rule, off when the subfaction replaces it), 'subfaction' or 'type' says whose; 'when' says where it shows (setup, roundStart, pod, putDown, voice, voiceGood, afterBattle, captive, break, legend); 'kind' says what the app does. The rule text shown is the book's own, from data/generated/factions.json.",
   "final": {
     "words": {
       "value": 3,
-      "source": "14.13"
+      "source": "15.3"
     },
     "spotlightFrom": {
       "value": 2,
-      "source": "14.13"
+      "source": "15.3"
     },
     "title": {
       "value": "Champions",
-      "source": "14.13"
+      "source": "15.3"
     },
     "deployment": {
       "value": "Battle lines",
-      "source": "14.13"
+      "source": "15.3"
     }
   }
 }

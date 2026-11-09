@@ -5,7 +5,7 @@ import { uid, type Crew, type Fighter, type ItemSlot } from '../src/engine/model
 export const rules = getRules();
 
 /** A crew of the given faction with four named rookies (Fight 1), captain = first, one captain trait.
- *  Its subfaction replaces rule `replaced` (default: the last rule that may be replaced, 12.1). */
+ *  Its subfaction replaces rule `replaced` (default: the last rule that may be replaced, 10.1). */
 export function crewOf(faction: string, subfaction?: string, edit?: (c: Crew) => Crew, replaced?: number): Crew {
   let c = newCrew(rules);
   c.name = 'Test crew';

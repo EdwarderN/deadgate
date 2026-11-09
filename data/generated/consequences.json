@@ -48,7 +48,7 @@
     },
     {
       "d6": "6",
-      "Result": "**Through the door.** \"Slam.\" Shoved 2 inches straight away from the attacker; they end prone and **Shook**. If that takes them through a door or window, it slams and locks behind them (red Hacked token). If a wall or another fighter stops them short, they are **Flustered** too"
+      "Result": "**Through the door.** \"Slam.\" Shoved 2 inches straight away from the attacker; they end prone and **Shook**. If that takes them through a shut door or window, it slams and locks behind them (red Hacked token); an open one stays open"
     }
   ],
   "Crushing (11)": [
@@ -66,7 +66,7 @@
     },
     {
       "d6": "4",
-      "Result": "**Down.** \"Like a sack of parts.\""
+      "Result": "**Down.** \"Like a sack of parts.\" Each ally within 2 inches hears the gear's voice promise cover: **Under warranty**"
     },
     {
       "d6": "5",

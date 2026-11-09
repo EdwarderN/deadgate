@@ -15,18 +15,18 @@ describe('resolving table effects', () => {
     const c = crew();
     const r = resolveEffects(rules, c, story(2, 4).pay!, { note: 'test' }, {}, 's');
     expect(r.missing).toEqual([]);
-    expect(r.changes).toEqual([{ kind: 'parts', amount: -3, note: 'test' }]);
-    expect(applyChanges(rules, c, r.changes).crew.parts).toBe(c.parts - 3);
+    expect(r.changes).toEqual([{ kind: 'parts', amount: -1, note: 'test' }]);
+    expect(applyChanges(rules, c, r.changes).crew.parts).toBe(c.parts - 1);
   });
-  it('a Pay answer that is not parts: a fighter wears the badge, and the crew gains a tag', () => {
+  it('a Pay answer with a fighter to choose: one fighter wears the badge, and the crew gains a lead', () => {
     const c = crew();
     const e = story(1, 1).pay!;
     expect(resolveEffects(rules, c, e, { note: 'test' }, {}, 's').missing).toEqual(['choose a fighter']);
     const r = resolveEffects(rules, c, e, { note: 'test' }, { 's.who:choose': c.fighters[1].id }, 's');
-    expect(r.changes).toEqual([{ kind: 'nextBattle', fid: c.fighters[1].id, value: 'Announced' }, { kind: 'tag', value: 'Reliable' }]);
+    expect(r.changes).toEqual([{ kind: 'parts', amount: -1, note: 'test' }, { kind: 'nextBattle', fid: c.fighters[1].id, value: 'Under warranty' }, { kind: 'lead', text: 'a lead' }]);
     const after = applyChanges(rules, c, r.changes).crew;
-    expect(after.parts).toBe(c.parts);
-    expect(after.notes.tags).toContain('Reliable');
+    expect(after.parts).toBe(c.parts - 1);
+    expect(after.notes.lead).toBe('a lead');
   });
   it('losses stop at 0; only a crew with credit pays a running cost into debt (14.2)', () => {
     const c = { ...crew(), parts: 2 };
@@ -59,7 +59,7 @@ describe('resolving table effects', () => {
     expect(r.missing.length).toBeGreaterThan(0);
     const r2 = resolveEffects(rules, c, story(5, 4).twist!.success, { note: '' }, { 'x.who:choose': c.fighters[1].id }, 'x');
     expect(r2.missing).toEqual([]);
-    expect(r2.changes.map((x) => ('fid' in x ? x.fid : ''))).toEqual([c.fighters[1].id, c.fighters[1].id]);
+    expect(r2.changes.filter((x) => 'fid' in x).map((x) => ('fid' in x ? x.fid : ''))).toEqual([c.fighters[1].id, c.fighters[1].id, c.fighters[1].id]);
   });
   it('the task fighter is "self"; the newest fighter is found by Experience', () => {
     let c = crew();
@@ -67,8 +67,10 @@ describe('resolving table effects', () => {
     const r = resolveEffects(rules, c, O.taskTables['Train']['7'], ctx, {}, 't');
     expect(r.changes).toEqual([{ kind: 'nextBattle', fid: c.fighters[2].id, value: 'Hyped' }]);
     c = { ...c, fighters: c.fighters.map((f, i) => ({ ...f, xp: i === 3 ? 0 : 5 })) };
-    const s = resolveEffects(rules, c, story(2, 4).accept, { note: '' }, {}, 's');
-    expect(s.changes).toEqual([{ kind: 'silly', fid: c.fighters[3].id, value: 'Jittery' }]);
+    const s = resolveEffects(rules, c, story(6, 1).twist!.success, { note: '' }, {}, 's');
+    expect(s.changes.find((x) => x.kind === 'xp')).toBeUndefined();
+    const n = resolveEffects(rules, c, story(1, 6).accept, { note: '' }, {}, 's');
+    expect(n.changes).toEqual([{ kind: 'nextBattle', fid: c.fighters[3].id, value: 'Hyped' }]);
   });
   it('finds roll nested effects; two finds keep one', () => {
     const c = crew();

@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { getRules, plain } from '../data/rules';
 import {
   battleXp, botWord, finishAfterBattle, injuryResult, injuryTableFor, leaguePoints, legendFor, positionDef,
-  captivesOf, earnedTags, sillyTableFor, stateNames, storyEventFor, storyKey, taskBlocked, taskDefs, totalLeaguePoints, RUMOUR, deedTier, wagerStake, wordName,
+  captivesOf, earnedTags, storyRolls, tagDice, sillyTableFor, stateNames, storyEventFor, storyKey, taskBlocked, taskDefs, totalLeaguePoints, RUMOUR, deedTier, wagerStake, wordName,
 } from '../engine/battle';
 import { scenarioOf } from './BattleExtras';
 import {
@@ -16,7 +16,7 @@ import { applyChanges, describe, setItemNamer, splitTwist, type Change } from '.
 import { resolveEffects, type EffCtx, type EffState, type Node, type Resolved } from '../engine/effects';
 import { uid, type AfterBattle as After, type Captive, type Crew, type Fighter } from '../engine/model';
 import { go } from '../App';
-import { Chassis, Doctor, Hire, Md, Recharge, Shop, Stash, fighterLabel, type Update } from './common';
+import { Chassis, Doctor, Hire, SpendEffects, Md, Recharge, Shop, Stash, fighterLabel, type Update } from './common';
 import { Experience } from './Campaign';
 import { PoolRoller, RollOrEnter } from './Dice';
 import { FactionNote } from './Battle';
@@ -176,7 +176,7 @@ function BattleStep(p: SP) {
     const st = wagerStake(rules, crew, b.fighters[f.id].word);
     if (st) changes.push({ kind: 'parts', amount: st, note: `Wager: ${fighterLabel(f)}` });
   }
-  // The prize (9.5), or the Final's (14.13); an evacuating or broken side cannot win it.
+  // The prize (11.5), or the Final's (15.3); an evacuating or broken side cannot win it.
   const est = a.eff ?? {};
   const setEst = (path: string, v: unknown) => setA((x) => ({ ...x, eff: { ...(x.eff ?? {}), [path]: v } }));
   const won = b.winCond && !b.evacuated && !b.broke;
@@ -185,12 +185,11 @@ function BattleStep(p: SP) {
   if (won && a.prizeExtra) changes.push({ kind: 'parts', amount: a.prizeExtra, note: 'The scenario pays more' });
   if (won && b.final) changes.push({ kind: 'crewRoll', name: crew.name || 'The crew', titles: rules.crew.final.title.value, fate: `${rules.crew.final.title.value} of the season` });
   const scenarioPrize = scenarioOf(b)?.sections.find((x) => /^Prize/.test(x.label))?.text;
-  // Evac costs the crew its name (9.6).
-  if (b.evacuated) changes.push({ kind: 'tag', value: rules.crew.afterBattle.evacTag.value });
+  // Evac costs the crew its name (11.6).
   // Tags from this battle's Words (14.10): a fulfilled Boast, two failed Words, two fulfilled with one Big or Legendary.
   const wordTags = earnedTags(rules, b, []);
   for (const t of wordTags) changes.push({ kind: 'tag', value: t.tag });
-  // The pod (9.7): opened by one of ours and carried off, or opened after the battle by the side that holds the field.
+  // The pod (11.7): opened by one of ours and carried off, or opened after the battle by the side that holds the field.
   const P = rules.crew.battle.pod;
   const podFell = (b.pod?.roll ?? 0) >= P.fallsOn;
   const dropRow = b.pod?.drop ? lookup(rules.data.drop_table, b.pod.drop) : null;
@@ -212,11 +211,10 @@ function BattleStep(p: SP) {
       blocked={undecided ? `Say whether ${undecided === 1 ? 'the Word was' : `${undecided} Words were`} fulfilled.` : sillyMissing ? 'Roll the silly trait for each failed Word.' : openBits.length ? `Still to do: ${openBits.join('; ')}.` : undefined}>
       {(won || b.evacuated || podFell) && (
         <div className="card stack-s">
-          <h3>{won ? (b.final ? 'Champions of the season' : 'The prize') : 'The battle'} <span className="section-tag">§ {b.final ? '14.13' : '9.5'}</span></h3>
+          <h3>{won ? (b.final ? 'Champions of the season' : 'The prize') : 'The battle'} <span className="section-tag">§ {b.final ? '15.3' : '11.5'}</span></h3>
           {won && scenarioPrize && <p className="small muted"><Md text={scenarioPrize} /></p>}
           {prize && <EffectNodes nodes={prize.nodes} st={est} set={setEst} crew={crew} />}
           {won && !b.final && <label className="field inline-field"><span className="small">Anything more the scenario pays (parts)</span><input className="num" inputMode="numeric" value={a.prizeExtra ?? ''} onChange={(e) => setA((x) => ({ ...x, prizeExtra: +e.target.value.replace(/\D/g, '') || null }))} /></label>}
-          {b.evacuated && <p className="small">We called our evac: the crew gains <strong>{rules.crew.afterBattle.evacTag.value}</strong> (9.6).</p>}
           {wordTags.map((t) => <p key={t.tag} className="small">{t.why}: the crew gains <strong>{t.tag}</strong> (14.10).</p>)}
           {podFell && dropRow && b.pod?.ours && <label className="check small"><input type="checkbox" checked={!!a.podCarried} onChange={(e) => setA((x) => ({ ...x, podCarried: e.target.checked }))} /> We carried off what came out of the pod: {plain(dropRow['What came out']).split(':')[0]}</label>}
           {podFell && !b.pod?.drop && <p className="small">{b.heldField ? 'Nobody cracked the pod: the crew holds the field and opens it now.' : 'Nobody cracked the pod, and the crew did not hold the field: it stays shut.'}</p>}
@@ -328,11 +326,11 @@ function BattleStep(p: SP) {
       </div>
 
       <div className="row gap wrap">
-        <span className="row gap-s small">Captives we took <span className="muted">(never a bot, 5.8)</span>
+        <span className="row gap-s small">Captives we took <span className="muted">(never a bot, 5.10)</span>
           <button className="btn small" aria-label="One captive fewer" onClick={() => setA((x) => ({ ...x, captives: captivesOf(x).slice(0, -1) }))}>−</button>{captivesOf(a).length}
           <button className="btn small" aria-label="One more captive" onClick={() => setA((x) => ({ ...x, captives: [...captivesOf(x), { price: null, refused: false }] }))}>+</button>
         </span>
-        <span className="small muted">{b.final ? 'The Final scores no league points (14.13).' : <>League points: {lp.map((r) => `${r.label} ${r.points}`).join(', ') || 'none'} = <strong>{totalLeaguePoints(rules, b)}</strong></>}</span>
+        <span className="small muted">{b.final ? 'The Final scores no league points (15.3).' : <>League points: {lp.map((r) => `${r.label} ${r.points}`).join(', ') || 'none'} = <strong>{totalLeaguePoints(rules, b)}</strong></>}</span>
       </div>
     </Step>
   );
@@ -388,7 +386,9 @@ function InjuriesStep(p: SP) {
   });
   // Tags from captives this break: two fates (Butchers), two ransoms at the lowest price (Merciful) (14.4, 14.10).
   const capTags = earnedTags(rules, { ...b, fighters: {} }, caps);
-  for (const t of capTags) changes.push({ kind: 'tag', value: t.tag });
+  // Through the effects, so a tag that gives something when gained asks for it (Merciful's contact, 14.10).
+  const capTagRes = capTags.length ? resolveEffects(rules, crew, capTags.map((t) => ({ tag: t.tag })), { battle: b, note: 'Captives' }, st, 'captags') : null;
+  if (capTagRes) { changes.push(...capTagRes.changes); missing.push(...capTagRes.missing); }
   return (
     <Step id="injuries" {...p} intro="Fighters who ended the battle down roll their injury table (13.2). Then captives are ransomed or meet their fate (14.4)." changes={changes}
       blocked={missing.length ? `Still to do: ${missing.join('; ')}.` : undefined}>
@@ -456,6 +456,7 @@ function InjuriesStep(p: SP) {
         );
       })}
       {capTags.map((t) => <p key={t.tag} className="note small">{t.why}: the crew gains <strong>{t.tag}</strong> (14.10).</p>)}
+      {capTagRes && <EffectNodes nodes={capTagRes.nodes.filter((n) => n.kind !== 'auto')} st={st} set={setSt} crew={crew} />}
     </Step>
   );
 }
@@ -530,11 +531,15 @@ function BreakStep(p: SP) {
   const evO = key && story.roll ? rules.outcomes.storyEvents[key]?.[String(story.roll)] : undefined;
   const twist = ev && ev.Twist !== 'None' ? splitTwist(ev.Twist) : null;
   const storyEffs = !evO ? [] : story.choice === 'Pay' ? evO.pay ?? [] : story.choice === 'Twist' ? (story.twistOk === true ? evO.twist?.success ?? [] : story.twistOk === false ? evO.twist?.failure ?? [] : []) : story.choice === 'Accept' ? evO.accept : [];
-  const storyRes = resolveEffects(rules, crew, storyEffs, { battle: a.battle, note: ev ? `Story: ${plain(ev.Event).replace(/\.$/, '')}` : '' }, st, `story:${story.row}.${story.roll}.${story.choice}.${story.twistOk}`);
+  // The lead is crossed off before the event is rolled, so the event may give a new one (14.8).
+  const leadOff = !!story.leadUsed && !!crew.notes.lead;
+  if (leadOff) changes.push({ kind: 'lead', text: '' });
+  const storyCrew = leadOff ? { ...crew, notes: { ...crew.notes, lead: '' } } : crew;
+  const storyRes = resolveEffects(rules, storyCrew, storyEffs, { battle: a.battle, note: ev ? `Story: ${plain(ev.Event).replace(/\.$/, '')}` : '' }, st, `story:${story.row}.${story.roll}.${story.choice}.${story.twistOk}`);
   changes.push(...storyRes.changes);
+  const nRolls = storyRolls(rules, crew, story.row);
   if (ev && !story.choice) missing.push('choose Accept, Pay or Twist');
   if (story.choice === 'Twist' && story.twistOk == null) missing.push('make the twist test');
-  if (story.leadUsed && crew.notes.lead) changes.push({ kind: 'lead', text: '' });
   if (!story.roll) missing.push('roll the story event');
   if (otherSub) missing.push('roll the story event again');
   missing.push(...storyRes.missing.map((m) => `story: ${m}`));
@@ -590,7 +595,18 @@ function BreakStep(p: SP) {
             </label>
           ))}
         </div>
-        {key && <RollOrEnter die="d6" value={story.roll} onResult={(n) => setStory({ roll: n, choice: undefined, twistOk: null })} />}
+        {key && nRolls === 1 && <RollOrEnter die="d6" value={story.roll} onResult={(n) => setStory({ roll: n, choice: undefined, twistOk: null })} />}
+        {key && nRolls > 1 && (
+          <div className="stack-s">
+            <p className="small">{rules.crew.afterBattle.tagStoryRolls?.value.filter((t) => t.row === story.row && crew.notes.tags.includes(t.tag)).map((t) => t.tag).join(', ')}: roll {nRolls} times and choose one ({rules.crew.afterBattle.tagStoryRolls?.source}).</p>
+            {Array.from({ length: nRolls }, (_, i) => (
+              <RollOrEnter key={i} die="d6" label={`Roll ${i + 1}`} value={story.rolls?.[i] ?? null} onResult={(n) => setStory({ rolls: Object.assign([...(story.rolls ?? [])], { [i]: n }), roll: null, choice: undefined, twistOk: null })} />
+            ))}
+            {(story.rolls ?? []).filter(Boolean).length >= nRolls && (
+              <div className="seg wrap">{(story.rolls ?? []).map((n, i) => n && <button key={i} className={`seg-btn tight ${story.roll === n ? 'on' : ''}`} onClick={() => setStory({ roll: n, choice: undefined, twistOk: null })}>{n}: {plain(lookup(rules.data.story_events[key], n)?.Event ?? '').split('.')[0]}</button>)}</div>
+            )}
+          </div>
+        )}
         {rolled && otherSub && <p className="note small"><Md text={rolled.Event} />: written for {otherSub}, not your subfaction. Roll again (14.5).</p>}
         {ev && (
           <div className="stack-s">
@@ -604,7 +620,7 @@ function BreakStep(p: SP) {
               ))}
             </div>
             {story.choice === 'Twist' && twist && (
-              <TwistTest crew={crew} rating={twist.rating} who={story.twistWho ?? null} setWho={(w) => setStory({ twistWho: w })} ok={story.twistOk ?? null} setOk={(v) => setStory({ twistOk: v })} />
+              <TwistTest crew={crew} rating={twist.rating} difficulty={twist.difficulty} note={twist.note} who={story.twistWho ?? null} setWho={(w) => setStory({ twistWho: w })} ok={story.twistOk ?? null} setOk={(v) => setStory({ twistOk: v })} />
             )}
             {story.choice && <EffectNodes nodes={storyRes.nodes} st={st} set={setSt} crew={crew} empty="Nothing happens." />}
           </div>
@@ -651,9 +667,9 @@ function taskResolve(rules: ReturnType<typeof getRules>, crew: Crew, a: After, f
   if (informer && !t.success) baseEffs = [{ finds: informer[1].findsOnFailure }];
   if (out.table?.noFinds) baseEffs = baseEffs.filter((e) => !e.finds);
   out.base = resolveEffects(rules, crew, baseEffs, ctx, st, `taskbase:${f.id}:${def.name}:${useFailure}`);
-  // Faction rules, captain traits and tags change the pay (12.5, 11.2, 14.10); the table can halve, double or cancel it.
+  // Faction rules, captain traits and tags change the pay (10.5, 9.2, 14.10); the table can halve, double or cancel it.
   const baseParts = out.base.changes.filter((c) => c.kind === 'parts').reduce((s, c) => s + (c as { amount: number }).amount, 0);
-  // "Pays double" doubles the task's printed pay, before other rules add to it (12.3); other changes apply to the whole pay.
+  // "Pays double" doubles the task's printed pay, before other rules add to it (10.3); other changes apply to the whole pay.
   const tp = taskPayWithTable(rules, crew, def.name, !!t.success && mult !== 'failure', baseParts || null, typeof mult === 'number' ? mult : undefined);
   const parts = tp.parts ?? 0;
   out.changes.push(...out.base.changes.filter((c) => c.kind !== 'parts'));
@@ -705,7 +721,17 @@ function TaskRow({ crew, f, a, setA, defs, off, r, st, setSt }: { crew: Crew; f:
           {helpers.map(([n, u]) => (
             <label key={n} className="check small"><input type="checkbox" disabled={!!usedBy(n) && usedBy(n) !== f.id} checked={usedBy(n) === f.id} onChange={(e) => setA((y) => ({ ...y, contactUse: { ...(y.contactUse ?? {}), [n]: e.target.checked ? f.id : '' } }))} /> Use the {n}: {u.target ? `the test is ${u.target}+` : 'a finds roll even if the test fails'}</label>
           ))}
-          <PoolRoller key={`${def.name}-${ratingUsed}-${target}`} initialExtra={rt[ratingUsed] ?? 0} target={target} label={`${ratingUsed} ${rt[ratingUsed] ?? 0}`} onResult={(tot) => set({ testTotal: tot, success: target !== null ? tot >= target : null })} />
+          {(() => {
+            // The crew's tags add dice to its first test of this task each break (14.10).
+            const first = crew.fighters.find((x) => a.tasks[x.id]?.task === def.name)?.id === f.id;
+            const td = first ? tagDice(rules, crew, { task: def.name }) : { dice: 0, notes: [] };
+            return (
+              <>
+                {td.notes.length > 0 && <p className="small muted">The crew's first {def.name} this break: {td.notes.join(', ')} die (14.10).</p>}
+                <PoolRoller key={`${def.name}-${ratingUsed}-${target}-${td.dice}`} initialExtra={(rt[ratingUsed] ?? 0) + td.dice} target={target} label={`${ratingUsed} ${rt[ratingUsed] ?? 0}`} onResult={(tot) => set({ testTotal: tot, success: target !== null ? tot >= target : null })} />
+              </>
+            );
+          })()}
           <div className="seg"><button className={`seg-btn tight ${t.success === true ? 'on' : ''}`} onClick={() => set({ success: true })}>Success</button><button className={`seg-btn tight ${t.success === false ? 'on' : ''}`} onClick={() => set({ success: false })}>Failure</button></div>
           {r?.base && <EffectNodes nodes={r.base.nodes.filter((n) => !(n.kind === 'auto' && /parts$/.test(n.text)))} st={st} set={setSt} crew={crew} />}
           {t.success != null && <p className="small">Pay: <strong>{r?.pay || 'nothing'}</strong></p>}
@@ -732,18 +758,20 @@ function rowHints(rules: ReturnType<typeof getRules>, crew: Crew, a: After): str
   return Object.entries(hints).filter(([, why]) => facts[why]).map(([row]) => row);
 }
 
-function TwistTest({ crew, rating, who, setWho, ok, setOk }: { crew: Crew; rating: string | null; who: string | null; setWho: (w: string | null) => void; ok: boolean | null; setOk: (v: boolean) => void }) {
+function TwistTest({ crew, rating, difficulty, note, who, setWho, ok, setOk }: { crew: Crew; rating: string | null; difficulty: string | null; note: string | null; who: string | null; setWho: (w: string | null) => void; ok: boolean | null; setOk: (v: boolean) => void }) {
   const rules = getRules();
   const f = crew.fighters.find((x) => x.id === who);
-  const r = f && rating ? currentRatings(rules, f)[rating] ?? 0 : 0;
-  const tt = rules.crew.afterBattle.twistTest;
+  const td = tagDice(rules, crew, { twist: true });
+  const r = (f && rating ? currentRatings(rules, f)[rating] ?? 0 : 0) + td.dice;
+  // Tricky (8) unless the event names another difficulty (14.5).
+  const tt = { ...rules.crew.afterBattle.twistTest, value: difficulty ?? rules.crew.afterBattle.twistTest.value };
   const diff = rules.data.difficulties.find((d) => plain(d.Difficulty) === tt.value);
   const target = +(diff?.Target ?? rules.data.difficulties[0]?.Target ?? 6);
   const can = crew.fighters.filter((x) => !taskBlocked(rules, x, crew));
   return (
     <div className="stack-s twist">
       <div className="row gap-s wrap">
-        <span className="small">{rating ?? 'A'} test, {tt.value} ({target}), by a fighter who may take a task (it does not use their task, {tt.source}). Who tries?</span>
+        <span className="small">{rating ?? 'A'} test, {tt.value} ({target}){note ? `, ${note}` : ''}{td.notes.length ? `, ${td.notes.join(', ')} die` : ''}, by a fighter who may take a task (it does not use their task, {tt.source}). Who tries?</span>
         <select aria-label="Who takes the test" value={who ?? ''} onChange={(e) => setWho(e.target.value || null)}>
           <option value="">Choose</option>{can.map((x) => <option key={x.id} value={x.id}>{fighterLabel(x)}{rating ? ` (${rating} ${currentRatings(rules, x)[rating] ?? 0})` : ''}</option>)}
         </select>
@@ -821,8 +849,9 @@ function SpendStep({ crew, update, confirm }: SP) {
   return (
     <div className="stack">
       <h2>Spend</h2>
-      <p className="muted">Recharge, repair, buy, sell, hire and fit prosthetics (14.3, 11.3, 14.9). A new break: old stock needs a seller again.</p>
+      <p className="muted">Recharge, repair, buy, sell, hire and fit prosthetics (14.3, 9.3, 14.9). A new break: old stock needs a seller again.</p>
       <Chassis crew={crew} update={update} />
+      <SpendEffects crew={crew} />
       <Doctor crew={crew} update={update} />
       <Recharge crew={crew} update={update} />
       <Stash crew={crew} update={update} />
@@ -881,7 +910,7 @@ function DoneStep({ crew, a, setA, update }: SP) {
   );
 }
 
-/** Remove a fighter and gain their hire price (Streaming Platforms, 12.7). */
+/** Remove a fighter and gain their hire price (Streaming Platforms, 10.7). */
 function CancelFighter({ crew, e, a, setA, update }: { crew: Crew; e: ActiveEffect; a: After; setA: P['setA']; update: Update }) {
   const rules = getRules();
   const ask = useAsk();
@@ -916,7 +945,7 @@ function RumourPicks({ crew, a, update }: { crew: Crew; a: After; update: Update
   return (
     <div className="card stack-s">
       <h3>Rumours <span className="section-tag">§ {R.source}</span></h3>
-      <p className="small muted">An arrival has no past, so the world writes one. Pick the rumour they will live up to: it is their Word every battle (a Big vow) until fulfilled (+{R.value} XP and its Legend) or disproved.</p>
+      <p className="small muted">An arrival has no past, so the world writes one. Pick the rumour they will live up to. While it is unfulfilled they may swear it as their Word in any battle (always a Big vow, counted against the crew's Words): fulfilled, +{R.value} XP and its Legend; sworn and failed, it is disproved.</p>
       {due.map((f) => (
         <label key={f.id} className="field"><span>{fighterLabel(f)}</span>
           <select value="" onChange={(e) => e.target.value && update((c) => applyChanges(rules, c, [{ kind: 'rumourPick', fid: f.id, value: e.target.value }]).crew)}>

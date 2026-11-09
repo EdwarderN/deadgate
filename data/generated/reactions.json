@@ -1,22 +1,50 @@
 [
   {
     "Reaction": "**Take it**",
-    "What it does": "Nothing. The reaction is kept for later",
-    "The price": "None"
+    "When": "Targeted by a ranged attack",
+    "What it does": "Nothing",
+    "The price": "None: the reaction is kept for later"
   },
   {
     "Reaction": "**Dive**",
-    "What it does": "Move up to 2 inches before the roll; this may reach cover",
+    "When": "Targeted by a ranged attack, or about to be caught in a blast (section 7.6)",
+    "What it does": "Move up to 2 inches before the roll; this may reach cover. Out of the blast means not in it",
     "The price": "The reaction is used"
   },
   {
     "Reaction": "**Duck**",
-    "What it does": "Go prone before the roll: the shooter has -1 die",
-    "The price": "The reaction is used. Standing up costs an action (then a half Move), and a prone fighter is easier to hit in melee"
+    "When": "Targeted by a ranged attack",
+    "What it does": "Go prone (section 5.10) before the roll: the shooter has -1 die",
+    "The price": "The reaction is used. The fighter stays prone until they stand up"
   },
   {
     "Reaction": "**Return fire**",
+    "When": "Targeted by a ranged attack",
     "What it does": "Needs a ranged weapon, range and line of sight. The shot becomes an **opposed** roll: shooter's Shoot against target's Shoot, every source counted, dice cancelling as usual. The winner by any margin hits the loser at that margin's severity",
     "The price": "Both fighters can be hurt. A tie: each hits the other with a **glance**. Saves apply to whoever is hit"
+  },
+  {
+    "Reaction": "**Parting blow**",
+    "When": "An enemy in base contact moves away",
+    "What it does": "An immediate melee attack on the leaving fighter, an ordinary opposed Fight roll. It uses none of the leaving fighter's actions",
+    "The price": "The reaction is used"
+  },
+  {
+    "Reaction": "**Block**",
+    "When": "Any attack, shot or melee",
+    "What it does": "A physical shield takes the hit if the attacker wins (section 7.4)",
+    "The price": "The shield takes dents"
+  },
+  {
+    "Reaction": "**Parry**",
+    "When": "A melee roll",
+    "What it does": "A fighter with the Parry trait and a melee weapon may turn a blow back on a win by 2 or more (section 7.4)",
+    "The price": "The reaction is used"
+  },
+  {
+    "Reaction": "**Counter-prompt**",
+    "When": "A prompt on a machine within 3 inches",
+    "What it does": "Raises the target number by 2 (section 8.1)",
+    "The price": "The reaction is used"
   }
 ]

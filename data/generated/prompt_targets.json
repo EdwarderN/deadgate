@@ -2,7 +2,7 @@
   {
     "Target": "**Door, window, hatch, lift**",
     "Number": "Routine (6)",
-    "Effects (choose one)": "**Open** (green): open and unlocked, and it stays open. **Lock** (red): shut and locked (section 5.10). **Unlock:** the token comes off and it is shut but unlocked, as it began. **Call** a lift to another level (instant)"
+    "Effects (choose one)": "**Open** (green). **Lock** (red). **Unlock:** the token comes off. What each does: section 5.11. **Call** a lift to another level (instant)"
   },
   {
     "Target": "**Charging station**",
@@ -22,7 +22,7 @@
   {
     "Target": "**Weapon** (old stock or copy, held by a fighter in view; not a drop)",
     "Number": "Tricky (8)",
-    "Effects (choose one)": "**Jam** (red): it cannot be used. **Drain** (instant): its holder's battery loses 1 Energy"
+    "Effects (choose one)": "**Jam** (instant): it jams (section 7.2). **Drain** (instant): its holder's battery loses 1 Energy"
   },
   {
     "Target": "**Rogue machine**",
@@ -37,7 +37,7 @@
   {
     "Target": "**Relay beacon** (on the table)",
     "Number": "Tricky (8)",
-    "Effects (choose one)": "**Quiet** (red): it relays nothing. **Claim** (green): it serves the hacker's crew instead (section 8.5)"
+    "Effects (choose one)": "**Quiet** (red): it relays nothing. **Claim** (green): it serves the hacker's crew instead (section 4.5)"
   },
   {
     "Target": "**Bot**",

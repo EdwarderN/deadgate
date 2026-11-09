@@ -1,11 +1,11 @@
 [
   {
     "Action": "**Move**",
-    "What it does": "Move up to the fighter's Move in inches (section 5.3)"
+    "What it does": "Move up to the fighter's Move in inches (section 5.4)"
   },
   {
     "Action": "**Attack**",
-    "What it does": "A melee attack on an enemy in base contact (Fight, opposed: section 5.4), or a ranged attack on an enemy in range and line of sight (Shoot, rolled alone: section 5.5). Throwing a grenade is an Attack (section 7.6)"
+    "What it does": "A melee attack on an enemy in base contact (Fight, opposed: section 5.6), or a ranged attack on an enemy in range and line of sight (Shoot, rolled alone: section 5.7). Throwing a grenade is an Attack (section 7.6)"
   },
   {
     "Action": "**Aim**",
@@ -13,11 +13,15 @@
   },
   {
     "Action": "**Assist**",
-    "What it does": "An ally within 2 inches is **Hyped** (section 5.9)"
+    "What it does": "An ally within 2 inches is **Hyped** (section 5.3)"
   },
   {
     "Action": "**Use**",
-    "What it does": "Operate an item, door, lift or terminal; swap a held item; swap in a spare cell; use a charging station; pick up an item; clear a jam (Routine Tech); fix a loose breather (Routine Tech); prompt a machine (section 8.1); use a relic or the psionic gift; Patch up (section 7.6)"
+    "What it does": "Operate an item, door, lift or terminal; swap a held item; swap in a spare cell; use a charging station; pick up an item; clear a jam (section 7.2); fix a loose breather (Routine Tech); prompt a machine (section 8.1); use a relic or the psionic gift; Patch up (section 7.6)"
+  },
+  {
+    "Action": "**Swap**",
+    "What it does": "Trade places with an allied fighter in base contact (not downed). Only the fighter who acts spends it (section 5.4)"
   },
   {
     "Action": "**Stand up**",
@@ -25,6 +29,6 @@
   },
   {
     "Action": "**Pick up**",
-    "What it does": "Lift a downed ally, or try to lift a downed enemy, with a free Hand and never a bot (section 5.8)"
+    "What it does": "Lift a downed ally, or try to lift a downed enemy, with a free Hand and never a bot (section 5.10)"
   }
 ]

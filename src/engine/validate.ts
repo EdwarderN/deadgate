@@ -26,17 +26,17 @@ const msg = (rule: string, level: Level, step: Step, section: string, text: stri
 export const validators: Record<string, Validator> = {
   faction({ rules, crew }) {
     const out: Message[] = [];
-    if (!crew.faction || !rules.faction(crew.faction)) out.push(msg('faction', 'error', 'faction', '11.1', 'Choose a faction.'));
-    else if (!crew.subfaction || !rules.faction(crew.faction)!.subfactions.some((s) => s.name === crew.subfaction)) out.push(msg('faction', 'error', 'faction', '11.1', 'Choose a subfaction.'));
-    else if (!replaceableRules(rules, crew.faction).some((r) => r.n === crew.replacedRule)) out.push(msg('faction', 'error', 'faction', '12.1', `Choose which faction rule ${crew.subfaction}'s rule replaces.`));
-    if (!crew.name.trim()) out.push(msg('faction', 'warning', 'faction', '11.1', 'The crew has no name yet.'));
+    if (!crew.faction || !rules.faction(crew.faction)) out.push(msg('faction', 'error', 'faction', '9.1', 'Choose a faction.'));
+    else if (!crew.subfaction || !rules.faction(crew.faction)!.subfactions.some((s) => s.name === crew.subfaction)) out.push(msg('faction', 'error', 'faction', '9.1', 'Choose a subfaction.'));
+    else if (!replaceableRules(rules, crew.faction).some((r) => r.n === crew.replacedRule)) out.push(msg('faction', 'error', 'faction', '10.1', `Choose which faction rule ${crew.subfaction}'s rule replaces.`));
+    if (!crew.name.trim()) out.push(msg('faction', 'warning', 'faction', '9.1', 'The crew has no name yet.'));
     return out;
   },
 
   rookieCount({ rules, crew }) {
     const n = rules.crew.creation.startingRookies.value;
     const r = crew.fighters.filter((f) => f.rookie).length;
-    return crew.phase === 'creation' && r !== n ? [msg('rookieCount', 'error', 'rookies', '11.1', `A new crew starts with ${n} rookies, not ${r}.`)] : [];
+    return crew.phase === 'creation' && r !== n ? [msg('rookieCount', 'error', 'rookies', '9.1', `A new crew starts with ${n} rookies, not ${r}.`)] : [];
   },
 
   maxFighters({ rules, crew }) {
@@ -86,7 +86,7 @@ export const validators: Record<string, Validator> = {
     if (!fr || !fac) return out;
     const names = fac.types.map((t) => t.name);
     for (const f of crew.fighters) {
-      if (fr.types && !f.type) out.push(msg('types', 'error', 'rookies', '4.4, 12.1', `${named(crew, f)} needs a type: every fighter of ${fac.name} takes one.`, f.id));
+      if (fr.types && !f.type) out.push(msg('types', 'error', 'rookies', '4.4, 10.1', `${named(crew, f)} needs a type: every fighter of ${fac.name} takes one.`, f.id));
       else if (fr.types && f.type && !names.includes(f.type)) out.push(msg('types', 'error', 'rookies', fac.section, `${f.type} is not a type of ${fac.name}.`, f.id));
       else if (!fr.types && f.type) out.push(msg('types', 'error', 'rookies', '4.4', `${fac.name} have no fighter types.`, f.id));
       const need = f.type ? fr.typeSpecies?.[f.type] : undefined;
@@ -107,7 +107,7 @@ export const validators: Record<string, Validator> = {
     const out: Message[] = [];
     const cap = captainOf(crew);
     const fr = rules.factionRules(crew.faction ?? '');
-    if (!cap) return [msg('captain', 'error', 'captain', '11.2', 'Choose a captain.')];
+    if (!cap) return [msg('captain', 'error', 'captain', '9.2', 'Choose a captain.')];
     if (fr?.captainType && cap.type !== fr.captainType && crew.phase === 'creation') out.push(msg('captain', 'error', 'captain', rules.faction(crew.faction!)!.section, `The captain of ${crew.faction} is the ${fr.captainType}.`));
     const n = rules.crew.creation.captainTraitsAtStart;
     const has = cap.captainTraits.filter((t) => !t.retired).length;
@@ -115,7 +115,7 @@ export const validators: Record<string, Validator> = {
     if (crew.phase === 'creation' && has > n.value) out.push(msg('captain', 'error', 'captain', n.source, `A new captain takes only ${n.value} captain trait.`, cap.id));
     for (const f of crew.fighters) {
       if (f.id !== cap.id && (f.captainTraits.some((t) => !t.retired) || f.advances.some((a) => a.kind === 'captain' && !a.retired)))
-        out.push(msg('captain', 'error', 'captain', '11.2', `${named(crew, f)} is not the captain, so cannot have captain traits.`, f.id));
+        out.push(msg('captain', 'error', 'captain', '9.2', `${named(crew, f)} is not the captain, so cannot have captain traits.`, f.id));
     }
     return out;
   },
@@ -126,7 +126,7 @@ export const validators: Record<string, Validator> = {
       if (l.pick) {
         if (!l.itemId) out.push(msg('kit', 'error', 'kit', rules.faction(crew.faction!)!.section, `Choose the starting kit: ${l.label}.`));
         else if (!kitPickOptions(rules, crew, l.pick).some((i) => i.id === l.itemId)) out.push(msg('kit', 'error', 'kit', rules.faction(crew.faction!)!.section, `That starting kit choice is not allowed: ${l.label}.`));
-      } else if (l.itemId && !rules.item(l.itemId)) out.push(msg('kit', 'error', 'kit', 'chapter 12', `Starting kit item not found in the shop data: ${l.label}.`));
+      } else if (l.itemId && !rules.item(l.itemId)) out.push(msg('kit', 'error', 'kit', 'chapter 10', `Starting kit item not found in the shop data: ${l.label}.`));
     }
     return out;
   },
@@ -147,8 +147,8 @@ export const validators: Record<string, Validator> = {
     for (const o of crew.items) {
       const d = rules.item(o.itemId);
       if (!d || o.kitRef) continue;
-      if (o.seller === 'needed') out.push(msg('seller', 'warning', 'shop', '11.3', `${d.name} (old stock) has no seller yet: roll for one or tick "found".`, o.fighterId ?? undefined));
-      if (o.seller === 'none') out.push(msg('seller', 'error', 'shop', '11.3', `No seller for the ${d.name} this break: remove it.`, o.fighterId ?? undefined));
+      if (o.seller === 'needed') out.push(msg('seller', 'warning', 'shop', '9.3', `${d.name} (old stock) has no seller yet: roll for one or tick "found".`, o.fighterId ?? undefined));
+      if (o.seller === 'none') out.push(msg('seller', 'error', 'shop', '9.3', `No seller for the ${d.name} this break: remove it.`, o.fighterId ?? undefined));
     }
     return out;
   },
@@ -220,7 +220,7 @@ export const validators: Record<string, Validator> = {
     const gifted = crew.fighters.filter((f) => hasGift(rules, crew, f));
     for (const f of gifted) {
       if (!gs.value.includes(f.species)) out.push(msg('gift', 'error', 'specials', gs.source, `${an(f.species)} can't have the gift. Only ${gs.value.join(' and ')}s can (${gs.source.split(',')[0]}).`, f.id));
-      if (f.gift && giftPrice(rules, crew, f) === null) out.push(msg('gift', 'error', 'specials', '11.4', `${crew.faction} may not have psions (${named(crew, f)} has the gift).`, f.id));
+      if (f.gift && giftPrice(rules, crew, f) === null) out.push(msg('gift', 'error', 'specials', '9.4', `${crew.faction} may not have psions (${named(crew, f)} has the gift).`, f.id));
     }
     if (gifted.length > max.value) out.push(msg('gift', 'error', 'specials', max.source, `A crew never has more than ${max.value} gifted fighters; this one has ${gifted.length}.`));
     return out;
@@ -229,7 +229,7 @@ export const validators: Record<string, Validator> = {
   rites({ rules, crew }) {
     const out: Message[] = [];
     for (const f of crew.fighters) {
-      if (f.rites && ritesPrice(rules, crew, f) === null) out.push(msg('rites', 'error', 'specials', '11.4', `${crew.faction} cannot buy Rites (${named(crew, f)}).`, f.id));
+      if (f.rites && ritesPrice(rules, crew, f) === null) out.push(msg('rites', 'error', 'specials', '9.4', `${crew.faction} cannot buy Rites (${named(crew, f)}).`, f.id));
       const allowed = ritesAllowed(rules, crew, f);
       const chosen = f.ritesKnown.length;
       if (!hasRites(rules, crew, f) && chosen) out.push(msg('rites', 'error', 'specials', '8.3', `${named(crew, f)} knows rites but has no Rites.`, f.id));
@@ -295,7 +295,7 @@ export const validators: Record<string, Validator> = {
           if (seen.has(a.name)) out.push(msg('advances', 'error', 'campaign', '13.4', `${w} has ${a.name} twice: a fighter takes each trait once.`, f.id));
           seen.add(a.name);
         } else if (a.kind === 'captain') {
-          if (seen.has(a.name) || f.captainTraits.some((t) => t.name === a.name)) out.push(msg('advances', 'error', 'campaign', '11.2', `${w} has the captain trait ${a.name} twice.`, f.id));
+          if (seen.has(a.name) || f.captainTraits.some((t) => t.name === a.name)) out.push(msg('advances', 'error', 'campaign', '9.2', `${w} has the captain trait ${a.name} twice.`, f.id));
           seen.add(a.name);
         }
       });
@@ -325,7 +325,7 @@ export const validators: Record<string, Validator> = {
       const opts = builtInOptions(rules, crew, f.type);
       const src = f.type ? rules.factionRules(crew.faction ?? '')?.typeRules?.[f.type]?.source ?? '' : '';
       if (opts && !opts.some((i) => i.id === f.builtIn)) out.push(msg('builtIn', 'error', 'rookies', src, `${named(crew, f)} is ${an(f.type!).toLowerCase()}: choose the copy weapon built into the chassis.`, f.id));
-      if (!opts && f.builtIn) out.push(msg('builtIn', 'error', 'rookies', '12.6', `${named(crew, f)} is not a chassis with a built-in weapon.`, f.id));
+      if (!opts && f.builtIn) out.push(msg('builtIn', 'error', 'rookies', '10.6', `${named(crew, f)} is not a chassis with a built-in weapon.`, f.id));
     }
     return out;
   },

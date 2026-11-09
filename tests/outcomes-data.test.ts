@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { splitTwist } from '../src/engine/outcomes';
 import { rules } from './helpers';
 import { plain, type Eff } from '../src/data/rules';
 import { cellCovers } from '../src/engine/dice';
@@ -35,7 +36,7 @@ describe('outcomes.json covers every table row in the book', () => {
         expect(e, `${k} ${r.d6}`).toBeTruthy();
         expect(!!e.pay, `${k} ${r.d6} pay`).toBe(r.Pay !== 'None');
         expect(!!e.twist, `${k} ${r.d6} twist`).toBe(r.Twist !== 'None');
-        if (e.twist) expect(plain(r.Twist).startsWith(`${e.twist.rating}:`), `${k} ${r.d6} twist rating`).toBe(true);
+        if (e.twist) expect(splitTwist(r.Twist).rating, `${k} ${r.d6} twist rating`).toBe(e.twist.rating);
       }
       expect(Object.keys(O.storyEvents[k]).length).toBe(rows.length);
     }
@@ -76,7 +77,7 @@ describe('every name in outcomes.json exists', () => {
       if (e.test) expect(rules.crew.limits.ratingNames.value).toContain(e.test.rating);
       if (e.contact && e.contact !== 'choose' && rules.contacts.every((c) => c.name !== e.contact)) expect(e.contact).toMatch(/^The /); // a faction as a contact
       for (const w of [e.who, e.noTask, e.gift, e.healInjury, e.prosthetic, e.leave, e.loseItem?.who, e.sellItem?.who].filter(Boolean) as string[]) {
-        if (w.startsWith('type:')) expect(types).toContain(w.slice(5)); else expect(who).toContain(w);
+        if (w.startsWith('type:')) expect(types).toContain(w.slice(5)); else if (!/^any:\d+$/.test(w)) expect(who).toContain(w);
       }
       if (e.item?.key) expect(rules.items.some((i) => i.key === e.item!.key && (!e.item!.source || i.source === e.item!.source)), e.item.key).toBe(true);
       for (const k of [...(e.item?.kinds ?? []), ...(e.loseItem?.kinds ?? []), ...(e.sellItem?.kinds ?? [])]) expect(kinds.has(k), k).toBe(true);
@@ -92,7 +93,10 @@ describe('outcomes.json agrees with the numbers in the book', () => {
     walk(effs, (e) => {
       if (e.parts !== undefined && e.parts !== 0) out.push(Math.abs(e.parts));
       if (e.ifDebt !== undefined) out.push(Math.abs(e.ifDebt));
-      if (e.xp !== undefined) out.push(e.xp);
+      if (e.xp !== undefined) out.push(Math.abs(e.xp));
+      if (e.spend?.amount) out.push(Math.abs(e.spend.amount));
+      if (e.hire?.discount) out.push(e.hire.discount);
+      if (e.item?.maxPrice !== undefined) out.push(e.item.maxPrice);
     });
     return out;
   };
@@ -106,7 +110,7 @@ describe('outcomes.json agrees with the numbers in the book', () => {
       check(`${k} ${r.d6} Accept`, r.Accept, e.accept);
       if (e.pay) check(`${k} ${r.d6} Pay`, r.Pay, e.pay);
       if (e.twist) {
-        const [s, f = ''] = plain(r.Twist).replace(/^\w+:\s*/, '').split(' / ');
+        const { success: s, failure: f } = splitTwist(r.Twist);
         check(`${k} ${r.d6} Twist success`, s, e.twist.success);
         check(`${k} ${r.d6} Twist failure`, f, e.twist.failure);
       }

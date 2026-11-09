@@ -6,7 +6,7 @@
   },
   {
     "State": "**Slack**",
-    "When": "A **Cut the link** prompt, or Jeminy's **\"I am a failure\"** result on the bot's own core (section 8.6)",
+    "When": "A **Cut the link** prompt, or Jeminy's **\"I am a failure\"** result on the bot's own core (section 8.5)",
     "What it does": "One action only, a Move toward the nearest enemy. They cannot attack, use anything or react"
   }
 ]

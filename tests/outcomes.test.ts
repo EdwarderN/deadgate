@@ -6,7 +6,15 @@ import { finishCreation } from '../src/engine/crew';
 
 describe('story twists', () => {
   it('a twist splits into its rating, success and failure', () => {
-    expect(splitTwist('Nerve: 8 parts / 0 parts and gain Oathbreakers')).toEqual({ rating: 'Nerve', success: '8 parts', failure: '0 parts and gain Oathbreakers' });
+    expect(splitTwist('Nerve: 8 parts / 0 parts and gain Oathbreakers')).toEqual({ rating: 'Nerve', difficulty: null, note: null, success: '8 parts', failure: '0 parts and gain Oathbreakers' });
+    expect(splitTwist('Nerve, Routine (6): a / b')).toMatchObject({ rating: 'Nerve', difficulty: 'Routine', success: 'a', failure: 'b' });
+    expect(splitTwist('Fight (-1 die if a rival gang sent them): a / b')).toMatchObject({ rating: 'Fight', difficulty: null, note: '-1 die if a rival gang sent them' });
+    // every twist in the book parses, and names a difficulty the dice chapter has
+    for (const rows of Object.values(rules.data.story_events)) for (const r of rows) if (r.Twist !== 'None') {
+      const t = splitTwist(r.Twist);
+      expect(t.rating, r.Twist).toBeTruthy();
+      if (t.difficulty) expect(rules.data.difficulties.some((d) => d.Difficulty.replace(/\*\*/g, '') === t.difficulty), t.difficulty).toBe(true);
+    }
   });
 });
 
