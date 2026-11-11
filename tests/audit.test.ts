@@ -32,7 +32,7 @@ describe('the book data the new features read', () => {
     for (const n of Object.keys(rules.crew.campaign.contactUses.value)) expect(rules.contacts.map((c) => c.name)).toContain(n);
     for (const n of Object.keys(rules.crew.campaign.sillyEffects.value)) expect(rules.silly.map((s) => s.name)).toContain(n);
     for (const n of Object.keys(rules.crew.battle.breaking.captainTraits)) expect(rules.captainTraits.map((t) => t.name)).toContain(n);
-    expect(rules.tags.map((t) => t.name)).toContain(rules.crew.battle.wagerStakes.noTakerTag);
+    expect(rules.tags.map((t) => t.name)).toContain(rules.crew.battle.wagerStakes.noWagerTag);
     expect(rules.data.states.map((s) => plain(s.State))).not.toContain(rules.crew.battle.madness.value);
     expect(Object.keys(rules.data.gear_failure).length).toBe(3);
     for (const k of rules.crew.gear.singleUse.value) expect(rules.items.some((i) => i.kind === k)).toBe(true);
@@ -86,8 +86,9 @@ describe('Words: wagers, rumours, the Final', () => {
     const W = rules.crew.battle.wagerStakes;
     expect(wagerStake(rules, c, { deed: big, audience: W.audience, result: 'fulfilled' })).toBe(W.value.Big);
     expect(wagerStake(rules, c, { deed: big, audience: W.audience, result: 'failed' })).toBe(-W.value.Big);
-    expect(wagerStake(rules, c, { deed: big, audience: W.audience, result: 'failed', taker: false })).toBe(0);
-    expect(wagerStake(rules, { ...c, notes: { ...c.notes, tags: [W.noTakerTag] } }, { deed: big, audience: W.audience, result: 'failed' })).toBe(0);
+    // a wager always has a taker: the crowd bets if the opponent declines (13.5)
+    expect(wagerStake(rules, c, { deed: big, audience: W.audience, result: 'failed', taker: false })).toBe(-W.value.Big);
+    expect(wagerStake(rules, { ...c, notes: { ...c.notes, tags: [W.doubleStakeTag] } }, { deed: big, audience: W.audience, result: 'failed' })).toBe(-2 * W.value.Big);
   });
   it("an arrival's rumour is a Big vow worth its own XP, with its Legend; failing it takes a sillier trait", () => {
     const name = plain(rules.data.rumours[0].Rumour).split('.')[0];

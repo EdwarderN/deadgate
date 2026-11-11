@@ -310,7 +310,7 @@
           },
           {
             "label": "Battle rules",
-            "text": "- **The speech.** A fighter standing on the stage may spend a Use action and make a **Tricky (8) Nerve** test. On a success their side's die goes on the stage, swapping the other side's if it was there. On a failure the speaker is heckled and **Flustered**. A bot cannot give the speech: it makes no Nerve tests.\n- **Spotlight.** Fighters on the stage are **Announced**."
+            "text": "- **The speech.** A fighter standing on the stage may spend a Use action and make a **Tricky (8) Nerve** test. On a success their side's die goes on the stage, swapping the other side's if it was there. On a failure the speaker is heckled and **Flustered**. A bot makes a **Tricky (8) Tech** test instead (it plays a recording), with the same results.\n- **Spotlight.** Fighters on the stage are **Announced**."
           },
           {
             "label": "Winning condition",
@@ -461,7 +461,7 @@
           },
           {
             "label": "Battle rules",
-            "text": "- **Selfies.** At the end of each round, after the crowd has moved, each side scores **1 point** for each of its standing fighters inside the crowd.\n- **The star.** The crowd follows the standing fighter with the most Experience, of either side, and moves 5 inches instead of 3 while it is on the carpet. The star does not score: a fighter tied for most Experience does not either."
+            "text": "- **Selfies.** At the end of each round, after the crowd has moved, each side scores **1 point** for each of its standing fighters inside the crowd.\n- **The star.** The crowd follows the standing fighter with the most Experience, of either side (if several are tied, it follows the captain nearest to it instead, tied or not), and moves 5 inches instead of 3 while it is on the carpet. Only the fighter it follows, the star, does not score."
           },
           {
             "label": "Winning condition",
@@ -493,7 +493,7 @@
           },
           {
             "label": "Non-player models",
-            "text": "They act at the end of each round (section 11.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Fan crowd** (template 4 inches across) | Move 3 | **Follows the star.** Moves toward the standing fighter with the most Experience (tie: the nearest). Fighters inside move through it as Difficult and cannot shoot out of it; it blocks sight like smoke |"
+            "text": "They act at the end of each round (section 11.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Fan crowd** (template 4 inches across) | Move 3 | **Follows the star.** Moves toward the standing fighter with the most Experience (tie: the nearest captain, tied or not). Fighters inside move through it as Difficult and cannot shoot out of it; it blocks sight like smoke |"
           }
         ]
       },
@@ -544,7 +544,7 @@
           },
           {
             "label": "Non-player models",
-            "text": "They act at the end of each round (section 11.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Fan crowd** (template 4 inches across) | Move 3 | **Follows the star.** Moves toward the standing fighter with the most Experience (tie: the nearest). Fighters inside move through it as Difficult and cannot shoot out of it; it blocks sight like smoke |"
+            "text": "They act at the end of each round (section 11.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Fan crowd** (template 4 inches across) | Move 3 | **Follows the star.** Moves toward the standing fighter with the most Experience (tie: the nearest captain, tied or not). Fighters inside move through it as Difficult and cannot shoot out of it; it blocks sight like smoke |"
           }
         ]
       },
@@ -595,7 +595,7 @@
           },
           {
             "label": "Non-player models",
-            "text": "They act at the end of each round (section 11.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Fan crowd** (template 4 inches across) | Move 3 | **Follows the star.** Moves toward the standing fighter with the most Experience (tie: the nearest). Fighters inside move through it as Difficult and cannot shoot out of it; it blocks sight like smoke |"
+            "text": "They act at the end of each round (section 11.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Fan crowd** (template 4 inches across) | Move 3 | **Follows the star.** Moves toward the standing fighter with the most Experience (tie: the nearest captain, tied or not). Fighters inside move through it as Difficult and cannot shoot out of it; it blocks sight like smoke |"
           }
         ]
       }
@@ -765,7 +765,7 @@
           },
           {
             "label": "Battle rules",
-            "text": "- **Bait.** The gnawer moves toward the **closest bait**, whoever carries it, and attacks any fighter it reaches on the way. A carrier who goes down drops the bait where they fall; any fighter in base contact may pick it up with a Use action. A bait the gnawer cannot reach (the carrier is out of Wet terrain and more than 2 inches from it) still draws it to the nearest Wet terrain.\n- **The gnawer** stays on the table and can be shot and fought like a fighter (section 11.8)."
+            "text": "- **Bait.** The gnawer moves toward the **closest bait**, whoever carries it, and attacks any fighter it reaches on the way. A carrier who goes down drops the bait where they fall; any fighter in base contact may pick it up with a Use action. A bait the gnawer cannot reach (the carrier is out of Wet terrain and more than 2 inches from it) still draws it to the nearest Wet terrain.\n- **The gnawer** stays on the table and can be shot and fought like a fighter (section 11.8).\n- **Teeth marks.** Each lasting condition a fighter puts on the gnawer gains that fighter **1 XP** after the battle."
           },
           {
             "label": "Winning condition",
@@ -967,7 +967,7 @@
           },
           {
             "label": "Battle rules",
-            "text": "- **On its route.** The machine walks from die 1 to die 2, then 3, and so on to die 6, and then back to die 1, and loops for the rest of the battle (section 11.8). It moves on to the next die as soon as it touches one.\n- **Taking the core.** A fighter in base contact with a machine that is down or Calmed (a red Hacked token) may take the core with a Use action (Hands 1; Move -1 while carried). A carrier who goes down drops it. The machine can be shot, fought, or prompted (Calm, Hard (10))."
+            "text": "- **On its route.** The machine walks from die 1 to die 2, then 3, and so on to die 6, and then back to die 1, and loops for the rest of the battle (section 11.8). It moves on to the next die as soon as it touches one.\n- **Taking the core.** A fighter in base contact with a machine that is down or Calmed (a red Hacked token) may take the core with a Use action (Hands 1; Move -1 while carried). A carrier who goes down drops it. The machine can be shot, fought, or prompted (Calm, Hard (10)), or Calmed by hand in base contact (section 8.1)."
           },
           {
             "label": "Winning condition",
@@ -1099,7 +1099,7 @@
           },
           {
             "label": "Non-player models",
-            "text": "They act at the end of each round (section 11.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Earwig** (monster) | Move 8, Fight 2, Save 1, Tough 3 | **Hunts the loudest.** Moves toward the nearest **Announced** fighter, or if none, the fighter who made a **ranged attack** most recently (if nobody has, the nearest fighter), and attacks if it reaches. If it starts in contact with a downed fighter, it drags them off instead |\n| **Turret** | Move none, Shoot 1 (range 18), Save 2, Tough 2 | **Fires at the nearest fighter,** friend or foe, in its line of sight. Prompt: Quiet or Claim, Tricky (8) |"
+            "text": "They act at the end of each round (section 11.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Earwig** (monster) | Move 8, Fight 2, Save 1, Tough 3 | **Hunts the loudest.** Moves toward the nearest **Announced** fighter, or if none, the nearest fighter, and attacks if it reaches. If it starts in contact with a downed fighter, it drags them off instead |\n| **Turret** | Move none, Shoot 1 (range 18), Save 2, Tough 2 | **Fires at the nearest fighter,** friend or foe, in its line of sight. Prompt: Quiet or Claim, Tricky (8) |"
           }
         ]
       },
@@ -1150,7 +1150,7 @@
           },
           {
             "label": "Non-player models",
-            "text": "They act at the end of each round (section 11.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Earwig** (monster) | Move 8, Fight 2, Save 1, Tough 3 | **Hunts the loudest.** Moves toward the nearest **Announced** fighter, or if none, the fighter who made a **ranged attack** most recently (if nobody has, the nearest fighter), and attacks if it reaches. If it starts in contact with a downed fighter, it drags them off instead |\n| **Turret** | Move none, Shoot 1 (range 18), Save 2, Tough 2 | **Fires at the nearest fighter,** friend or foe, in its line of sight. Prompt: Quiet or Claim, Tricky (8) |\n| **Bystander** | Move 4, Fight 0, Tough 2 | **Dazed.** Unless led, moves 2 inches in the direction of a direction die. Led: moves with the leader, who has Move -1. Not a target: nobody may attack a bystander, but a blast or a missed shot into melee can hit one as a glance, with no save |"
+            "text": "They act at the end of each round (section 11.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Earwig** (monster) | Move 8, Fight 2, Save 1, Tough 3 | **Hunts the loudest.** Moves toward the nearest **Announced** fighter, or if none, the nearest fighter, and attacks if it reaches. If it starts in contact with a downed fighter, it drags them off instead |\n| **Turret** | Move none, Shoot 1 (range 18), Save 2, Tough 2 | **Fires at the nearest fighter,** friend or foe, in its line of sight. Prompt: Quiet or Claim, Tricky (8) |\n| **Bystander** | Move 4, Fight 0, Tough 2 | **Dazed.** Unless led, moves 2 inches in the direction of a direction die. Led: moves with the leader, who has Move -1. Not a target: nobody may attack a bystander, but a blast or a missed shot into melee can hit one as a glance, with no save |"
           }
         ]
       },
@@ -1201,7 +1201,7 @@
           },
           {
             "label": "Non-player models",
-            "text": "They act at the end of each round (section 11.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Earwig** (monster) | Move 8, Fight 2, Save 1, Tough 3 | **Hunts the loudest.** Moves toward the nearest **Announced** fighter, or if none, the fighter who made a **ranged attack** most recently (if nobody has, the nearest fighter), and attacks if it reaches. If it starts in contact with a downed fighter, it drags them off instead |\n| **Turret** | Move none, Shoot 1 (range 18), Save 2, Tough 2 | **Fires at the nearest fighter,** friend or foe, in its line of sight. Prompt: Quiet or Claim, Tricky (8) |"
+            "text": "They act at the end of each round (section 11.8). Tough N: down after N lasting conditions.\n| Model | Stats | At the end of each round |\n| --- | --- | --- |\n| **Earwig** (monster) | Move 8, Fight 2, Save 1, Tough 3 | **Hunts the loudest.** Moves toward the nearest **Announced** fighter, or if none, the nearest fighter, and attacks if it reaches. If it starts in contact with a downed fighter, it drags them off instead |\n| **Turret** | Move none, Shoot 1 (range 18), Save 2, Tough 2 | **Fires at the nearest fighter,** friend or foe, in its line of sight. Prompt: Quiet or Claim, Tricky (8) |"
           }
         ]
       }
@@ -1211,7 +1211,7 @@
     "section": "12.7",
     "name": "Vigil",
     "ground": "Cold and the array",
-    "alwaysOn": "**Always on: Cold.** A fighter who **moved** in their activation and ends it in the open (more than 1 inch from any terrain piece) makes a Routine Grit test; on a failure they are **Shook**. Bots never test. Every battery starts the battle **1 Energy short**.",
+    "alwaysOn": "**Always on: Cold.** A fighter who spent **both actions** of their activation on Move and ends it in the open (more than 1 inch from any terrain piece) makes a Routine Grit test; on a failure they are **Shook**. Bots never test. Every battery starts the battle **1 Energy short**.",
     "terrain": "**Typical terrain.** Array consoles (**Powered**), frozen machinery (heavy cover), drifts (**Difficult**), shrines (light cover).",
     "events": [
       {
@@ -1269,7 +1269,7 @@
           },
           {
             "label": "Battle rules",
-            "text": "- **Lighting a lamp.** A fighter within 6 inches of a console and in line of sight may prompt it (a Use action, **Tricky (8)**, either mode) to light their side's lamp: put one of their side's dice on it. If the other side's die is there, swap it. A console holds one die at a time.\n- **The array answers.** At the end of each round, after non-player models act, if one side's dice are on at least **two** consoles, it has held them for the round. If it held two or more at the end of the previous round too, the array answers it and the battle **ends at once**."
+            "text": "- **Lighting a lamp.** A fighter within 6 inches of a console and in line of sight may prompt it (a Use action, **Tricky (8)**, either mode, or by hand in base contact, section 8.1) to light their side's lamp: put one of their side's dice on it. If the other side's die is there, swap it. A console holds one die at a time.\n- **The array answers.** At the end of each round, after non-player models act, if one side's dice are on at least **two** consoles, it has held them for the round. If it held two or more at the end of the previous round too, the array answers it and the battle **ends at once**."
           },
           {
             "label": "Winning condition",
@@ -1285,7 +1285,7 @@
           },
           {
             "label": "Always on: Cold",
-            "text": "A fighter who **moved** in their activation and ends it in the open (more than 1 inch from any terrain piece) makes a Routine Grit test; on a failure they are **Shook**. Bots never test. Every battery starts the battle **1 Energy short**."
+            "text": "A fighter who spent **both actions** of their activation on Move and ends it in the open (more than 1 inch from any terrain piece) makes a Routine Grit test; on a failure they are **Shook**. Bots never test. Every battery starts the battle **1 Energy short**."
           },
           {
             "label": "Pods",
@@ -1332,7 +1332,7 @@
           },
           {
             "label": "Always on: Cold",
-            "text": "A fighter who **moved** in their activation and ends it in the open (more than 1 inch from any terrain piece) makes a Routine Grit test; on a failure they are **Shook**. Bots never test. Every battery starts the battle **1 Energy short**."
+            "text": "A fighter who spent **both actions** of their activation on Move and ends it in the open (more than 1 inch from any terrain piece) makes a Routine Grit test; on a failure they are **Shook**. Bots never test. Every battery starts the battle **1 Energy short**."
           },
           {
             "label": "Pods",
@@ -1379,7 +1379,7 @@
           },
           {
             "label": "Always on: Cold",
-            "text": "A fighter who **moved** in their activation and ends it in the open (more than 1 inch from any terrain piece) makes a Routine Grit test; on a failure they are **Shook**. Bots never test. Every battery starts the battle **1 Energy short**."
+            "text": "A fighter who spent **both actions** of their activation on Move and ends it in the open (more than 1 inch from any terrain piece) makes a Routine Grit test; on a failure they are **Shook**. Bots never test. Every battery starts the battle **1 Energy short**."
           },
           {
             "label": "Pods",
@@ -1561,7 +1561,7 @@
           },
           {
             "label": "Battle rules",
-            "text": "- **The parade.** At the end of each round the float moves 3 inches toward the edge it is heading for, pushing aside, prone, anything in its way, and the officials walk with it instead of making their own walk. If it reaches that edge, it stops.\n- **Taking the controls.** A fighter in base contact with the float may spend a Use action to prompt the float (section 8.1): a **Tricky (8)** prompt, either mode. On a success the float now heads for the nearest point of **their** deployment zone, and keeps going there at the end of each round until someone else takes it. The float cannot be shot or fought.\n- **The officials** keep the line: they attack any fighter in base contact with the float. They can be shot and fought like fighters."
+            "text": "- **The parade.** At the end of each round the float moves 3 inches toward the edge it is heading for, pushing aside, prone, anything in its way, and the officials walk with it instead of making their own walk. If it reaches that edge, it stops.\n- **Taking the controls.** A fighter in base contact with the float may spend a Use action to prompt the float (section 8.1): a **Tricky (8)** prompt, either mode, or by hand (section 8.1). On a success the float now heads for the nearest point of **their** deployment zone, and keeps going there at the end of each round until someone else takes it. The float cannot be shot or fought.\n- **The officials** keep the line: they attack any fighter in base contact with the float. They can be shot and fought like fighters."
           },
           {
             "label": "Winning condition",

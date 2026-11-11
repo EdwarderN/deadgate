@@ -353,17 +353,23 @@ export function ItemChip({ crew, item, update }: { crew: Crew; item: OwnedItem; 
   const opts = slotOptions(rules, def);
   const campaign = crew.phase === 'campaign';
   const sv = sellValue(rules, crew, item);
+  // a drop with several prices (drop armour: light or medium) offers each
+  const variants: (string | null)[] = def.sells && def.sells.length > 1 ? def.sells.map((s) => s.label) : [null];
   const fence = crew.notes.contacts.find((c) => c.name === rules.crew.campaign.fenceContact.value && !c.used);
   // A faction rule may let the crew sell drops for a roll (Black Tape, 10.2).
   const dropSale = def.source === 'drop' && campaign ? activeEffects(rules, crew, 'break').find((e) => e.effect.kind === 'sellDrop') : undefined;
 
-  const move = (val: string) => {
+  const move = (choice: string) => {
+    let val = choice;
     if (val === 'sell-drop') { setSellingDrop(true); return; }
     update((c) => {
       if (val === 'stash') return { ...c, items: c.items.map((o) => (o.uid === item.uid ? { ...o, fighterId: null, slot: 'stash' } : o)) };
       if (val === 'remove') return { ...c, items: c.items.filter((o) => o.uid !== item.uid) };
-      if (val === 'sell' || val === 'sell-fence') {
-        const amount = sellValue(rules, c, item, val === 'sell-fence') ?? 0;
+      if (val.startsWith('sell:') || val.startsWith('sell-fence:')) {
+        const [how, vi] = val.split(':');
+        const variant = +vi || 0;
+        const amount = sellValue(rules, c, item, how === 'sell-fence', variant) ?? 0;
+        val = how;
         let next: Crew = { ...c, items: c.items.filter((o) => o.uid !== item.uid) };
         if (val === 'sell-fence') {
           const i = next.notes.contacts.findIndex((x) => x.name === rules.crew.campaign.fenceContact.value && !x.used);
@@ -371,7 +377,8 @@ export function ItemChip({ crew, item, update }: { crew: Crew; item: OwnedItem; 
         }
         const full = val !== 'sell-fence' && !!pendingSpend(c, 'sale');
         if (full) next = useSpend(next, 'sale');
-        return addLedger(next, amount, `Sold ${def.name}${val === 'sell-fence' ? ' through the Fence' : full ? ' at full price (this break)' : ''}`);
+        const vlabel = def.sells && def.sells.length > 1 ? ` (${def.sells[variant]?.label})` : '';
+        return addLedger(next, amount, `Sold ${def.name}${vlabel}${val === 'sell-fence' ? ' through the Fence' : full ? ' at full price (this break)' : ''}`);
       }
       if (val.startsWith('slot:')) return { ...c, items: c.items.map((o) => (o.uid === item.uid ? { ...o, slot: val.slice(5) as ItemSlot } : o)) };
       if (val.startsWith('to:')) {
@@ -396,8 +403,8 @@ export function ItemChip({ crew, item, update }: { crew: Crew; item: OwnedItem; 
         {crew.fighters.filter((f) => f.id !== item.fighterId).map((f) => <option key={f.id} value={`to:${f.id}`}>Give to {f.name || 'unnamed fighter'}</option>)}
         {owner && <option value="stash">To the stash</option>}
         {!campaign && !item.kitRef && <option value="remove">Return it to the shop</option>}
-        {campaign && sv !== null && <option value="sell">Sell for {sv} parts</option>}
-        {campaign && sv !== null && fence && <option value="sell-fence">Sell through the Fence for {sellValue(rules, crew, item, true)}</option>}
+        {campaign && sv !== null && variants.map((v, i) => <option key={`s${i}`} value={`sell:${i}`}>Sell{v ? ` (${v})` : ''} for {sellValue(rules, crew, item, false, i)} parts</option>)}
+        {campaign && sv !== null && fence && variants.map((v, i) => <option key={`f${i}`} value={`sell-fence:${i}`}>Sell{v ? ` (${v})` : ''} through the Fence for {sellValue(rules, crew, item, true, i)}</option>)}
         {dropSale && <option value="sell-drop">Sell it: {dropSale.title} (a {dropSale.effect.roll} × {dropSale.effect.amount})</option>}
         {campaign && <option value="remove">Lose or discard it</option>}
       </select>
@@ -564,6 +571,51 @@ export function SpendEffects({ crew }: { crew: Crew }) {
     <div className="note small">
       <strong>This break only</strong> <span className="muted">(Spend effects, § {se?.source ?? ''})</span>:{' '}
       {list.map((e, i) => <span key={i}>{text(e)}{e.note ? ` (${e.note})` : ''}{i < list.length - 1 ? '; ' : '.'}</span>)}
+    </div>
+  );
+}
+
+/** Captives (14.4): ours Held by other crews (buy back at the asked price from the break after the next battle),
+ *  and the enemy fighters we Hold (bought back by their owner, or Taken at the end of the league). */
+export function HeldCaptives({ crew, update }: { crew: Crew; update: Update }) {
+  const rules = getRules();
+  const hold = rules.crew.campaign.hold;
+  const held = crew.held ?? [];
+  const prisoners = crew.prisoners ?? [];
+  if (!hold || (!held.length && !prisoners.length)) return null;
+  const taken = rules.crew.afterBattle.takenFate.value;
+  const statuses = rules.crew.campaign.statuses.value;
+  const canBuy = (h: (typeof held)[number]) => (crew.breakNo ?? 0) >= h.sinceBreak + hold.value.buyBackAfterBreaks;
+  const comeHome = (i: number, price: number, note: string) => update((c) => {
+    const h = (c.held ?? [])[i];
+    if (!h) return c;
+    const next = { ...c, fighters: [...c.fighters, h.fighter], items: [...c.items, ...h.items], held: (c.held ?? []).filter((_, j) => j !== i) };
+    return price ? addLedger(next, -price, note) : next;
+  });
+  return (
+    <div className="card stack-s">
+      <h3>Captives <span className="section-tag">§ {hold.source}</span></h3>
+      {held.map((h, i) => (
+        <div key={h.fighter.id} className="row gap-s wrap between">
+          <span><strong>{fighterLabel(h.fighter)}</strong> <span className="muted small">Held by {h.captor || 'another crew'}, asked price {h.price}</span></span>
+          <span className="row gap-s wrap">
+            <button className="btn small primary" disabled={!canBuy(h) || !canSpend(rules, crew, h.price)} onClick={() => comeHome(i, h.price, `Bought back ${h.fighter.name || 'a fighter'}`)}>Buy back ({h.price})</button>
+            <button className="btn small" onClick={() => comeHome(i, 0, '')}>Captor wiped out: home free</button>
+            <button className="btn small" onClick={() => update((c) => ({ ...c, held: (c.held ?? []).filter((_, j) => j !== i), notes: { ...c.notes, roll: [...c.notes.roll, { id: uid('r'), name: h.fighter.name || 'A fighter', titles: [h.fighter.title, ...h.fighter.titles].filter(Boolean).join(', '), fate: taken, note: 'Not bought back by the end of the league' }] } }))}>End of league: {taken}</button>
+          </span>
+          {!canBuy(h) && <span className="muted small">They can be bought back from the break after the next battle.</span>}
+        </div>
+      ))}
+      {prisoners.map((p, i) => (
+        <div key={p.id} className="row gap-s wrap between">
+          <span><strong>{p.name || 'A captive'}</strong> <span className="muted small">of {p.owner || 'another crew'}, Held by us, asked price {p.price}</span></span>
+          <span className="row gap-s wrap">
+            <select aria-label={`${p.name || 'Captive'}'s state`} value={p.status ?? statuses[0]} onChange={(e) => update((c) => ({ ...c, prisoners: (c.prisoners ?? []).map((x, j) => (j === i ? { ...x, status: e.target.value } : x)) }))}>{statuses.map((s) => <option key={s}>{s}</option>)}</select>
+            <button className="btn small primary" onClick={() => update((c) => addLedger({ ...c, prisoners: (c.prisoners ?? []).filter((_, j) => j !== i) }, p.price, `${p.name || 'A captive'} bought back by ${p.owner || 'their crew'}`))}>Bought back: +{p.price}</button>
+            <button className="btn small" onClick={() => update((c) => ({ ...c, prisoners: (c.prisoners ?? []).filter((_, j) => j !== i) }))}>Released (end of league, or their crew is gone)</button>
+          </span>
+        </div>
+      ))}
     </div>
   );
 }

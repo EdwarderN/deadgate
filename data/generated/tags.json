@@ -22,7 +22,7 @@
   {
     "Tag": "**Oathbreakers**",
     "Gained when": "Two failed Words in one battle, or story events",
-    "What it does": "A wager offered by this crew finds no taker. Patrons do not trust them: **-1 die** on the crew's first Work a job test each break"
+    "What it does": "This crew may not swear wagers. Patrons do not trust them: **-1 die** on the crew's first Work a job test each break"
   },
   {
     "Tag": "**Merciful**",
@@ -32,6 +32,6 @@
   {
     "Tag": "**Oathkeepers**",
     "Gained when": "Two Words fulfilled in one battle, one of them Big or Legendary, or story events",
-    "What it does": "A wager offered by this crew is always taken: if the other player declines, someone watching takes the other side. Patrons pay those who keep their word: **+1 die** on the crew's first Work a job test each break"
+    "What it does": "The stake of a wager this crew swears is doubled, won or lost. Patrons pay those who keep their word: **+1 die** on the crew's first Work a job test each break"
   }
 ]

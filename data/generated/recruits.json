@@ -1,19 +1,23 @@
 [
   {
-    "recruit": "Human, Longshanks, Brinie",
+    "recruit": "Human, Longshanks",
     "price": "15"
   },
   {
+    "recruit": "Brinie",
+    "price": "14"
+  },
+  {
     "recruit": "Fourhands",
-    "price": "20"
+    "price": "24"
   },
   {
     "recruit": "Hullback",
-    "price": "25"
+    "price": "23"
   },
   {
     "recruit": "Bot chassis (Control Group only): Observer / Lab-hand / Prototype",
-    "price": "15 / 20 / 15"
+    "price": "16 / 17 / 18"
   },
   {
     "recruit": "Volunteer (Control Group only)",

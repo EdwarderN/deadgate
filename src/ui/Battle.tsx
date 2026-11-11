@@ -102,18 +102,17 @@ function Setup({ crew, b, setB, setF, update }: { crew: Crew; b: Battle; setB: S
                     onChange={(e) => setF(f.id, (x) => ({ ...x, word: e.target.value ? { deed: e.target.value, audience: x.word?.audience ?? audiences[0] } : null }))}>
                     <option value="">No Word</option>
                     {f.rumour?.name && !f.rumour.done && <optgroup label="Their rumour (a Big vow, 13.9)"><option value={`${RUMOUR}${f.rumour.name}`}>{f.rumour.name}</option></optgroup>}
-                    {allowedTiers(f).map((t) => <optgroup key={t} label={t}>{rules.deeds.filter((d) => d.tier === t).map((d) => <option key={d.id} value={d.id}>{d.id} {d.name}</option>)}</optgroup>)}
+                    {allowedTiers(f).map((t) => <optgroup key={t} label={t}>{rules.deeds.filter((d) => d.tier === t && !f.deedsDone?.includes(d.id)).map((d) => <option key={d.id} value={d.id}>{d.id} {d.name}</option>)}</optgroup>)}
                   </select>
                   {bf.word && !bf.word.deed.startsWith(RUMOUR) && (
                     <select aria-label="Audience" value={bf.word.audience} onChange={(e) => setF(f.id, (x) => ({ ...x, word: { ...x.word!, audience: e.target.value } }))}>
-                      {audiences.map((a) => <option key={a}>{a}</option>)}
+                      {audiences.filter((a) => a !== stakes.audience || !wagerTags(rules, crew).noWagers).map((a) => <option key={a}>{a}</option>)}
                     </select>
                   )}
-                  {bf.word?.audience === stakes.audience && (wagerTags(rules, crew).noTaker
-                    ? <span className="small muted">{stakes.noTakerTag}: nobody takes the bet, so it is a vow (14.10).</span>
-                    : wagerTags(rules, crew).always
-                    ? <span className="small muted">{stakes.alwaysTakerTag}: the bet is always taken (stake {stakes.value[deedTier(rules, bf.word.deed)?.tier ?? ''] ?? 0} parts, 14.10).</span>
-                    : <label className="check small"><input type="checkbox" checked={bf.word.taker !== false} onChange={(e) => setF(f.id, (x) => ({ ...x, word: { ...x.word!, taker: e.target.checked } }))} /> Someone took the bet (stake {stakes.value[deedTier(rules, bf.word.deed)?.tier ?? ''] ?? 0} parts)</label>)}
+                  {bf.word?.audience === stakes.audience && (
+                    <span className="small muted">Stake {(stakes.value[deedTier(rules, bf.word.deed)?.tier ?? ''] ?? 0) * (wagerTags(rules, crew).double ? 2 : 1)} parts{wagerTags(rules, crew).double ? ` (${stakes.doubleStakeTag}: doubled)` : ''}; if the opponent declines, the crowd bets ({stakes.source}).</span>
+                  )}
+                  {wagerTags(rules, crew).noWagers && <span className="small muted">{stakes.noWagerTag}: the crew may not swear wagers.</span>}
                   {bf.word && sillyTierUp(f) && <span className="small muted">{f.sillyTrait}: this Word must be a tier above the one they failed (13.7).</span>}
                   {bf.word && <DeedText id={bf.word.deed} audience={bf.word.audience} />}
                 </div>

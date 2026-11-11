@@ -18,9 +18,10 @@
     "gift_rules": 3,
     "tag_opposites": 3,
     "title_rules": 2,
+    "drop_sales": 5,
     "captain_traits": 12,
-    "shop": 68,
-    "recruits": 7,
+    "shop": 69,
+    "recruits": 8,
     "factions": 6,
     "research_studies": 2,
     "xp_ladder": 6,
@@ -36,7 +37,7 @@
     "tags": 7,
     "contacts": 6,
     "tasks": 5,
-    "glossary": 117,
+    "glossary": 118,
     "difficulties": 3,
     "severity": 3,
     "states": 5,
@@ -74,8 +75,8 @@
     "story_events": 12,
     "task_tables": 5,
     "finds": 6,
-    "league_points": 7,
-    "catalog": 68
+    "league_points": 8,
+    "catalog": 69
   },
   "unlinkedShopItems": []
 }

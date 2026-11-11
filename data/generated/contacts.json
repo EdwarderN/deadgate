@@ -1,19 +1,7 @@
 [
   {
-    "Contact": "**Patron**",
-    "Use them to": "Make one Work a job Routine (6) instead of Tricky"
-  },
-  {
     "Contact": "**Fence**",
     "Use them to": "Sell one item at full price instead of half"
-  },
-  {
-    "Contact": "**Medic**",
-    "Use them to": "Make one Laid up fighter only Sore, or fit one prosthetic at half price"
-  },
-  {
-    "Contact": "**Informer**",
-    "Use them to": "Roll on the finds table after one Hunt leads, even if the test failed"
   },
   {
     "Contact": "**Fixer**",
@@ -22,5 +10,17 @@
   {
     "Contact": "**Friend at the meter**",
     "Use them to": "Halve the air tax for one break (round up)"
+  },
+  {
+    "Contact": "**Informer**",
+    "Use them to": "Roll on the finds table after one Hunt leads, even if the test failed"
+  },
+  {
+    "Contact": "**Medic**",
+    "Use them to": "Make one Laid up fighter only Sore, or fit one prosthetic at half price"
+  },
+  {
+    "Contact": "**Patron**",
+    "Use them to": "Make one Work a job Routine (6) instead of Tricky"
   }
 ]

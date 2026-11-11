@@ -10,13 +10,13 @@ import { scenarioOf } from './BattleExtras';
 import {
   activeEffects, canTakeTitle, factionAfterBattle, factionWordBonus, putDownXpTarget, researchEligible, prefixTitle, taskPayWithTable, type ActiveEffect,
 } from '../engine/faction';
-import { advancesEarned, airTax, currentRatings, hirePrice, isBot, ratingNames } from '../engine/crew';
+import { advancesEarned, airTax, currentRatings, hirePrice, isBot, newFighter, ratingNames } from '../engine/crew';
 import { lookup } from '../engine/dice';
 import { applyChanges, describe, setItemNamer, splitTwist, type Change } from '../engine/outcomes';
 import { resolveEffects, type EffCtx, type EffState, type Node, type Resolved } from '../engine/effects';
 import { uid, type AfterBattle as After, type Captive, type Crew, type Fighter } from '../engine/model';
 import { go } from '../App';
-import { Chassis, Doctor, Hire, SpendEffects, Md, Recharge, Shop, Stash, fighterLabel, type Update } from './common';
+import { Chassis, Doctor, HeldCaptives, Hire, SpendEffects, Md, Recharge, Shop, Stash, fighterLabel, type Update } from './common';
 import { Experience } from './Campaign';
 import { PoolRoller, RollOrEnter } from './Dice';
 import { FactionNote } from './Battle';
@@ -151,6 +151,7 @@ function BattleStep(p: SP) {
   for (const f of sworn) {
     const w = b.fighters[f.id].word!;
     if (w.result === 'fulfilled') {
+      if (!w.deed.startsWith(RUMOUR)) changes.push({ kind: 'deedDone', fid: f.id, deed: w.deed });
       if (f.sillyTrait) changes.push({ kind: 'silly', fid: f.id, value: null });
       const l = legendFor(rules, w.deed);
       if (l) {
@@ -360,7 +361,9 @@ function InjuriesStep(p: SP) {
   const taken = rules.crew.afterBattle.takenFate.value;
   for (const f of captured) {
     const r = a.ransom?.[f.id];
-    if (r?.refuse) changes.push({ kind: 'leave', fid: f.id, fate: taken, note: b.opponent ? `Taken by ${b.opponent}` : '' });
+    // Declined: the captor carries out the fate (Taken) or Holds them (14.4).
+    if (r?.refuse && r.held) { if (r.price) changes.push({ kind: 'hold', fid: f.id, price: r.price, captor: b.opponent }); else missing.push(`the price asked for ${fighterLabel(f)}`); }
+    else if (r?.refuse) changes.push({ kind: 'leave', fid: f.id, fate: taken, note: b.opponent ? `Taken by ${b.opponent}` : '' });
     else if (r?.pay) changes.push({ kind: 'parts', amount: -r.pay, note: `Ransom for ${fighterLabel(f)}`, floor: 'none' });
   }
   // Captives we took (14.4): each is ransomed (the asked price) or refused (half of it, and the faction's fate).
@@ -370,18 +373,33 @@ function InjuriesStep(p: SP) {
   const fates = activeEffects(rules, crew, 'captive');
   const own = rules.outcomes.ownTasks[crew.faction ?? ''];
   const fac = rules.faction(crew.faction ?? '');
-  const fateRes = caps.map((c, i) => (c.refused && c.roll && own ? resolveEffects(rules, crew, own.table[String(c.roll)] ?? [], { note: 'Captive fate', battle: b }, st, `captive:${i}`) : null));
+  const fateRes = caps.map((c, i) => (c.refused && !c.hold && c.roll && own ? resolveEffects(rules, crew, own.table[String(c.roll)] ?? [], { note: 'Captive fate', battle: b }, st, `captive:${i}`) : null));
+  const fr0 = rules.factionRules(crew.faction ?? '');
+  const canHold = !fr0?.noHold?.value;
+  const maxF = rules.crew.limits.maxFighters.value;
   caps.forEach((c, i) => {
     if (!c.price) { missing.push(`the price asked for captive ${i + 1}`); return; }
-    const income = c.refused ? Math.floor(c.price / 2) : c.price;
-    changes.push({ kind: 'parts', amount: income, note: c.refused ? `Half the price for captive ${i + 1} (refused)` : `Ransom for captive ${i + 1}` });
-    if (!c.refused) return;
+    if (!c.refused) { changes.push({ kind: 'parts', amount: c.price, note: `Ransom for captive ${i + 1}` }); return; }
+    // Held (14.4): kept for labour, bought back later at the asked price.
+    if (c.hold && canHold) {
+      changes.push({ kind: 'prisoner', prisoner: { id: uid('p'), name: c.name ?? '', owner: c.owner || b.opponent, price: c.price, species: c.species ?? '', ratings: c.ratings ?? {} } });
+      return;
+    }
+    // The fate: half the asked price (or the faction's share), and the faction's fate (14.4, chapter 10).
+    const share = fates.find((e) => e.effect.kind === 'captivePrice')?.effect.fraction ?? 0.5;
+    changes.push({ kind: 'parts', amount: Math.floor(c.price * share), note: `Captive ${i + 1}: ${share === 1 ? 'the full' : 'half the'} asked price` });
     const r = fateRes[i];
     if (r) { changes.push(...r.changes); missing.push(...r.missing); }
     for (const e of fates) {
       if (e.effect.kind === 'rollOwnTaskTable' && !c.roll) missing.push(`roll the fate of captive ${i + 1}`);
       if (e.effect.kind === 'captiveXp') { if (c.xpWho) changes.push({ kind: 'xp', fid: c.xpWho, amount: e.effect.amount ?? 0, note: e.title }); else missing.push(`who gains XP from captive ${i + 1}`); }
-      if (e.effect.lead) changes.push({ kind: 'lead', text: crew.notes.lead || 'a lead' });
+      if (e.effect.tagGain) changes.push({ kind: 'tag', value: e.effect.tagGain });
+      if (e.effect.kind === 'convert') {
+        // A free rookie of their own species, never a bot, with Rites; with a full crew, a lead instead (10.4).
+        if (crew.fighters.length >= maxF) { if (e.effect.lead) changes.push({ kind: 'lead', text: crew.notes.lead || 'a lead' }); }
+        else if (!c.species) missing.push(`the species of captive ${i + 1}`);
+        else changes.push({ kind: 'recruit', fighter: { ...newFighter(rules, { species: c.species, baseRatings: Object.fromEntries(ratingNames(rules).map((n, k) => [n, k === 0 ? 1 : 0])) }), name: c.name ?? '', rites: true, rookie: false, hirePaid: 0 }, note: `${e.title}: a free rookie with Rites; choose their type and rating on the card` });
+      }
     }
   });
   // Tags from captives this break: two fates (Butchers), two ransoms at the lowest price (Merciful) (14.4, 14.10).
@@ -407,19 +425,26 @@ function InjuriesStep(p: SP) {
           {r.row && <EffectNodes nodes={r.res.nodes} st={st} set={setSt} crew={crew} botWords={isBot(rules, f)} />}
         </div>
       ))}
-      {pulled.map((f) => <div key={f.id} className="card small">✓ <strong>{fighterLabel(f)}</strong>: the core was pulled and got home. The chassis is scrap; a new one keeps half the Experience ({Math.floor(f.xp * rules.crew.afterBattle.botCore.value)} XP), with the advances and Legends that buys (13.3).</div>)}
+      {pulled.map((f) => <div key={f.id} className="card small">✓ <strong>{fighterLabel(f)}</strong>: the core was pulled and got home. The chassis is scrap; a new one keeps the Experience ({Math.floor(f.xp * rules.crew.afterBattle.botCore.value)} XP), with the advances and Legends that buys (13.3).</div>)}
       {captured.map((f) => {
-        const r = a.ransom?.[f.id] ?? { pay: null, refuse: false };
+        const r: { pay: number | null; refuse: boolean; held?: boolean; price?: number | null } = a.ransom?.[f.id] ?? { pay: null, refuse: false };
         const setR = (x: Partial<typeof r>) => setA((y) => ({ ...y, ransom: { ...(y.ransom ?? {}), [f.id]: { ...r, ...x } } }));
         return (
           <div key={f.id} className="card stack-s">
             <strong>{fighterLabel(f)} was captured</strong>
-            <p className="small muted">The captor names a price from 10 to 10 + their Experience ({Math.min(30, 10 + f.xp)}), at most 30. Pay it, or refuse and they are {taken}.</p>
+            {rules.crew.campaign.ransom && <p className="small muted">The captor names a price from {rules.crew.campaign.ransom.value.min} to {rules.crew.campaign.ransom.value.min} + their Experience ({Math.min(rules.crew.campaign.ransom.value.max, rules.crew.campaign.ransom.value.min + f.xp * rules.crew.campaign.ransom.value.perXp)}), at most {rules.crew.campaign.ransom.value.max}. Pay it, or decline: then the captor carries out its fate ({taken}) or Holds them ({rules.crew.campaign.ransom.source}).</p>}
             {rules.tags.filter((t) => (rules.crew.afterBattle.ransomTags?.value ?? []).includes(t.name) && crew.notes.tags.includes(t.name)).map((t) => <p key={t.name} className="note small"><strong>{t.name}:</strong> <Md text={t.text} /></p>)}
             <div className="row gap-s wrap">
               <label className="field inline-field"><span className="small">Ransom paid</span><input className="num" inputMode="numeric" value={r.pay ?? ''} disabled={r.refuse} onChange={(e) => setR({ pay: +e.target.value.replace(/\D/g, '') || null })} /></label>
-              <label className="check small"><input type="checkbox" checked={r.refuse} onChange={(e) => setR({ refuse: e.target.checked })} /> Refused: {taken}</label>
+              <label className="check small"><input type="checkbox" checked={r.refuse} onChange={(e) => setR({ refuse: e.target.checked })} /> Declined</label>
             </div>
+            {r.refuse && (
+              <div className="row gap-s wrap">
+                <label className={`option tight ${!r.held ? 'on' : ''}`}><input type="radio" name={`held-${f.id}`} checked={!r.held} onChange={() => setR({ held: false })} /> <span className="small">The captor carries out the fate: {taken}</span></label>
+                <label className={`option tight ${r.held ? 'on' : ''}`}><input type="radio" name={`held-${f.id}`} checked={!!r.held} onChange={() => setR({ held: true })} /> <span className="small">The captor Holds them</span></label>
+                {r.held && <label className="field inline-field"><span className="small">The asked price (to buy them back)</span><input className="num" inputMode="numeric" value={r.price ?? ''} onChange={(e) => setR({ price: +e.target.value.replace(/\D/g, '') || null })} /></label>}
+              </div>
+            )}
           </div>
         );
       })}
@@ -428,14 +453,29 @@ function InjuriesStep(p: SP) {
         return (
           <div key={i} className="card stack-s">
             <h3>Our captive {caps.length > 1 ? i + 1 : ''} <span className="section-tag">§ 14.4</span></h3>
-            {pr && <p className="small muted">Name a price from {pr.min} to {pr.min} + the captive's Experience, at most {pr.max}. The owner pays it, or refuses: then the crew gains half the price and the captive's fate happens.</p>}
+            {pr && <p className="small muted">Name a price from {pr.min} to {pr.min} + the captive's Experience, at most {pr.max}. The owner pays it, or declines: then you carry out your faction's fate (half the price, and the fate), or Hold them for labour until the owner buys them back.</p>}
             <div className="row gap-s wrap">
               <label className="field inline-field"><span className="small">Price asked</span><input className="num" inputMode="numeric" value={c.price ?? ''} onChange={(e) => setCapI(i, { price: +e.target.value.replace(/\D/g, '') || null })} /></label>
-              <label className="check small"><input type="radio" name={`cap-${i}`} checked={!c.refused} onChange={() => setCapI(i, { refused: false })} /> Ransomed</label>
-              <label className="check small"><input type="radio" name={`cap-${i}`} checked={c.refused} onChange={() => setCapI(i, { refused: true })} /> Refused: the fate</label>
+              <label className="check small"><input type="radio" name={`cap-${i}`} checked={!c.refused} onChange={() => setCapI(i, { refused: false, hold: false })} /> Ransomed</label>
+              <label className="check small"><input type="radio" name={`cap-${i}`} checked={c.refused && !c.hold} onChange={() => setCapI(i, { refused: true, hold: false })} /> Declined: the fate</label>
+              {canHold && <label className="check small"><input type="radio" name={`cap-${i}`} checked={c.refused && !!c.hold} onChange={() => setCapI(i, { refused: true, hold: true })} /> Declined: we Hold them</label>}
             </div>
+            {c.refused && (c.hold || fates.some((e) => e.effect.kind === 'convert')) && (
+              <div className="row gap-s wrap">
+                <label className="field inline-field"><span className="small">Their name</span><input value={c.name ?? ''} onChange={(e) => setCapI(i, { name: e.target.value })} /></label>
+                {c.hold && <label className="field inline-field"><span className="small">Their crew</span><input value={c.owner ?? b.opponent} onChange={(e) => setCapI(i, { owner: e.target.value })} /></label>}
+                <label className="field inline-field"><span className="small">Species</span>
+                  <select value={c.species ?? ''} onChange={(e) => setCapI(i, { species: e.target.value })}>
+                    <option value="">Choose</option>{rules.crew.limits.playableSpecies.value.map((s) => <option key={s}>{s}</option>)}
+                  </select>
+                </label>
+                {c.hold && ratingNames(rules).map((n) => (
+                  <label key={n} className="field inline-field"><span className="small">{n}</span><input className="num" inputMode="numeric" value={c.ratings?.[n] ?? ''} onChange={(e) => setCapI(i, { ratings: { ...(c.ratings ?? {}), [n]: +e.target.value.replace(/\D/g, '') || 0 } })} /></label>
+                ))}
+              </div>
+            )}
             {!c.refused && <label className="check small"><input type="checkbox" checked={!!c.lowest} onChange={(e) => setCapI(i, { lowest: e.target.checked })} /> At the lowest price allowed (two in a break: the crew gains a tag, 14.10)</label>}
-            {c.refused && fates.map((e) => (
+            {c.refused && !c.hold && fates.map((e) => (
               <FactionNote key={e.effect.id} e={e} small>
                 {e.effect.kind === 'rollOwnTaskTable' && fac && (
                   <>
@@ -471,9 +511,15 @@ function injuryResolve(rules: ReturnType<typeof getRules>, crew: Crew, a: After,
   const row = roll !== null ? injuryResult(rules, t.table, roll) : undefined;
   const effs = row ? rules.outcomes.injuryTables[t.table]?.[row.d66] ?? [] : [];
   const coreHome = t.table === rules.crew.afterBattle.injuryTables.value.gentle;
-  const res = resolveEffects(rules, crew, effs, { self: f.id, battle: a.battle, injuryTable: t.table, coreHome, note: `${fighterLabel(f)}: ${row ? plain(row.Result).split('.')[0] : ''}` }, st, `inj:${f.id}:e`);
-  // A bot left behind loses its core: all its Experience, always (13.3).
-  if (isBot(rules, f) && !coreHome) { res.changes.unshift({ kind: 'botCoreLost', fid: f.id }); res.nodes.unshift({ kind: 'auto', path: `core:${f.id}`, text: `Left behind: scavengers take the core. ${fighterLabel(f)} loses all Experience, advances and Legends (13.3)` }); }
+  // Dragged off by a monster: the core is lost; left behind: half kept; home: all (13.3).
+  const dragged = positionDef(rules, a.battle.fighters[f.id]?.position ?? '')?.injury === 'harshTwice';
+  const coreFraction = coreHome ? rules.crew.afterBattle.botCore.value : dragged ? 0 : rules.crew.afterBattle.botCoreLeftBehind?.value ?? 0;
+  const res = resolveEffects(rules, crew, effs, { self: f.id, battle: a.battle, injuryTable: t.table, coreHome, coreFraction, note: `${fighterLabel(f)}: ${row ? plain(row.Result).split('.')[0] : ''}` }, st, `inj:${f.id}:e`);
+  if (isBot(rules, f) && !coreHome && row) {
+    const destroyed = res.changes.some((c) => c.kind === 'botReplace' && c.fid === f.id);
+    if (coreFraction === 0) { res.changes.unshift({ kind: 'botCoreLost', fid: f.id }); res.nodes.unshift({ kind: 'auto', path: `core:${f.id}`, text: `Dragged off: the core is lost. ${fighterLabel(f)} loses all Experience, advances and Legends (13.3)` }); }
+    else if (!destroyed) { res.changes.unshift({ kind: 'botReplace', fid: f.id, fraction: coreFraction, chassis: false }); res.nodes.unshift({ kind: 'auto', path: `core:${f.id}`, text: `Left behind: ${fighterLabel(f)} keeps half their Experience, and the advances and Legends that buys (13.3)` }); }
+  }
   return { t, rolls, chosen, roll, row, res };
 }
 
@@ -558,6 +604,20 @@ function BreakStep(p: SP) {
     missing.push(...r.missing.map((m) => `${fighterLabel(f)}: ${m}`));
     return { f, off, r };
   });
+  // Held captives work one labour task a break for us: Scavenge or Work a job, or our own task where the faction says so (14.4).
+  const hold = rules.crew.campaign.hold;
+  const labourDefs = defs.filter((d) => (hold?.value.labourTasks ?? []).includes(d.name) || (d.own && rules.factionRules(crew.faction ?? '')?.holdLabourOwnTask?.value));
+  const labour = (crew.prisoners ?? []).map((pz) => {
+    const f: Fighter = { ...newFighter(rules, { baseRatings: pz.ratings, species: pz.species }), id: pz.id, name: `${pz.name || 'Held captive'} (Held)`, status: pz.status ?? rules.crew.campaign.statuses.value[0] };
+    const off = taskBlocked(rules, f, crew);
+    const t = a.tasks[f.id];
+    if (off || !t?.task) return { f, off, r: null };
+    const r = taskResolve(rules, crew, a, f, t, labourDefs, st);
+    // only what the task does for our crew: its pay and its results for the crew; what it does to the captive is the owner's
+    changes.push(...r.changes.filter((ch) => !('fid' in ch) || crew.fighters.some((x) => x.id === (ch as { fid: string }).fid)));
+    missing.push(...r.missing.map((m) => `${fighterLabel(f)}: ${m}`));
+    return { f, off, r };
+  });
 
   return (
     <Step id="break" {...p} intro="The air tax, one story event, and a downtime task for each fighter who may take one (14.1)." changes={changes}
@@ -631,6 +691,9 @@ function BreakStep(p: SP) {
         <h3>Downtime tasks <span className="section-tag">§ 14.6</span></h3>
         <p className="small muted">Choose a task, roll its test, then win or lose roll its table. Sore, Laid up, unpaid tax, teaching, or a story event that says so: no task.</p>
         {results.map(({ f, off, r }) => <TaskRow key={f.id} crew={crew} f={f} a={a} setA={setA} defs={defs} off={off} r={r} st={st} setSt={setSt} />)}
+        {labour.length > 0 && <h4>Labour by Held captives <span className="section-tag">§ {hold?.source}</span></h4>}
+        {labour.length > 0 && <p className="small muted">Tested with the captive's ratings; the pay goes to us. A Held captive who is Sore or Laid up works no task.</p>}
+        {labour.map(({ f, off, r }) => <TaskRow key={f.id} crew={crew} f={f} a={a} setA={setA} defs={labourDefs} off={off} r={r} st={st} setSt={setSt} />)}
       </div>
     </Step>
   );
@@ -697,7 +760,8 @@ function TaskRow({ crew, f, a, setA, defs, off, r, st, setSt }: { crew: Crew; f:
   const needs = def && !def.own ? rules.outcomes.taskBase[def.name]?.needs : undefined;
   const laid = rules.crew.campaign.statuses.value.find((x) => /laid/i.test(x));
   const patients = crew.fighters.filter((x) => x.id !== f.id && x.status === laid);
-  const teachers = crew.fighters.filter((x) => x.id !== f.id && (currentRatings(rules, x)[ratingUsed] ?? 0) > (rt[ratingUsed] ?? 0));
+  const eq = rules.crew.afterBattle.teacherRating?.value === 'equalOrHigher';
+  const teachers = crew.fighters.filter((x) => x.id !== f.id && (eq ? (currentRatings(rules, x)[ratingUsed] ?? 0) >= (rt[ratingUsed] ?? 0) : (currentRatings(rules, x)[ratingUsed] ?? 0) > (rt[ratingUsed] ?? 0)));
   return (
     <div className="task-row stack-s">
       <div className="row gap-s wrap between">
@@ -716,8 +780,8 @@ function TaskRow({ crew, f, a, setA, defs, off, r, st, setSt }: { crew: Crew; f:
             ? <select aria-label="Patient" value={t.patient ?? ''} onChange={(e) => set({ patient: e.target.value || null })}><option value="">Who is nursed? (Laid up)</option>{patients.map((x) => <option key={x.id} value={x.id}>{fighterLabel(x)}</option>)}</select>
             : <p className="small err-text">Nobody is Laid up: this task can't be taken.</p>)}
           {needs === 'teacher' && (teachers.length
-            ? <select aria-label="Teacher" value={t.teacher ?? ''} onChange={(e) => set({ teacher: e.target.value || null })}><option value="">Who teaches? (higher {ratingUsed})</option>{teachers.map((x) => <option key={x.id} value={x.id}>{fighterLabel(x)} ({ratingUsed} {currentRatings(rules, x)[ratingUsed]})</option>)}</select>
-            : <p className="small err-text">Nobody has a higher {ratingUsed} to teach them.</p>)}
+            ? <select aria-label="Teacher" value={t.teacher ?? ''} onChange={(e) => set({ teacher: e.target.value || null })}><option value="">Who teaches? ({eq ? 'equal or higher' : 'higher'} {ratingUsed})</option>{teachers.map((x) => <option key={x.id} value={x.id}>{fighterLabel(x)} ({ratingUsed} {currentRatings(rules, x)[ratingUsed]})</option>)}</select>
+            : <p className="small err-text">Nobody has {eq ? 'an equal or higher' : 'a higher'} {ratingUsed} to teach them.</p>)}
           {helpers.map(([n, u]) => (
             <label key={n} className="check small"><input type="checkbox" disabled={!!usedBy(n) && usedBy(n) !== f.id} checked={usedBy(n) === f.id} onChange={(e) => setA((y) => ({ ...y, contactUse: { ...(y.contactUse ?? {}), [n]: e.target.checked ? f.id : '' } }))} /> Use the {n}: {u.target ? `the test is ${u.target}+` : 'a finds roll even if the test fails'}</label>
           ))}
@@ -852,6 +916,7 @@ function SpendStep({ crew, update, confirm }: SP) {
       <p className="muted">Recharge, repair, buy, sell, hire and fit prosthetics (14.3, 9.3, 14.9). A new break: old stock needs a seller again.</p>
       <Chassis crew={crew} update={update} />
       <SpendEffects crew={crew} />
+      <HeldCaptives crew={crew} update={update} />
       <Doctor crew={crew} update={update} />
       <Recharge crew={crew} update={update} />
       <Stash crew={crew} update={update} />

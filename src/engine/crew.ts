@@ -422,9 +422,16 @@ export function finishCreation(rules: Rules, crew: Crew): Crew {
 }
 
 /** Half the price, rounded down; full with a Fence (14.8). Drops are not sold. */
-export function sellValue(rules: Rules, crew: Crew, o: OwnedItem, fence = false): number | null {
+export function sellValue(rules: Rules, crew: Crew, o: OwnedItem, fence = false, variant = 0): number | null {
   const d = rules.item(o.itemId);
-  if (!d || d.price === null) return null;
+  if (!d) return null;
+  // A drop sells for its table's price, half its worth; a Fence (or a full-price sale) pays the worth, double (14.8).
+  if (d.source === 'drop') {
+    const s = d.sells?.[variant] ?? d.sells?.[0];
+    if (!s) return null;
+    return fence || pendingSpend(crew, 'sale') ? Math.round(s.value / rules.crew.campaign.sellFraction.value) : s.value;
+  }
+  if (d.price === null) return null;
   const base = d.price;
   if (fence || pendingSpend(crew, 'sale')) return base;
   return Math.floor(base * rules.crew.campaign.sellFraction.value);

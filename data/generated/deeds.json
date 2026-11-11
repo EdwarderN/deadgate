@@ -6,7 +6,7 @@
     },
     {
       "#": "S2",
-      "Deed": "**Bring them home.** Carry a downed ally to the evac point"
+      "Deed": "**Bring them home.** Carry a downed ally into your own deployment zone, or to the evac point"
     },
     {
       "#": "S3",
@@ -22,11 +22,11 @@
     },
     {
       "#": "S6",
-      "Deed": "**Last to leave.** Be the last of your crew on the table, standing, when the battle ends"
+      "Deed": "**Last to leave.** End the battle standing, and nearer the enemy's deployment zone than any other fighter of your crew (a tie fails)"
     },
     {
       "#": "S7",
-      "Deed": "**Rude gesture.** Assist an ally while in base contact with an enemy"
+      "Deed": "**Rude gesture.** Assist an ally while in base contact with two enemies"
     },
     {
       "#": "S8",

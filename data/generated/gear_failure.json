@@ -14,7 +14,7 @@
     },
     {
       "d6": "4",
-      "Result": "It works far too well: the effect is as strong as it can be (a hit is crushing, an armour save is passed automatically, and any test the effect would need is passed), then the item is dead until the next battle"
+      "Result": "It works far too well: the effect is as strong as it can be (an attack hits with no roll to hit, and the hit is crushing; an armour save is passed automatically; and any test the effect would need is passed), then the item is dead until the next battle"
     },
     {
       "d6": "5",
@@ -32,7 +32,7 @@
     },
     {
       "d6": "2",
-      "Result": "**Smoke.** Smoke pours out of the item: a smoke cloud 2 inches across around the user, until the end of the next round"
+      "Result": "**Smoke.** Smoke pours out of the item: a smoke cloud 2 inches across around the user (it clears as a cloud does, section 7.6)"
     },
     {
       "d6": "3",

@@ -96,16 +96,6 @@ describe('faction pay after a battle (chapter 10)', () => {
     expect(factionAfterBattle(rules, c, playing(c), none).parts).toEqual([]);
     expect(factionAfterBattle(rules, c, playing(c), { ...none, asks: { [e.id]: true } }).parts[0].amount).toBe(e.amount);
   });
-  it('XP for fighters standing and Shook at the end', () => {
-    const fac = factionWith('xpEach', (e) => !!e.state);
-    const e = F[fac].effects!.find((x) => x.state)!;
-    const c = crewKeeping(fac, e);
-    const down = positions(rules).find((p) => p.down)!.name;
-    let b = setF(playing(c), c.fighters[0].id, { states: [e.state!] });
-    b = setF(b, c.fighters[1].id, { states: [e.state!], position: down });
-    const xp = factionAfterBattle(rules, c, b, none).xp;
-    expect(xp.map((x) => x.fid)).toEqual([c.fighters[0].id]);
-  });
   it('XP for a world not fought on this season', () => {
     const fac = factionWith('xpEach', (e) => e.condition === 'newWorld');
     const e = F[fac].effects!.find((x) => x.condition === 'newWorld')!;

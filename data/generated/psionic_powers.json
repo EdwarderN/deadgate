@@ -27,7 +27,7 @@
   {
     "Power": "**Lengthen** (Longshanks only)",
     "Number": "Tricky (8)",
-    "Effect": "An ally in view within 12 inches: their melee weapon gains **Reach** until the end of their next activation"
+    "Effect": "An ally in view within 12 inches makes a free melee attack at an enemy within **2 inches** of them, as if their weapon had **Reach** (section 7.3). It counts as an attack for the second-attack rule"
   },
   {
     "Power": "**Undertow** (Brinie only)",

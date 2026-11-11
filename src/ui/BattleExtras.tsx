@@ -2,7 +2,7 @@
 // breaking tests (11.4), madness (8.4), grenades (7.6, 7.7) and the reference tables.
 import { useState } from 'react';
 import { getRules, plain } from '../data/rules';
-import { breakingStatus, positionDef } from '../engine/battle';
+import { breakingStatus, positionDef, underdogFor } from '../engine/battle';
 import { activeEffects } from '../engine/faction';
 import { cellCovers, lookup } from '../engine/dice';
 import { equipped } from '../engine/crew';
@@ -65,6 +65,9 @@ export function WorldSetup({ crew, b, setB }: { crew: Crew; b: Battle; setB: Set
           : ownDeployment ? <span className="small"><strong>Deployment:</strong> <Md text={scenarioDeploy} /></span>
           : <><span className="small strong">Deployment</span><RollOrEnter die="d6" label="Roll deployment" value={b.deploymentRoll ?? null} onResult={(n) => setB((x) => ({ ...x, deploymentRoll: n }))} /></>}
       </div>
+      {!ownDeployment && !b.final && rules.crew.underdogs.picksDeployment?.value && underdogFor(rules, crew, b).underdog && (
+        <p className="note small">{underdogFor(rules, crew, b).underdog === 'us' ? 'We are' : 'The opponent is'} the underdog: {underdogFor(rules, crew, b).underdog === 'us' ? 'we pick' : 'they pick'} the deployment result instead of rolling ({rules.crew.underdogs.picksDeployment.source}).</p>
+      )}
       {dep && !ownDeployment && !b.final && <p className="small"><strong>{plain(dep.Deployment)}:</strong> <Md text={dep["Each side's zone"]} /></p>}
       <p className="small muted">Table: {big ? ts.large : ts.small} ({big ? 'a crew has more than' : 'neither crew has more than'} {ts.value} fighters). The first player is the higher of a d6 each. No fighter deploys within 6 inches of an enemy, a non-player model or a scenario item.</p>
       {crew && null}

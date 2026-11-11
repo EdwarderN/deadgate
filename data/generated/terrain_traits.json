@@ -21,7 +21,7 @@
   },
   {
     "Trait": "**Wet**",
-    "What it does": "Water. Halves movement for a fighter who cannot swim (section 5.4)"
+    "What it does": "Water. A fighter who cannot swim has 1 inch less on a Move action through it (section 5.4)"
   },
   {
     "Trait": "**Deep water**",

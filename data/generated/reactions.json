@@ -8,7 +8,7 @@
   {
     "Reaction": "**Dive**",
     "When": "Targeted by a ranged attack, or about to be caught in a blast (section 7.6)",
-    "What it does": "Move up to 2 inches before the roll; this may reach cover. Out of the blast means not in it",
+    "What it does": "Move up to 2 inches before the roll; this may reach cover. Out of the blast means not in it. If the move takes the target out of sight or out of range, the shot is lost and the Attack action is spent",
     "The price": "The reaction is used"
   },
   {

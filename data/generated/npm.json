@@ -6,7 +6,7 @@
     "Shoot": "none",
     "Save": "1",
     "Tough": "3",
-    "At the end of each round": "**Hunts the loudest.** Moves toward the nearest **Announced** fighter, or if none, the fighter who made a **ranged attack** most recently (if nobody has, the nearest fighter), and attacks if it reaches. If it starts in contact with a downed fighter, it drags them off instead"
+    "At the end of each round": "**Hunts the loudest.** Moves toward the nearest **Announced** fighter, or if none, the nearest fighter, and attacks if it reaches. If it starts in contact with a downed fighter, it drags them off instead"
   },
   {
     "Model": "**Gnawer** (monster)",
@@ -51,7 +51,7 @@
     "Shoot": "none",
     "Save": "none",
     "Tough": "none",
-    "At the end of each round": "**Follows the star.** Moves toward the standing fighter with the most Experience (tie: the nearest). Fighters inside move through it as Difficult and cannot shoot out of it; it blocks sight like smoke"
+    "At the end of each round": "**Follows the star.** Moves toward the standing fighter with the most Experience (tie: the nearest captain, tied or not). Fighters inside move through it as Difficult and cannot shoot out of it; it blocks sight like smoke"
   },
   {
     "Model": "**Bystander** (an arrival, the doubter, a pilgrim, a dignitary)",

@@ -1,13 +1,13 @@
 [
   {
+    "Device": "**Crank charger** (copy only)",
+    "Basic": "Use and a Routine Tech test: restore 1 Energy to the user's battery. Reusable. Unreliable (section 7.2)",
+    "Boosted (1 Energy)": "None"
+  },
+  {
     "Device": "**Grapnel and line**",
     "Basic": "Use: fix the line to a ledge or wall up to 6 inches above or across. The user climbs it, up or down, **without a Grit test**, and the line stays for allies",
     "Boosted (1 Energy)": "**Winch:** haul the user or an ally up 6 inches in one action with no test, or drag a downed ally 3 inches toward the user"
-  },
-  {
-    "Device": "**Ping scanner**",
-    "Basic": "Use: choose a point within 8 inches. Enemies within **2 inches** of it are **Announced**",
-    "Boosted (1 Energy)": "Radius **3 inches**"
   },
   {
     "Device": "**Hard hat** (copy only, Belt 1)",
@@ -20,8 +20,13 @@
     "Boosted (1 Energy)": "**+1 die on the prompt.** Slates are never drops"
   },
   {
-    "Device": "**Crank charger** (copy only)",
-    "Basic": "Use and a Routine Tech test: restore 1 Energy to the user's battery. Reusable. Unreliable (section 7.2)",
+    "Device": "**Ping scanner**",
+    "Basic": "Use: choose a point within 8 inches. Enemies within **2 inches** of it are **Announced**",
+    "Boosted (1 Energy)": "Radius **3 inches**"
+  },
+  {
+    "Device": "**Relay beacon** (old stock; Control Group)",
+    "Basic": "Use: set it down within 6 inches of the user (it is thrown). Bots within 12 inches of it are not Laggy (section 4.5)",
     "Boosted (1 Energy)": "None"
   },
   {
@@ -32,11 +37,6 @@
   {
     "Device": "**Spare cell** (old stock only)",
     "Basic": "Use: the battery gains **2 Energy**, up to its size. The spare is used up for this battle and is back in the belt after it",
-    "Boosted (1 Energy)": "None"
-  },
-  {
-    "Device": "**Relay beacon** (old stock; Control Group)",
-    "Basic": "Use: set it down within 6 inches of the user (it is thrown). Bots within 12 inches of it are not Laggy (section 4.5)",
     "Boosted (1 Energy)": "None"
   }
 ]

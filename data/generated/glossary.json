@@ -86,7 +86,7 @@
   },
   {
     "Term": "**Captive**",
-    "Meaning": "A downed enemy (never a bot) picked up and carried off; ransomed or meets their fate",
+    "Meaning": "A downed enemy (never a bot) picked up and carried off; ransomed, held for labour (and bought back later) or meets their fate",
     "See": "14.4"
   },
   {
@@ -115,14 +115,14 @@
     "See": "3.4"
   },
   {
-    "Term": "**Deed**",
-    "Meaning": "What a Word promises: Small, Big or Legendary",
-    "See": "13.6"
-  },
-  {
     "Term": "**Dangerous terrain**",
     "Meaning": "A terrain trait: entering it asks a Routine Grit test; a failure is a glance",
     "See": "5.4"
+  },
+  {
+    "Term": "**Deed**",
+    "Meaning": "What a Word promises: Small, Big or Legendary",
+    "See": "13.6"
   },
   {
     "Term": "**Deep water**",
@@ -161,7 +161,7 @@
   },
   {
     "Term": "**Drop**",
-    "Meaning": "Tech that fell in a pod. Strange, voiceless and never for sale",
+    "Meaning": "Tech that fell in a pod. Strange, voiceless, never bought and sold for half its worth",
     "See": "7.2"
   },
   {
@@ -255,6 +255,11 @@
     "See": "13.2"
   },
   {
+    "Term": "**Held**",
+    "Meaning": "A captive the captor keeps for labour instead of carrying out the fate; the owner may buy them back later",
+    "See": "14.4"
+  },
+  {
     "Term": "**Higher ground**",
     "Meaning": "A fighter whose base stands at least 1 inch above the enemy's: +1 die in melee and on shots, and -1 die for shooters against them",
     "See": "5.11"
@@ -271,12 +276,12 @@
   },
   {
     "Term": "**Hyped**",
-    "Meaning": "A state: +1 die, spent on an attack, test or save",
+    "Meaning": "A state: +1 die, spent on any roll of the fighter's own",
     "See": "5.3"
   },
   {
     "Term": "**Jam**",
-    "Meaning": "A jammed item cannot be used. From a kept total of 3 or less on Unreliable gear, a Chet result or a hack; a Use action and a Routine Tech test clear it",
+    "Meaning": "A jammed item cannot be used. From a kept total of 3 or less on Unreliable gear, a voice result (Claudius 1, Jeminy 1) or a hack; a Use action and a Routine Tech test clear it",
     "See": "7.2"
   },
   {
@@ -311,7 +316,7 @@
   },
   {
     "Term": "**League points**",
-    "Meaning": "Points a battle scores for the winning condition, the field and Words fulfilled",
+    "Meaning": "Points a battle scores for the winning condition, the field, Words fulfilled (at most 3 a battle) and, for the Control Group, research tasks",
     "See": "15.2"
   },
   {
@@ -441,7 +446,7 @@
   },
   {
     "Term": "**Shook**",
-    "Meaning": "A state: -1 die on the next attack, test or save",
+    "Meaning": "A state: -1 die on the next roll of the fighter's own",
     "See": "5.3"
   },
   {
@@ -465,14 +470,14 @@
     "See": "13.2"
   },
   {
-    "Term": "**Spend effect**",
-    "Meaning": "A story-event result that changes one price for this break only: recharging, the first purchase, the next hire or the first sale",
-    "See": "14.6"
-  },
-  {
     "Term": "**Spectacular**",
     "Meaning": "A hit or Press that throws the target through a door or window, over an edge (3 inches or more), or hard into a wall or fighter; also Down, flying and Thrown. Some rules pay for them",
     "See": "5.5"
+  },
+  {
+    "Term": "**Spend effect**",
+    "Meaning": "A story-event result that changes one price for this break only: recharging, the first purchase, the next hire or the first sale",
+    "See": "14.6"
   },
   {
     "Term": "**Spotlight**",
@@ -521,7 +526,7 @@
   },
   {
     "Term": "**Teacher**",
-    "Meaning": "The ally who teaches a Train task, with a higher rating, and takes no task",
+    "Meaning": "The ally who teaches a Train task, with an equal or higher rating, and takes no task",
     "See": "14.6"
   },
   {
@@ -546,7 +551,7 @@
   },
   {
     "Term": "**Underdog**",
-    "Meaning": "The weaker crew; its fighters gain extra XP",
+    "Meaning": "The weaker crew; its player picks the deployment result and its fighters gain extra XP",
     "See": "9.5"
   },
   {
@@ -561,7 +566,7 @@
   },
   {
     "Term": "**Wager**",
-    "Meaning": "A Word with a stake of parts against a bettor",
+    "Meaning": "A Word with a stake of parts against a bettor; if the opponent declines, the crowd bets",
     "See": "13.5"
   },
   {
@@ -576,7 +581,7 @@
   },
   {
     "Term": "**Wiped out**",
-    "Meaning": "A crew with no fighters left, dead or Taken: out of the league. The player may start again from scratch",
+    "Meaning": "A crew with no fighters left, dead, Taken or Held: out of the league. The player may start again from scratch",
     "See": "15.1"
   },
   {

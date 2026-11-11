@@ -1,7 +1,7 @@
 [
   {
     "Source": "**Old stock**",
-    "Armour rule": "The save above. **Boosted (1 Energy, when hit): Brace.** A passed save also stops Press, and any knock to the ground, from that hit"
+    "Armour rule": "The save above. **Boosted (1 Energy, when hit): +1 save die, and Brace:** a passed save also stops Press, and any knock to the ground, from that hit"
   },
   {
     "Source": "**Copy**",
@@ -9,6 +9,6 @@
   },
   {
     "Source": "**Drop**",
-    "Armour rule": "The save and Brace without Energy, after a know-how test (Weirdness 6) the first time it is used in a battle: a success means it works all battle, a failure rolls the weird table"
+    "Armour rule": "The save with +1 die, and Brace, without Energy, after a know-how test (Weirdness 6) the first time it is used in a battle: a success means it works all battle, a failure rolls the weird table"
   }
 ]

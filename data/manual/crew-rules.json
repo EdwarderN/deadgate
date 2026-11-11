@@ -433,6 +433,11 @@
         2
       ],
       "source": "9.5"
+    },
+    "picksDeployment": {
+      "value": true,
+      "source": "9.5, 11.1",
+      "note": "the underdog's player picks the deployment table result instead of rolling"
     }
   },
   "factions": {
@@ -491,15 +496,21 @@
           "kind": "reminder"
         },
         {
-          "id": "work-them",
+          "id": "sell-them-on",
           "when": "captive",
-          "kind": "rollOwnTaskTable"
+          "kind": "captivePrice",
+          "fraction": 1
         }
       ],
       "beltSlots": {
         "value": 4,
         "rule": 1,
         "source": "7.1, 10.2"
+      },
+      "holdLabourOwnTask": {
+        "value": true,
+        "source": "14.4",
+        "note": "a Held captive may be given the faction's own task as labour"
       }
     },
     "The Inspectorate": {
@@ -583,6 +594,12 @@
           "subfaction": "Fire Marshals",
           "when": "setup",
           "kind": "reminder"
+        },
+        {
+          "id": "fined-anyway",
+          "when": "captive",
+          "kind": "captivePrice",
+          "fraction": 1
         }
       ]
     },
@@ -644,15 +661,6 @@
           "kind": "reminder"
         },
         {
-          "id": "share-the-burden",
-          "subfaction": "The Visionaries",
-          "when": "afterBattle",
-          "kind": "xpEach",
-          "who": "standingShook",
-          "amount": 1,
-          "state": "Shook"
-        },
-        {
           "id": "on-the-road-world",
           "subfaction": "The Pilgrims",
           "when": "setup",
@@ -670,10 +678,14 @@
         {
           "id": "convert-them",
           "when": "captive",
-          "kind": "captiveXp",
-          "amount": 1,
-          "who": "anyFighter",
+          "kind": "convert",
           "lead": true
+        },
+        {
+          "id": "share-the-burden",
+          "subfaction": "The Visionaries",
+          "when": "voice",
+          "kind": "reminder"
         }
       ]
     },
@@ -759,7 +771,12 @@
           "when": "setup",
           "kind": "reminder"
         }
-      ]
+      ],
+      "noHold": {
+        "value": true,
+        "source": "10.5",
+        "note": "the Ledgerhands never hold a captive and have no other fate: the ransom cannot be declined"
+      }
     },
     "The Control Group": {
       "startingKit": [
@@ -844,7 +861,7 @@
           "id": "experiment-on-them",
           "when": "captive",
           "kind": "captiveXp",
-          "amount": 2,
+          "amount": 4,
           "who": "bots"
         }
       ],
@@ -923,9 +940,10 @@
           "roll": "d6"
         },
         {
-          "id": "cast-them",
+          "id": "written-out",
           "when": "captive",
-          "kind": "rollOwnTaskTable"
+          "kind": "rollOwnTaskTable",
+          "tagGain": "Showboats"
         }
       ],
       "typeRules": {
@@ -952,6 +970,11 @@
           },
           "note": "free, Hands 1; cannot be sold, dropped or taken, and passes to the next Director (10.7)"
         }
+      },
+      "holdLabourOwnTask": {
+        "value": true,
+        "source": "14.4",
+        "note": "a Held captive may be given the faction's own task as labour"
       }
     }
   },
@@ -1073,6 +1096,17 @@
       "value": 3,
       "source": "14.8",
       "note": "a crew told to lose a contact or the lead that has none loses this many parts instead"
+    },
+    "hold": {
+      "value": {
+        "labourTasks": [
+          "Scavenge",
+          "Work a job"
+        ],
+        "buyBackAfterBreaks": 1
+      },
+      "source": "14.4",
+      "note": "a Held fighter does one labour task a break for the captor (Scavenge or Work a job, or the faction's own task where it says so), tested with their ratings, pay to the captor; the owner may buy them back at the asked price in the Spend step of any break from the one after the next battle; not bought back by the end of the league, they are Taken; a wiped-out captor's Held fighters go home free"
     }
   },
   "sections": {
@@ -1284,10 +1318,10 @@
         "Legendary": 3
       },
       "audience": "Wager",
-      "noTakerTag": "Oathbreakers",
       "source": "13.5, 14.10",
-      "alwaysTakerTag": "Oathkeepers",
-      "note": "noTakerTag: a wager this crew offers finds no taker; alwaysTakerTag: it is always taken (14.10). They are opposites, so a crew never has both (14.10, replacing designer's answer 34)"
+      "note": "a wager always has a taker (the crowd bets if the opponent declines); a crew with noWagerTag may not swear wagers; a crew with doubleStakeTag has its stake doubled, won or lost",
+      "noWagerTag": "Oathbreakers",
+      "doubleStakeTag": "Oathkeepers"
     }
   },
   "afterBattle": {
@@ -1327,7 +1361,8 @@
         "A Small Word fulfilled": "word:Small",
         "A Big Word fulfilled": "word:Big",
         "A Legendary Word fulfilled": "word:Legendary",
-        "A Boast fulfilled": "boast"
+        "A Boast fulfilled": "boast",
+        "A research task completed": "research"
       },
       "source": "15.2",
       "note": "how each league points row is counted from the battle"
@@ -1364,9 +1399,9 @@
       "note": "which story rows fit the battle, for the app's suggestion; the player still chooses"
     },
     "botCore": {
-      "value": 0.5,
+      "value": 1,
       "source": "13.3",
-      "note": "left behind: all XP lost; destroyed with the core home: the replacement chassis keeps this share, rounded down, and is bought at its hire price in the Spend step (designer's answer 27)"
+      "note": "the share of its Experience a bot keeps when its core came home (evacuated, held the field, or pulled), even if the chassis is Destroyed; a Destroyed bot's replacement is bought at its hire price in the Spend step"
     },
     "twistTest": {
       "value": "Tricky",
@@ -1484,6 +1519,21 @@
       "value": 1,
       "source": "14.8",
       "note": "a fighter whose attack puts down a rival fighter, or any fighter of a rival crew, gains this much more, at most once a battle"
+    },
+    "wordPointsCap": {
+      "value": 3,
+      "source": "15.2",
+      "note": "Words score at most this many league points a battle; a research task is not a Word"
+    },
+    "botCoreLeftBehind": {
+      "value": 0.5,
+      "source": "13.3",
+      "note": "left behind (the harsh table): the bot keeps this share, rounded down, whatever the roll; dragged off by a monster: all is lost"
+    },
+    "teacherRating": {
+      "value": "equalOrHigher",
+      "source": "14.6",
+      "note": "a Train teacher needs a rating equal to or higher than the trainee's in the rating tested ('higher' for strictly higher)"
     }
   },
   "factionPayCap": {

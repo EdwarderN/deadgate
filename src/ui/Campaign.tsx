@@ -8,7 +8,7 @@ import { uid, type Advance, type Crew, type Fighter } from '../engine/model';
 import { validate, type Message } from '../engine/validate';
 import { crewToJson, download, fileName, safeColour, shareLink } from '../store';
 import { go } from '../App';
-import { Chassis, Doctor, Equip, SpendEffects, Hire, Recharge, Messages, PartsCounter, ReplacedRulePick, Shop, Stash, describeType, fighterLabel, patchFighter, type Update } from './common';
+import { Chassis, Doctor, Equip, HeldCaptives, SpendEffects, Hire, Recharge, Messages, PartsCounter, ReplacedRulePick, Shop, Stash, describeType, fighterLabel, patchFighter, type Update } from './common';
 import { copyLink, useAsk } from './confirm';
 import { canTakeTitle } from '../engine/faction';
 import { applyChanges } from '../engine/outcomes';
@@ -54,7 +54,7 @@ export function Campaign({ crew, update }: { crew: Crew; update: Update }) {
       </nav>
       <div role="tabpanel">
         {tab === 'Fighters' && <FightersTab crew={crew} update={update} messages={messages} />}
-        {tab === 'Shop and hire' && <div className="stack"><SpendEffects crew={crew} /><Doctor crew={crew} update={update} /><Chassis crew={crew} update={update} /><Recharge crew={crew} update={update} /><Stash crew={crew} update={update} /><Shop crew={crew} update={update} /><Hire crew={crew} update={update} /></div>}
+        {tab === 'Shop and hire' && <div className="stack"><SpendEffects crew={crew} /><HeldCaptives crew={crew} update={update} /><Doctor crew={crew} update={update} /><Chassis crew={crew} update={update} /><Recharge crew={crew} update={update} /><Stash crew={crew} update={update} /><Shop crew={crew} update={update} /><Hire crew={crew} update={update} /></div>}
         {tab === 'Parts' && <PartsTab crew={crew} update={update} />}
         {tab === 'Roster notes' && <NotesTab crew={crew} update={update} messages={messages.filter((m) => m.step === 'notes')} />}
         {tab === 'Season' && <SeasonTab crew={crew} update={update} />}

@@ -26,5 +26,9 @@
   {
     "What": "**A Boast fulfilled**",
     "Points": "+1 on top of its tier"
+  },
+  {
+    "What": "**A research task completed** (Control Group only, section 10.6)",
+    "Points": "2"
   }
 ]

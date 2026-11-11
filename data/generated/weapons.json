@@ -116,7 +116,7 @@
     "Source": "Old stock",
     "Hands": "Mount",
     "Range": "24",
-    "Traits": "Powered (2 Energy an attack), Heavy, Hits hard"
+    "Traits": "Powered (2 Energy an attack), Heavy, Hits hard, Armour-piercing"
   },
   {
     "Weapon": "Strange pistol",
@@ -144,7 +144,7 @@
     "Source": "Drop",
     "Hands": "2",
     "Range": "8",
-    "Traits": "Strange (Weirdness 10), Hits hard, Spread"
+    "Traits": "Strange (Weirdness 8), Hits hard, Spread"
   },
   {
     "Weapon": "Slow gun",

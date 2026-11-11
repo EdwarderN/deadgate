@@ -44,8 +44,8 @@
   {
     "Relic (rite)": "**Seatbelt** (Ward)",
     "Slot": "Belt 1",
-    "Basic": "A fighter within 3 inches has **Brace** on their next save: a passed save also stops Press and any knock",
-    "Boosted (1 Energy)": "The fighter and each ally within 2 inches of them"
+    "Basic": "The airbag: every other fighter within 2 inches of the user, friend or foe, is pushed **1 inch** straight away (a forced move, section 5.4), and the user is **Under warranty**",
+    "Boosted (1 Energy)": "Pushed **2 inches**"
   },
   {
     "Relic (rite)": "**Anti-static wristband** (Ward)",
@@ -93,7 +93,7 @@
     "Relic (rite)": "**Tumbler** (Mending)",
     "Slot": "Hands 1",
     "Basic": "Clear one lasting condition from an ally in base contact",
-    "Boosted (1 Energy)": "Clear two"
+    "Boosted (1 Energy)": "Clear one lasting condition from each of two allies in base contact"
   },
   {
     "Relic (rite)": "**Heating pad** (Mending)",
@@ -104,7 +104,7 @@
   {
     "Relic (rite)": "**Wool blanket** (Mending)",
     "Slot": "Belt 1",
-    "Basic": "One lasting condition on an ally in base contact has **no effect** until the end of the battle (it still counts toward going down)",
-    "Boosted (1 Energy)": "And the ally loses every **Shook**, **Flustered** and **Announced** token (their Hyped and Under warranty stay)"
+    "Basic": "One lasting condition on an ally in base contact is **cleared**, and the ally is **Flustered** (wrapped up)",
+    "Boosted (1 Energy)": "The ally is **Under warranty** instead of Flustered"
   }
 ]

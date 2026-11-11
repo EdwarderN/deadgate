@@ -252,6 +252,21 @@ def title_rules():
     return out
 
 
+def drop_sales():
+    """What drop weapons sell for (7.3): "**Drop weapons sell for** (...): Strange pistol 9, ...". Other drops
+    carry it in their own table's "Sells for" column (7.6)."""
+    for l in read("07-gear.md"):
+        m = re.match(r"\*\*Drop weapons sell for\*\*[^:]*: (.+?)\.?$", l)
+        if m:
+            out = {}
+            for part in m.group(1).split(", "):
+                pm = re.match(r"(.+?) (\d+)$", part.strip())
+                if pm:
+                    out[pm.group(1)] = int(pm.group(2))
+            return out
+    sys.exit("extract_rules: 'Drop weapons sell for' (7.3) not found.")
+
+
 def plain(md):
     return re.sub(r"\*\*(.+?)\*\*", r"\1", md).strip()
 
@@ -349,6 +364,7 @@ DATA = {
     "gift_rules": lambda: bold_paragraphs("08-special.md", "The psionic gift"),
     "tag_opposites": tag_opposites,
     "title_rules": title_rules,
+    "drop_sales": drop_sales,
     "captain_traits": lambda: find_table("11-crews.md", "| Captain trait | Rule"),
     "shop": shop,
     "recruits": recruits,

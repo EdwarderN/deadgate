@@ -55,6 +55,7 @@ export const generatedSchemas = {
   devices: rows('Device', 'Basic'),
   medical_kits: rows('Tier', 'Kit', 'Effect'),
   drop_items: rows('Drop item', 'Slot', 'What it does'),
+  drop_sales: z.record(z.string(), z.number()),
   relics: rows('Relic (rite)', 'Slot', 'Basic', 'Boosted (1 Energy)'),
   psionic_powers: rows('Power', 'Number', 'Effect'),
   captain_traits: rows('Captain trait', 'Rule'),
@@ -147,7 +148,7 @@ export const effectSchema = z.object({
   subfaction: str.optional(),
   type: str.optional(),
   when: z.enum(['setup', 'roundStart', 'pod', 'putDown', 'allyDown', 'gearFail', 'voice', 'voiceGood', 'afterBattle', 'captive', 'break', 'legend', 'breaking']),
-  kind: z.enum(['reminder', 'xpEach', 'partsPer', 'partsIf', 'rating', 'nameEnemy', 'payment', 'research', 'sellDrop', 'cancelFighter', 'spinOffLegend', 'rollOwnTaskTable', 'captiveXp', 'breakingDice', 'breakingThreshold']),
+  kind: z.enum(['reminder', 'xpEach', 'partsPer', 'partsIf', 'rating', 'nameEnemy', 'payment', 'research', 'sellDrop', 'cancelFighter', 'spinOffLegend', 'rollOwnTaskTable', 'captiveXp', 'captivePrice', 'convert', 'breakingDice', 'breakingThreshold']),
   rounds: z.array(z.number()).optional(),
   roll: z.enum(['d6', '2d6', 'd66']).optional(),
   amount: z.number().optional(),
@@ -172,6 +173,8 @@ export const effectSchema = z.object({
   lead: z.boolean().optional(),
   /** the glossary term the effect counts (Spectacular, 6.2) */
   term: str.optional(),
+  /** a captive fate that also gives the crew a tag */
+  tagGain: str.optional(),
 });
 
 export const taskPaySchema = z.object({
@@ -219,6 +222,8 @@ export const factionRulesSchema = z.object({
   taskPay: z.array(taskPaySchema).optional(),
   typeRules: z.record(z.string(), z.object({ injuryTable: z.enum(['gentle', 'harsh']).optional(), putDownXpTo: str.optional(), noTitle: z.boolean().optional(), builtIn: z.object({ kind: str, source: sourceSchema, maxPrice: z.number() }).optional(), note: str.optional(), source: str })).optional(),
   typeLimits: sourced(z.record(z.string(), z.number())).optional(),
+  noHold: sourced(z.boolean()).optional(),
+  holdLabourOwnTask: sourced(z.boolean()).optional(),
 });
 
 const slotRule = z.object({
@@ -299,6 +304,7 @@ export const crewRulesSchema = z.object({
     ritesAdvance: sourced(str),
   }),
   underdogs: z.object({
+    picksDeployment: sourced(z.boolean()).optional(),
     strength: sourced(str),
     threshold: sourced(z.array(z.number())).extend({ xp: z.array(z.number()) }),
   }),
@@ -310,6 +316,7 @@ export const crewRulesSchema = z.object({
     fenceContact: sourced(str),
     statuses: sourced(z.array(str)),
     doctor: sourced(str).optional(),
+    hold: sourced(z.object({ labourTasks: z.array(str), buyBackAfterBreaks: z.number() })).optional(),
     ransom: sourced(z.object({ min: z.number(), perXp: z.number(), max: z.number() })).optional(),
     spendEffects: sourced(z.object({ rechargeMultiplier: z.number(), hireExtra: z.number() })).optional(),
     loseNoteFallback: num.optional(),
@@ -342,7 +349,7 @@ export const crewRulesSchema = z.object({
     tableSize: num.extend({ small: str, large: str }),
     madness: sourced(str).extend({ frenzied: str, cracked: str, trait: str, title: str }),
     rumourWord: num.extend({ tier: str, audience: str, silly: str, past: str }),
-    wagerStakes: sourced(z.record(z.string(), z.number())).extend({ audience: str, noTakerTag: str, alwaysTakerTag: str.optional() }),
+    wagerStakes: sourced(z.record(z.string(), z.number())).extend({ audience: str, noWagerTag: str, doubleStakeTag: str }),
   }),
   afterBattle: z.object({
     injuryTables: sourced(z.object({ gentle: str, harsh: str })),
@@ -351,10 +358,13 @@ export const crewRulesSchema = z.object({
     takenFate: sourced(str),
     genericXp: sourced(z.object({ cameHome: str, putDown: str, didJob: str })),
     leaguePoints: sourced(z.record(z.string(), str)),
+    wordPointsCap: num.optional(),
+    teacherRating: sourced(z.enum(['higher', 'equalOrHigher'])).optional(),
     taskBlockedStatuses: sourced(z.array(str)),
     taskTableDie: sourced(str).extend({ ownTask: str }),
     resetStatusesAtBreak: sourced(z.boolean()),
     botCore: num,
+    botCoreLeftBehind: num.optional(),
     twistTest: sourced(str),
     taskPayDoubleIsPrinted: sourced(z.boolean()),
     ransomTags: sourced(z.array(str)).optional(),

@@ -61,6 +61,8 @@ export interface Fighter {
   energy?: number;
   /** an arrival's rumour (13.9): the one chosen, and those disproved */
   rumour?: { name: string | null; disproved: string[]; done?: boolean };
+  /** deeds the fighter has fulfilled: never sworn again (13.5) */
+  deedsDone?: string[];
   /** statuses the fighter is spared once ("Paste": the next time they would be Sore, they are not, 14.6) */
   wards?: string[];
   /** traits outside the budget from madness and the like (Cracked, 8.4) */
@@ -134,7 +136,14 @@ export interface Battle {
   pod?: { roll: number | null; drop: number | null; ours?: boolean };
 }
 
-export interface Captive { price: number | null; refused: boolean; lowest?: boolean; roll?: number | null; xpWho?: string | null }
+/** A captive the crew took (14.4): the asked price; ransomed, or declined and then the fate carried out or Held. */
+export interface Captive { price: number | null; refused: boolean; hold?: boolean; lowest?: boolean; roll?: number | null; xpWho?: string | null; name?: string; owner?: string; species?: string; ratings?: Record<string, number> }
+
+/** One of ours Held by another crew (14.4): off the roster, gear with them, bought back at the asked price. */
+export interface HeldFighter { fighter: Fighter; items: OwnedItem[]; price: number; captor: string; sinceBreak: number }
+
+/** An enemy fighter this crew Holds for labour (14.4). */
+export interface Prisoner { id: string; name: string; owner: string; price: number; species: string; ratings: Record<string, number>; status?: string }
 
 export interface AfterBattle {
   /** the id of the step on screen */
@@ -147,7 +156,7 @@ export interface AfterBattle {
   spinOff?: Record<string, string>;
   tookCaptive?: boolean;
   injuries: Record<string, { rolls: number[]; chosen?: number | null; listRolls?: number[]; picks?: Record<string, boolean>; done?: boolean; notes?: string }>;
-  ransom?: Record<string, { pay: number | null; refuse: boolean }>;
+  ransom?: Record<string, { pay: number | null; refuse: boolean; held?: boolean; price?: number | null }>;
   captive?: { income: number | null; roll: number | null; xpWho: string | null; picks?: Record<string, boolean> };
   /** captives the crew took this battle (14.4): the asked price, ransomed or refused (the fate), and the fate's roll and XP */
   captives?: Captive[];
@@ -220,6 +229,9 @@ export interface Crew {
   hireOffers?: { id: string; discount: number | null; note: string; past?: string }[];
   /** a relic tip this break (14.7): one relic at half price */
   relicLead?: { noRoll: boolean } | null;
+  /** our fighters Held by other crews, and the enemy fighters we Hold (14.4) */
+  held?: HeldFighter[];
+  prisoners?: Prisoner[];
   /** this break's Spend effects (14.6) */
   spendEffects?: SpendEffect[];
 }

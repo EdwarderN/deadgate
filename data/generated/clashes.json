@@ -28,7 +28,7 @@
   "Row 2: Scramble": [
     {
       "d66": "21",
-      "Result": "**Both hit the floor.** Both fighters are prone where they stand"
+      "Result": "**Roll for cover.** Both fighters roll into the nearest cover within 3 inches (the active player picks if two are as near), ending in base contact. With no cover in reach, both are **Flustered**"
     },
     {
       "d66": "22",
@@ -44,7 +44,7 @@
     },
     {
       "d66": "25",
-      "Result": "**Respect for experience.** The fighter with more Experience takes Press"
+      "Result": "**Dirty trick.** The active fighter makes a **Routine (6) Nerve** test: on a success the other fighter is **Shook**; on a failure the active fighter is"
     },
     {
       "d66": "26",
@@ -62,7 +62,7 @@
     },
     {
       "d66": "33",
-      "Result": "**The voices shout.** Both fighters' gear speaks at once: each fighter with a voiced device rolls on their crew's voice table now (section 8.5), free, and the result happens. It does not use their ask. A result that works on \"this roll\" works on their next attack, test or save"
+      "Result": "**The voices shout.** Both fighters' gear speaks at once: each fighter with a voiced device rolls on their crew's voice table now (section 8.5), free, and the result happens. It does not use their ask. A result that works on \"this roll\" works on their next roll of their own"
     },
     {
       "d66": "34",
@@ -74,17 +74,17 @@
     },
     {
       "d66": "36",
-      "Result": "**Covered.** The gear takes the knock, and its voice promises it is all covered: each fighter is **Under warranty**"
+      "Result": "**Cell trouble.** The fighter with more Energy in their battery loses 1 Energy and the other gains 1 (a tie: nothing)"
     }
   ],
   "Row 4: The room": [
     {
       "d66": "41",
-      "Result": "**Dust-up.** Dust and steam fill a cloud 2 inches across around the pair until the end of the next round, like a small smoke grenade: nobody inside can see out, or be seen"
+      "Result": "**Dust-up.** Dust and steam fill a cloud 2 inches across around the pair, like a small smoke grenade (it clears as a cloud does, section 7.6): nobody inside can see out, or be seen"
     },
     {
       "d66": "42",
-      "Result": "**Bad footing.** Both fighters make a Routine Grit test; each who fails falls prone"
+      "Result": "**Everyone stops to look.** Every other fighter within 6 inches of the pair, friend or foe, is **Flustered**. With nobody there, the pair are **Flustered** instead"
     },
     {
       "d66": "43",
@@ -92,7 +92,7 @@
     },
     {
       "d66": "44",
-      "Result": "**Spotted.** Both fighters are **Announced** until the end of the round"
+      "Result": "**Spotted.** Both fighters are **Announced**"
     },
     {
       "d66": "45",
@@ -122,7 +122,7 @@
     },
     {
       "d66": "55",
-      "Result": "**Tremor.** \"The gate turns over in its sleep.\" Every other fighter within 3 inches of the pair makes a **Routine (6) Grit test** or falls prone. With nobody else that close, the pair are **Shook** instead"
+      "Result": "**Swap states.** \"The gate turns over in its sleep.\" The two fighters trade states: each takes every state the other holds (Hyped, Shook, Flustered, Under warranty, Announced). With none, nothing happens"
     },
     {
       "d66": "56",
@@ -136,7 +136,7 @@
     },
     {
       "d66": "62",
-      "Result": "**Defender's edge.** The fighter who was attacked wins by a hair: they may take Press, as if they had won by 1"
+      "Result": "**Fall back.** The fighter who was attacked may step up to 2 inches away, out of contact, with no parting blow, or stay"
     },
     {
       "d66": "63",

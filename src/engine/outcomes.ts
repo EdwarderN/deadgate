@@ -2,7 +2,7 @@
 // What a table row does is data (data/manual/outcomes.json), resolved in effects.ts.
 import { getRules, plain, type Rules } from '../data/rules';
 import { addLedger, advancesEarned, battery, creditFloor, isBot } from './crew';
-import { uid, type Crew, type Fighter, type ItemSlot, type SpendEffect } from './model';
+import { uid, type Crew, type Fighter, type ItemSlot, type Prisoner, type SpendEffect } from './model';
 
 export type Change =
   /** a loss stops at 0 (14.2), unless floor says the crew may pay into debt: 'credit' to its credit floor, 'none' with no floor (a ransom to the Ledgerhands) */
@@ -32,9 +32,13 @@ export type Change =
   | { kind: 'removeContact'; name: string }
   | { kind: 'removeRival'; value: string }
   | { kind: 'ward'; fid: string; value: string }
+  | { kind: 'deedDone'; fid: string; deed: string }
+  | { kind: 'hold'; fid: string; price: number; captor: string }
+  | { kind: 'prisoner'; prisoner: Prisoner }
+  | { kind: 'recruit'; fighter: Fighter; note: string }
   | { kind: 'spendEffect'; effect: SpendEffect }
   | { kind: 'botCoreLost'; fid: string }
-  | { kind: 'botReplace'; fid: string; fraction: number }
+  | { kind: 'botReplace'; fid: string; fraction: number; chassis?: boolean }
   | { kind: 'mark'; fid: string; value: string; title: string | null }
   | { kind: 'rumourPick'; fid: string; value: string }
   | { kind: 'rumourEnd'; fid: string; fulfilled: boolean }
@@ -87,9 +91,13 @@ export function describe(crew: Crew, c: Change): string {
     case 'removeContact': return `The ${c.name} is crossed off`;
     case 'removeRival': return `${c.value} is crossed off the rivals`;
     case 'ward': return `${who(c.fid)}: the next time they would be ${c.value}, they are not (once)`;
+    case 'deedDone': return `${who(c.fid)} has done ${c.deed}: they may not swear it again (13.5)`;
+    case 'hold': return `${who(c.fid)} is Held by ${c.captor || 'the captor'} (buy back for ${c.price} parts from the break after the next battle)`;
+    case 'prisoner': return `We Hold ${c.prisoner.name || 'a captive'} of ${c.prisoner.owner || 'the enemy'} (asked price ${c.prisoner.price})`;
+    case 'recruit': return `${c.fighter.name || 'A new fighter'} joins the crew${c.note ? ` (${c.note})` : ''}`;
     case 'spendEffect': return `This break: ${c.effect.kind === 'rechargeDouble' ? 'recharging costs double' : c.effect.kind === 'purchase' ? `the first purchase costs ${Math.abs(c.effect.amount ?? 0)} ${(c.effect.amount ?? 0) >= 0 ? 'more' : 'less'}` : c.effect.kind === 'hire' ? 'the next hire costs more' : 'the first sale is at full price'}`;
     case 'botCoreLost': return `${who(c.fid)}'s core is lost: Experience, advances and Legends are gone (13.3)`;
-    case 'botReplace': return `${who(c.fid)}'s core keeps ${c.fraction === 0.5 ? 'half' : `${c.fraction}`} their Experience; buy a new chassis in the Spend step (13.3)`;
+    case 'botReplace': return `${who(c.fid)}'s core keeps ${c.fraction === 1 ? 'all' : c.fraction === 0.5 ? 'half' : `${c.fraction}`} their Experience${c.chassis === false ? '' : '; buy a new chassis in the Spend step'} (13.3)`;
     case 'mark': return `${who(c.fid)} gains ${c.value}${c.title ? ` ("${c.title}")` : ''}`;
     case 'rumourPick': return `${who(c.fid)}'s rumour: ${c.value}`;
     case 'rumourEnd': return `${who(c.fid)}'s rumour is ${c.fulfilled ? 'fulfilled' : 'disproved'}`;
@@ -129,6 +137,17 @@ export function applyChanges(rules: Rules, crew: Crew, changes: Change[]): { cre
         return i >= 0 ? { ...f, wards: f.wards!.filter((_, j) => j !== i) } : { ...f, status: ch.value };
       }); break;
       case 'ward': fx(ch.fid, (f) => ({ ...f, wards: [...(f.wards ?? []), ch.value] })); break;
+      case 'deedDone': fx(ch.fid, (f) => ({ ...f, deedsDone: Array.from(new Set([...(f.deedsDone ?? []), ch.deed])) })); break;
+      // Held (14.4): off the roster with their gear until bought back.
+      case 'hold': {
+        const f = c.fighters.find((x) => x.id === ch.fid);
+        if (!f) break;
+        const items = c.items.filter((o) => o.fighterId === f.id);
+        c = { ...c, fighters: c.fighters.filter((x) => x.id !== f.id), items: c.items.filter((o) => o.fighterId !== f.id), held: [...(c.held ?? []), { fighter: f, items, price: ch.price, captor: ch.captor, sinceBreak: c.breakNo ?? 0 }], captainId: c.captainId === f.id ? null : c.captainId };
+        break;
+      }
+      case 'prisoner': c = { ...c, prisoners: [...(c.prisoners ?? []), ch.prisoner] }; break;
+      case 'recruit': c = { ...c, fighters: [...c.fighters, ch.fighter] }; break;
       case 'injury': fx(ch.fid, (f) => (f.injuries.includes(ch.value) ? f : { ...f, injuries: [...f.injuries, ch.value], titles: ch.title ? Array.from(new Set([...f.titles, ch.title])) : f.titles })); break;
       case 'legend': fx(ch.fid, (f) => (f.legends.some((l) => l.name === ch.name) ? f : { ...f, legends: [...f.legends, { id: uid('g'), name: ch.name, title: ch.title }] })); break;
       case 'silly': fx(ch.fid, (f) => ({ ...f, sillyTrait: ch.value, lastFailedTier: ch.tier ?? f.lastFailedTier })); break;
@@ -210,7 +229,8 @@ export function applyChanges(rules: Rules, crew: Crew, changes: Change[]): { cre
         fx(ch.fid, (f) => {
           const xp = Math.floor(f.xp * ch.fraction);
           const n = advancesEarned(rules, xp);
-          return { ...f, xp, advances: f.advances.slice(0, n), legends: f.legends.slice(0, Math.max(0, n - Math.min(n, f.advances.length))), energy: undefined, awaitingChassis: true };
+          const kept = { ...f, xp, advances: f.advances.slice(0, n), legends: f.legends.slice(0, Math.max(0, n - Math.min(n, f.advances.length))) };
+          return ch.chassis === false ? kept : { ...kept, energy: undefined, awaitingChassis: true };
         });
         break;
       }

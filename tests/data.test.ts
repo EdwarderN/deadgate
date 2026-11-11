@@ -115,7 +115,7 @@ describe('data files', () => {
     expect(rules.captainTraits.some((t) => t.name === rules.crew.battle.wordsPerSide.extraFrom.captainTrait)).toBe(true);
     expect(rules.tags.some((t) => t.name === rules.crew.battle.wordsPerSide.extraFrom.tag)).toBe(true);
     const ws = rules.crew.battle.wagerStakes;
-    for (const t of [ws.noTakerTag, ws.alwaysTakerTag]) expect(rules.tags.some((x) => x.name === t), t).toBe(true);
+    for (const t of [ws.noWagerTag, ws.doubleStakeTag]) expect(rules.tags.some((x) => x.name === t), t).toBe(true);
     for (const t of rules.crew.afterBattle.ransomTags?.value ?? []) expect(rules.tags.some((x) => x.name === t), t).toBe(true);
     if (rules.crew.campaign.doctor) expect(rules.crew.campaign.statuses.value).toContain(rules.crew.campaign.doctor.value);
     for (const st of rules.crew.afterBattle.taskBlockedStatuses.value) expect(rules.crew.campaign.statuses.value).toContain(st);

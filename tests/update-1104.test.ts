@@ -149,14 +149,13 @@ describe('tags the crew earns (14.10, designer\'s answer 35), and opposite tags'
     expect(earnedTags(rules, b, [{ refused: false, lowest: true }, { refused: false, lowest: false }]).map((t) => t.tag)).toEqual([]);
     expect(earnedTags(rules, b, [{ refused: false, lowest: true }, { refused: false, lowest: true }]).map((t) => t.tag)).toEqual([low]);
   });
-  it('no taker, or always a taker', () => {
+  it('no wagers for Oathbreakers; Oathkeepers double the stake (14.10)', () => {
     const ws = rules.crew.battle.wagerStakes;
     const tagged = (tags: string[]) => ({ ...c, notes: { ...c.notes, tags } });
-    expect(wagerTags(rules, tagged([ws.noTakerTag]))).toEqual({ noTaker: true, always: false });
-    expect(wagerTags(rules, tagged([ws.alwaysTakerTag!]))).toEqual({ noTaker: false, always: true });
-    const w = { deed: deedOf('Small'), audience: ws.audience, result: 'fulfilled' as const, taker: false };
-    expect(wagerStake(rules, tagged([ws.alwaysTakerTag!]), w)).toBeGreaterThan(0);
-    expect(wagerStake(rules, tagged([ws.noTakerTag]), { ...w, taker: true })).toBe(0);
+    expect(wagerTags(rules, tagged([ws.noWagerTag]))).toEqual({ noWagers: true, double: false });
+    expect(wagerTags(rules, tagged([ws.doubleStakeTag]))).toEqual({ noWagers: false, double: true });
+    const w = { deed: deedOf('Small'), audience: ws.audience, result: 'fulfilled' as const };
+    expect(wagerStake(rules, tagged([ws.doubleStakeTag]), w)).toBe(2 * wagerStake(rules, tagged([]), w));
   });
   it('opposite tags: gaining one while holding the other crosses both off (14.10)', () => {
     const pairs = rules.data.tag_opposites;
@@ -170,6 +169,6 @@ describe('tags the crew earns (14.10, designer\'s answer 35), and opposite tags'
     }
     // the wager tags are a pair, so a crew never holds both
     const ws = rules.crew.battle.wagerStakes;
-    expect(pairs.some((p) => p.includes(ws.noTakerTag) && p.includes(ws.alwaysTakerTag!))).toBe(true);
+    expect(pairs.some((p) => p.includes(ws.noWagerTag) && p.includes(ws.doubleStakeTag))).toBe(true);
   });
 });

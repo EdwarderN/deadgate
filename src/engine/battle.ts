@@ -136,18 +136,17 @@ export const wordName = (rules: Rules, deedId: string) => (deedId.startsWith(RUM
 /** Is this Word Big or Legendary (it makes a legend, 13.8, 14.5)? */
 export const makesLegend = (rules: Rules, deedId: string) => B(rules).legendTiers.value.includes(deedTier(rules, deedId)?.tier ?? '');
 
-/** Does a wager this crew offers find no taker, or always one (14.10)? Opposite tags never stand together. */
-export function wagerTags(rules: Rules, crew: Crew): { noTaker: boolean; always: boolean } {
+/** May the crew swear wagers, and is its stake doubled (14.10)? A wager always has a taker (13.5). */
+export function wagerTags(rules: Rules, crew: Crew): { noWagers: boolean; double: boolean } {
   const s = B(rules).wagerStakes;
-  return { noTaker: crew.notes.tags.includes(s.noTakerTag), always: !!s.alwaysTakerTag && crew.notes.tags.includes(s.alwaysTakerTag) };
+  return { noWagers: crew.notes.tags.includes(s.noWagerTag), double: crew.notes.tags.includes(s.doubleStakeTag) };
 }
 
-/** A wager's stake (13.5): won when fulfilled, paid when failed. None without a taker, or for a crew nobody bets against (14.10). */
+/** A wager's stake (13.5): won when fulfilled, paid when failed; the crowd bets if the opponent declines. Doubled for a crew with the tag (14.10). */
 export function wagerStake(rules: Rules, crew: Crew, w: BattleFighter['word']): number {
   const s = B(rules).wagerStakes;
-  const { noTaker, always } = wagerTags(rules, crew);
-  if (!w || w.audience !== s.audience || (w.taker === false && !always) || noTaker || !w.result) return 0;
-  const n = s.value[deedTier(rules, w.deed)?.tier ?? ''] ?? 0;
+  if (!w || w.audience !== s.audience || !w.result) return 0;
+  const n = (s.value[deedTier(rules, w.deed)?.tier ?? ''] ?? 0) * (wagerTags(rules, crew).double ? 2 : 1);
   return w.result === 'fulfilled' ? n : -n;
 }
 
@@ -257,7 +256,7 @@ export function botWord(rules: Rules, word: string): string {
 export function leaguePoints(rules: Rules, b: Battle): { label: string; count: number; points: number }[] {
   const map = rules.crew.afterBattle.leaguePoints.value;
   const words = Object.values(b.fighters).filter((f) => f.inBattle && f.word?.result === 'fulfilled').map((f) => f.word!);
-  return rules.data.league_points.map((r) => {
+  const rows = rules.data.league_points.map((r) => {
     const label = plain(r.What).replace(/:.*$/, '').replace(/\s*\(.*\)\s*$/, '').trim();
     const how = map[label] ?? '';
     let count = 0;
@@ -266,9 +265,15 @@ export function leaguePoints(rules: Rules, b: Battle): { label: string; count: n
     else if (how === 'stoodGround') count = b.stoodGround ? 1 : 0;
     else if (how.startsWith('word:')) count = words.filter((w) => deedTier(rules, w.deed)?.tier === how.slice(5)).length;
     else if (how === 'boast') count = words.filter((w) => w.audience === B(rules).boastAudience.value).length;
+    else if (how === 'research') count = b.research?.done ? 1 : 0;
     const pts = parseInt(r.Points.replace('+', ''), 10) || 0;
-    return { label, count, points: count * pts };
+    return { label, count, points: count * pts, word: how.startsWith('word:') || how === 'boast' };
   });
+  // Words score at most so many league points a battle (15.2).
+  const cap = rules.crew.afterBattle.wordPointsCap;
+  const wordPts = rows.filter((r) => r.word).reduce((s, r) => s + r.points, 0);
+  if (cap && wordPts > cap.value) rows.push({ label: `Words: at most ${cap.value} a battle (${cap.source})`, count: 1, points: cap.value - wordPts, word: true });
+  return rows.map(({ word: _w, ...r }) => r);
 }
 
 // ---------- tasks (14.6) ----------
@@ -399,7 +404,7 @@ export function storyEventFor(rules: Rules, crew: Crew, event: string): string |
 
 
 // ---------- tags the crew earns (14.4, 14.10) ----------
-export interface CaptiveTaken { refused: boolean; lowest?: boolean }
+export interface CaptiveTaken { refused: boolean; hold?: boolean; lowest?: boolean }
 
 /** Tags the crew gains from this battle's Words and this break's captives, as each tag's "Gained when" says. */
 export function earnedTags(rules: Rules, b: Battle, captives: CaptiveTaken[]): { tag: string; why: string }[] {
@@ -414,7 +419,7 @@ export function earnedTags(rules: Rules, b: Battle, captives: CaptiveTaken[]): {
       const ws = words.filter((w) => w.result === res && (!r.audience || w.audience === r.audience));
       n = ws.length;
       if (r.tiers) ok = ws.some((w) => r.tiers!.some((t) => deedTier(rules, w.deed)?.tier.startsWith(t)));
-    } else if (r.when === 'captiveFates') n = captives.filter((c) => c.refused).length;
+    } else if (r.when === 'captiveFates') n = captives.filter((c) => c.refused && !c.hold).length;
     else if (r.when === 'lowestRansoms') n = captives.filter((c) => !c.refused && c.lowest).length;
     if (ok && n >= r.count) {
       const what = r.when === 'fulfilledWords' ? `${n} fulfilled ${r.audience ? `${r.audience}s` : 'Words'}${r.tiers ? `, one ${r.tiers.join(' or ')}` : ''}`

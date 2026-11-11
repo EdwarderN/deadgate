@@ -11,7 +11,7 @@
   },
   {
     "Grenade": "**Smoke**",
-    "Basic": "Radius **2**, until the end of the next round",
-    "Boosted (1 Energy to prime)": "Radius **3**, until the end of the round after next"
+    "Basic": "Radius **2**, a cloud (below)",
+    "Boosted (1 Energy to prime)": "Radius **3**, a cloud that clears on a 1 or 2 only"
   }
 ]

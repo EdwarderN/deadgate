@@ -19,6 +19,8 @@ export interface EffCtx {
   injuryTable?: string;
   /** a bot's core got home (evacuated, captured, held the field, 13.3) */
   coreHome?: boolean;
+  /** the share of a bot's Experience its core keeps (13.3): all if it came home, half if left behind, none if dragged off */
+  coreFraction?: number;
   note: string;
 }
 export type EffState = Record<string, unknown>;
@@ -317,7 +319,9 @@ export function resolveEffects(rules: Rules, crew: Crew, effs: Eff[], ctx: EffCt
     }
     if (e.dead) for (const f of people('self', p)) {
       // A destroyed bot whose core got home is rebuilt with half its Experience (13.3).
-      if (isBot(rules, f) && ctx.coreHome) auto({ kind: 'botReplace', fid: f.id, fraction: rules.crew.afterBattle.botCore.value }, `${name(f)}: ${deathFate(rules, f)}, but the core came home: a new chassis, half the Experience`);
+      // A Destroyed bot's core is rebuilt in a new chassis: all its Experience if the core came home, half if it was left behind (13.3).
+      const keep = ctx.coreFraction ?? (ctx.coreHome ? rules.crew.afterBattle.botCore.value : 0);
+      if (isBot(rules, f) && keep > 0) auto({ kind: 'botReplace', fid: f.id, fraction: keep }, `${name(f)}: ${deathFate(rules, f)}, but the core is kept: a new chassis, ${keep === 1 ? 'all' : keep === 0.5 ? 'half' : keep} the Experience`);
       else auto({ kind: 'leave', fid: f.id, fate: deathFate(rules, f), note: ctx.note }, `${name(f)}: ${deathFate(rules, f)}. Their gear returns to the crew`);
     }
     if (e.leave) for (const f of people(e.leave, p)) auto({ kind: 'leave', fid: f.id, fate: 'Left the crew', note: ctx.note }, `${name(f)} leaves the crew (their gear stays)`);

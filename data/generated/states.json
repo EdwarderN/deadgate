@@ -1,12 +1,12 @@
 [
   {
     "State": "**Hyped**",
-    "What it does": "+1 die, which the fighter spends on an attack, test or save of their choice",
+    "What it does": "+1 die, which the fighter spends on any roll of their own they choose",
     "When it ends": "When they spend it"
   },
   {
     "State": "**Shook**",
-    "What it does": "-1 die on the fighter's next attack, test or save",
+    "What it does": "-1 die on the fighter's next roll of their own",
     "When it ends": "When they make that roll"
   },
   {

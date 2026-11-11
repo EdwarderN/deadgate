@@ -17,6 +17,7 @@ import grenades from '../../data/generated/grenades.json';
 import devices from '../../data/generated/devices.json';
 import medical_kits from '../../data/generated/medical_kits.json';
 import drop_items from '../../data/generated/drop_items.json';
+import drop_sales from '../../data/generated/drop_sales.json';
 import relics from '../../data/generated/relics.json';
 import psionic_powers from '../../data/generated/psionic_powers.json';
 import captain_traits from '../../data/generated/captain_traits.json';
@@ -85,7 +86,7 @@ import outcomesJson from '../../data/manual/outcomes.json';
 
 export const rawData = {
   _meta, species, slots, weapon_traits, weapons, armour, armour_by_source, frames, robo_arms, grenades, devices,
-  medical_kits, drop_items, relics, psionic_powers, captain_traits, shop, recruits, factions, research_studies,
+  medical_kits, drop_items, drop_sales, relics, psionic_powers, captain_traits, shop, recruits, factions, research_studies,
   xp_ladder, advances, injuries_light, injuries_heavy, prosthetics, glitches, recovery_words, silly_traits, deeds,
   rumours, tags, contacts, tasks, glossary, catalog,
   difficulties, severity, states, actions, consequences, lasting_conditions, clashes, voices, drop_table, generic_xp,
@@ -148,6 +149,8 @@ export interface ItemDef {
   rite: string | null;
   section: string;
   forSale: boolean;
+  /** a drop's sell price (7.3, 7.6): half its worth; one per variant when the table names several ("8 (light), 14 (medium)") */
+  sells?: { label: string | null; value: number }[];
 }
 
 export interface SpeciesDef { name: string; moveText: string; move: number | null; trait: string }
@@ -269,10 +272,14 @@ function buildItems(crew: CrewRules, raw: RawData, cat: CatalogItem[]): ItemDef[
   }));
   // Drops: never for sale, but a crew can find them (11.7).
   for (const w of raw.weapons.filter((w) => plain(w.Source).toLowerCase() === 'drop')) {
-    items.push(make({ key: keyOf(w.Weapon), name: plain(w.Weapon).replace(/\s*\(.*\)/, ''), source: 'drop', price: null, kind: 'weapon', group: 'Drops', note: null, rules: w, forSale: false }));
+    const name = plain(w.Weapon).replace(/\s*\(.*\)/, '');
+    const sale = (raw.drop_sales as Record<string, number>)[name];
+    items.push({ ...make({ key: keyOf(w.Weapon), name, source: 'drop', price: null, kind: 'weapon', group: 'Drops', note: null, rules: w, forSale: false }), ...(sale !== undefined ? { sells: [{ label: null, value: sale }] } : {}) });
   }
   for (const d of raw.drop_items) {
-    items.push(make({ key: keyOf(d['Drop item']), name: plain(d['Drop item']).replace(/\s*\(.*\)/, ''), source: 'drop', price: null, kind: 'drop', group: 'Drops', note: null, rules: d, forSale: false }));
+    // "8 (light), 14 (medium)" -> two variants; "4" -> one
+    const sells = (d['Sells for'] ?? '').split(/,\s*/).map((s) => s.match(/^(\d+)(?:\s*\(([^)]+)\))?/)).filter(Boolean).map((m) => ({ label: m![2] ?? null, value: +m![1] }));
+    items.push({ ...make({ key: keyOf(d['Drop item']), name: plain(d['Drop item']).replace(/\s*\(.*\)/, ''), source: 'drop', price: null, kind: 'drop', group: 'Drops', note: null, rules: d, forSale: false }), ...(sells.length ? { sells } : {}) });
   }
   return items;
 }

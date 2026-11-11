@@ -10,7 +10,7 @@
     "name": "Knife",
     "group": "Weapons",
     "source": "copy",
-    "price": 3,
+    "price": 7,
     "note": null
   },
   {
@@ -24,35 +24,35 @@
     "name": "Maul",
     "group": "Weapons",
     "source": "copy",
-    "price": 6,
+    "price": 4,
     "note": null
   },
   {
     "name": "Long hook",
     "group": "Weapons",
     "source": "copy",
-    "price": 5,
+    "price": 7,
     "note": null
   },
   {
     "name": "Snare pole",
     "group": "Weapons",
     "source": "copy",
-    "price": 7,
+    "price": 11,
     "note": null
   },
   {
     "name": "Scrap pistol",
     "group": "Weapons",
     "source": "copy",
-    "price": 5,
+    "price": 8,
     "note": null
   },
   {
     "name": "Energy pistol",
     "group": "Weapons",
     "source": "old stock",
-    "price": 12,
+    "price": 16,
     "note": null
   },
   {
@@ -66,56 +66,56 @@
     "name": "Energy rifle",
     "group": "Weapons",
     "source": "old stock",
-    "price": 28,
+    "price": 27,
     "note": null
   },
   {
     "name": "Scrap shotgun",
     "group": "Weapons",
     "source": "copy",
-    "price": 8,
+    "price": 10,
     "note": null
   },
   {
     "name": "Scatter gun",
     "group": "Weapons",
     "source": "old stock",
-    "price": 25,
+    "price": 38,
     "note": null
   },
   {
     "name": "Shock baton",
     "group": "Weapons",
     "source": "old stock",
-    "price": 14,
+    "price": 5,
     "note": null
   },
   {
     "name": "Vibro-knife",
     "group": "Weapons",
     "source": "old stock",
-    "price": 18,
+    "price": 11,
     "note": null
   },
   {
     "name": "Power blade",
     "group": "Weapons",
     "source": "old stock",
-    "price": 22,
+    "price": 15,
     "note": null
   },
   {
     "name": "Power axe",
     "group": "Weapons",
     "source": "old stock",
-    "price": 30,
+    "price": 16,
     "note": null
   },
   {
     "name": "Energy cannon",
     "group": "Weapons",
     "source": "old stock",
-    "price": 45,
+    "price": 21,
     "note": "needs a military frame"
   },
   {
@@ -129,19 +129,19 @@
     "name": "Light armour",
     "group": "Armour, shields and fields",
     "source": "old stock",
-    "price": 15,
-    "note": null
-  },
-  {
-    "name": "Medium armour",
-    "group": "Armour, shields and fields",
-    "source": "copy",
     "price": 14,
     "note": null
   },
   {
     "name": "Medium armour",
     "group": "Armour, shields and fields",
+    "source": "copy",
+    "price": 17,
+    "note": null
+  },
+  {
+    "name": "Medium armour",
+    "group": "Armour, shields and fields",
     "source": "old stock",
     "price": 25,
     "note": null
@@ -150,161 +150,168 @@
     "name": "Heavy armour",
     "group": "Armour, shields and fields",
     "source": "copy",
-    "price": 20,
+    "price": 27,
     "note": null
   },
   {
     "name": "Heavy armour",
     "group": "Armour, shields and fields",
     "source": "old stock",
-    "price": 30,
+    "price": 37,
     "note": null
   },
   {
     "name": "Physical shield",
     "group": "Armour, shields and fields",
     "source": "copy",
-    "price": 6,
+    "price": 16,
     "note": null
   },
   {
     "name": "Force field",
     "group": "Armour, shields and fields",
     "source": "old stock",
-    "price": 30,
+    "price": 13,
     "note": null
   },
   {
     "name": "Civilian frame",
     "group": "Frames and body items",
     "source": "old stock",
-    "price": 25,
+    "price": 4,
     "note": null
   },
   {
     "name": "Military frame",
     "group": "Frames and body items",
     "source": "old stock",
-    "price": 60,
+    "price": 35,
     "note": null
   },
   {
     "name": "Robo-arm",
     "group": "Frames and body items",
     "source": "copy",
-    "price": 10,
+    "price": 8,
     "note": null
   },
   {
     "name": "Robo-arm",
     "group": "Frames and body items",
     "source": "old stock",
-    "price": 25,
+    "price": 9,
     "note": null
   },
   {
     "name": "Peg-leg",
     "group": "Frames and body items",
     "source": "copy",
-    "price": 8,
+    "price": 6,
     "note": null
   },
   {
     "name": "Old-stock leg",
     "group": "Frames and body items",
     "source": "old stock",
-    "price": 35,
+    "price": 10,
     "note": null
   },
   {
     "name": "Frag grenades",
     "group": "Belt devices and medicine",
     "source": "copy",
-    "price": 6,
+    "price": 7,
     "note": "a pair"
   },
   {
     "name": "Frag grenades",
     "group": "Belt devices and medicine",
     "source": "old stock",
-    "price": 15,
+    "price": 11,
     "note": "a pair"
   },
   {
     "name": "Flash grenades",
     "group": "Belt devices and medicine",
     "source": "copy",
-    "price": 5,
+    "price": 2,
     "note": "a pair"
   },
   {
     "name": "Flash grenades",
     "group": "Belt devices and medicine",
     "source": "old stock",
-    "price": 12,
-    "note": "a pair"
-  },
-  {
-    "name": "Smoke grenades",
-    "group": "Belt devices and medicine",
-    "source": "copy",
-    "price": 4,
-    "note": "a pair"
-  },
-  {
-    "name": "Smoke grenades",
-    "group": "Belt devices and medicine",
-    "source": "old stock",
-    "price": 10,
-    "note": "a pair"
-  },
-  {
-    "name": "Grapnel and line",
-    "group": "Belt devices and medicine",
-    "source": "copy",
-    "price": 4,
-    "note": null
-  },
-  {
-    "name": "Grapnel and line",
-    "group": "Belt devices and medicine",
-    "source": "old stock",
-    "price": 12,
-    "note": null
-  },
-  {
-    "name": "Ping scanner",
-    "group": "Belt devices and medicine",
-    "source": "copy",
     "price": 6,
+    "note": "a pair"
+  },
+  {
+    "name": "Smoke grenades",
+    "group": "Belt devices and medicine",
+    "source": "copy",
+    "price": 2,
+    "note": "a pair"
+  },
+  {
+    "name": "Smoke grenades",
+    "group": "Belt devices and medicine",
+    "source": "old stock",
+    "price": 2,
+    "note": "a pair"
+  },
+  {
+    "name": "Grapnel and line",
+    "group": "Belt devices and medicine",
+    "source": "copy",
+    "price": 3,
+    "note": null
+  },
+  {
+    "name": "Grapnel and line",
+    "group": "Belt devices and medicine",
+    "source": "old stock",
+    "price": 4,
+    "note": null
+  },
+  {
+    "name": "Ping scanner",
+    "group": "Belt devices and medicine",
+    "source": "copy",
+    "price": 4,
     "note": null
   },
   {
     "name": "Ping scanner",
     "group": "Belt devices and medicine",
     "source": "old stock",
-    "price": 15,
+    "price": 4,
     "note": null
   },
   {
     "name": "Maintenance slate",
     "group": "Belt devices and medicine",
     "source": "copy",
-    "price": 10,
+    "price": 2,
     "note": null
   },
   {
     "name": "Maintenance slate",
     "group": "Belt devices and medicine",
     "source": "old stock",
-    "price": 20,
+    "price": 2,
+    "note": null
+  },
+  {
+    "name": "Hard hat",
+    "group": "Belt devices and medicine",
+    "source": "copy",
+    "price": 2,
     "note": null
   },
   {
     "name": "Crank charger",
     "group": "Belt devices and medicine",
     "source": "copy",
-    "price": 6,
+    "price": 3,
     "note": null
   },
   {
@@ -318,14 +325,14 @@
     "name": "Repair kit",
     "group": "Belt devices and medicine",
     "source": "old stock",
-    "price": 12,
+    "price": 5,
     "note": null
   },
   {
     "name": "Spare cell",
     "group": "Belt devices and medicine",
     "source": "old stock",
-    "price": 8,
+    "price": 5,
     "note": null
   },
   {
@@ -339,7 +346,7 @@
     "name": "Patchwork med-unit",
     "group": "Belt devices and medicine",
     "source": "old stock",
-    "price": 20,
+    "price": 6,
     "note": null
   },
   {
@@ -350,129 +357,129 @@
     "note": "Control Group only"
   },
   {
-    "name": "Hum-stone",
+    "name": "Anti-static wristband",
     "group": "Relics",
     "source": "old stock",
-    "price": 25,
-    "note": "relic"
-  },
-  {
-    "name": "Halo",
-    "group": "Relics",
-    "source": "old stock",
-    "price": 20,
-    "note": "relic"
-  },
-  {
-    "name": "Warranty plate",
-    "group": "Relics",
-    "source": "old stock",
-    "price": 20,
+    "price": 3,
     "note": "relic"
   },
   {
     "name": "Death Pointer of Destruction",
     "group": "Relics",
     "source": "old stock",
-    "price": 35,
-    "note": "relic"
-  },
-  {
-    "name": "Service bell",
-    "group": "Relics",
-    "source": "old stock",
-    "price": 20,
-    "note": "relic"
-  },
-  {
-    "name": "Tumbler",
-    "group": "Relics",
-    "source": "old stock",
-    "price": 25,
-    "note": "relic"
-  },
-  {
-    "name": "Mute remote",
-    "group": "Relics",
-    "source": "old stock",
-    "price": 25,
-    "note": "relic"
-  },
-  {
-    "name": "Shush sign",
-    "group": "Relics",
-    "source": "old stock",
-    "price": 15,
+    "price": 31,
     "note": "relic"
   },
   {
     "name": "Disco ball",
     "group": "Relics",
     "source": "old stock",
-    "price": 20,
-    "note": "relic"
-  },
-  {
-    "name": "Laser pointer",
-    "group": "Relics",
-    "source": "old stock",
-    "price": 25,
-    "note": "relic"
-  },
-  {
-    "name": "Seatbelt",
-    "group": "Relics",
-    "source": "old stock",
-    "price": 20,
-    "note": "relic"
-  },
-  {
-    "name": "Anti-static wristband",
-    "group": "Relics",
-    "source": "old stock",
-    "price": 15,
-    "note": "relic"
-  },
-  {
-    "name": "Letter opener",
-    "group": "Relics",
-    "source": "old stock",
-    "price": 20,
+    "price": 4,
     "note": "relic"
   },
   {
     "name": "Fire extinguisher",
     "group": "Relics",
     "source": "old stock",
-    "price": 30,
+    "price": 21,
     "note": "relic"
   },
   {
-    "name": "Megaphone",
+    "name": "Halo",
     "group": "Relics",
     "source": "old stock",
-    "price": 15,
-    "note": "relic"
-  },
-  {
-    "name": "Whistle",
-    "group": "Relics",
-    "source": "old stock",
-    "price": 15,
+    "price": 4,
     "note": "relic"
   },
   {
     "name": "Heating pad",
     "group": "Relics",
     "source": "old stock",
-    "price": 20,
+    "price": 3,
+    "note": "relic"
+  },
+  {
+    "name": "Hum-stone",
+    "group": "Relics",
+    "source": "old stock",
+    "price": 3,
+    "note": "relic"
+  },
+  {
+    "name": "Laser pointer",
+    "group": "Relics",
+    "source": "old stock",
+    "price": 5,
+    "note": "relic"
+  },
+  {
+    "name": "Letter opener",
+    "group": "Relics",
+    "source": "old stock",
+    "price": 11,
+    "note": "relic"
+  },
+  {
+    "name": "Megaphone",
+    "group": "Relics",
+    "source": "old stock",
+    "price": 4,
+    "note": "relic"
+  },
+  {
+    "name": "Mute remote",
+    "group": "Relics",
+    "source": "old stock",
+    "price": 5,
+    "note": "relic"
+  },
+  {
+    "name": "Seatbelt",
+    "group": "Relics",
+    "source": "old stock",
+    "price": 6,
+    "note": "relic"
+  },
+  {
+    "name": "Service bell",
+    "group": "Relics",
+    "source": "old stock",
+    "price": 7,
+    "note": "relic"
+  },
+  {
+    "name": "Shush sign",
+    "group": "Relics",
+    "source": "old stock",
+    "price": 3,
+    "note": "relic"
+  },
+  {
+    "name": "Tumbler",
+    "group": "Relics",
+    "source": "old stock",
+    "price": 11,
+    "note": "relic"
+  },
+  {
+    "name": "Warranty plate",
+    "group": "Relics",
+    "source": "old stock",
+    "price": 6,
+    "note": "relic"
+  },
+  {
+    "name": "Whistle",
+    "group": "Relics",
+    "source": "old stock",
+    "price": 4,
     "note": "relic"
   },
   {
     "name": "Wool blanket",
     "group": "Relics",
     "source": "old stock",
-    "price": 20,
+    "price": 9,
     "note": "relic"
   }
 ]

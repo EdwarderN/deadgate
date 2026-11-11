@@ -68,7 +68,7 @@
     "voice": "**Voice: Dipstick** (section 8.5).",
     "startingKit": "**Starting kit:** a repair kit, a pair of smoke grenades, a crank charger and a grapnel and line, all copies.",
     "specials": "**Specials:** the gift and Rites at the normal price (30 and 20). No bots.",
-    "captiveFate": "**Captive fate: Work them.** The captive works the stall for a break: the Bodgers roll once on the flea market table below (no test), on top of half the price.",
+    "captiveFate": "**Captive fate: Sell them on.** The captive is sold on at the next stall: the Bodgers gain the **full asked price** instead of half. A Bodgers crew that holds a captive may give them its own task, Work the flea market (below), as their labour.",
     "ownTask": "**Own task: Work the flea market** (Nerve, Routine 6). Success: sell one item at **full price**, or buy one copy item at **half price**."
   },
   {
@@ -140,7 +140,7 @@
     "voice": "**Voice: Gawk** (section 8.5).",
     "startingKit": "**Starting kit:** uniforms: the captain and one other rookie start in light armour (copy), and the crew has a pair of flash grenades (copy).",
     "specials": "**Specials:** the gift and Rites at the normal price (30 and 20). No bots.",
-    "captiveFate": "**Captive fate: Fined anyway.** Refusing does not get the owner out of the fee: on top of the half price, the owner's crew pays the Inspectorate **another half of the asked price**, as much as it has.",
+    "captiveFate": "**Captive fate: Fined anyway.** When the Inspectorate carry out the fate, the owner's crew also pays the fee: on top of the half price, it pays the Inspectorate **another half of the asked price**, as much as it has.",
     "ownTask": "**Own task: Collect fees** (Fight, Tricky 8). Success: **13 parts**."
   },
   {
@@ -166,7 +166,7 @@
       {
         "n": 4,
         "name": "The omen",
-        "text": "At the start of each round, the Waiting player rolls a d6 and sets it aside: the **omen**. Before any roll of two or more dice, a Waiting fighter's or an enemy's, the Waiting player may say so and spend it: that roll is made with one die fixed at the omen's value, the other dice rolled as usual, and the kept dice chosen as usual. A spent omen is gone, and so is an unused one at the end of the round."
+        "text": "At the start of each round, the Waiting player rolls a d6 and sets it aside: the **omen**. Before any attack, test or save of two or more dice, a Waiting fighter's or an enemy's, the Waiting player may say so and spend it: that roll is made with one die fixed at the omen's value, the other dice rolled as usual, and the kept dice chosen as usual. A spent omen is gone, and so is an unused one at the end of the round."
       }
     ],
     "subfactions": [
@@ -176,7 +176,7 @@
       },
       {
         "name": "The Visionaries",
-        "rule": "**Share the burden down the chain.** A Visionary psion's drain tokens may also go on allies within 12 inches of **an ally who already holds a Shook token**, not only near the psion. Each ally who ends the battle **standing and Shook** gains **+1 XP**"
+        "rule": "**Share the burden down the chain.** A Visionary psion's drain tokens may also go on allies within 12 inches of **an ally who already holds a Shook token**, not only near the psion. An ally who passes the roll that uses up a Shook token from the drain is **Hyped**"
       },
       {
         "name": "The Pilgrims",
@@ -234,7 +234,7 @@
     "voice": "**Voice: the pantheon,** all five (rule 3, section 8.5).",
     "startingKit": "**Starting kit:** one relic of the player's choice worth up to 20 parts. A priest can use it only if they know its rite.",
     "specials": "**Specials:** the gift and Rites at **half price** (15 and 10; Priests and Seers have them free as types). No bots.",
-    "captiveFate": "**Captive fate: Convert them.** The captive vanishes into the faith; they do not join the crew. The fighter who captured them gains **+1 XP**, and the crew gains a **lead**, on top of half the price.",
+    "captiveFate": "**Captive fate: Convert them.** The captive is received into the faith and **joins the crew as a free rookie** of their own species (never a bot): one rating of 1, a type from the faction's list as any hire takes one, and **Rites**, free. They keep no Experience, advances or titles from their old crew. If the crew already has nine fighters, they vanish into the faith instead and the crew gains a **lead**. The crew also gains half the price.",
     "ownTask": "**Own task: Keep the vigil** (Nerve, Routine 6). Success: **+1 XP**, or one relic may be bought this break at half price."
   },
   {
@@ -306,7 +306,7 @@
     "voice": "**Voice: Jeminy** (section 8.5).",
     "startingKit": "**Starting kit:** a gun for everyone: each of the four rookies starts with a scrap pistol (copy). Under rule 3, the crew may also start up to **20 parts** in debt to buy more gear.",
     "specials": "**Specials:** the gift and Rites at the normal price (30 and 20). No bots.",
-    "captiveFate": "**Captive fate: Pay now.** The owner of a fighter the Ledgerhands capture **cannot refuse** the ransom: it pays the asked price at once, even if that takes its parts below 0. A crew below 0 this way buys and hires nothing, and every part it gains pays the debt first, until the debt is paid. The captive comes home.",
+    "captiveFate": "**Captive fate: Pay now.** The owner of a fighter the Ledgerhands capture **cannot decline** the ransom: it pays the asked price at once, even if that takes its parts below 0. A crew below 0 this way buys and hires nothing, and every part it gains pays the debt first, until the debt is paid. The captive comes home. The Ledgerhands never hold a captive and have no other fate.",
     "ownTask": "**Own task: Chase a debtor** (Grit, Tricky 8). Success: **13 parts**."
   },
   {
@@ -321,7 +321,7 @@
       {
         "n": 2,
         "name": "Research tasks",
-        "text": "Before deployment, roll a d6 on each list below and choose one of the two studies. If the crew completes it, one bot or volunteer who took part gains **+2 XP**. No subfaction rule can replace this one.",
+        "text": "Before deployment, roll a d6 on each list below and choose one of the two studies. If the crew completes it, one bot or volunteer who took part gains **+2 XP**, and the crew scores **2 league points** (section 15.2). No subfaction rule can replace this one.",
         "fixed": true
       },
       {
@@ -399,9 +399,9 @@
     ],
     "voice": "**Voice: Claudius** (section 8.5).",
     "startingKit": "**Starting kit:** any of the four free rookies may be a bot chassis instead (any of the three; a Lab-hand pays its 5 parts over a rookie, section 9.1), and the crew has two relay beacons and a spare cell (old stock).",
-    "specials": "**Specials:** bots (Observer 15, Lab-hand 20, Prototype 15 parts); volunteers 10 (15 if the crew gave up rule 3 for its subfaction's rule, as the Replication Wing may); relay beacons 6. Rites at the normal price (20). **No psions:** every volunteer is human.",
-    "noWords": "**No Words.** The Control Group swears no Words. Its fighters earn experience from research tasks instead. A table result that gives a Word (an injury, a story event, a task) does nothing for a Control Group crew.",
-    "captiveFate": "**Captive fate: Experiment on them.** The captive vanishes into the bunker. One bot of the crew gains **+2 XP** from the findings, on top of half the price.",
+    "specials": "**Specials:** bots (Observer 16, Lab-hand 17, Prototype 18 parts); volunteers 10 (15 if the crew gave up rule 3 for its subfaction's rule, as the Replication Wing may); relay beacons 6. Rites at the normal price (20). **No psions:** every volunteer is human.",
+    "noWords": "**No Words.** The Control Group swears no Words. Its fighters earn experience, and the crew its league points, from research tasks instead. A table result that gives a Word (an injury, a story event, a task) does nothing for a Control Group crew.",
+    "captiveFate": "**Captive fate: Experiment on them.** The captive vanishes into the bunker. One bot of the crew gains **+4 XP** from the findings, on top of half the price.",
     "ownTask": "**Own task: Run an experiment** (Tech, Tricky 8). Success: one bot gains **+2 XP**. Volunteers may run it too; nobody tells them what it was."
   },
   {
@@ -445,7 +445,7 @@
       },
       {
         "name": "Franchise Studios",
-        "rule": "**The formula.** A Franchise fighter who takes the same two actions in the same order as in their previous activation (Move then Attack, say) has **+1 die on every roll** in that activation. A reaction does not change it. An **Aim** never counts: an activation with an Aim in it earns no bonus, and the first activation of the battle has no previous one"
+        "rule": "**The formula.** A Franchise fighter whose second action in an activation is the same kind as their first (two Attacks, two Uses) has **+1 die on every roll** of that second action. An **Aim** never counts, in either action"
       }
     ],
     "types": [
@@ -499,7 +499,7 @@
     "voice": "**Voice: Chet Jippity** (section 8.5).",
     "startingKit": "**Starting kit:** real props: one old-stock weapon worth up to 18 parts, and the Director's camera. The four rookies are a **Director** (the captain), an **Action star**, an **Expert** and a **Stunt double**.",
     "specials": "**Specials:** the gift and Rites at the normal price (30 and 20). No bots. A crew has **at most one Director**; later hires may be any other type.",
-    "captiveFate": "**Captive fate: Cast them.** The captive works as an extra in the background of the picture: the crew rolls once on the Shoot a picture table below (no test), on top of half the price.",
+    "captiveFate": "**Captive fate: Written out.** The captive's exit is the season's big scene: the crew gains **Showboats** and rolls once on the Shoot a picture table below (no test), on top of half the price. A Hollowood crew that holds a captive may give them its own task, Shoot a picture (below), as their labour.",
     "ownTask": "**Own task: Shoot a picture** (Nerve, Tricky 8). Success: **13 parts**."
   }
 ]
