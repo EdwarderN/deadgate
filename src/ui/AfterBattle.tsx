@@ -361,9 +361,16 @@ function InjuriesStep(p: SP) {
   const taken = rules.crew.afterBattle.takenFate.value;
   for (const f of captured) {
     const r = a.ransom?.[f.id];
+    if (rules.factionRules(r?.captorFaction ?? '')?.ransomNoDecline?.value && !r?.pay) missing.push(`the ransom for ${fighterLabel(f)} (it cannot be declined)`);
     // Declined: the captor carries out the fate (Taken) or Holds them (14.4).
     if (r?.refuse && r.held) { if (r.price) changes.push({ kind: 'hold', fid: f.id, price: r.price, captor: b.opponent }); else missing.push(`the price asked for ${fighterLabel(f)}`); }
-    else if (r?.refuse) changes.push({ kind: 'leave', fid: f.id, fate: taken, note: b.opponent ? `Taken by ${b.opponent}` : '' });
+    else if (r?.refuse) {
+      changes.push({ kind: 'leave', fid: f.id, fate: taken, note: b.opponent ? `Taken by ${b.opponent}` : '' });
+      // A captor's fate that also takes a fee from the owner, as much as it has (Fined anyway, 10.3): losses stop at 0.
+      const fee = (rules.factionRules(r.captorFaction ?? '')?.effects ?? []).find((e) => e.when === 'captive' && e.extraUpTo);
+      if (fee && r.price) changes.push({ kind: 'parts', amount: -Math.floor(r.price * fee.extraUpTo!), note: `${r.captorFaction}: the fee for ${fighterLabel(f)} (as much as we have)` });
+      else if (fee) missing.push(`the price asked for ${fighterLabel(f)}`);
+    }
     else if (r?.pay) changes.push({ kind: 'parts', amount: -r.pay, note: `Ransom for ${fighterLabel(f)}`, floor: 'none' });
   }
   // Captives we took (14.4): each is ransomed (the asked price) or refused (half of it, and the faction's fate).
@@ -386,8 +393,14 @@ function InjuriesStep(p: SP) {
       return;
     }
     // The fate: half the asked price (or the faction's share), and the faction's fate (14.4, chapter 10).
-    const share = fates.find((e) => e.effect.kind === 'captivePrice')?.effect.fraction ?? 0.5;
+    const cp = fates.find((e) => e.effect.kind === 'captivePrice')?.effect;
+    const share = cp?.fraction ?? 0.5;
     changes.push({ kind: 'parts', amount: Math.floor(c.price * share), note: `Captive ${i + 1}: ${share === 1 ? 'the full' : 'half the'} asked price` });
+    // A further share the owner pays as much as it can (Fined anyway, 10.3): the player says how much came.
+    if (cp?.extraUpTo) {
+      if (c.extraPaid == null) missing.push(`how much of the fee the owner of captive ${i + 1} paid`);
+      else if (c.extraPaid > 0) changes.push({ kind: 'parts', amount: Math.min(c.extraPaid, Math.floor(c.price * cp.extraUpTo)), note: `Captive ${i + 1}: the fee from the owner` });
+    }
     const r = fateRes[i];
     if (r) { changes.push(...r.changes); missing.push(...r.missing); }
     for (const e of fates) {
@@ -427,8 +440,9 @@ function InjuriesStep(p: SP) {
       ))}
       {pulled.map((f) => <div key={f.id} className="card small">✓ <strong>{fighterLabel(f)}</strong>: the core was pulled and got home. The chassis is scrap; a new one keeps the Experience ({Math.floor(f.xp * rules.crew.afterBattle.botCore.value)} XP), with the advances and Legends that buys (13.3).</div>)}
       {captured.map((f) => {
-        const r: { pay: number | null; refuse: boolean; held?: boolean; price?: number | null } = a.ransom?.[f.id] ?? { pay: null, refuse: false };
+        const r: { pay: number | null; refuse: boolean; held?: boolean; price?: number | null; captorFaction?: string } = a.ransom?.[f.id] ?? { pay: null, refuse: false };
         const setR = (x: Partial<typeof r>) => setA((y) => ({ ...y, ransom: { ...(y.ransom ?? {}), [f.id]: { ...r, ...x } } }));
+        const noDecline = !!rules.factionRules(r.captorFaction ?? '')?.ransomNoDecline?.value;
         return (
           <div key={f.id} className="card stack-s">
             <strong>{fighterLabel(f)} was captured</strong>
@@ -436,13 +450,19 @@ function InjuriesStep(p: SP) {
             {rules.tags.filter((t) => (rules.crew.afterBattle.ransomTags?.value ?? []).includes(t.name) && crew.notes.tags.includes(t.name)).map((t) => <p key={t.name} className="note small"><strong>{t.name}:</strong> <Md text={t.text} /></p>)}
             <div className="row gap-s wrap">
               <label className="field inline-field"><span className="small">Ransom paid</span><input className="num" inputMode="numeric" value={r.pay ?? ''} disabled={r.refuse} onChange={(e) => setR({ pay: +e.target.value.replace(/\D/g, '') || null })} /></label>
-              <label className="check small"><input type="checkbox" checked={r.refuse} onChange={(e) => setR({ refuse: e.target.checked })} /> Declined</label>
+              {!noDecline && <label className="check small"><input type="checkbox" checked={r.refuse} onChange={(e) => setR({ refuse: e.target.checked })} /> Declined</label>}
+              <label className="field inline-field"><span className="small">The captor's faction</span>
+                <select value={r.captorFaction ?? ''} onChange={(e) => setR({ captorFaction: e.target.value, ...(rules.factionRules(e.target.value)?.ransomNoDecline?.value ? { refuse: false } : {}) })}>
+                  <option value="">Choose</option>{rules.factions.map((x) => <option key={x.name}>{x.name}</option>)}
+                </select>
+              </label>
             </div>
+            {noDecline && <p className="note small">{r.captorFaction}: the ransom cannot be declined; pay it now, even into debt ({rules.factionRules(r.captorFaction ?? '')?.ransomNoDecline?.source}).</p>}
             {r.refuse && (
               <div className="row gap-s wrap">
                 <label className={`option tight ${!r.held ? 'on' : ''}`}><input type="radio" name={`held-${f.id}`} checked={!r.held} onChange={() => setR({ held: false })} /> <span className="small">The captor carries out the fate: {taken}</span></label>
                 <label className={`option tight ${r.held ? 'on' : ''}`}><input type="radio" name={`held-${f.id}`} checked={!!r.held} onChange={() => setR({ held: true })} /> <span className="small">The captor Holds them</span></label>
-                {r.held && <label className="field inline-field"><span className="small">The asked price (to buy them back)</span><input className="num" inputMode="numeric" value={r.price ?? ''} onChange={(e) => setR({ price: +e.target.value.replace(/\D/g, '') || null })} /></label>}
+                {(r.held || (rules.factionRules(r.captorFaction ?? '')?.effects ?? []).some((e) => e.when === 'captive' && e.extraUpTo)) && <label className="field inline-field"><span className="small">The asked price{r.held ? ' (to buy them back)' : ''}</span><input className="num" inputMode="numeric" value={r.price ?? ''} onChange={(e) => setR({ price: +e.target.value.replace(/\D/g, '') || null })} /></label>}
               </div>
             )}
           </div>
@@ -477,6 +497,9 @@ function InjuriesStep(p: SP) {
             {!c.refused && <label className="check small"><input type="checkbox" checked={!!c.lowest} onChange={(e) => setCapI(i, { lowest: e.target.checked })} /> At the lowest price allowed (two in a break: the crew gains a tag, 14.10)</label>}
             {c.refused && !c.hold && fates.map((e) => (
               <FactionNote key={e.effect.id} e={e} small>
+                {e.effect.kind === 'captivePrice' && e.effect.extraUpTo && c.price && (
+                  <label className="field inline-field"><span className="small">The owner paid (as much as it has, up to {Math.floor(c.price * e.effect.extraUpTo)})</span><input className="num" inputMode="numeric" value={c.extraPaid ?? ''} onChange={(ev) => setCapI(i, { extraPaid: ev.target.value === '' ? null : Math.min(+ev.target.value.replace(/\D/g, '') || 0, Math.floor(c.price! * e.effect.extraUpTo!)) })} /></label>
+                )}
                 {e.effect.kind === 'rollOwnTaskTable' && fac && (
                   <>
                     <RollOrEnter die="d6" value={c.roll ?? null} onResult={(n) => setCapI(i, { roll: n })} label="Roll the fate" />

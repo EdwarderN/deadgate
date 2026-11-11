@@ -175,6 +175,8 @@ export const effectSchema = z.object({
   term: str.optional(),
   /** a captive fate that also gives the crew a tag */
   tagGain: str.optional(),
+  /** captivePrice: a further share the owner pays as much as it can (Fined anyway, 10.3) */
+  extraUpTo: z.number().optional(),
 });
 
 export const taskPaySchema = z.object({
@@ -223,6 +225,7 @@ export const factionRulesSchema = z.object({
   typeRules: z.record(z.string(), z.object({ injuryTable: z.enum(['gentle', 'harsh']).optional(), putDownXpTo: str.optional(), noTitle: z.boolean().optional(), builtIn: z.object({ kind: str, source: sourceSchema, maxPrice: z.number() }).optional(), note: str.optional(), source: str })).optional(),
   typeLimits: sourced(z.record(z.string(), z.number())).optional(),
   noHold: sourced(z.boolean()).optional(),
+  ransomNoDecline: sourced(z.boolean()).optional(),
   holdLabourOwnTask: sourced(z.boolean()).optional(),
 });
 

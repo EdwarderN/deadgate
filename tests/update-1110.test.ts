@@ -92,3 +92,15 @@ describe('bots keep their core (13.3)', () => {
     expect(c.fighters[0].awaitingChassis).toBeFalsy();
   });
 });
+
+describe("designer's answers 38 and 39", () => {
+  it('the Ledgerhands ransom cannot be declined; Fined anyway takes a further share, as much as the owner has', () => {
+    const F = rules.crew.factions;
+    expect(Object.keys(F).filter((n) => F[n].ransomNoDecline?.value)).toHaveLength(1);
+    const fee = Object.values(F).flatMap((f) => f.effects ?? []).find((e) => e.extraUpTo)!;
+    expect(fee.kind).toBe('captivePrice');
+    // losses stop at 0, so a fee the owner cannot pay in full takes what it has (14.2)
+    const c = { ...base(), parts: 3 };
+    expect(applyChanges(rules, c, [{ kind: 'parts', amount: -7, note: '' }]).crew.parts).toBe(0);
+  });
+});

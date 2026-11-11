@@ -63,4 +63,5 @@ A static web app: TypeScript, Vite, React (or Svelte if you prefer), schema vali
 - Every validator has a test that uses the real data files.
 - A test loads every data file against its schema, so a rulebook change that breaks the data fails loudly.
 - Accessible: keyboard use, readable contrast, works at phone width.
+- The book always wins: where the designer's notes or a change list disagree with the chapters, follow the chapters (owner's ruling).
 - Ask the owner before inventing any rule the data does not cover, rather than guessing silently. Record each decision in `data/manual/` with its section (decisions from the designer are marked "designer's answer N").

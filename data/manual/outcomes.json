@@ -4250,6 +4250,16 @@
       "answer": 37,
       "section": "14.8",
       "text": "When the crew gains a fourth contact, the player chooses which one it replaces."
+    },
+    {
+      "answer": 38,
+      "section": "10.5, 14.4",
+      "text": "The ransom card asks for the captor's faction: when it is the Ledgerhands, the ransom cannot be declined."
+    },
+    {
+      "answer": 39,
+      "section": "10.3, 14.4",
+      "text": "Fined anyway: the app asks how much of the second half of the price the owner actually paid (as much as it has)."
     }
   ]
 }

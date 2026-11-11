@@ -137,7 +137,7 @@ export interface Battle {
 }
 
 /** A captive the crew took (14.4): the asked price; ransomed, or declined and then the fate carried out or Held. */
-export interface Captive { price: number | null; refused: boolean; hold?: boolean; lowest?: boolean; roll?: number | null; xpWho?: string | null; name?: string; owner?: string; species?: string; ratings?: Record<string, number> }
+export interface Captive { price: number | null; refused: boolean; hold?: boolean; extraPaid?: number | null; lowest?: boolean; roll?: number | null; xpWho?: string | null; name?: string; owner?: string; species?: string; ratings?: Record<string, number> }
 
 /** One of ours Held by another crew (14.4): off the roster, gear with them, bought back at the asked price. */
 export interface HeldFighter { fighter: Fighter; items: OwnedItem[]; price: number; captor: string; sinceBreak: number }
@@ -156,7 +156,7 @@ export interface AfterBattle {
   spinOff?: Record<string, string>;
   tookCaptive?: boolean;
   injuries: Record<string, { rolls: number[]; chosen?: number | null; listRolls?: number[]; picks?: Record<string, boolean>; done?: boolean; notes?: string }>;
-  ransom?: Record<string, { pay: number | null; refuse: boolean; held?: boolean; price?: number | null }>;
+  ransom?: Record<string, { pay: number | null; refuse: boolean; held?: boolean; price?: number | null; captorFaction?: string }>;
   captive?: { income: number | null; roll: number | null; xpWho: string | null; picks?: Record<string, boolean> };
   /** captives the crew took this battle (14.4): the asked price, ransomed or refused (the fate), and the fate's roll and XP */
   captives?: Captive[];

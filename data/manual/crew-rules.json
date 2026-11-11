@@ -599,7 +599,8 @@
           "id": "fined-anyway",
           "when": "captive",
           "kind": "captivePrice",
-          "fraction": 1
+          "fraction": 0.5,
+          "extraUpTo": 0.5
         }
       ]
     },
@@ -776,6 +777,11 @@
         "value": true,
         "source": "10.5",
         "note": "the Ledgerhands never hold a captive and have no other fate: the ransom cannot be declined"
+      },
+      "ransomNoDecline": {
+        "value": true,
+        "source": "10.5",
+        "note": "Pay now: the owner of a fighter the Ledgerhands capture cannot decline the ransom, even into debt (designer's answer 38: the app asks for the captor's faction)"
       }
     },
     "The Control Group": {
